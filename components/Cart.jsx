@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
-import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
+import { useGetCartQuery, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
 import { useRouter } from 'next/router';
 
 const Cart = () => {
-  const { data, isLoading, error, refetch } = useGetCartQuery();
+  const { data = { items: [] }, isLoading, error, refetch } = useGetCartQuery();
   const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
   const [removeCartItem] = useRemoveFromCartMutation();
   const router = useRouter();
-
-  console.log(data);
 
   const calculateTotalPrice = () => {
     return data.items.reduce((total, item) => {
@@ -36,7 +34,7 @@ const Cart = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading cart items</div>;
@@ -49,7 +47,7 @@ const Cart = () => {
   return (
     <div className="checkout-container">
       <div className="cart-page">
-        {data.items.length < 1 && (
+        {data.items.length === 0 && (
           <div className="empty-cart">
             <AiOutlineShopping size={150} />
             <h3>Your shopping bag is empty</h3>
@@ -60,7 +58,7 @@ const Cart = () => {
             </Link>
           </div>
         )}
-        {data.items.length >= 1 && (
+        {data.items.length > 0 && (
           <>
             <div className='address-header'>
               <h4 id='address-header-one'>MY CART </h4>
