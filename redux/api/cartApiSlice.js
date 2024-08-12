@@ -12,6 +12,7 @@ export const cartApiSlice = apiSlice.injectEndpoints({
         url: `${CART_URL}`,
         method: 'POST',
         body: { productId, quantity },
+        credentials: 'include',
       }),
     }),
     updateCartItem: builder.mutation({
