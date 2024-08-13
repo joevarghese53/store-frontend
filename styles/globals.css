@@ -466,7 +466,7 @@ span.text-red {
   backdrop-filter: blur(10px);
 }
 
-.logo {
+.nav-logo {
   font-size: 24px;
   font-weight: bold;
 }
@@ -527,7 +527,7 @@ span.text-red {
   color: black;
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 20px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -566,7 +566,7 @@ span.text-red {
 }
 
 /* Logo */
-.logo img {
+.nav-logo img {
   height: 50px;
 }
 
@@ -713,22 +713,127 @@ span.text-red {
 }
 
 
+/* Laptop Large */
+@media (max-width: 1440px) {
+  .bottom-right-links {
+    left: 58%;
+  }
+}
 
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-  .bottom-navbar {
-    flex-direction: column;
-    align-items: flex-start;
+/* Laptop */
+@media (max-width: 1024px) {
+  .top-left-links {
+    left: 12%;
+  }
+
+  .top-right-links {
+    right: 12%;
+  }
+  
+  .bottom-right-links {
+    left: 40%;
   }
 
   .bottom-left-links {
-    display: flex;
-    flex-direction: column;
+    left: 20%;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .bottom-navbar {
+    justify-content: space-between;
+  }
+
+  .bottom-left-links {
+    left: 0;
   }
 
   .bottom-left-links a {
-    margin: 5px 0;
+    margin: 10px 41px;
   }
+
+  .bottom-right-links {
+    left: 0;
+    width: auto;
+  }
+
+  .top-left-links,
+  .top-right-links {
+    left: 0;
+  }
+
+  .top-left-links a,
+  .top-right-links a {
+    padding: 10px;
+  }
+}
+
+/* Mobile - L */
+@media (max-width: 430px) {
+  .desc {
+    bottom: 16px;
+    width: 36%;
+    left: 32%;
+  }
+
+  .top-left-links a.active {
+    padding: 14px 5px;
+  }
+
+  .top-left-links a {
+    font-size: 12px;
+  }
+
+  .top-right-links a {
+    font-size: 11px;
+    margin: 0;
+  }
+
+  .bottom-navbar {
+    padding: 19px 20px;
+  }
+
+  .bottom-left-links a {
+    margin: 10px 11px;
+    font-size: 12px;
+  }
+}
+
+/* Mobile - M */
+@media (max-width: 375px) {
+  .desc {
+    bottom: 16px;
+    width: 40%;
+    left: 30%;
+  }
+
+  .top-right-links a {
+    font-size: 11px;
+    padding: 3px;
+  }
+}
+
+/* Mobile - S */
+@media (max-width: 320px) {
+  .top-left-links a {
+    font-size: 9px;
+  }
+  .top-left-links a.active {
+    padding: 15px 3px;
+}
+
+  .top-right-links a {
+    padding: 3px;
+    font-size: 10px;
+  }
+
+  .desc {
+    bottom: 16px;
+    width: 47%;
+    left: 27%;
+  }
+
 }
 
 /* navbar.jsx end */
@@ -895,9 +1000,10 @@ span.text-red {
 
 /* styles/globals.css */
 
-.policies-main-container{
+.policies-main-container {
   margin-top: 140px;
 }
+
 .policies-container {
   padding: 20px;
   max-width: 800px;
@@ -2381,7 +2487,7 @@ form input {
 
 /* PaymentPage.js start */
 
-#shipping-summary-heading{
+#shipping-summary-heading {
   font-size: 18px;
   font-weight: 900;
   font-family: monospace;
@@ -2390,7 +2496,7 @@ form input {
   margin-top: 60px;
 }
 
-#billing-summary-heading{
+#billing-summary-heading {
   font-size: 18px;
   font-weight: 900;
   font-family: monospace;
@@ -2424,9 +2530,10 @@ form input {
   width: 41%;
   position: relative;
   margin-left: 5%;
-  
+
 }
-.payment-page-summary{
+
+.payment-page-summary {
   background: #eeeeee;
 }
 
@@ -2486,54 +2593,58 @@ form input {
   bottom: 70%;
 }
 
-.shipping-summary{
+.shipping-summary {
   margin-left: 11%;
   margin-top: 2%;
   display: flex;
 }
 
-.shipping-summary-right{
+.shipping-summary-right {
   margin-left: 10%;
 }
 
-.shipping-summary h2{
-  font-size: 15px;
-  font-weight: 600;
-  font-family: monospace;
-}
-.shipping-summary h3{
+.shipping-summary h2 {
   font-size: 15px;
   font-weight: 600;
   font-family: monospace;
 }
 
-.billing-summary{
+.shipping-summary h3 {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.billing-summary {
   margin-left: 11%;
   margin-top: 2%;
 }
 
-.billing-summary-right{
+.billing-summary-right {
   margin-left: 10%;
 }
 
-.billing-summary-left{
+.billing-summary-left {
   width: 50%;
 }
 
-.billing-summary h2{
+.billing-summary h2 {
   font-size: 15px;
   font-weight: 600;
   font-family: monospace;
 }
-.billing-summary h3{
+
+.billing-summary h3 {
   font-size: 15px;
   font-weight: 600;
   font-family: monospace;
 }
-.billing-summary p{
+
+.billing-summary p {
   font-size: 10px;
 }
-.billing-summary span{
+
+.billing-summary span {
   font-size: 15px;
   font-weight: 600;
   font-family: monospace;
@@ -2541,17 +2652,18 @@ form input {
   left: 30px;
 }
 
-.pay-now-button{
+.pay-now-button {
   margin-top: 10px;
-    padding: 10px 155px;
-    border: none;
-    background-color: #155100;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: 600;
+  padding: 10px 155px;
+  border: none;
+  background-color: #155100;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
 }
+
 /* PaymentPage.js end */
 
 .dynamic-product-main-container {
@@ -2983,10 +3095,6 @@ form input {
   .hero-banner-container button {
     margin-top: 90px;
     z-index: 10000;
-  }
-
-  .desc {
-    bottom: 60px;
   }
 
   .product-detail-container {

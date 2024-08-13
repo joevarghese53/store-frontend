@@ -79,7 +79,7 @@ const Navbar = () => {
       </div>
       <div className="red-line"></div>
       <div className="bottom-navbar">
-        <div className="logo">
+        <div className="nav-logo">
           <Link href="/"><img src="/logo.png" alt="Logo" /></Link>
         </div>
         <div className="bottom-left-links">
