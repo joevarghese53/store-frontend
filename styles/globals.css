@@ -830,10 +830,14 @@ span.text-red {
     left: 32%;
   }
 
-  .top-left-links a,
-  .top-right-links a {
+  .top-left-links a{
     font-size: 10px;
   }
+  .top-right-links a {
+    font-size: 10px;
+    margin: 2px;
+    padding: 0px;
+   }
 
   .bottom-navbar {
     padding: 19px 20px;
