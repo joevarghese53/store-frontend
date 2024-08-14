@@ -20,7 +20,7 @@ export function ImageSlider({ media }) {
   }
 
   return (
-    <section aria-label="Image Slider" style={{ width: "100%", height: "660px", position: "relative", marginTop: "119px" }}>
+    <section aria-label="Image Slider" className="image-slider-main-container">
       <a href="#after-media-slider-controls" className="skip-link">
         Skip Media Slider Controls
       </a>
@@ -51,13 +51,13 @@ export function ImageSlider({ media }) {
         ))}
       </div>
       <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}></div>
-      <div className="hero-banner-container">
+      <div className="hero-banner-button-container">
 
         <div>
           <Link href={`/customs`}>
             <button type="button">Explore</button>
           </Link>
-          <div className="desc">
+          <div className="hero-banner-desc">
             Wear Your Own Style
           </div>
 
