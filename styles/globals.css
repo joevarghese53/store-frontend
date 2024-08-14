@@ -739,6 +739,10 @@ span.text-red {
   .bottom-right-links {
     left: 51%;
   }
+
+  .login-icon {
+    right: 31px;
+  }
 }
 
 @media (max-width: 1170px) {
@@ -768,6 +772,10 @@ span.text-red {
 @media (max-width: 970px) {
   .bottom-right-links {
     left: 34%;
+  }
+
+  .login-icon {
+    right: 31px;
   }
 }
 
@@ -809,6 +817,13 @@ span.text-red {
   .top-left-links a.active {
     padding: 14px 12px;
   }
+
+  .login-icon {
+    right: -10px;
+  }
+  .cart-icon {
+    margin: 0px 51px;
+}
 }
 
 @media (max-width: 550px) {
@@ -830,14 +845,15 @@ span.text-red {
     left: 32%;
   }
 
-  .top-left-links a{
+  .top-left-links a {
     font-size: 10px;
   }
+
   .top-right-links a {
     font-size: 10px;
     margin: 2px;
     padding: 0px;
-   }
+  }
 
   .bottom-navbar {
     padding: 19px 20px;
@@ -865,6 +881,18 @@ span.text-red {
     margin: 2px;
     padding: 0px;
   }
+  .login-icon {
+    font-size: 11px;
+  }
+  .cart-icon {
+    font-size: 18px;
+}
+.bottom-right-links {
+  width: 38%;
+}
+.bottom-left-links {
+  width: 54%;
+}
 }
 
 @media (max-width: 320px) {
@@ -892,6 +920,7 @@ span.text-red {
     margin: 0px 4px;
     font-size: 10px;
   }
+
   .cart-icon {
     margin: 5px 0px;
     font-size: 16px;
