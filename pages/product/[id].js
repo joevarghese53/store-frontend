@@ -63,6 +63,12 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = async () => {
+    if (!userInfo) {
+      // Display a toast message if the user is not logged in
+      toast.error('Please login to continue.');
+      return;
+    }
+  
     try {
       console.log(`Adding product to cart: productId=${product._id}, quantity=${qty}`);
       await addToCart({ productId: product._id, quantity: qty }).unwrap();
