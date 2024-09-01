@@ -1227,6 +1227,15 @@ span.text-red {
 /* sizeselector.jsx end  */
 
 /* CartPage.js start */
+
+
+.cart-page-not-logged-in {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .checkout-container {
   padding: 20px;
   position: relative;
@@ -2786,8 +2795,7 @@ form input {
   display: flex;
   gap: 40px;
   color: #2c2a2a;
-  position: relative;
-  left: 23%;
+  justify-content: center;
 }
 
 .product-details-tabs {
@@ -2803,7 +2811,7 @@ form input {
 }
 
 .select-quantity {
-  width: 50px;
+  width: 52px;
 }
 
 .product-detail-image {
