@@ -64,14 +64,12 @@ span.text-red {
 
 
 
-
+/* index.js home start */
 
 .products-heading {
   text-align: center;
   margin: 40px 0px;
   color: #000000;
-  height: 33px;
-
 }
 
 .products-heading h2 {
@@ -79,10 +77,21 @@ span.text-red {
   font-weight: 700;
 }
 
-.products-heading p {
-  font-size: 16px;
-  font-weight: 200;
+.categories-heading {
+  text-align: center;
+  color: #000000;
+  margin-top: 80px;
+  margin-bottom: 40px;
 }
+
+.categories-heading h2 {
+  font-size: 27px;
+  font-weight: 700;
+}
+
+
+/* index.js home start */
+
 
 
 /* cart.jsx start */
@@ -1019,7 +1028,7 @@ span.text-red {
 }
 
 .product-card:hover {
-  transform: scale(1.1, 1.1)
+  transform: scale(1.05, 1.05)
 }
 
 .product-image {
@@ -1049,11 +1058,46 @@ span.text-red {
 
 /* main page product card end */
 
+/* Categories.jsx start */
+
+.categories{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 75px;
+  margin: 20px 20px;
+}
+
+.category-card {
+  cursor: pointer;
+  transition: transform 0.5s ease;
+  position: relative;
+}
+
+.category-card:hover {
+  transform: scale(1.05, 1.05)
+}
+
+.category-image {
+  width: 100%;
+  height: 650px;
+}
+
+.category-title {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 24px;
+  position: absolute;
+  bottom: 10px;
+  left: 27%;
+}
+
+/* Categories.jsx end */
+
+
 /* BestSeller.jsx start */
 
 .best-sellers {
-  width: auto;
-  height: 500px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
