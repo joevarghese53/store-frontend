@@ -7,7 +7,7 @@ const hoodie = '/img/hoodie.jpg';
 const Categories = () => {
     return (
         <div className='categories'>
-            <Link href={'/'} >
+            <Link href={'/OverSized'} >
                 <div className="category-card">
                     <img
                         src={oversized}
@@ -16,7 +16,7 @@ const Categories = () => {
                     <h1 className="category-title">OVERSIZED T-SHIRTS</h1>
                 </div>
             </Link>
-            <Link href={'/'} >
+            <Link href={'/Regular'} >
                 <div className="category-card">
                     <img
                         src={regular}
@@ -26,7 +26,7 @@ const Categories = () => {
                     <h1 className="category-title">REGULAR T-SHIRTS</h1>
                 </div>
             </Link>
-            <Link href={'/'} >
+            <Link href={'/Hoodie'} >
                 <div className="category-card">
                     <img
                         src={hoodie}

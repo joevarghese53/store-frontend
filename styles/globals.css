@@ -1094,6 +1094,18 @@ span.text-red {
 
 /* Categories.jsx end */
 
+/* OverSized.js start */
+
+.over-sized {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  margin: 200px 12%;
+}
+
+/* OverSized.js end */
+
 
 /* BestSeller.jsx start */
 
