@@ -1089,20 +1089,47 @@ span.text-red {
   font-size: 24px;
   position: absolute;
   bottom: 10px;
-  left: 27%;
+  left: 50%;               /* Position left at 50% */
+  transform: translateX(-50%); /* Move it back by 50% of its width */
+  text-align: center;      /* Center the text within its container */
 }
+
 
 /* Categories.jsx end */
 
 /* OverSized.js start */
 
-.over-sized {
+.filtered-products-main-container{
+
+  margin-top: 200px;
+    display: flex;
+}
+
+.filter-options {
+  width: 15%;
+  margin-left: 20px;
+}
+
+.filter-option{
+  margin-bottom: 20px;
+}
+
+.checkbox{
+  margin-top: 10px;
+}
+
+.checkbox-label{
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.filtered-products {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 50px;
-  margin: 200px 12%;
 }
+
 
 /* OverSized.js end */
 
