@@ -22,10 +22,10 @@ const Footer = () => {
 
         <div className="footer-section">
           <h3>COMPANY</h3>
-          <Link href="/ContactUs"> About Us</Link>
-          <Link href="/ContactUs"> We're Hiring</Link>
-          <Link href="/ContactUs"> Terms & Conditions</Link>
-          <Link href="/ContactUs"> Privacy Policy</Link>
+          <Link href="/AboutUs"> About Us</Link>
+          <Link href="/Hiring"> We're Hiring</Link>
+          <Link href="/TandC"> Terms & Conditions</Link>
+          <Link href="/PrivacyPolicy"> Privacy Policy</Link>
         </div>
 
         <div className="footer-section">

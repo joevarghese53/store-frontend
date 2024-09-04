@@ -275,15 +275,17 @@ span.text-red {
   color: #ffffff;
 }
 
-.footer-container h1{
+.footer-container h1 {
   font-size: 20px;
   font-weight: 700;
   color: #eeff00;
 }
-.footer-container-title{
+
+.footer-container-title {
   padding: 20px 15%;
 }
-.footer-row{
+
+.footer-row {
   display: flex;
   padding-left: 15%;
   padding-right: 15%;
@@ -297,7 +299,7 @@ span.text-red {
   gap: 10px;
 }
 
-.footer-section h3{
+.footer-section h3 {
   color: #eeff00;
   font-size: 14px;
   font-family: system-ui;
@@ -306,20 +308,49 @@ span.text-red {
 
 .footer-section a {
   display: block;
-  margin-bottom: 8px; 
+  margin-bottom: 8px;
   font-size: 13px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
-.phonepe-logo{
+.phonepe-logo {
   width: 100px;
 }
 
-.phonepe-logo img{
+.phonepe-logo img {
   width: 100%;
 }
+
 /* footer.jsx end */
+
+/* TandC.js start */
+
+.tandc-main-container {
+  max-width: 950px;
+  margin: 120px auto;
+  padding: 20px;
+}
+
+.tandc-main-container h2 {
+  font-size: 34px;
+  font-weight: 800;
+  margin-left: 50%;
+  margin-bottom: 50px;
+  font-family: system-ui;
+  color: #333333;
+  transform: translateX(-30%);
+}
+.tandc-main-container h3 {
+  font-size: 20px;
+    font-weight: 700;
+    margin: 15px 0px;
+    font-family: system-ui;
+    color: #333333;
+}
+
+
+/* TandC.js end */
 
 /* FAQ.jsx start */
 
@@ -329,7 +360,7 @@ span.text-red {
   padding: 20px;
 }
 
-.faq-container h1{
+.faq-container h1 {
   margin-left: 50%;
 }
 
@@ -367,6 +398,159 @@ span.text-red {
 
 /* FAQ.jsx end */
 
+/* AboutUs.js start */
+
+.about-us-container {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  margin-top: 130px;
+}
+
+.about-us-header {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+              url('/img/about-us-bg1.jpg') center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 100px 20px;
+}
+
+
+.about-us-title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.about-us-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+.about-us-section {
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: white;
+}
+
+.about-us-section.alt-background {
+  background: #f4f4f4;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.section-text {
+  max-width: 800px;
+  margin-bottom: 2rem;
+}
+
+.about-us-image {
+  max-width: 80%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-us-closing {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+              url('/img/about-us-bg2.jpg') center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 120px 20px;
+  height: 400px;
+}
+
+.closing-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.closing-text {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* AboutUs.js end  */
+
+/* Hiring.js start */
+
+/* Hiring.css */
+
+.hiring-page {
+  max-width: 800px;
+  margin: 130px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.hiring-page__header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.hiring-page__header h1 {
+  font-size: 2.5em;
+  color: #333;
+}
+
+.hiring-page__header h2 {
+  font-size: 1.8em;
+  color: #333;
+  margin-top: 0;
+}
+
+.hiring-page__section {
+  margin-bottom: 30px;
+}
+
+.hiring-page__section h3 {
+  font-size: 1.5em;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.hiring-page__section p {
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.hiring-page__section ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.hiring-page__section li {
+  margin-bottom: 10px;
+}
+
+.hiring-page__section strong {
+  color: #007BFF;
+}
+
+.hiring-page__section a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.hiring-page__section a:hover {
+  text-decoration: underline;
+}
+
+.hiring-page__apply {
+  text-align: center;
+}
+
+
+/* Hiring.js end */
+
+
 /* ContactUs.js start */
 
 .contact-us-main-container {
@@ -379,9 +563,10 @@ span.text-red {
   padding: 20px;
 }
 
-.contact-us-container h1{
+.contact-us-container h1 {
   margin-left: 40%;
 }
+
 /* ContactUs.js end */
 
 /* imageslider.jsx start */
@@ -541,12 +726,14 @@ span.text-red {
   .image-slider-main-container {
     height: 380px;
   }
+
   .hero-banner-button-container button {
- 
+
     padding: 8px 13px;
     font-size: 16px;
- 
+
   }
+
   .hero-banner-desc {
     font-size: 10px;
   }
@@ -1152,7 +1339,7 @@ span.text-red {
 
 /* Categories.jsx start */
 
-.categories{
+.categories {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1181,9 +1368,12 @@ span.text-red {
   font-size: 24px;
   position: absolute;
   bottom: 10px;
-  left: 50%;               /* Position left at 50% */
-  transform: translateX(-50%); /* Move it back by 50% of its width */
-  text-align: center;      /* Center the text within its container */
+  left: 50%;
+  /* Position left at 50% */
+  transform: translateX(-50%);
+  /* Move it back by 50% of its width */
+  text-align: center;
+  /* Center the text within its container */
 }
 
 
@@ -1191,10 +1381,10 @@ span.text-red {
 
 /* OverSized.js start */
 
-.filtered-products-main-container{
+.filtered-products-main-container {
 
   margin-top: 200px;
-    display: flex;
+  display: flex;
 }
 
 .filter-options {
@@ -1202,15 +1392,15 @@ span.text-red {
   margin-left: 20px;
 }
 
-.filter-option{
+.filter-option {
   margin-bottom: 20px;
 }
 
-.checkbox{
+.checkbox {
   margin-top: 10px;
 }
 
-.checkbox-label{
+.checkbox-label {
   font-size: 15px;
   font-weight: 600;
 }
