@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetFilteredProductsQuery } from '../redux/api/productApiSlice';
 import { useFetchCategoriesQuery } from '../redux/api/categoryApiSlice';
 import Loader from '../components/Loader';
 import { Product } from '../components';
-import { setCategories, setProducts, setChecked } from '../redux/features/shop/shopSlice';
+import { setCategories, setProducts, setChecked, setPriceRange } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
 
 const FilteredProducts = () => {
   const dispatch = useDispatch();
-  const { categories, products, checked, radio } = useSelector((state) => state.shop);
+  const { categories, products, checked, priceRange } = useSelector((state) => state.shop);
   const categoriesQuery = useFetchCategoriesQuery();
   const router = useRouter();
   const { category } = router.query;
-  const [priceFilter, setPriceFilter] = useState('');
 
-  const filteredProductsQuery = useGetFilteredProductsQuery({
-    checked,
-    radio,
-  });
+  // Fetch filtered products based on checked categories and price range
+  const filteredProductsQuery = useGetFilteredProductsQuery({ checked, radio: priceRange });
 
   useEffect(() => {
-    if (!categoriesQuery.isLoading) {
+    // Dispatch categories when fetched
+    if (categoriesQuery.isSuccess && categoriesQuery.data) {
       dispatch(setCategories(categoriesQuery.data));
     }
-  }, [categoriesQuery.data, dispatch]);
+  }, [categoriesQuery.data, categoriesQuery.isSuccess, dispatch]);
 
   useEffect(() => {
+    // Check if category exists and set as checked if it does
     if (category && categories.length) {
       const categoryExists = categories.find((c) => c._id === category);
       if (categoryExists) {
@@ -36,23 +35,24 @@ const FilteredProducts = () => {
   }, [category, categories, dispatch]);
 
   useEffect(() => {
-    if (!checked.length || !radio.length) {
-      if (!filteredProductsQuery.isLoading) {
-        // Filter products based on both checked categories and price filter
-        const filteredProducts = filteredProductsQuery.data.filter((product) => {
-          // Check if the product price includes the entered price filter value
-          return product.price.toString().includes(priceFilter) || product.price === parseInt(priceFilter, 10);
-        });
-
-        dispatch(setProducts(filteredProducts));
-      }
+    // Fetch and set products when checked categories or price range change
+    if (filteredProductsQuery.isSuccess && filteredProductsQuery.data) {
+      dispatch(setProducts(filteredProductsQuery.data));
     }
-  }, [checked, radio, filteredProductsQuery.data, dispatch, priceFilter]);
+  }, [checked, priceRange, filteredProductsQuery.data, filteredProductsQuery.isSuccess, dispatch]);
 
   const handleCheck = (value, id) => {
     const updatedChecked = value ? [...checked, id] : checked.filter((c) => c !== id);
     dispatch(setChecked(updatedChecked));
   };
+
+  const handlePriceChange = (range) => {
+    dispatch(setPriceRange(range));
+  };
+
+  if (categoriesQuery.isLoading || filteredProductsQuery.isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="filtered-products-main-container">
@@ -66,7 +66,7 @@ const FilteredProducts = () => {
                 id={`checkbox-${c._id}`}
                 onChange={(e) => handleCheck(e.target.checked, c._id)}
                 className="checkbox"
-                checked={checked.includes(c._id)} // Control checked state
+                checked={checked.includes(c._id)}
               />
               <label htmlFor={`checkbox-${c._id}`} className="checkbox-label">
                 {c.name}
@@ -74,10 +74,22 @@ const FilteredProducts = () => {
             </div>
           ))}
         </div>
+        <div className="filter-option">
+          <h6>PRICE RANGE</h6>
+          <div>
+            <input type="radio" name="price" onChange={() => handlePriceChange([500, 600])} /> 500-600
+          </div>
+          <div>
+            <input type="radio" name="price" onChange={() => handlePriceChange([600, 700])} /> 600-700
+          </div>
+          <div>
+            <input type="radio" name="price" onChange={() => handlePriceChange([700, 800])} /> 700-800
+          </div>
+        </div>
       </div>
       <div className="filtered-products">
         {products.length === 0 ? (
-          <Loader />
+          <p>No products found</p>
         ) : (
           products.map((product) => (
             <div key={product._id}>
