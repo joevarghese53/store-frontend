@@ -72,7 +72,7 @@ const Navbar = () => {
           </a>
         </div>
         <div className="top-right-links">
-          <Link href="/track-order">Track Order</Link>
+          <Link href="/TrackOrder">Track Order</Link>
           <Link href="/ContactUs">Contact Us</Link>
           <Link href="/Policies">Policies</Link>
         </div>
