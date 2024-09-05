@@ -32,6 +32,8 @@ const Hiring = () => {
           <li><strong>High Skill Level</strong>: We need individuals who are highly skilled in their field and can take ownership of their projects.</li>
           <li><strong>Proactive Attitude</strong>: This is a start-up environment—things move fast, and we need people who can adapt and get things done.</li>
           <li><strong>Team Players</strong>: Collaboration is key. We’re looking for people who can communicate effectively and work well in a small team.</li>
+          <li><strong>Marketing Specialists</strong>: Are you a strategic thinker with a knack for reaching audiences? We're looking for marketers who can build brand awareness and drive engagement.</li>
+          <li><strong>Content Creators</strong>: Great at crafting compelling stories or creating engaging content? We need individuals who can develop content that resonates with our audience and aligns with our brand.</li>
         </ul>
       </div>
 
@@ -40,7 +42,7 @@ const Hiring = () => {
         <p>
           If you’re excited about building something extraordinary and believe you have what it takes, we’d love to hear from you!
         </p>
-        <p><strong>Please send your application and resume to</strong>: <a href="mailto:dgencustomercare@gmail.com">dgencustomercare@gmail.com</a></p>
+        <p><strong>Please send your application and resume to</strong>: <a href="mailto:dgenhiring@gmail.com">dgenhiring@gmail.com</a></p>
       </div>
     </div>
   );

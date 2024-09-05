@@ -1,7 +1,7 @@
 import React from 'react';
 import { HeroBanner } from '../components';
 import BestSellers from '../components/BestSellers';
-
+import Categories from '../components/Categories';
 
 const Women = () => {
   return (
@@ -11,7 +11,11 @@ const Women = () => {
         <h2>Best Seller Products</h2>
       </div>
 
-      <BestSellers />
+      <BestSellers gender="female" />
+      <div className="categories-heading">
+        <h2>CATEGORIES</h2>
+      </div>
+      <Categories gender="female"/>
 
     </div>
   );

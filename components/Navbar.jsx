@@ -74,7 +74,6 @@ const Navbar = () => {
         <div className="top-right-links">
           <Link href="/TrackOrder">Track Order</Link>
           <Link href="/ContactUs">Contact Us</Link>
-          <Link href="/Policies">Policies</Link>
         </div>
       </div>
       <div className="red-line"></div>
@@ -89,7 +88,7 @@ const Navbar = () => {
               e.preventDefault();
               handleNavigation('/');
             }}
-            className={router.pathname === '/' ? 'active' : ''}
+            className={router.pathname === '/'|| router.pathname === '/FilteredProductsMale'  ? 'active' : ''}
           >
             MEN
           </a>
@@ -99,7 +98,7 @@ const Navbar = () => {
               e.preventDefault();
               handleNavigation('/women');
             }}
-            className={router.pathname === '/women' ? 'active' : ''}
+            className={router.pathname === '/women' || router.pathname === '/FilteredProductsFemale'  ? 'active' : ''}
           >
             WOMEN
           </a>

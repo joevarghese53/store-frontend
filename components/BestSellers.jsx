@@ -3,9 +3,10 @@ import { useGetTopProductsQuery } from "../redux/api/productApiSlice";
 import Loader from "./Loader";
 import { Product } from '../components';
 
-const BestSellers = () => {
-    const { data, isLoading, error } = useGetTopProductsQuery();
-    console.log(data);  
+const BestSellers = ({ gender }) => { // Accept gender as a prop
+    // Pass gender as a parameter to the query hook
+    const { data, isLoading, error } = useGetTopProductsQuery({ gender });
+    console.log(data);
     if (isLoading) {
         return <Loader />;
     }

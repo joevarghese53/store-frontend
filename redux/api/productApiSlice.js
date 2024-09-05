@@ -73,7 +73,11 @@ export const productApiSlice = apiSlice.injectEndpoints({
     }),
 
     getTopProducts: builder.query({
-      query: () => `${PRODUCT_URL}/top`,
+      query: ({ gender }) => {
+        // Adding a query parameter for gender if it's provided
+        const genderParam = gender ? `?gender=${gender}` : '';
+        return `${PRODUCT_URL}/top${genderParam}`;
+      },
       keepUnusedDataFor: 5,
     }),
 
@@ -83,10 +87,10 @@ export const productApiSlice = apiSlice.injectEndpoints({
     }),
 
     getFilteredProducts: builder.query({
-      query: ({ checked, radio }) => ({
+      query: ({ checked, radio, gender }) => ({
         url: `${PRODUCT_URL}/filtered-products`,
         method: "POST",
-        body: { checked, radio },
+        body: { checked, radio, gender },
       }),
     }),
   }),

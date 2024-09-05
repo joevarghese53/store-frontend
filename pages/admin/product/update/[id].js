@@ -20,7 +20,7 @@ const ProductUpdate = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
-    const [brand, setBrand] = useState("");
+    const [gender, setGender] = useState("");
     const [stock, setStock] = useState("");
     const [offers, setOffers] = useState("");
     const [returnpolicy, setReturnPolicy] = useState("");
@@ -37,7 +37,7 @@ const ProductUpdate = () => {
             setDescription(productData.description);
             setPrice(productData.price);
             setCategory(productData.category?._id || "");
-            setBrand(productData.brand);
+            setGender(productData.gender);
             setImage(productData.image);
             setStock(productData.countInStock);
             setOffers(productData.offers);
@@ -65,7 +65,7 @@ const ProductUpdate = () => {
             formData.append("description", description);
             formData.append("price", price);
             formData.append("category", category);
-            formData.append("brand", brand);
+            formData.append("gender", gender);
             formData.append("countInStock", stock);
             formData.append("offers", offers);
             formData.append("returnpolicy", returnpolicy);
@@ -145,14 +145,19 @@ const ProductUpdate = () => {
                     </div>
                 </div>
                 <div className="create-product-details-row2">
-                    <div className="create-product-details-brand">
-                        <label htmlFor="brand">Brand</label> <br />
-                        <input
-                            type="text"
-                            value={brand}
-                            onChange={(e) => setBrand(e.target.value)}
-                        />
+                    <div className="create-product-details-gender">
+                        <label htmlFor="gender">Gender</label> <br />
+                        <select
+                            id="gender"
+                            value={gender}
+                            onChange={(e) => setGender(e.target.value)}
+                        >
+                            <option value="">Select Gender</option> {/* Placeholder option */}
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
                     </div>
+
                 </div>
                 <div className="create-product-details-row3">
                     <div className="create-product-details-offers">

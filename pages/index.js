@@ -12,12 +12,12 @@ const Home = () => {
       <div className="products-heading">
         <h2>BEST SELLERS</h2>
       </div>
-      <BestSellers />
+      <BestSellers gender="male" />
       
       <div className="categories-heading">
         <h2>CATEGORIES</h2>
       </div>
-      <Categories />
+      <Categories gender="male" />
 
     </div>
   );

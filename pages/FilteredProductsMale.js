@@ -7,7 +7,7 @@ import { Product } from '../components';
 import { setCategories, setProducts, setChecked, setPriceRange } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
 
-const FilteredProducts = () => {
+const FilteredProductsMale = () => {
   const dispatch = useDispatch();
   const { categories, products, checked, priceRange } = useSelector((state) => state.shop);
   const categoriesQuery = useFetchCategoriesQuery();
@@ -15,7 +15,7 @@ const FilteredProducts = () => {
   const { category } = router.query;
 
   // Fetch filtered products based on checked categories and price range
-  const filteredProductsQuery = useGetFilteredProductsQuery({ checked, radio: priceRange });
+  const filteredProductsQuery = useGetFilteredProductsQuery({ checked, radio: priceRange, gender: 'male' });
 
   useEffect(() => {
     // Dispatch categories when fetched
@@ -86,6 +86,14 @@ const FilteredProducts = () => {
             <input type="radio" name="price" onChange={() => handlePriceChange([700, 800])} /> 700-800
           </div>
         </div>
+        <div className="filter-option">
+          <button
+            className="button"
+            onClick={() => window.location.reload()}
+          >
+            Reset
+          </button>
+        </div>
       </div>
       <div className="filtered-products">
         {products.length === 0 ? (
@@ -102,4 +110,4 @@ const FilteredProducts = () => {
   );
 };
 
-export default FilteredProducts;
+export default FilteredProductsMale;
