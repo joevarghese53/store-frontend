@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
+import Loader from "./Loader";
 
 const Categories = ({ gender }) => {
     const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
@@ -22,15 +23,23 @@ const Categories = ({ gender }) => {
     const imagesForGender = gender && categoryImages[gender] ? categoryImages[gender] : {};
     const pathname = gender === 'male' ? '/FilteredProductsMale' : '/FilteredProductsFemale';
 
-    if (categoriesLoading) return <p>Loading...</p>;
-    if (categoriesError) return <p>Error loading categories!</p>;
+    if (categoriesLoading) return (
+        <div className='categories'>
+            <Loader />
+        </div>
+    );
+    if (categoriesError) return (
+        <div className='categories'>
+            <h1 style={{ height: '200px', paddingTop: '100px' }}>ERROR</h1>
 
+        </div>
+    );
     return (
         <div className='categories'>
             {categoriesData?.map((category) => (
-                <Link 
-                    key={category._id} 
-                    href={{ pathname, query: { category: category._id } }} 
+                <Link
+                    key={category._id}
+                    href={{ pathname, query: { category: category._id } }}
                 >
                     <div className="category-card">
                         <img

@@ -8,11 +8,19 @@ const BestSellers = ({ gender }) => { // Accept gender as a prop
     const { data, isLoading, error } = useGetTopProductsQuery({ gender });
     console.log(data);
     if (isLoading) {
-        return <Loader />;
+        return (
+            <div className="best-sellers">
+                <Loader />
+            </div>
+        );
     }
 
     if (error) {
-        return <h1>ERROR</h1>;
+        return (
+            <div className="best-sellers">
+                <h1 style={{ height: '200px', paddingTop: '100px' }}>ERROR</h1>
+            </div>
+        );
     }
 
     return (

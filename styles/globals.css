@@ -62,6 +62,26 @@ span.text-red {
   margin-left: 6px;
 }
 
+/* Loader.jsx start */
+
+/* Add these styles to your CSS file */
+.loader {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  border: 4px solid rgba(255, 105, 180, 0.5); /* Light pink color */
+  border-radius: 50%;
+  border-top-color: rgba(255, 20, 147, 1); /* Darker pink */
+  animation: spin 1s ease-in-out infinite; /* Spin effect */
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loader.jsx end */
 
 
 /* index.js home start */
@@ -1969,12 +1989,12 @@ form input {
   position: relative;
   top: 173px;
   height: auto;
-  padding-bottom: 50px;
+  margin-bottom: 700px;
 }
 
 .checkout-page .btn1 {
-  position: absolute;
-  top: 284%;
+  position: relative;
+  top: 50px;
   left: 58%;
   padding: 10px 120px;
   border: none;
@@ -2024,10 +2044,10 @@ form input {
 }
 
 .checkout-address-summary {
-  position: absolute;
+  position: relative;
   width: 252px;
   left: 32%;
-  top: 82px;
+  top: 28px;
 }
 
 .checkout-change-address-link {
@@ -2990,6 +3010,7 @@ form input {
   position: relative;
   top: 173px;
   height: auto;
+  margin-bottom: 600px;
 }
 
 .payment-page-bottom-container {

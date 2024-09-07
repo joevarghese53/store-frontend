@@ -3,6 +3,8 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { useGetOrderDetailsQuery } from '../redux/api/orderApiSlice';
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
+import axios from 'axios';
+
 
 const PaymentPage = () => {
   const router = useRouter();
@@ -18,7 +20,9 @@ const PaymentPage = () => {
     skip: !orderId, // Skip the query if orderId is not available
   });
 
-  
+
+
+
   useEffect(() => {
     if (orderId) {
       console.log('Order ID:', orderId);
@@ -26,6 +30,30 @@ const PaymentPage = () => {
     }
   }, [orderId, orderDetails]);
 
+ 
+
+    const handlePayment = async () => {
+      const data = {
+        merchantTransactionId: orderDetails._id,
+        customerUserId: orderDetails.user._id,
+        amount: orderDetails.totalPrice * 100,
+        name: orderDetails.user.username,
+      };
+      console.log('Payment data:', data);
+    
+      try {
+        const res = await axios.post('https://store-backend-2r39.onrender.com/api/payment/initiate-payment', data);
+        console.log('Payment response:', res.data); 
+        if (res.data.success) {
+          window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
+    
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -95,7 +123,7 @@ const PaymentPage = () => {
           ) : (
             <div>Loading order details...</div>
           )}
-          <button type="button" className="pay-now-button"  >
+          <button type="button" className="pay-now-button" onClick={handlePayment} >
             PAY WITH PHONEPE
           </button>
         </div>

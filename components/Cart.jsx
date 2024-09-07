@@ -38,8 +38,37 @@ const Cart = () => {
     refetch();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading cart items</div>;
+  if (isLoading) return (
+    <div className="checkout-container">
+      <div className="cart-page">
+        <div className="empty-cart">
+          <AiOutlineShopping size={150} />
+          <h3>Loading...</h3>;
+          <Link href="/">
+            <button type="button" className="btn">
+              Continue Shopping
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+    );
+
+  if (error) return (
+    <div className="checkout-container">
+      <div className="cart-page">
+        <div className="empty-cart">
+          <AiOutlineShopping size={150} />
+          <h3>Your shopping bag is empty</h3>
+          <Link href="/">
+            <button type="button" className="btn">
+              Continue Shopping
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+    );
 
   const categoryMap = categoriesData ? categoriesData.reduce((acc, category) => {
     acc[category._id] = category.name;
