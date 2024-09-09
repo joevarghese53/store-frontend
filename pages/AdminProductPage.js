@@ -7,7 +7,7 @@ const AdminProductPage = () => {
         <div className='admin-product-page-create'>
         <Link href="/CreateProduct">CREATE<br></br> PRODUCT</Link>
         </div>
-        <div className='admin-product-page-update'>
+        <div className='admin-product-page-create'>
         <Link href="/ProductList">UPDATE/<br></br>DELETE<br></br> PRODUCT</Link>
         </div>
     </div>

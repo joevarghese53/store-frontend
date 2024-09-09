@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
+import { FaTrash, FaCheck, FaTimes } from "react-icons/fa";
+import { MdModeEdit } from "react-icons/md";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {
@@ -78,7 +79,7 @@ const UserList = () => {
                   <td>{user._id}</td>
                   <td>
                     {editableUserId === user._id ? (
-                      <div className="flex items-center">
+                      <div className="user-list-edit-item">
                         <input
                           type="text"
                           value={editableUserName}
@@ -93,21 +94,21 @@ const UserList = () => {
                         </button>
                       </div>
                     ) : (
-                      <div className="flex items-center">
+                      <div className="user-list-edit-item">
                         {user.username}
                         <button
                           onClick={() =>
                             toggleEdit(user._id, user.username, user.email)
                           }
                         >
-                          <FaEdit className="ml-4" />
+                          <MdModeEdit />
                         </button>
                       </div>
                     )}
                   </td>
                   <td>
                     {editableUserId === user._id ? (
-                      <div className="flex items-center">
+                      <div className="user-list-edit-item">
                         <input
                           type="text"
                           value={editableUserEmail}
@@ -122,14 +123,14 @@ const UserList = () => {
                         </button>
                       </div>
                     ) : (
-                      <div className="flex items-center">
+                      <div className="user-list-edit-item">
                         <a href={`mailto:${user.email}`}>{user.email}</a>
                         <button
                           onClick={() =>
                             toggleEdit(user._id, user.username, user.email)
                           }
                         >
-                          <FaEdit className="ml-4" />
+                          <MdModeEdit />
                         </button>
                       </div>
                     )}
@@ -143,7 +144,7 @@ const UserList = () => {
                   </td>
                   <td>
                     {!user.isAdmin && (
-                      <div className="flex">
+                      <div className="user-list-edit-item">
                         <button
                           onClick={() => deleteHandler(user._id)}
                           className="btn-red"

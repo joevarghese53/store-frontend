@@ -2,12 +2,29 @@ import React from 'react'
 import { useGetMyOrdersQuery } from '../redux/api/orderApiSlice'
 import Link from 'next/link';
 import Loader from '../components/Loader';
+import { useRouter } from 'next/router';
+import useInitializeUser from '../components/useInitializeUser';
+
+
+
 
 const MyOrders = () => {
 
     const { data: orders, error, isLoading } = useGetMyOrdersQuery()
     console.log('Orders : ', orders)
 
+    const { userInfo, loading } = useInitializeUser();
+    const router = useRouter();
+
+    React.useEffect(() => {
+        if (!loading && !userInfo) {
+            router.push('/LoginPage'); // Redirect to login page if userInfo is null
+        }
+    }, [userInfo, loading, router]);
+
+    if (loading || !userInfo) {
+        return <p>Loading...</p>; // You can replace this with a spinner or any loading indicator
+    }
     if (isLoading) return (<div className="orders-container">
         <div style={{
             display: 'flex',
@@ -32,18 +49,6 @@ const MyOrders = () => {
         <div className="orders-container">
             <h2>My Orders</h2>
             <div className="orders-grid">
-
-                {orders?.length < 1 &&
-                    <p style={{
-                        display: 'inline-block',
-                        width: '15px',
-                        height: '15px',
-                        backgroundColor: 'green',
-                        borderRadius: '50%',
-                        marginRight: '10px',
-                        marginTop: '2px'
-                    }}>No orders found.</p>}
-
                 {orders?.length > 0 ? (
                     orders.map((order) => (
                         <Link href={{ pathname: '/OrderDetails', query: { order_id: order._id } }} key={order._id}>

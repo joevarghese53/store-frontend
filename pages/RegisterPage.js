@@ -96,7 +96,7 @@ const RegisterPage = () => {
             onChange={handleInputChange}
             placeholder="Enter your password again"
           />
-          <button type="submit" disabled={buttonDisabled}>{buttonDisabled ? "Enter all details" : "Sign Up"}</button>
+          <button type="submit" disabled={buttonDisabled}>{buttonDisabled ? "Please enter all details" : "Sign Up"}</button>
           <button type="button" className="google-signin">Sign Up with Google</button>
         </form>
         <p>Already have an account? <Link id='login' href="/LoginPage">Login</Link></p>

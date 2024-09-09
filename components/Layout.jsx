@@ -7,7 +7,10 @@ import useInitializeUser from '../components/useInitializeUser';
 
 
 const Layout = ({ children }) => {
-  useInitializeUser();
+  const { loading } = useInitializeUser();
+
+  if (loading) return <p>Loading...</p>; // Add a loading spinner or message if needed
+
   return (
     <div className="layout">
       <Head>
