@@ -4,6 +4,7 @@ import { AiOutlineShopping } from 'react-icons/ai';
 import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
 import { useRouter } from 'next/router';
+import Loader from './Loader';
 
 const Cart = () => {
   const { data, isLoading, error, refetch } = useGetCartQuery();
@@ -43,7 +44,9 @@ const Cart = () => {
       <div className="cart-page">
         <div className="empty-cart">
           <AiOutlineShopping size={150} />
-          <h3>Loading...</h3>;
+          <div className="loader-container">
+            <Loader />
+          </div>
           <Link href="/">
             <button type="button" className="btn">
               Continue Shopping
@@ -59,7 +62,7 @@ const Cart = () => {
       <div className="cart-page">
         <div className="empty-cart">
           <AiOutlineShopping size={150} />
-          <h3>Your shopping bag is empty</h3>
+          <h3>We are experiencing issues with server. We are working on it. Please come again after some time</h3>
           <Link href="/">
             <button type="button" className="btn">
               Continue Shopping

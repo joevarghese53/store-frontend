@@ -33,7 +33,7 @@ const ProfilePage = () => {
           </>
         ) : (
           <>
-            <Link href="#" className="account-navItem">My Orders</Link>
+            <Link href="/MyOrders" className="account-navItem">My Orders</Link>
             <Link href="#" className="account-navItem">My Payments</Link>
             <Link href="#" className="account-navItem">My Addresses</Link>
             <Link href="/UpdateProfile" className="account-navItem">My Profile</Link>
