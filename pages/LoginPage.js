@@ -78,9 +78,9 @@ const LoginPage = () => {
         </form>
         <p>Don't have an account? <Link id='signup' href="/RegisterPage">Sign up</Link></p>
       </div>
-      <div className="login-image">
+      {/* <div className="login-image">
         <img src={slide1} alt="Login Page Image" />
-      </div>
+      </div> */}
     </div>
   );
 };

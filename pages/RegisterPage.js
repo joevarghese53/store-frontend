@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+//RegisterPage.js
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useRegisterMutation } from "../redux/api/usersApiSlice";
-
+import { FaGoogle } from "react-icons/fa";
 
 const slide1 = '/img/LoginPageImage.jpg';
 
@@ -25,17 +25,36 @@ const RegisterPage = () => {
     const { id, value } = e.target;
     setUser({ ...user, [id]: value });
 
-    if (user.name && user.email && user.password && user.confirmPassword) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
   };
+
+  useEffect(() => {
+    const allFieldsFilled = Object.values(user).every(field => field !== '');
+    const passwordsMatch = user.password === user.confirmPassword;
+    setButtonDisabled(!(allFieldsFilled && passwordsMatch));
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+    if (!passwordPattern.test(user.password)) {
+      setError((
+        <>
+          Password must include:
+          <br /> - At least one uppercase letter
+          <br /> - One lowercase letter
+          <br /> - One number
+          <br /> - One special character
+          <br /> - Be at least 8 characters long.
+        </>
+      ));
+      
+      setIsLoading(false);
+      return;
+    }
 
     if (user.password !== user.confirmPassword) {
       setError("Passwords do not match!");
@@ -48,11 +67,14 @@ const RegisterPage = () => {
 
       console.log('User registered successfully:', response.data);
 
-      // Redirect to login page or home page
       router.push('/LoginPage');
     } catch (error) {
-      console.error('Error registering user:', error.response ? error.response.data : error.message);
-      setError(error.response ? error.response.data.message : 'An error occurred');
+      console.error('Error registering user:', error);
+      if (error?.data?.message === "User with this email already exists.") {
+        setError("An account with this email already exists. Please try logging in or use a different email.");
+      } else {
+        setError(error?.data?.message || 'An error occurred');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -70,7 +92,7 @@ const RegisterPage = () => {
             type='text'
             value={user.name}
             onChange={handleInputChange}
-            placeholder="Enter your Name"
+            placeholder="Enter your full name"
           />
           <label>Email</label>
           <input
@@ -78,7 +100,7 @@ const RegisterPage = () => {
             type="email"
             value={user.email}
             onChange={handleInputChange}
-            placeholder="Enter your email"
+            placeholder="Enter your valid email"
           />
           <label>Password</label>
           <input
@@ -86,7 +108,7 @@ const RegisterPage = () => {
             type="password"
             value={user.password}
             onChange={handleInputChange}
-            placeholder="Enter your password"
+            placeholder="Enter new password"
           />
           <label>Confirm Password</label>
           <input
@@ -94,16 +116,17 @@ const RegisterPage = () => {
             id='confirmPassword'
             value={user.confirmPassword}
             onChange={handleInputChange}
-            placeholder="Enter your password again"
+            placeholder="Confirm password"
           />
-          <button type="submit" disabled={buttonDisabled}>{buttonDisabled ? "Please enter all details" : "Sign Up"}</button>
-          <button type="button" className="google-signin">Sign Up with Google</button>
+          <button type="submit" disabled={buttonDisabled}>Sign Up</button>
+          {/* <p>---------------------OR----------------------</p>
+          <button type="button" className="google-signin">Sign Up with Google 
+            <FaGoogle style={{marginLeft: '10px', marginBottom:'2px'}}/>
+          </button> */}
         </form>
         <p>Already have an account? <Link id='login' href="/LoginPage">Login</Link></p>
       </div>
-      <div className="register-image">
-        <img src={slide1} alt="Login Page Image"/>
-      </div>
+      
     </div>
   );
 };
