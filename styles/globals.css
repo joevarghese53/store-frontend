@@ -352,6 +352,7 @@ span.text-red {
   max-width: 950px;
   margin: 120px auto;
   padding: 20px;
+  min-height: 100vh;
 }
 
 .tandc-main-container h2 {
@@ -578,6 +579,7 @@ span.text-red {
 
 .contact-us-main-container {
   margin-top: 170px;
+  min-height: 100vh;
 }
 
 .contact-us-container {
@@ -1175,6 +1177,7 @@ span.text-red {
 
   margin-top: 200px;
   display: flex;
+  min-height: 100vh;
 }
 
 .filter-options {
@@ -1289,6 +1292,7 @@ span.text-red {
 
 .order-details-main-container {
   margin-top: 150px;
+  min-height: 100vh;
 }
 
 .order-details-delivery-address {
@@ -1431,6 +1435,7 @@ span.text-red {
 
 .policies-main-container {
   margin-top: 140px;
+  min-height: 100vh;
 }
 
 .policies-container {
@@ -1731,6 +1736,7 @@ form input {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
+  min-height: 100vh;
 }
 
 .cart-page h1 {
@@ -1761,10 +1767,8 @@ form input {
 .cart-item {
   display: flex;
   gap: 20px;
-  border-bottom: 1px solid #e0e0e0;
   padding: 40px 29px;
   width: 66%;
-  height: 336px;
 }
 
 .cart-product-image {
@@ -2441,6 +2445,7 @@ form input {
   flex-direction: column;
   align-items: center;
   gap: 60px;
+  min-height: 100vh;
 }
 
 .admin-product-page-create {
@@ -2771,6 +2776,7 @@ form input {
   top: 173px;
   height: auto;
   padding-bottom: 50px;
+  min-height: 100vh;
 }
 
 .address-header {
@@ -2903,6 +2909,14 @@ form input {
   left: 85%;
 }
 
+.address-form input {
+  padding: 12px;
+    border: 1px solid #cb8eff;
+    border-radius: 10px;
+    width: 100%;
+}
+
+
 /* AddressPage.js end */
 
 /* PaymentPage.js start */
@@ -2930,7 +2944,7 @@ form input {
   position: relative;
   top: 173px;
   height: auto;
-  margin-bottom: 600px;
+  min-height: 100vh;
 }
 
 .payment-page-bottom-container {
@@ -2979,7 +2993,7 @@ form input {
   font-weight: 600;
   color: #6c757d;
   position: relative;
-  bottom: 4px;
+  bottom: 15px;
 }
 
 #payment-cart-item-quantity {

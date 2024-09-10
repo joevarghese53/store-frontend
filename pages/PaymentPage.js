@@ -83,7 +83,7 @@ const PaymentPage = () => {
                   <img src={item.image} className="payment-cart-product-image" />
                   <div className="payment-item-desc">
                     <h5>{item.name}</h5>
-                    <p id='payment-cart-item-category'>{categoryMap[item.category]}</p>
+                    <p id='payment-cart-item-category'>{item.category}</p>
                     <p id='payment-cart-item-quantity'>Quantity: {item.qty}</p>
                     <h4 >₹{item.price}</h4>
                     <h3 >MRP inclusive of all taxes</h3>
