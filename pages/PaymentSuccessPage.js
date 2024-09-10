@@ -58,7 +58,7 @@ const PaymentSuccessPage = () => {
           <BsBagCheckFill />
         </p>
         <h2>Thank you for your order!</h2>
-        <p className="email-msg">Check your email inbox for the receipt.</p>
+        <p className="email-msg">Check your email inbox for the receipt. <br></br>Please do check the updates/promotions/spam folder for the email.<br></br> If you still haven't recieved a confirmation mail, please contact our customer support.</p>
         <p className="description">
           If you have any questions, please email
           <a className="email" href="mailto:order@example.com">
