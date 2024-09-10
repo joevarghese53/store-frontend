@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useGetOrderDetailsQuery } from '../redux/api/orderApiSlice';
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
 import axios from 'axios';
+import { BASE_URL } from "../redux/constants.js";
 
 
 const PaymentPage = () => {
@@ -42,7 +43,7 @@ const PaymentPage = () => {
       console.log('Payment data:', data);
     
       try {
-        const res = await axios.post('https://store-backend-2r39.onrender.com/api/payment/initiate-payment', data);
+        const res = await axios.post(`${BASE_URL}/api/payment/initiate-payment`, data);
         console.log('Payment response:', res.data); 
         if (res.data.success) {
           window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
@@ -63,10 +64,7 @@ const PaymentPage = () => {
     return <div>Error loading order details</div>;
   }
 
-  const categoryMap = categoriesData ? categoriesData.reduce((acc, category) => {
-    acc[category._id] = category.name;
-    return acc;
-  }, {}) : {};
+
 
   return (
     <div className='payment-page-main-container'>

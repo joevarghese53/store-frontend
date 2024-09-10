@@ -62,7 +62,7 @@ const Cart = () => {
       <div className="cart-page">
         <div className="empty-cart">
           <AiOutlineShopping size={150} />
-          <h3>We are experiencing issues with server. We are working on it. Please come again after some time</h3>
+          <h3>Your shopping bag is empty</h3>
           <Link href="/">
             <button type="button" className="btn">
               Continue Shopping
