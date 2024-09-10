@@ -1,5 +1,4 @@
 // constants.js
-// export const BASE_URL = "https://store-backend-2r39.onrender.com" ;
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL; 
 export const USERS_URL = "/api/users";
 export const CATEGORY_URL = "/api/category";
