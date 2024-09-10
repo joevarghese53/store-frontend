@@ -13,7 +13,7 @@ import Link from 'next/link';
 const AddressPage = () => {
   const dispatch = useDispatch();
   const { data: addresses, isLoading } = useGetUserShippingAddressesQuery();
-  const { data: cartData, isLoading : isCartLoading, error: isCartError } = useGetCartQuery();
+  const { data: cartData, isLoading: isCartLoading, error: isCartError } = useGetCartQuery();
   const [createShippingAddress] = useCreateShippingAddressMutation();
   const [updateShippingAddress] = useUpdateShippingAddressMutation();
   const [deleteShippingAddress] = useDeleteShippingAddressMutation();
@@ -50,7 +50,15 @@ const AddressPage = () => {
   };
 
   const handleDelete = async (id) => {
+    const addressToDelete = addresses.find(address => address._id === id);
+
     await deleteShippingAddress(id);
+
+    if (selectedAddress && selectedAddress._id === id) {
+      dispatch(selectShippingAddress(null)); // Clear from Redux
+      localStorage.removeItem('selectedAddress'); // Clear from local storage
+    }
+    
   };
 
   const handleSelectAddress = (address) => {
@@ -72,35 +80,41 @@ const AddressPage = () => {
         <h4 id='address-header-one'>MY CART ------- ADDRESS</h4>
         <h4 id='address-header-two'>  ------- CHECKOUT ------- PAYMENT </h4>
       </div>
-        <h3 id='deliver-to-heading'>Deliver To : </h3>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <div className='addresses-container'>
-            {addresses.map((address) => (
-              <div key={address._id} className='address-select-container' style={{ border: selectedAddress?._id === address._id ? '4px solid green' : '', padding: '10px', margin: '10px' }}>
-                <p id='address'>{address.address}.<br></br> {address.city} - {address.postalCode},  {address.country}.<br></br> CONTACT : {address.phoneno}</p>
-                <div className='button-container'>
-                  <button className='address-page-button' onClick={() => handleEdit(address)}>Edit</button>
-                  <button className='address-page-button' onClick={() => handleDelete(address._id)}>Delete</button>
-                  <button className='address-page-button' onClick={() => handleSelectAddress(address)}>Select</button>
-                </div>
+      <h3 id='deliver-to-heading'>Deliver To : </h3>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className='addresses-container'>
+          {addresses.map((address) => (
+            <div key={address._id} className='address-select-container' style={{ border: selectedAddress?._id === address._id ? '4px solid green' : '', padding: '10px', margin: '10px' }}>
+              <p id='address'>{address.address}.<br></br> {address.city} - {address.postalCode},  {address.country}.<br></br> CONTACT : {address.phoneno}</p>
+              <div className='button-container'>
+                <button className='address-page-button' onClick={() => handleEdit(address)}>Edit</button>
+                <button className='address-page-button' onClick={() => handleDelete(address._id)}>Delete</button>
+                <button className='address-page-button' onClick={() => handleSelectAddress(address)}>Select</button>
               </div>
-            ))}
-          </div>
-        )}
-        <div className="address-cart-summary">
-          <h6>BILLING DETAILS</h6>
-          <h8>Cart Total (Excl. of all taxes)       <span>₹{calculateTotalPrice()}</span></h8>
-          <h8>GST                                   <span>₹{calculateTotalPrice()}</span></h8>
-          <h8>Shipping Charges                      <span>₹{calculateTotalPrice()}</span></h8>
-          <h8>Total Amount:                         <span>₹{calculateTotalPrice()}</span></h8>
-          <Link href="/CheckoutPage">
-            <button type="button" className="btn">
-              PROCEED TO CHECKOUT
-            </button>
-          </Link>
+            </div>
+          ))}
         </div>
+      )}
+      <div className="address-cart-summary">
+        <h6>BILLING DETAILS</h6>
+        <h8>Cart Total (Excl. of all taxes)       <span>₹{calculateTotalPrice()}</span></h8>
+        <h8>GST                                   <span>₹{calculateTotalPrice()}</span></h8>
+        <h8>Shipping Charges                      <span>₹{calculateTotalPrice()}</span></h8>
+        <h8>Total Amount:                         <span>₹{calculateTotalPrice()}</span></h8>
+        <Link href={selectedAddress ? "/CheckoutPage" : "#"} onClick={(e) => !selectedAddress && e.preventDefault()}>
+          <button
+            type="button"
+            className="btn"
+            disabled={!selectedAddress} // Disable if no address is selected
+          >
+            PROCEED TO CHECKOUT
+          </button>
+        </Link>
+
+
+      </div>
       <form onSubmit={handleSubmit} className='address-form'>
         <h2 id='address-form-heading'>{editingAddress ? 'Edit Address' : 'Add New Address'}</h2>
         <input
@@ -145,7 +159,7 @@ const AddressPage = () => {
         />
         <button className='address-form-submit' type="submit">{editingAddress ? 'Update Address' : 'Add Address'}</button>
       </form>
-      
+
     </div>
   );
 };
