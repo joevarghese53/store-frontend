@@ -136,7 +136,7 @@ const Navbar = () => {
                     <FiBox style={{ marginRight: '10px' }} />
                     Orders
                   </Link>
-                  <Link href="/ProfilePage">
+                  <Link href="/WishlistPage">
                   <IoMdHeartEmpty style={{ marginRight: '10px' }} />
                   WishList</Link>
                   <Link href="/CartPage">

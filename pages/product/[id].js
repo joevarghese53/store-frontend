@@ -15,6 +15,8 @@ import { useRouter } from 'next/router';
 import Ratings from '@/components/Ratings';
 import { useAddToCartMutation } from '../../redux/api/cartApiSlice';
 import { useGetCategoryByIdQuery } from '../../redux/api/categoryApiSlice';
+import { useRemoveFromWishlistMutation, useCheckItemInWishlistQuery, useAddToWishlistMutation } from '../../redux/api/wishlistApiSlice';
+import { GoHeart, GoHeartFill } from "react-icons/go";
 
 
 const ProductDetails = () => {
@@ -31,6 +33,10 @@ const ProductDetails = () => {
   const [comment, setComment] = useState("");
   const [categoryId, setCategoryId] = useState(null);
   const [addToCart] = useAddToCartMutation();
+  const [addToWishlist] = useAddToWishlistMutation();
+  const [removeFromWishlist] = useRemoveFromWishlistMutation();
+  const { data: wishlistData } = useCheckItemInWishlistQuery(productId);
+  console.log("item exists? : ", wishlistData);
 
   useEffect(() => {
     if (product?.category) {
@@ -62,13 +68,31 @@ const ProductDetails = () => {
     }
   };
 
+  const handleAddToWishlist = async () => {
+    try {
+      await addToWishlist({productId}).unwrap();
+      toast.success(`Item added to wishlist`);
+    } catch (error) {
+      toast.error(error?.data || error.message);
+    }
+  }
+
+  const handleRemoveFromWishlist = async () => {
+    try {
+      await removeFromWishlist(productId).unwrap();
+      toast.success(`Item removed from wishlist`);
+    } catch (error) {
+      toast.error(error?.data || error.message);
+    }
+  }
+
   const handleAddToCart = async () => {
     if (!userInfo) {
       // Display a toast message if the user is not logged in
       toast.error('Please login to continue.');
       return;
     }
-  
+
     try {
       console.log(`Adding product to cart: productId=${product._id}, quantity=${qty}`);
       await addToCart({ productId: product._id, quantity: qty }).unwrap();
@@ -155,9 +179,18 @@ const ProductDetails = () => {
             >
               Add to Cart
             </button>
-            <Link href="/CartPage">
-              <div className="buy-now">Go to cart</div>
-            </Link>
+            {wishlistData && wishlistData.exists ? (
+              <button type="button" className="buy-now" onClick={handleRemoveFromWishlist}>
+                <GoHeartFill style={{marginRight:'10px'}}/>
+                Added to Wishlist
+              </button>
+            ) : (
+              <button type="button" className="buy-now" onClick={handleAddToWishlist}>
+                <GoHeart style={{marginRight:'10px'}}/>
+                Add to Wishlist
+              </button>
+            )}
+
           </div>
           <PinCodeCheck />
           <div className="product-details">

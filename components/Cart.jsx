@@ -118,7 +118,7 @@ const Cart = () => {
                 <h8>Total Amount:                         <span>₹{calculateTotalPrice()}</span></h8>
                 <Link href="/AddressPage">
                   <button type="button" className="btn">
-                    PLACE ORDER
+                    PROCEED TO CHECKOUT
                   </button>
                 </Link>
               </div>

@@ -8,6 +8,7 @@ export const shippingAddressApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: SHIPPING_ADDRESS_URL,
         method: 'GET',
+        credentials: 'include',
       }),
       providesTags: ['ShippingAddress'],
     }),
@@ -16,6 +17,7 @@ export const shippingAddressApiSlice = apiSlice.injectEndpoints({
         url: SHIPPING_ADDRESS_URL,
         method: 'POST',
         body: newAddress,
+        credentials: 'include',
       }),
       invalidatesTags: ['ShippingAddress'],
     }),
@@ -24,6 +26,7 @@ export const shippingAddressApiSlice = apiSlice.injectEndpoints({
         url: `${SHIPPING_ADDRESS_URL}/${id}`,
         method: 'PUT',
         body: updatedAddress,
+        credentials: 'include',
       }),
       invalidatesTags: ['ShippingAddress'],
     }),
@@ -31,6 +34,7 @@ export const shippingAddressApiSlice = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `${SHIPPING_ADDRESS_URL}/${id}`,
         method: 'DELETE',
+        credentials: 'include',
       }),
       invalidatesTags: ['ShippingAddress'],
     }),

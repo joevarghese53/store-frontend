@@ -10,7 +10,7 @@ const Home = () => {
       <HeroBanner />
 
       <div className="products-heading">
-        <h2>BEST SELLERS</h2>
+        <h2>BEST RATED</h2>
       </div>
       <BestSellers gender="male" />
       

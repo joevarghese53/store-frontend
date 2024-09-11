@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { AiFillStar } from 'react-icons/ai';
-import { useGetCategoryByIdQuery } from '../redux/api/categoryApiSlice';
 
 const Product = ({ product }) => {
   // Assume product.image already contains the full URL
