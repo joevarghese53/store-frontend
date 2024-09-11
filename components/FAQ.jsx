@@ -42,7 +42,7 @@ const FAQ = () => {
             faqs: [
                 {
                     question: 'Cancellation Policy',
-                    answer: ' • You can cancel your item(s) within one hour after your order is confirmed. After 1 hour, cancellation will not be possible.'
+                    answer: ' • Since our products are made to order, we do not offer cancellations. If you have any issues with your order, please contact our customer service team, and we will work with you to resolve the issue.'
                 },
                 {
                     question: 'Return and Refund Policy',
