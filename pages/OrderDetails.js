@@ -30,8 +30,9 @@ const OrderDetails = () => {
         doc.text('Shipping Address:', 20, 80);
         doc.text(`${orderDetails.shippingAddress.address}`, 20, 90);
         doc.text(`${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.postalCode}`, 20, 100);
-        doc.text(`${orderDetails.shippingAddress.country}`, 20, 110);
-        doc.text(`Phone: ${orderDetails.shippingAddress.phoneno}`, 20, 120);
+        doc.text(`${orderDetails.shippingAddress.state}`, 20, 110);
+        doc.text(`${orderDetails.shippingAddress.country}`, 20, 120);
+        doc.text(`Phone: ${orderDetails.shippingAddress.phoneno}`, 20, 130);
 
         // Adding order items
         doc.text('Order Items:', 20, 140);
@@ -79,7 +80,7 @@ const OrderDetails = () => {
                         <div className='order-details-delivery-address'>
                             <h2>Delivery Address</h2>
                             <p>{orderDetails.user.username}</p>
-                            <p>{`${orderDetails.shippingAddress.address}, ${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.postalCode}, ${orderDetails.shippingAddress.country}`}</p>
+                            <p>{`${orderDetails.shippingAddress.address}, ${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.postalCode}, ${orderDetails.shippingAddress.state}, ${orderDetails.shippingAddress.country}`}</p>
                             <p><strong>Phone number: </strong><br></br>{orderDetails.shippingAddress.phoneno}</p>
                         </div>
 

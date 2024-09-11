@@ -106,7 +106,7 @@ const PaymentPage = () => {
                 <div className='shipping-summary-right'>
                   <h3>{orderDetails.user.username}</h3>
                   <h3>{orderDetails.user.email}</h3>
-                  <p id='address'>{orderDetails.shippingAddress.address}.<br /> {orderDetails.shippingAddress.city} - {orderDetails.shippingAddress.postalCode},  {orderDetails.shippingAddress.country}.<br /> CONTACT : {orderDetails.shippingAddress.phoneno}</p>
+                  <p id='address'>{orderDetails.shippingAddress.address}.<br /> {orderDetails.shippingAddress.city} - {orderDetails.shippingAddress.postalCode}, {orderDetails.shippingAddress.state}, {orderDetails.shippingAddress.country}.<br /> CONTACT : {orderDetails.shippingAddress.phoneno}</p>
                 </div>
               </div>
               <h1 id='billing-summary-heading'>BILLING</h1>

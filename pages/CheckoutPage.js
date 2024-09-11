@@ -42,6 +42,7 @@ const CheckoutPage = () => {
                 address: selectedAddress.address,
                 city: selectedAddress.city,
                 postalCode: selectedAddress.postalCode,
+                state: selectedAddress.state,
                 country: selectedAddress.country,
                 phoneno: selectedAddress.phoneno
             };
@@ -84,7 +85,7 @@ const CheckoutPage = () => {
                 <p>{userInfo.username}</p>
                 <h6>ADDRESS DETAILS </h6>
                 <Link href="/AddressPage" className='checkout-change-address-link'>change</Link>
-                <p>{`${selectedAddress.address}, ${selectedAddress.city}, ${selectedAddress.postalCode}, ${selectedAddress.country}, ${selectedAddress.phoneno}`}</p>
+                <p>{`${selectedAddress.address}, ${selectedAddress.city}, ${selectedAddress.postalCode}, ${selectedAddress.state}, ${selectedAddress.country}, ${selectedAddress.phoneno}`}</p>
             </div>
             <div className="checkout-cart-summary">
                 <h6>BILLING DETAILS</h6>

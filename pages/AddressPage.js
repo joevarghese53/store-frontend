@@ -24,6 +24,7 @@ const AddressPage = () => {
     address: '',
     city: '',
     postalCode: '',
+    state: '',
     country: '',
     phoneno: ''
   });
@@ -41,7 +42,7 @@ const AddressPage = () => {
     } else {
       await createShippingAddress(newAddress);
     }
-    setNewAddress({ address: '', city: '', postalCode: '', country: '', phoneno: '' });
+    setNewAddress({ address: '', city: '', postalCode: '', state: '', country: '', phoneno: '' });
   };
 
   const handleEdit = (address) => {
@@ -87,7 +88,7 @@ const AddressPage = () => {
         <div className='addresses-container'>
           {addresses.map((address) => (
             <div key={address._id} className='address-select-container' style={{ border: selectedAddress?._id === address._id ? '4px solid green' : '', padding: '10px', margin: '10px' }}>
-              <p id='address'>{address.address}.<br></br> {address.city} - {address.postalCode},  {address.country}.<br></br> CONTACT : {address.phoneno}</p>
+              <p id='address'>{address.address}.<br></br> {address.city} - {address.postalCode}, {address.state}, {address.country}.<br></br> CONTACT : {address.phoneno}</p>
               <div className='button-container'>
                 <button className='address-page-button' onClick={() => handleEdit(address)}>Edit</button>
                 <button className='address-page-button' onClick={() => handleDelete(address._id)}>Delete</button>
@@ -138,6 +139,14 @@ const AddressPage = () => {
           name="postalCode"
           placeholder="Postal Code"
           value={newAddress.postalCode}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="text"
+          name="state"
+          placeholder="State"
+          value={newAddress.state}
           onChange={handleInputChange}
           required
         />
