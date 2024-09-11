@@ -1136,7 +1136,8 @@ span.text-red {
   flex-wrap: wrap;
   justify-content: center;
   gap: 75px;
-  margin: 20px 20px;
+  margin-bottom: 100px;
+  /* margin: 20px 20px; */
 }
 
 .category-card {

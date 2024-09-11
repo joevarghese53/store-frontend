@@ -2,13 +2,11 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
-import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
 import { useRouter } from 'next/router';
 import Loader from './Loader';
 
 const Cart = () => {
   const { data, isLoading, error, refetch } = useGetCartQuery();
-  const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
   const [removeCartItem] = useRemoveFromCartMutation();
   const router = useRouter();
 
@@ -73,10 +71,6 @@ const Cart = () => {
     </div>
     );
 
-  const categoryMap = categoriesData ? categoriesData.reduce((acc, category) => {
-    acc[category._id] = category.name;
-    return acc;
-  }, {}) : {};
 
   return (
     <div className="checkout-container">
@@ -105,7 +99,7 @@ const Cart = () => {
                     <img src={item.productId.image} className="cart-product-image" />
                     <div className="item-desc">
                       <h5>{item.productId.name}</h5>
-                      <p id='cart-item-category'>{categoryMap[item.productId.category]}</p>
+                      <p id='cart-item-category'>{item.productId.category}</p>
                       <p id='cart-item-quantity'>Quantity: {item.quantity}</p>
                       <h4>₹{item.productId.price}</h4>
                       <h3>MRP inclusive of all taxes</h3>
