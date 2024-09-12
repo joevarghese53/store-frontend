@@ -343,6 +343,26 @@ span.text-red {
 .phonepe-logo img {
   width: 100%;
 }
+@media (max-width: 1024px) {
+  .footer-container-title {
+    padding: 20px 5%;
+  }
+  
+  .footer-row {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .footer-section h3 {
+    font-size: 11px;
+  }
+
+  .footer-section a {
+    font-size: 10px;
+  }
+  
+}
+
 
 /* footer.jsx end */
 
