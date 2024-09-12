@@ -1508,6 +1508,25 @@ span.text-red {
   margin: 32px 15%;
 }
 
+.order-details-more-actions button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #000c5b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.order-details-more-actions button:disabled {
+  cursor: not-allowed;
+}
+
+.order-details-more-actions button:hover {
+  background-color: #2a3266;
+}
+
 /* OrderDetails.js end */
 
 /* OrderStatusBar.jsx start */

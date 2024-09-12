@@ -57,21 +57,21 @@ const OrderDetails = () => {
         <div className='order-details-main-container'>
             {isLoading && (<div className="order-details-container">
                 <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '30vh'
-        }}>
-            <Loader />
-        </div>
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '30vh'
+                }}>
+                    <Loader />
+                </div>
             </div>)}
             {error && (<div className="order-details-container">
                 <p style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '30vh'
-        }}>We are experiencing issues with server. We are working on it. Please come again after some time</p>
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '30vh'
+                }}>We are experiencing issues with server. We are working on it. Please come again after some time</p>
             </div>)}
             {orderDetails && (
                 <div className='order-details-container'>
@@ -88,8 +88,16 @@ const OrderDetails = () => {
                         <OrderStatusBar order={orderDetails} />
 
                         {/* Additional Actions */}
-                        <div className='more-actions'>
-                            <button onClick={generateInvoice}>Download Invoice</button>
+                        <div className='order-details-more-actions'>
+                            <button
+                                onClick={generateInvoice}
+                                disabled={!orderDetails.isDelivered} // Disable button if order is not delivered
+                            >
+                                Download Invoice
+                            </button>
+                            {!orderDetails.isDelivered && (
+                                <p style={{ color: 'red', marginTop: '10px' }}>Invoice will be available once the order is delivered.</p>
+                            )}
                         </div>
                     </div>
 
