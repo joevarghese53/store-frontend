@@ -1226,6 +1226,7 @@ span.text-red {
 
 .orders-container {
   margin: 150px 20%;
+  min-height: 500px;
 }
 
 .orders-container h2 {
@@ -1603,6 +1604,98 @@ span.text-red {
 
 
 /* OrderStatusBar.jsx end */
+
+/* AdminDashboard.js start */
+
+.admin-dashboard-dashboard {
+  padding: 24px;
+  max-width: 1500px;
+  margin: 130px auto;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.admin-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.admin-dashboard-header h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.admin-dashboard-select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+}
+
+.admin-dashboard-metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+
+.admin-dashboard-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-dashboard-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+
+.admin-dashboard-metricCard {
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 37%);
+}
+
+.admin-dashboard-metricHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.admin-dashboard-metricHeader span {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.admin-dashboard-metricValue {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.admin-dashboard-metricChange {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.admin-dashboard-positive {
+  color: #10b981;
+}
+
+.admin-dashboard-negative {
+  color: #ef4444;
+}
+
+/* AdminDashboard.js end */
 
 /* Product Info Collapsible start */
 

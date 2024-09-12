@@ -11,6 +11,8 @@ import { LuBoxes } from "react-icons/lu";
 import { MdOutlineCategory } from "react-icons/md";
 import { PiTShirt } from "react-icons/pi";
 import useInitializeUser from '../components/useInitializeUser';
+import { AiFillDashboard } from "react-icons/ai";
+
 
 
 const ProfilePage = () => {
@@ -49,6 +51,9 @@ const ProfilePage = () => {
             <Link href="/UpdateProfile" className="account-navItem">
             <BsPersonLock className="account-navIcon" />
             Personal Information</Link>
+            <Link href="/AdminDashboard" className="account-navItem">
+            <AiFillDashboard className="account-navIcon" />
+            Admin Dashboard</Link>
           </>
         ) : (
           <>
