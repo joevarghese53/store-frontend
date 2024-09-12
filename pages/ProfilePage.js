@@ -58,7 +58,7 @@ const ProfilePage = () => {
             <Link href="/MyOrders" className="account-navItem">
               <FaBoxOpen className="account-navIcon" />
               Your Orders</Link>
-            <Link href="#" className="account-navItem">
+            <Link href="WishlistPage" className="account-navItem">
             <IoMdHeartEmpty className="account-navIcon" />
             Your Wishlist</Link>
             <Link href="/CartPage" className="account-navItem">
