@@ -1289,6 +1289,201 @@ span.text-red {
 
 /* MyOrders.js end */
 
+/* ManageOrders.js start */
+
+.manage-orders-container {
+  max-width: 1500px;
+  margin: 110px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.manage-orders-header {
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.manage-orders-title {
+  font-size: 28px;
+  color: #333;
+  margin: 0;
+}
+
+.manage-orders-table-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.manage-orders-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.manage-orders-table th,
+.manage-orders-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.manage-orders-table th {
+  background-color: #f6f8fa;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #24292e;
+  letter-spacing: 0.5px;
+}
+
+.manage-orders-table-row {
+  transition: background-color 0.3s ease;
+}
+
+.manage-orders-table-row:hover {
+  background-color: #f6f8fa;
+}
+
+.manage-orders-status-true,
+.manage-orders-status-false {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.manage-orders-status-true {
+  background-color: #28a745;
+}
+
+.manage-orders-status-false {
+  background-color: #dc3545;
+}
+
+.manage-orders-action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.manage-orders-action-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.manage-orders-ship-button {
+  background-color: #0366d6;
+  color: white;
+}
+
+.manage-orders-ship-button:hover {
+  background-color: #0056b3;
+}
+
+.manage-orders-delivery-button {
+  background-color: #f9a825;
+  color: #333;
+}
+
+.manage-orders-delivery-button:hover {
+  background-color: #f57f17;
+}
+
+.manage-orders-complete-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.manage-orders-complete-button:hover {
+  background-color: #218838;
+}
+
+.manage-orders-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.manage-orders-pagination-button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  background-color: #fff;
+  border: 1px solid #e1e4e8;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.manage-orders-pagination-button:hover,
+.manage-orders-pagination-button.manage-orders-active {
+  background-color: #0366d6;
+  color: white;
+  border-color: #0366d6;
+}
+
+@keyframes manage-orders-fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.manage-orders-table-row {
+  animation: manage-orders-fadeIn 0.5s ease-out;
+}
+
+.manage-orders-search-container {
+  position: relative;
+}
+
+.manage-orders-search-input {
+  padding: 12px 20px;
+  border: 2px solid #e1e4e8;
+  border-radius: 25px;
+  font-size: 16px;
+  width: 300px;
+  transition: all 0.3s ease;
+}
+
+.manage-orders-search-input:focus {
+  outline: none;
+  border-color: #0366d6;
+  box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+}
+
+.manage-orders-search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6a737d;
+}
+
+/* ManageOrders.js end */
+
 /* OrderDetails.js start */
 
 .order-details-main-container {
@@ -1374,14 +1569,13 @@ span.text-red {
 }
 
 .status-line {
-  height: 2px;
-  width: 100%;
-  background-color: #ddd;
-  position: absolute;
-  top: 9px;
-  /* Centered on the circle */
-  z-index: -1;
-  /* Behind the circles */
+    height: 2px;
+    width: 100%;
+    background-color: #ddd;
+    position: absolute;
+    top: 9px;
+    left: -50%;
+    z-index: -1;
 }
 
 .status-line.completed {
@@ -2025,34 +2219,34 @@ form input {
   margin: 0 auto;
 }
 
-.wishlist-item{
+.wishlist-item {
   display: flex;
   flex-direction: column;
 }
 
 .wishlist-remove-button {
-    margin-top: 10px;
-    padding: 10px 30px;
-    min-width: 280px;
-    border: none;
-    background-color: #8e0000;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: 600;
+  margin-top: 10px;
+  padding: 10px 30px;
+  min-width: 280px;
+  border: none;
+  background-color: #8e0000;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.wishlist-movetocart-button{
-    padding: 10px 30px;
-    min-width: 280px;
-    border: none;
-    background-color: #155100;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: 600;
+.wishlist-movetocart-button {
+  padding: 10px 30px;
+  min-width: 280px;
+  border: none;
+  background-color: #155100;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 

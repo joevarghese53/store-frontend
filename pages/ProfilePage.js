@@ -37,7 +37,7 @@ const ProfilePage = () => {
             <Link href="/UsersList" className="account-navItem">
             <FaUsers className="account-navIcon" />
             Manage Users</Link>
-            <Link href="#" className="account-navItem">
+            <Link href="ManageOrders" className="account-navItem">
             <LuBoxes className="account-navIcon" />
             Manage Orders</Link>
             <Link href="/CategoryList" className="account-navItem">

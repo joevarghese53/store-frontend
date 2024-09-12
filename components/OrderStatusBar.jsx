@@ -28,6 +28,8 @@ const OrderStatusBar = ({ order }) => {
     },
   ];
 
+  console.log(statusSteps);
+
   return (
     <div className="status-bar-container">
       <div className="status-bar">
@@ -38,7 +40,7 @@ const OrderStatusBar = ({ order }) => {
             </div>
             <div className="status-label">{step.label}</div>
             <div className="status-date">{step.date}</div>
-            {index < statusSteps.length - 1 && (
+            {index > 0  && (
               <div className={`status-line ${step.isCompleted ? 'completed' : ''}`}></div>
             )}
           </div>
