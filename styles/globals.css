@@ -343,11 +343,12 @@ span.text-red {
 .phonepe-logo img {
   width: 100%;
 }
+
 @media (max-width: 1024px) {
   .footer-container-title {
     padding: 20px 5%;
   }
-  
+
   .footer-row {
     padding-left: 5%;
     padding-right: 5%;
@@ -360,7 +361,7 @@ span.text-red {
   .footer-section a {
     font-size: 10px;
   }
-  
+
 }
 
 
@@ -1323,13 +1324,13 @@ span.text-red {
 
 .manage-orders-header {
   display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .manage-orders-title {
@@ -1609,13 +1610,13 @@ span.text-red {
 }
 
 .status-line {
-    height: 2px;
-    width: 100%;
-    background-color: #ddd;
-    position: absolute;
-    top: 9px;
-    left: -50%;
-    z-index: -1;
+  height: 2px;
+  width: 100%;
+  background-color: #ddd;
+  position: absolute;
+  top: 9px;
+  left: -50%;
+  z-index: -1;
 }
 
 .status-line.completed {
@@ -3955,33 +3956,17 @@ form input {
   }
 }
 
+/* Customs.js start */
 
-
-
-
-
-
-
-
-
-
-
-/* cutomisations styling */
-/* cutomisations styling */
-/* cutomisations styling */
-
-/* new */
-
-/* App container to set the display to flex */
-.app-container {
+.customs-main-container {
   display: flex;
   height: 100vh;
+  margin-top: 130px;
 }
 
-/* Tabs container to set the width and background color */
-.tabs {
+.customs-tabs {
   position: relative;
-  top: 40%;
+  top: 25%;
   display: flex;
   flex-direction: row;
   width: 392px;
@@ -3990,7 +3975,7 @@ form input {
   height: 228px;
 }
 
-.tabs-list {
+.customs-tabs-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -3998,6 +3983,43 @@ form input {
   flex-direction: column;
   margin-left: 10px;
 }
+
+.customs-image-area {
+  margin-top: 60px;
+  margin-left: 100px;
+}
+
+.customs-category-content h1 {
+  font-size: 20px;
+  font-weight: 900;
+  font-family: monospace;
+  color: #000000;
+  margin-left: 40px;
+}
+
+.customs-category-content h4 {
+  font-size: 14px;
+  font-weight: 900;
+  font-family: monospace;
+  color: #000000;
+  margin: 30px 40px;
+}
+
+.customs-category-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.customs-category-card.selected {
+  border: 2px solid #f02d34;
+}
+
+
+
 
 .react-tabs__tab {
   display: flex;
@@ -4029,12 +4051,11 @@ form input {
   margin-top: 5px;
 }
 
-/* Tab panels to take the full width */
-.tab-panel {
+.customs-tab-panel {
   display: none;
 }
 
-.tab-panel--selected {
+.customs-tab-panel--selected {
   display: block;
   width: 255px;
   padding: 0px;
@@ -4054,7 +4075,6 @@ form input {
   font-family: sans-serif;
 }
 
-/* Custom styles for color options and prompt input */
 .color-options {
   display: flex;
   flex-direction: column;
@@ -4081,12 +4101,12 @@ form input {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.tab-panel input[type="file"] {
+.customs-tab-panel input[type="file"] {
   width: 100%;
   padding: 10px;
 }
 
-.tab-panel input[type="text"] {
+.customs-tab-panel input[type="text"] {
   width: calc(100% - 22px);
   padding: 10px;
   margin-bottom: 10px;
@@ -4112,11 +4132,7 @@ button:focus {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Adjust the main content section to fill the remaining space */
-.banner-wrapper {
-  flex: 1;
-  padding: 20px;
-}
+
 
 
 /* new */
@@ -4133,7 +4149,7 @@ button:focus {
   display: flex;
 }
 
-.color-content {
+.customs-color-content {
   border: solid;
   left: 20px;
   text-align: center;
@@ -4143,14 +4159,14 @@ button:focus {
   border-width: thin;
 }
 
-.color-content h2 {
+.customs-color-content h2 {
   /* border: dashed; */
 
   position: relative;
   top: 20px;
 }
 
-.color-groups {
+.customs-color-groups {
   /* border: dashed; */
   display: flex;
   justify-content: center;
@@ -4230,17 +4246,7 @@ button:focus {
   /* Ensure that the height is responsive */
 }
 
-.both-image {
-  position: relative;
-  top: 130px;
-  left: 16px;
-}
 
-.both-image::after {
-  content: "";
-  clear: both;
-  display: table;
-}
 
 
 
@@ -4350,12 +4356,12 @@ button {
 @media screen and (max-width: 768px) {
 
   /* Adjustments for screens with a maximum width of 768 pixels */
-  .color-groups {
+  .customs-color-groups {
     height: auto;
     top: 0;
   }
 
-  .color-content h2 {
+  .customs-color-content h2 {
     top: 0;
   }
 
@@ -4405,3 +4411,5 @@ button {
 }
 
 /* Add more media queries for other screen sizes if needed */
+
+/* Customs.js end */

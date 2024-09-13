@@ -12,12 +12,11 @@ function Dragg({ upload ,back}) {
   const router = useRouter();
   const [dynamicProductSlug, setDynamicProductSlug] = useState('some-slug');
   const cproductDetails={
-    cname: 'Product Name',
+    cname: 'DGEN CUSTOMS',
     cdetails: 'Product Details',
     cprice: 50,
     cimage: back.substring(1) // Add the image path or URL
-    // Add other details as needed
-  }
+    }
 
 
 

@@ -69,7 +69,7 @@ const Navbar = () => {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              handleNavigation('/customs');
+              handleNavigation('/Customs');
             }}
             className={router.pathname === '/customs' ? 'active' : ''}
           >
