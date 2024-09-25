@@ -41,12 +41,6 @@ const BoxDrawing = ({ imageUrl, onValuesChange ,imggg }) => {
 
     <div 
       ref={containerRef}
-      style={{
-        position: 'absolute',
-        width: 'auto',
-        height: 'auto',
-
-      }}
 
       onMouseDown={imggg ? handleMouseDown : undefined}
       onMouseMove={imggg ? handleMouseMove : undefined}

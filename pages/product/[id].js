@@ -70,7 +70,7 @@ const ProductDetails = () => {
 
   const handleAddToWishlist = async () => {
     try {
-      await addToWishlist({productId}).unwrap();
+      await addToWishlist({ productId }).unwrap();
       toast.success(`Item added to wishlist`);
     } catch (error) {
       toast.error(error?.data || error.message);
@@ -94,10 +94,13 @@ const ProductDetails = () => {
     }
 
     try {
-      console.log(`Adding product to cart: productId=${product._id}, quantity=${qty}`);
-      await addToCart({ productId: product._id, quantity: qty }).unwrap();
+      const cartData = { productId: product._id, quantity: qty, productType: 'Product' };
+      console.log('Sending to API:', cartData);
+      await addToCart(cartData).unwrap();
       toast.success(`${qty} ${product.name} added to the cart.`);
+      console.log("Product added to cart");
     } catch (error) {
+      console.log("Error adding product to cart: ", error);
       toast.error(error?.data || error.message);
     }
   };
@@ -116,9 +119,6 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <div className="customs-header">
-        {/* Header content goes here */}
-      </div>
       <div className="product-detail-container">
         <div className='image-container'>
           <div className='big-image-container'>
@@ -181,12 +181,12 @@ const ProductDetails = () => {
             </button>
             {wishlistData && wishlistData.exists ? (
               <button type="button" className="buy-now" onClick={handleRemoveFromWishlist}>
-                <GoHeartFill style={{marginRight:'10px'}}/>
+                <GoHeartFill style={{ marginRight: '10px' }} />
                 Added to Wishlist
               </button>
             ) : (
               <button type="button" className="buy-now" onClick={handleAddToWishlist}>
-                <GoHeart style={{marginRight:'10px'}}/>
+                <GoHeart style={{ marginRight: '10px' }} />
                 Add to Wishlist
               </button>
             )}

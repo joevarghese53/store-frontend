@@ -16,7 +16,7 @@ const WishlistPage = () => {
     const handleAddToCart = async (product_id) => {
         try {
           console.log(`Adding product to cart: productId=${product_id}, quantity= 1`);
-          await addToCart({ productId: product_id, quantity: 1 }).unwrap();
+          await addToCart({ productId: product_id, quantity: 1, productType: 'Product' }).unwrap();
           toast.success(`Item Moved to cart successfully.`);
           await removeFromWishlist(product_id).unwrap();
         } catch (error) {

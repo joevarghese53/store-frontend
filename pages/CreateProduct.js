@@ -24,6 +24,8 @@ const CreateProduct = () => {
   const [createProduct] = useCreateProductMutation();
   const { data: categories } = useFetchCategoriesQuery();
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,6 +61,7 @@ const CreateProduct = () => {
     const formData = new FormData();
     const file = e.target.files[0];
     formData.append("image", file);
+    console.log("this is the image file", file);
 
     try {
       const res = await uploadProductImage(formData).unwrap();

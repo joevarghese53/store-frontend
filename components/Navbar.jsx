@@ -61,7 +61,7 @@ const Navbar = () => {
               e.preventDefault();
               handleNavigation('/');
             }}
-            className={router.pathname !== '/customs' ? 'active' : ''}
+            className={router.pathname !== '/Customs' ? 'active' : ''}
           >
             ORIGINALS
           </a>
@@ -71,7 +71,7 @@ const Navbar = () => {
               e.preventDefault();
               handleNavigation('/Customs');
             }}
-            className={router.pathname === '/customs' ? 'active' : ''}
+            className={router.pathname === '/Customs' ? 'active' : ''}
           >
             CUSTOMS
           </a>
