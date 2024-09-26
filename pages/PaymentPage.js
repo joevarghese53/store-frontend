@@ -11,6 +11,7 @@ const PaymentPage = () => {
   const router = useRouter();
   const { orderId } = router.query;
   const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
+  console.log('orderId:', orderId);
 
   // Conditional query call
   const {

@@ -28,6 +28,7 @@ const CheckoutPage = () => {
     const placeOrderHandler = async () => {
         try {
             console.log('Placing order...');
+            console.log('Cart Data:', cartData);
 
             const cartItems = cartData.items.map(item => ({
                 name: item.productId.name,
@@ -35,6 +36,7 @@ const CheckoutPage = () => {
                 image: item.productId.image,
                 _id: item.productId._id,
                 category: item.productId.category,
+                productType: item.productType,
             }));
             console.log('Cart Items:', cartItems);
 

@@ -1274,7 +1274,7 @@ span.text-red {
 }
 
 .order-product-image {
-  width: auto;
+  width: 100px;
   height: 130px;
   object-fit: cover;
   border-radius: 8px;

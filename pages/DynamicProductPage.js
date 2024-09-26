@@ -31,7 +31,7 @@ const DynamicProductPage = () => {
     }
 
     try {
-      const cartData = { productId: product._id, quantity: qty, productType: 'CustomProduct' };
+      const cartData = { productId: product._id, quantity: qty, productType: 'cProduct' };
       console.log('Sending to API:', cartData);
       await addToCart(cartData).unwrap();
       toast.success(`${qty} ${product.name} added to the cart.`);

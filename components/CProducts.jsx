@@ -17,7 +17,7 @@ const Cproducts = () => {
   const handleAddToCart = async (product_id) => {
     try {
       console.log(`Adding product to cart: productId=${product_id}, quantity= 1`);
-      await addToCart({ productId: product_id, quantity: 1, productType: 'CustomProduct' }).unwrap();
+      await addToCart({ productId: product_id, quantity: 1, productType: 'cProduct' }).unwrap();
       toast.success(`Item Moved to cart successfully.`);
     } catch (error) {
       toast.error(error?.data || error.message);
