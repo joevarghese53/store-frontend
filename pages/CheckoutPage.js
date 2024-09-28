@@ -16,14 +16,39 @@ const CheckoutPage = () => {
     const router = useRouter();
 
 
-    const calculateTotalPrice = () => {
-        if (!cartData || !cartData.items) {
-            return 0;
-        }
-        return cartData.items.reduce((total, item) => {
-            return total + (item.productId.price * item.quantity);
-        }, 0);
-    };
+    function calcPrices(data) {
+        const items = data.items;
+        let itemsPriceWithTax = 0;
+        let taxPrice = 0;
+        items.forEach((item) => {
+        const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
+    
+        // Calculate the price before tax for each item
+        const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
+    
+        // Calculate the GST for each item
+        const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
+    
+        // Sum up the total price and tax for all items
+        itemsPriceWithTax += item.productId.price * item.quantity;
+        taxPrice += itemTaxPrice * item.quantity;
+      });
+    
+      const shippingPrice = itemsPriceWithTax > 1000 ? 0 : 150;
+      const totalPrice = (
+        parseFloat(itemsPriceWithTax) + 
+        parseFloat(shippingPrice)
+      ).toFixed(2);
+    
+      return {
+        itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
+        shippingPrice: shippingPrice.toFixed(2), // Shipping charges
+        taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
+        totalPrice, // Final price including tax and shipping
+      };
+    }
+
+    const { itemsPrice, shippingPrice, taxPrice, totalPrice } = cartData ? calcPrices(cartData) : {};
 
     const placeOrderHandler = async () => {
         try {
@@ -35,6 +60,7 @@ const CheckoutPage = () => {
                 qty: item.quantity,
                 image: item.productId.image,
                 _id: item.productId._id,
+                size: item.size,
                 category: item.productId.category,
                 productType: item.productType,
             }));
@@ -50,17 +76,17 @@ const CheckoutPage = () => {
             };
             console.log('Shipping Address:', shippingAddress);
 
-            const totalPrice = calculateTotalPrice();
-            console.log('Total Price:', totalPrice);
+            const totPrice = totalPrice;
+            console.log('Total Price:', totPrice);
 
             const orderData = {
                 orderItems: cartItems,
                 shippingAddress: shippingAddress,
                 paymentMethod: 'Paytm',
-                itemsPrice: totalPrice,
+                itemsPrice: totPrice,
                 shippingPrice: 0,
                 taxPrice: 0,
-                totalPrice: totalPrice,
+                totalPrice: totPrice,
             };
             console.log('Order Data:', orderData);
 
@@ -91,10 +117,10 @@ const CheckoutPage = () => {
             </div>
             <div className="checkout-cart-summary">
                 <h6>BILLING DETAILS</h6>
-                <p>Cart Total (Excl. of all taxes) <span>₹{calculateTotalPrice()}</span></p>
-                <p>GST <span>₹0</span></p>
-                <p>Shipping Charges <span>₹0</span></p>
-                <p>Total Amount: <span>₹{calculateTotalPrice()}</span></p>
+                <p>Cart Total (Excl. of all taxes) <span>₹{itemsPrice}</span></p>
+                <p>GST <span>₹{taxPrice}</span></p>
+                <p>Shipping Charges <span>₹{shippingPrice}</span></p>
+                <p>Total Amount: <span>₹{totalPrice}</span></p>
             </div>
             <button type="button" className="btn1" onClick={placeOrderHandler} >
                 PLACE ORDER

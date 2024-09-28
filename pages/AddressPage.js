@@ -66,15 +66,38 @@ const AddressPage = () => {
     dispatch(selectShippingAddress(address));
   };
 
-  const calculateTotalPrice = () => {
-    if (!cartData || !cartData.items) {
-      return 0;
-    }
-    return cartData.items.reduce((total, item) => {
-      return total + (item.productId.price * item.quantity);
-    }, 0);
-  };
+  function calcPrices(data) {
+    const items = data.items;
+    let itemsPriceWithTax = 0;
+    let taxPrice = 0;
+    items.forEach((item) => {
+    const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
 
+    // Calculate the price before tax for each item
+    const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
+
+    // Calculate the GST for each item
+    const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
+
+    // Sum up the total price and tax for all items
+    itemsPriceWithTax += item.productId.price * item.quantity;
+    taxPrice += itemTaxPrice * item.quantity;
+  });
+
+  const shippingPrice = itemsPriceWithTax > 1000 ? 0 : 150;
+  const totalPrice = (
+    parseFloat(itemsPriceWithTax) + 
+    parseFloat(shippingPrice)
+  ).toFixed(2);
+
+  return {
+    itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
+    shippingPrice: shippingPrice.toFixed(2), // Shipping charges
+    taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
+    totalPrice, // Final price including tax and shipping
+  };
+}
+const { itemsPrice, shippingPrice, taxPrice, totalPrice } = cartData ? calcPrices(cartData) : {};
   return (
     <div className='address-page-main-container'>
       <div className='address-header'>
@@ -100,10 +123,10 @@ const AddressPage = () => {
       )}
       <div className="address-cart-summary">
         <h6>BILLING DETAILS</h6>
-        <h8>Cart Total (Excl. of all taxes)       <span>₹{calculateTotalPrice()}</span></h8>
-        <h8>GST                                   <span>₹{calculateTotalPrice()}</span></h8>
-        <h8>Shipping Charges                      <span>₹{calculateTotalPrice()}</span></h8>
-        <h8>Total Amount:                         <span>₹{calculateTotalPrice()}</span></h8>
+        <h8>Cart Total (Excl. of all taxes)       <span>₹{itemsPrice}</span></h8>
+        <h8>GST                                   <span>₹{taxPrice}</span></h8>
+        <h8>Shipping Charges                      <span>₹{shippingPrice}</span></h8>
+        <h8>Total Amount:                         <span>₹{totalPrice}</span></h8>
         <Link href={selectedAddress ? "/CheckoutPage" : "#"} onClick={(e) => !selectedAddress && e.preventDefault()}>
           <button
             type="button"

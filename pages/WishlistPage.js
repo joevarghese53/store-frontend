@@ -4,7 +4,7 @@ import { useAddToCartMutation } from '../redux/api/cartApiSlice'
 import { Product } from '../components';
 import Loader from '../components/Loader';
 import Link from 'next/link';
-import { AiOutlineShopping } from 'react-icons/ai';
+import { FaRegFaceSadTear } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import SizeSelectorPopUp from '@/components/SizeSelectorPopUp';
 
@@ -62,8 +62,8 @@ const WishlistPage = () => {
       <div className="wishlist-items">
         {data.items.length < 1 && (
           <div className="empty-cart">
-            <AiOutlineShopping size={150} />
-            <h3>Your shopping bag is empty</h3>
+            <FaRegFaceSadTear size={150} />
+            <h3>Your wishlist is empty</h3>
             <Link href="/">
               <button type="button" className="btn">
                 Continue Shopping

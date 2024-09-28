@@ -12,11 +12,37 @@ const Cart = () => {
 
   console.log(data);
 
-  const calculateTotalPrice = () => {
-    return data.items.reduce((total, item) => {
-      return total + (item.productId.price * item.quantity);
-    }, 0);
+  function calcPrices(data) {
+    const items = data.items;
+    let itemsPriceWithTax = 0;
+    let taxPrice = 0;
+    items.forEach((item) => {
+    const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
+
+    // Calculate the price before tax for each item
+    const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
+
+    // Calculate the GST for each item
+    const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
+
+    // Sum up the total price and tax for all items
+    itemsPriceWithTax += item.productId.price * item.quantity;
+    taxPrice += itemTaxPrice * item.quantity;
+  });
+
+  const shippingPrice = itemsPriceWithTax > 1000 ? 0 : 150;
+  const totalPrice = (
+    parseFloat(itemsPriceWithTax) + 
+    parseFloat(shippingPrice)
+  ).toFixed(2);
+
+  return {
+    itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
+    shippingPrice: shippingPrice.toFixed(2), // Shipping charges
+    taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
+    totalPrice, // Final price including tax and shipping
   };
+}
 
   const handleRemoveFromCart = async (itemId, size) => {
     try {
@@ -27,7 +53,6 @@ const Cart = () => {
 
       const { data } = await removeCartItem({ productId: itemId, size: size }).unwrap();
       console.log('Product deleted successfully', data);
-      router.reload();
     } catch (err) {
       console.log(err);
     }
@@ -71,6 +96,7 @@ const Cart = () => {
     </div>
     );
 
+    const { itemsPrice, shippingPrice, taxPrice, totalPrice } = data ? calcPrices(data) : {};
 
   return (
     <div className="checkout-container">
@@ -101,6 +127,7 @@ const Cart = () => {
                       <h5>{item.productId.name}</h5>
                       <p id='cart-item-category'>{item.productId.category}</p>
                       <p id='cart-item-quantity'>Quantity: {item.quantity}</p>
+                      <p id='cart-item-size'>Size: {item.size}</p>
                       <h4>₹{item.productId.price}</h4>
                       <h3>MRP inclusive of all taxes</h3>
                       <button type="button" className="remove-item" onClick={() => handleRemoveFromCart(item.productId._id, item.size)}>
@@ -112,10 +139,10 @@ const Cart = () => {
               </div>
               <div className="cart-summary">
                 <h6>BILLING DETAILS</h6>
-                <h8>Cart Total (Excl. of all taxes)       <span>₹{calculateTotalPrice()}</span></h8>
-                <h8>GST                                   <span>₹{calculateTotalPrice()}</span></h8>
-                <h8>Shipping Charges                      <span>₹{calculateTotalPrice()}</span></h8>
-                <h8>Total Amount:                         <span>₹{calculateTotalPrice()}</span></h8>
+                <h8>Cart Total (Excl. of all taxes)       <span>₹{itemsPrice}</span></h8>
+                <h8>GST                                   <span>₹{taxPrice}</span></h8>
+                <h8>Shipping Charges                      <span>₹{shippingPrice}</span></h8>
+                <h8>Total Amount:                         <span>₹{totalPrice}</span></h8>
                 <Link href="/AddressPage">
                   <button type="button" className="btn">
                     PROCEED TO CHECKOUT

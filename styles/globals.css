@@ -228,6 +228,10 @@ span.text-red {
   left: 149%;
 }
 
+.remove-item:hover {
+  background-color: #f02d34;
+}
+
 .cart-bottom {
   position: absolute;
   bottom: 12px;
@@ -1969,7 +1973,8 @@ span.text-red {
 
 .cart-page .btn,
 .address-page-main-container .btn,
-.checkout-page .btn {
+.checkout-page .btn,
+.empty-cart .btn {
   margin-top: 10px;
   padding: 8px 30px;
   min-width: 280px;
@@ -2028,6 +2033,7 @@ span.text-red {
   font-size: 1.0rem;
   position: absolute;
   left: 85%;
+  font-weight: 500;
 }
 
 .address-page {
@@ -2114,10 +2120,17 @@ form input {
   font-weight: 600;
   color: #6c757d;
   position: relative;
-  bottom: 24px;
+  bottom: 8px;
 }
 
 #cart-item-quantity {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6c757d;
+  position: relative;
+  bottom: 24px;
+}
+#cart-item-size{
   font-size: 13px;
   font-weight: 600;
   color: #6c757d;
@@ -2309,6 +2322,7 @@ form input {
   font-size: 1.0rem;
   position: absolute;
   left: 85%;
+  font-weight: 500;
 }
 
 .checkout-address-summary {
@@ -3291,6 +3305,7 @@ form input {
   font-size: 1.0rem;
   position: absolute;
   left: 85%;
+  font-weight: 500;
 }
 
 .address-form input {
@@ -3310,7 +3325,7 @@ form input {
   font-weight: 900;
   font-family: monospace;
   color: #000000;
-  margin-left: 39%;
+  text-align: center;
   margin-top: 60px;
 }
 
@@ -3319,15 +3334,14 @@ form input {
   font-weight: 900;
   font-family: monospace;
   color: #000000;
-  margin-left: 39%;
+  text-align: center;
   margin-top: 10px;
 }
 
 
 .payment-page-main-container {
-  position: relative;
-  top: 173px;
-  height: auto;
+  margin-top: 173px;
+  margin-bottom: 100px;
   min-height: 100vh;
 }
 
