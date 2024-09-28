@@ -18,14 +18,14 @@ const Cart = () => {
     }, 0);
   };
 
-  const handleRemoveFromCart = async (itemId) => {
+  const handleRemoveFromCart = async (itemId, size) => {
     try {
       let answer = window.confirm(
         "Are you sure you want to delete this product?"
       );
       if (!answer) return;
 
-      const { data } = await removeCartItem(itemId);
+      const { data } = await removeCartItem({ productId: itemId, size: size }).unwrap();
       console.log('Product deleted successfully', data);
       router.reload();
     } catch (err) {
@@ -103,7 +103,7 @@ const Cart = () => {
                       <p id='cart-item-quantity'>Quantity: {item.quantity}</p>
                       <h4>₹{item.productId.price}</h4>
                       <h3>MRP inclusive of all taxes</h3>
-                      <button type="button" className="remove-item" onClick={() => handleRemoveFromCart(item.productId._id)}>
+                      <button type="button" className="remove-item" onClick={() => handleRemoveFromCart(item.productId._id, item.size)}>
                         Remove
                       </button>
                     </div>

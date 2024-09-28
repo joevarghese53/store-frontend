@@ -1869,10 +1869,17 @@ span.text-red {
   border-radius: 20px;
   background-color: #ffffff;
   color: rgb(0, 0, 0);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .size-button:hover {
   border-color: #0070f3;
+}
+
+.size-button.selected {
+  background-color: #0070f3; /* Change background color when selected */
+  color: #ffffff; /* Change text color when selected */
+  border-color: #005bb5; /* Optional: Change border color when selected */
 }
 
 /* sizeselector.jsx end  */

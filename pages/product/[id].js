@@ -37,6 +37,7 @@ const ProductDetails = () => {
   const [removeFromWishlist] = useRemoveFromWishlistMutation();
   const { data: wishlistData } = useCheckItemInWishlistQuery(productId);
   console.log("item exists? : ", wishlistData);
+  const [selectedSize, setSelectedSize] = useState(null);
 
   useEffect(() => {
     if (product?.category) {
@@ -92,9 +93,12 @@ const ProductDetails = () => {
       toast.error('Please login to continue.');
       return;
     }
-
+    if (!selectedSize) {
+      toast.error('Please select a size before adding to cart.');
+      return; // Ensure size is selected before proceeding
+    }
     try {
-      const cartData = { productId: product._id, quantity: qty, productType: 'Product' };
+      const cartData = { productId: product._id, quantity: qty, productType: 'Product', size: selectedSize };
       console.log('Sending to API:', cartData);
       await addToCart(cartData).unwrap();
       toast.success(`${qty} ${product.name} added to the cart.`);
@@ -151,7 +155,7 @@ const ProductDetails = () => {
           <p className="price">₹{product.price}</p>
           <p className="tax">Inclusive of all taxes</p>
           <div className="size-chart">
-            <SizeSelector />
+          <SizeSelector onSizeSelect={setSelectedSize} />
           </div>
           <div className="quantity">
             {product.countInStock > 0 && (

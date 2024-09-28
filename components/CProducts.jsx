@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useGetCProductsQuery } from '../redux/api/cProductApiSlice'
 import { useAddToCartMutation } from '../redux/api/cartApiSlice'
 import { useDeleteCProductMutation } from '../redux/api/cProductApiSlice'
 import { toast } from 'react-toastify'
 import Loader from './Loader'
 import CProduct  from '../components/CProduct';
+import SizeSelectorPopUp from './SizeSelectorPopUp'
 
 
 const Cproducts = () => {
@@ -13,11 +14,13 @@ const Cproducts = () => {
   console.log(data);
   const [addToCart] = useAddToCartMutation();
   const [DeleteCProduct] = useDeleteCProductMutation();
+  const [showSizeModal, setShowSizeModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const handleAddToCart = async (product_id) => {
+  const handleAddToCart = async (product_id, size) => {
     try {
-      console.log(`Adding product to cart: productId=${product_id}, quantity= 1`);
-      await addToCart({ productId: product_id, quantity: 1, productType: 'cProduct' }).unwrap();
+      console.log(`Adding product to cart: productId=${product_id}, quantity= 1, size=${size}`);
+      await addToCart({ productId: product_id, quantity: 1, productType: 'cProduct', size: size }).unwrap();
       toast.success(`Item Moved to cart successfully.`);
     } catch (error) {
       toast.error(error?.data || error.message);
@@ -33,6 +36,11 @@ const Cproducts = () => {
       toast.error(error?.data || error.message);
     }
   }
+
+  const handleMoveToCartClick = (product) => {
+    setSelectedProduct(product); // Set the selected product
+    setShowSizeModal(true); // Show the size selection modal
+};
 
   if (isLoading) {
     return (
@@ -55,10 +63,18 @@ const Cproducts = () => {
             {data.customProducts.map((product) => (
                 <div key={product._id} className='cproduct-item'>
                     <CProduct product={product} />
-                    <button className="wishlist-movetocart-button" onClick={() => handleAddToCart(product._id)}>Add to Cart</button>
+                    <button className="wishlist-movetocart-button" onClick={() => handleMoveToCartClick(product)}>Add to Cart</button>
                     {/* <button className="wishlist-remove-button" onClick={() => handleDeleteCProduct(product._id)}>Delete</button> */}
                 </div>
             ))}
+            {selectedProduct && (
+                <SizeSelectorPopUp
+                    show={showSizeModal}
+                    onClose={() => setShowSizeModal(false)}
+                    onConfirm={handleAddToCart}
+                    product={selectedProduct}
+                />
+            )}
         </div>
     );
 };
