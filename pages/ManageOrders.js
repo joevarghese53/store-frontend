@@ -16,8 +16,9 @@ const ManageOrders = () => {
     const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY;
     function encryptData(data) {
         const ciphertext = CryptoJS.AES.encrypt(data, secretKey).toString();
-        return ciphertext;
+        return encodeURIComponent(ciphertext);  // Ensures the data is URL-safe
     }
+    
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('paid');

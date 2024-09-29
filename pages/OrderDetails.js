@@ -11,10 +11,17 @@ const OrderDetails = () => {
     const { order_id: encryptedOrderId } = router.query;
     const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY;
     const decryptData = (ciphertext) => {
-        const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
-        const originalData = bytes.toString(CryptoJS.enc.Utf8);
-        return originalData;
+        try {
+            const decodedCiphertext = decodeURIComponent(ciphertext);  // Decode the URL-safe string
+            const bytes = CryptoJS.AES.decrypt(decodedCiphertext, secretKey);
+            const originalData = bytes.toString(CryptoJS.enc.Utf8);
+            return originalData;
+        } catch (error) {
+            console.error("Decryption failed: ", error);
+            return null;  // Return null or handle error appropriately
+        }
     };
+    
 
     const orderId = encryptedOrderId ? decryptData(encryptedOrderId) : null;
     const { data: orderDetails, error, isLoading } = useGetOrderDetailsQuery(orderId);
