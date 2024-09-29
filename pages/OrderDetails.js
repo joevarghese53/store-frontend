@@ -4,10 +4,19 @@ import { useRouter } from 'next/router';
 import OrderStatusBar from '@/components/OrderStatusBar';
 import jsPDF from 'jspdf';
 import Loader from '@/components/Loader';
+import CryptoJS from 'crypto-js';
 
 const OrderDetails = () => {
     const router = useRouter();
-    const { order_id: orderId } = router.query;
+    const { order_id: encryptedOrderId } = router.query;
+    const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY;
+    const decryptData = (ciphertext) => {
+        const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
+        const originalData = bytes.toString(CryptoJS.enc.Utf8);
+        return originalData;
+    };
+
+    const orderId = encryptedOrderId ? decryptData(encryptedOrderId) : null;
     const { data: orderDetails, error, isLoading } = useGetOrderDetailsQuery(orderId);
 
     const generateInvoice = () => {
