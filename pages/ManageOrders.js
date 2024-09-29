@@ -24,12 +24,6 @@ const ManageOrders = () => {
     const [outForDeliveryOrder] = useOutForDeliveryOrderMutation();
     const [deliveredOrder] = useDeliveredOrderMutation();
 
-    const encryptOrderId = (orderId) => {
-        const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY; 
-        console.log('Secret Key : ', secretKey);
-        return CryptoJS.AES.encrypt(orderId, secretKey).toString();
-    };
-
     const handleConfirm = async (orderId) => {
         try {
             await confirmOrder(orderId).unwrap();
@@ -162,7 +156,7 @@ const ManageOrders = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        <Link href={{ pathname: '/OrderDetails', query: { order_id: encryptOrderId(order._id) } }} key={order._id}>
+                                        <Link href={{ pathname: '/OrderDetails', query: { order_id: order._id } }} key={order._id}>
                                             <button className="manage-orders-view-button">View</button>
                                         </Link>
                                     </td>

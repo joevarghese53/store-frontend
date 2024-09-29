@@ -9,14 +9,7 @@ import CryptoJS from 'crypto-js';
 
 const OrderDetails = () => {
     const router = useRouter();
-    const { order_id: encryptedOrderId } = router.query;
-    const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY;
-    const decryptData = (ciphertext) => {
-        const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
-        const originalData = bytes.toString(CryptoJS.enc.Utf8);
-        return originalData;
-    };
-    const orderId = encryptedOrderId ? decryptData(encryptedOrderId) : null;
+    const { order_id: orderId } = router.query;
     console.log("orderId : ", orderId);
     
     const { data: orderDetails, error, isLoading } = useGetOrderDetailsQuery(orderId);

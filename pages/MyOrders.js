@@ -11,13 +11,7 @@ const MyOrders = () => {
     const { data: orders, error, isLoading } = useGetMyOrdersQuery()
     console.log('Orders : ', orders)
 
-    const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY;
-    console.log('Secret Key : ', secretKey);    
-    function encryptData(data) {
-        const ciphertext = CryptoJS.AES.encrypt(data, secretKey).toString();
-        return ciphertext;
-    }
-
+   
 
     const { userInfo, loading } = useInitializeUser();
     const router = useRouter();
@@ -49,7 +43,7 @@ const MyOrders = () => {
             justifyContent: 'center',
             alignItems: 'center',
             height: '30vh'
-        }}>We are experiencing issues with server. We are working on it. Please come again after some time</p>
+        }}>No orders😢</p>
     </div>);
 
     return (
@@ -60,7 +54,7 @@ const MyOrders = () => {
                     orders.map((order) => {
                         const encryptedOrderId = encryptData(order._id);
                         return (
-                            <Link href={{ pathname: '/OrderDetails', query: { order_id: encryptedOrderId } }} key={order._id}>
+                            <Link href={{ pathname: '/OrderDetails', query: { order_id: order._id } }} key={order._id}>
                                 <div key={order._id} className="order-card">
                                     <div className="order-items">
                                         {order.orderItems.map((item) => (
