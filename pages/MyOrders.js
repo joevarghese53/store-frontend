@@ -5,9 +5,6 @@ import Loader from '../components/Loader';
 import { useRouter } from 'next/router';
 import useInitializeUser from '../components/useInitializeUser';
 
-
-
-
 const MyOrders = () => {
 
     const { data: orders, error, isLoading } = useGetMyOrdersQuery()
@@ -61,6 +58,7 @@ const MyOrders = () => {
                                                 <h3>{item.name}</h3>
                                                 <p>{item.category}</p>
                                                 <p>Quantity : {item.qty}</p>
+                                                <p>Size : {item.size}</p>
                                             </div>
                                         </div>
                                     ))}
