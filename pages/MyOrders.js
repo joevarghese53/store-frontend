@@ -4,14 +4,14 @@ import Link from 'next/link';
 import Loader from '../components/Loader';
 import { useRouter } from 'next/router';
 import useInitializeUser from '../components/useInitializeUser';
-import CryptoJS from 'crypto-js';
+
+
+
 
 const MyOrders = () => {
 
     const { data: orders, error, isLoading } = useGetMyOrdersQuery()
     console.log('Orders : ', orders)
-
-
 
     const { userInfo, loading } = useInitializeUser();
     const router = useRouter();
@@ -21,7 +21,6 @@ const MyOrders = () => {
             router.push('/LoginPage'); // Redirect to login page if userInfo is null
         }
     }, [userInfo, loading, router]);
-
 
     if (loading || !userInfo) {
         return <p>Loading...</p>; // You can replace this with a spinner or any loading indicator
@@ -52,8 +51,6 @@ const MyOrders = () => {
             <div className="orders-grid">
                 {orders?.length > 0 ? (
                     orders.map((order) => (
-
-
                         <Link href={{ pathname: '/OrderDetails', query: { order_id: order._id } }} key={order._id}>
                             <div key={order._id} className="order-card">
                                 <div className="order-items">
@@ -64,7 +61,6 @@ const MyOrders = () => {
                                                 <h3>{item.name}</h3>
                                                 <p>{item.category}</p>
                                                 <p>Quantity : {item.qty}</p>
-                                                <p>Size : {item.size}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -129,7 +125,6 @@ const MyOrders = () => {
                                 </div>
                             </div>
                         </Link>
-
                     ))
                 ) : (
                     <p>No orders found.</p>

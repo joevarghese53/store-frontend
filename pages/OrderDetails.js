@@ -4,16 +4,11 @@ import { useRouter } from 'next/router';
 import OrderStatusBar from '@/components/OrderStatusBar';
 import jsPDF from 'jspdf';
 import Loader from '@/components/Loader';
-import CryptoJS from 'crypto-js';
-
 
 const OrderDetails = () => {
     const router = useRouter();
     const { order_id: orderId } = router.query;
-    console.log("orderId : ", orderId);
-    
     const { data: orderDetails, error, isLoading } = useGetOrderDetailsQuery(orderId);
-    console.log("orderDetails : ", orderDetails);
 
     const generateInvoice = () => {
         if (!orderDetails) return;
@@ -94,8 +89,6 @@ const OrderDetails = () => {
 
                         {/* Additional Actions */}
                         <div className='order-details-more-actions'>
-                            <h3>{orderDetails.user.username}</h3>
-                            <h3>{orderDetails.user.email}</h3>
                             <button
                                 onClick={generateInvoice}
                                 disabled={!orderDetails.isDelivered} // Disable button if order is not delivered
@@ -118,7 +111,6 @@ const OrderDetails = () => {
                                     <h3>{item.name}</h3>
                                     <p>{item.category}</p>
                                     <p>Quantity : {item.qty}</p>
-                                    <p>Size : {item.size}</p>
                                 </div>
                             </div>
                         ))}

@@ -53,7 +53,7 @@ const Cproducts = () => {
   if (error) {
     return (
       <div className="best-sellers">
-        <h1 style={{ height: '200px', paddingTop: '100px', minHeight: '50vh', alignContent: 'center' }}>No Products Made So Far😢</h1>
+        <h1 style={{ height: '200px', paddingTop: '100px' }}>ERROR</h1>
       </div>
     );
   }
