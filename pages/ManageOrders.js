@@ -26,6 +26,7 @@ const ManageOrders = () => {
 
     const encryptOrderId = (orderId) => {
         const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY; 
+        console.log('Secret Key : ', secretKey);
         return CryptoJS.AES.encrypt(orderId, secretKey).toString();
     };
 

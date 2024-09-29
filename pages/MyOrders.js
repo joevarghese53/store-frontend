@@ -12,6 +12,7 @@ const MyOrders = () => {
     console.log('Orders : ', orders)
 
     const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY;
+    console.log('Secret Key : ', secretKey);    
     function encryptData(data) {
         const ciphertext = CryptoJS.AES.encrypt(data, secretKey).toString();
         return ciphertext;
