@@ -6,19 +6,12 @@ import {useDeliveredOrderMutation,
     useConfirmOrderMutation } from '../redux/api/orderApiSlice'
 import toast from 'react-hot-toast';
 import Link from 'next/link';
-import CryptoJS from 'crypto-js';
 
 const ManageOrders = () => {
 
     const { data: ordersData, error, isLoading } = useGetOrdersQuery();
     console.log("orders : ", ordersData);
 
-    const secretKey = process.env.NEXT_PUBLIC_CRYPTOJS_SECRET_KEY;
-    function encryptData(data) {
-        const ciphertext = CryptoJS.AES.encrypt(data, secretKey).toString();
-        return encodeURIComponent(ciphertext);  // Ensures the data is URL-safe
-    }
-    
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('paid');
@@ -160,7 +153,7 @@ const ManageOrders = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        <Link href={{ pathname: '/OrderDetails', query: { order_id: encryptData(order._id) } }} key={order._id}>
+                                        <Link href={{ pathname: '/OrderDetails', query: { order_id: order._id } }} key={order._id}>
                                             <button className="manage-orders-view-button">View</button>
                                         </Link>
                                     </td>
