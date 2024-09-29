@@ -54,6 +54,14 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['Order'],
     }),
 
+    confirmOrder: builder.mutation({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/${orderId}/confirm`,
+        method: "PUT",
+      }),
+      invalidatesTags: ['Order'],
+    }),
+
     shippedOrder: builder.mutation({
       query: (orderId) => ({
         url: `${ORDERS_URL}/${orderId}/shipped`,
@@ -98,6 +106,7 @@ export const {
   useGetPaypalClientIdQuery,
   useGetMyOrdersQuery,
   useDeliveredOrderMutation,
+  useConfirmOrderMutation,
   useShippedOrderMutation,
   useOutForDeliveryOrderMutation,
   useGetOrdersQuery,
