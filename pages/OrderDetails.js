@@ -71,7 +71,7 @@ const OrderDetails = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     height: '30vh'
-                }}>We are experiencing issues with server. We are working on it. Please come again after some time</p>
+                }}>We are experiencing issues with server. We are working on it. Please come back again after some time</p>
             </div>)}
             {orderDetails && (
                 <div className='order-details-container'>
@@ -89,6 +89,8 @@ const OrderDetails = () => {
 
                         {/* Additional Actions */}
                         <div className='order-details-more-actions'>
+                            <h3>{orderDetails.user.username}</h3>
+                            <h3>{orderDetails.user.email}</h3>
                             <button
                                 onClick={generateInvoice}
                                 disabled={!orderDetails.isDelivered} // Disable button if order is not delivered
@@ -111,6 +113,7 @@ const OrderDetails = () => {
                                     <h3>{item.name}</h3>
                                     <p>{item.category}</p>
                                     <p>Quantity : {item.qty}</p>
+                                    <p>Size : {item.size}</p>
                                 </div>
                             </div>
                         ))}
