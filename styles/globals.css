@@ -271,7 +271,7 @@ span.text-red {
 
 /* dragg.jsx start */
 
-.finalise .finalise-button {
+.finalise-button {
   width: 200px;
   padding: 10px 20px;
   background-color: #f02d34;
@@ -281,9 +281,10 @@ span.text-red {
   cursor: pointer;
   transition: transform 0.5s ease;
   margin-left: 100px;
+  margin-top: 50px;
 }
 
-.finalise .finalise-button:hover {
+.finalise-button:hover {
   transform: scale(1.1, 1.1)
 }
 
@@ -1946,9 +1947,12 @@ span.text-red {
 }
 
 .size-button.selected {
-  background-color: #0070f3; /* Change background color when selected */
-  color: #ffffff; /* Change text color when selected */
-  border-color: #005bb5; /* Optional: Change border color when selected */
+  background-color: #0070f3;
+  /* Change background color when selected */
+  color: #ffffff;
+  /* Change text color when selected */
+  border-color: #005bb5;
+  /* Optional: Change border color when selected */
 }
 
 /* sizeselector.jsx end  */
@@ -2195,7 +2199,8 @@ form input {
   position: relative;
   bottom: 24px;
 }
-#cart-item-size{
+
+#cart-item-size {
   font-size: 13px;
   font-weight: 600;
   color: #6c757d;
@@ -4045,7 +4050,7 @@ form input {
 
 .customs-tabs {
   display: flex;
-    justify-content: center;
+  justify-content: center;
 }
 
 .customs-tab {
@@ -4072,13 +4077,13 @@ form input {
 
 .workshop-tabs {
   position: relative;
-    top: 160px;
-    display: flex;
-    flex-direction: row;
-    width: 550px;
-    background-color: #ffffff;
-    border-right: 1px solid #ddd;
-    height: 100%;
+  top: 160px;
+  display: flex;
+  flex-direction: row;
+  width: 550px;
+  background-color: #ffffff;
+  border-right: 1px solid #ddd;
+  height: 100%;
 }
 
 .workshop-tabs-list {
@@ -4091,10 +4096,27 @@ form input {
 }
 
 .workshop-image-area {
-  display: flex;
-  margin-top: 90px;
   width: 100%;
+}
+
+.workshop-image-header{
+  display: flex;
   justify-content: space-around;
+  margin-top: 50px;
+  font-size: 30px;
+}
+
+.workshop-image-header span{
+  color: #04003b;
+  font-family: monospace;
+    font-weight: 600;
+}
+
+.workshop-images {
+  display: flex;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-around;
 }
 
 .workshop-category-content h1 {
@@ -4126,8 +4148,25 @@ form input {
   border: 2px solid #f02d34;
 }
 
+.workshop-side-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+}
 
+.workshop-side-selection label {
+  font-weight: bold;
+}
 
+.workshop-side-selection select {
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
 
 .react-tabs__tab {
   display: flex;
@@ -4170,6 +4209,35 @@ form input {
   margin-left: 23px;
   position: relative;
   top: 44px;
+}
+
+.ring-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.busy-message {
+  position: fixed;
+  align-content: center;
+  font-family: emoji;
+  width: 300px;
+  height: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  z-index: 1001;
 }
 
 #prompt-submit-button {
@@ -4268,21 +4336,17 @@ button:focus {
 }
 
 .workshop-color-content h2 {
-  /* border: dashed; */
-
   position: relative;
   top: 20px;
 }
 
 .workshop-color-groups {
-  /* border: dashed; */
   display: flex;
   justify-content: center;
-  margin-top: 10px;
-  position: relative;
-  top: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
   height: 100px;
-
+  margin-bottom: 10px;
 }
 
 .color {
@@ -4291,27 +4355,75 @@ button:focus {
   margin: 0 5px;
   cursor: pointer;
   border: 1px solid #000;
-  /* border-radius: 50%; */
+  border-radius: 50%;
 }
 
 .color-white {
-  background-color: #fff;
+  background-color: #ffffff;
 }
 
 .color-black {
   background-color: #000;
 }
 
-.color-yellow {
-  background-color: #ffd700;
+.color-green {
+  background-color: #00A15A;
 }
 
-.color-blue {
-  background-color: #0000ff;
+.color-royal_blue {
+  background-color: #095BE5;
 }
 
-.color-red {
-  background-color: #ff0000;
+.color-baby_pink {
+  background-color: #F8CDD5;
+}
+
+.color-dark_greenh {
+  background-color: #003920;
+}
+
+.color-dark_grey {
+  background-color: #14141C;
+}
+
+.color-sky_blue {
+  background-color: #8CB4F4;
+}
+
+.color-aqua_green {
+  background-color: #75EDB8;
+}
+
+.color-dark_greenr {
+  background-color: #05270B;
+}
+
+.color-brown {
+  background-color: #290C06;
+}
+
+.color-lavender {
+  background-color: #9E68C6;
+}
+
+.color-beige {
+  background-color: #BBA576;
+}
+
+.color-grey {
+  background-color: #353A4A;
+}
+
+.color-peach {
+  background-color: #F78266;
+}
+
+.color-violet {
+  background-color: #3F0051;
+}
+
+.color-hot_pink {
+  background-color: #D01957;
 }
 
 .active-color {
@@ -4327,26 +4439,20 @@ button:focus {
 
 .imagecomponent {
   width: 400px;
-  height: 500px;
+  height: 400px;
   position: relative;
 }
 
 .generated-image {
   width: 400px;
-  height: 630px;
+  height: 400px;
   position: relative;
 }
 
 .imagecomponent img,
 .generated-image img {
+  filter: drop-shadow(0px 6px 15px rgba(0, 0, 0, 0.5));
   max-width: 100%;
-  /* Set the maximum width to 100% of the parent container */
-  max-height: 100%;
-  /* Set the maximum height to 100% of the parent container */
-  width: auto;
-  /* Ensure that the width is responsive */
-  height: auto;
-  /* Ensure that the height is responsive */
 }
 
 
@@ -4542,7 +4648,7 @@ button {
   margin-bottom: 100px;
 }
 
-.cproduct-item{
+.cproduct-item {
   display: flex;
   flex-direction: column;
 }
@@ -4575,5 +4681,3 @@ button {
 }
 
 /* CProduct.js end */
-
-

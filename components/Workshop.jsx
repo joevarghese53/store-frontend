@@ -3,7 +3,7 @@ import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BoxDrawing from '@/components/BoxDrawing';
 import Dragg from '@/components/dragg';
-import { Hourglass } from 'react-loader-spinner';
+import { RingLoader } from 'react-spinners';
 import { FaUpload, FaPalette, FaCog } from 'react-icons/fa';
 import { MdCategory } from "react-icons/md";
 import { useFetchCategoriesQuery } from '@/redux/api/categoryApiSlice';
@@ -16,18 +16,19 @@ import {
 import { toast } from "react-toastify";
 
 
-const Workshop = ( { setActiveTab } ) => {
+const Workshop = ({ setActiveTab }) => {
 
   const [createCProduct] = useCreateCProductMutation();
   const [uploadProductImage] = useUploadProductImageMutation();
   const { userInfo } = useSelector((state) => state.auth);
-  const colors = ['white', 'black', 'yellow', 'blue', 'red'];
   const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
-  const [activeColor, setActiveColor] = useState('white');
+  const [activeColor, setActiveColor] = useState('black');
+  const [activeSide, setActiveSide] = useState('front');
   const [textareaValue, setTextareaValue] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageData, setImageData] = useState(null);
   const [animbool, setanimbool] = useState(false);
+  const [showBusyMessage, setShowBusyMessage] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('regular');
   const [category, setCategory] = useState('66adfb21a1698be6bdfa8e59');
   const [boxDrawingValues, setBoxDrawingValues] = useState({
@@ -36,6 +37,13 @@ const Workshop = ( { setActiveTab } ) => {
     endX: 0,
     endY: 0,
   });
+  const colorSets = {
+    regular: ['white', 'black', 'dark_greenr', 'brown', 'lavender', 'beige', 'grey', 'peach', 'violet', 'hot_pink'],
+    oversized: ['white', 'black', 'green', 'brown', 'lavender', 'beige', 'royal_blue', 'baby_pink'],
+    hoodies: ['white', 'black', 'dark_greenh', 'lavender', 'sky_blue', 'dark_grey', 'aqua_green'],
+  };
+
+  const currentColorSet = colorSets[selectedCategory] || colorSets.regular;
 
   const categoryMap = {
     "Regular T-Shirts": "regular",
@@ -49,13 +57,12 @@ const Workshop = ( { setActiveTab } ) => {
 
   const handleColorClick = (color) => {
     if (color !== activeColor) {
-      setActiveColor(color);
-      setNewColor(color);
+      setActiveColor(color);  
     }
   };
 
-  const setNewColor = (color) => {
-    setActiveColor(color);
+  const handleSideChange = (e) => {
+    setActiveSide(e.target.value);
   };
 
   const handleTextareaChange = (e) => {
@@ -69,6 +76,19 @@ const Workshop = ( { setActiveTab } ) => {
   };
 
   const handleSubmit = () => {
+    // Check if the prompt (textareaValue) is empty
+    if (!textareaValue.trim()) {
+      toast.error("Please enter a prompt.");
+      return;
+    }
+
+    const { startX, startY, endX, endY } = boxDrawingValues;
+    if (startX === 0 && startY === 0 && endX === 0 && endY === 0) {
+      toast.error("Please select an area on the canvas.");
+      return;
+    }
+
+    setShowBusyMessage(false);
     setanimbool(true)
     const boxDrawingValuesArray = Object.values(boxDrawingValues);
     const formattedBoxDrawingValues = boxDrawingValuesArray.join('_');
@@ -77,7 +97,7 @@ const Workshop = ( { setActiveTab } ) => {
     const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory}`;
     console.log(postData);
 
-    fetch('https://8bef-34-125-216-102.ngrok-free.app/submit-prompt', {
+    fetch('https://4375-35-185-228-15.ngrok-free.app/submit-prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -104,6 +124,8 @@ const Workshop = ( { setActiveTab } ) => {
       })
       .catch(error => {
         console.error('Error:', error);
+        setanimbool(false);
+        setShowBusyMessage(true);
       });
   };
 
@@ -161,7 +183,7 @@ const Workshop = ( { setActiveTab } ) => {
         console.log("Error: ", data.error);
       } else {
         toast.success(`Product is created`);
-        setActiveTab('CProducts'); 
+        setActiveTab('CProducts');
       }
     } catch (error) {
       console.error(error);
@@ -169,7 +191,30 @@ const Workshop = ( { setActiveTab } ) => {
     }
   };
 
+  useEffect(() => {
+    if (animbool) {
+      const timeout = setTimeout(() => {
+        setanimbool(false);
+        setShowBusyMessage(true);  // Show busy message if timeout occurs
 
+        // Hide the busy message after 3 seconds
+        setTimeout(() => {
+          setShowBusyMessage(false);
+        }, 1500);
+
+      }, 90000);  // 1 minute 30 seconds
+      return () => clearTimeout(timeout);
+    }
+  }, [animbool]);
+
+  useEffect(() => {
+    if (showBusyMessage) {
+      const hideMessageTimeout = setTimeout(() => {
+        setShowBusyMessage(false);
+      }, 1500);  // Hide after 3 seconds
+      return () => clearTimeout(hideMessageTimeout);
+    }
+  }, [showBusyMessage]);
 
   return (
     <>
@@ -207,7 +252,7 @@ const Workshop = ( { setActiveTab } ) => {
                       key={category._id}
                       className={`workshop-category-card ${selectedCategory === categoryMap[category.name] ? "selected" : ""
                         }`}
-                      onClick={() => { setSelectedCategory(categoryMap[category.name]); setCategory(category._id); }}
+                      onClick={() => { setSelectedCategory(categoryMap[category.name]); setCategory(category._id); setActiveColor('black'); }}
                     >
                       <h4>{category.name.toUpperCase()}</h4>
                     </div>
@@ -224,7 +269,7 @@ const Workshop = ( { setActiveTab } ) => {
               <div className="workshop-color-content">
                 <h4>SELECT COLOR</h4>
                 <div className="workshop-color-groups">
-                  {colors.map((color) => (
+                  {currentColorSet.map((color) => (
                     <div
                       key={color}
                       className={`color color-${color} ${color === activeColor ? 'active-color' : ''}`}
@@ -252,53 +297,61 @@ const Workshop = ( { setActiveTab } ) => {
 
 
           <div className="workshop-image-area">
-            <div className="imagecomponent">
-              <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} />
+            <div className="workshop-image-header">
+              <span>Canvas</span>
+              <span>Preview</span>
             </div>
-            {animbool && (
-              <div className="loader">
-                <Hourglass
-                  visible={true}
-                  height="80"
-                  width="80"
-                  ariaLabel="hourglass-loading"
-                  wrapperStyle={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '43%',
-                    transform: 'translate(-50%, -50%)',
-                  }}
-                  colors={['#306cce', '#72a1ed']}
-                />
+
+            <div className="workshop-side-selection">
+              <label>Select Side:</label>
+              <select value={activeSide} onChange={handleSideChange}>
+                <option value="front">Front</option>
+                <option value="back">Back</option>
+              </select>
+            </div>
+
+            <div className="workshop-images">
+              <div className="imagecomponent">
+                <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side = {`${activeSide}`}/>
               </div>
-            )}
-            <div className="generated-image" >
-              {imageData ? (
-                <React.Fragment>
-                  {!selectedFile && (
-                    <div>
-                      <img src={`${imageData}`} alt="Generated Image" />
-                      <div className='finalise'>
-                          <button type='button' className='finalise-button' onClick={() => { handleFinalise(); }}>CREATE PRODUCT</button>
-                      </div>
-                    </div>
-                  )}
-                  {selectedFile && (
-                    <div style={{ position: 'absolute', top: 0, left: 0 }}>
-                      <Dragg upload={selectedFile} back={`${imageData}`} category={category} />
-                    </div>
-                  )}
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  {!selectedFile && <img src={`./img/${activeColor}_tshirt_${selectedCategory}.png`} alt="Generated Image" draggable="false" />}
-                  {selectedFile && (
-                    <div style={{ position: 'absolute', top: 0, left: 0 }}>
-                      <Dragg upload={selectedFile} back={`./img/${activeColor}_tshirt_${selectedCategory}.png`} category={category} />
-                    </div>
-                  )}
-                </React.Fragment>
+              {animbool && (
+                <div className="ring-loader">
+                  <RingLoader color='#00fffc' />
+                </div>
               )}
+              {showBusyMessage && (
+                <div className="busy-message">
+                  Server is busy, please try again.🙂
+                </div>
+              )}
+              <div className="generated-image" >
+                {imageData ? (
+                  <React.Fragment>
+                    {!selectedFile && (
+                      <div>
+                        <img src={`${imageData}`} alt="Generated Image" />
+                        <div className='finalise'>
+                          <button type='button' className='finalise-button' onClick={() => { handleFinalise(); }}>CREATE PRODUCT</button>
+                        </div>
+                      </div>
+                    )}
+                    {selectedFile && (
+                      <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                        <Dragg upload={selectedFile} back={`${imageData}`} category={category} />
+                      </div>
+                    )}
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    {!selectedFile && <img src={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} alt="Generated Image" draggable="false" />}
+                    {selectedFile && (
+                      <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                        <Dragg upload={selectedFile} back={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} category={category} />
+                      </div>
+                    )}
+                  </React.Fragment>
+                )}
+              </div>
             </div>
           </div>
         </div>

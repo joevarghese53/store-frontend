@@ -2,8 +2,7 @@ import React, { useState, useRef } from 'react';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
-const BoxDrawing = ({ imageUrl, onValuesChange ,imggg }) => {
-  console.log(imggg)
+const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [startY, setStartY] = useState(0);
@@ -12,8 +11,47 @@ const BoxDrawing = ({ imageUrl, onValuesChange ,imggg }) => {
 
   const containerRef = useRef(null);
 
+  const getTshirtBounds = (category, side) => {
+    const bounds = {
+      regular: {
+        front: { left: 110, top: 140, right: 285, bottom: 380 },
+        back: { left: 115, top: 50, right: 285, bottom: 370 }
+      },
+      oversized: {
+        front: { left: 115, top: 140, right: 280, bottom: 375 },
+        back: { left: 120, top: 60, right: 280, bottom: 375 }
+      },
+      hoodies: {
+        front: { left: 100, top: 150, right: 290, bottom: 240 },
+        back: { left: 105, top: 105, right: 290, bottom: 340 }
+      },
+      default: {
+        front: { left: 120, top: 70, right: 290, bottom: 355 },
+        back: { left: 115, top: 65, right: 285, bottom: 345 }
+      }
+    };
+
+    return bounds[category]?.[side] || bounds.default[side];
+  };
+
+  const tshirtBounds = getTshirtBounds(category, side);
+
+  console.log(tshirtBounds)
+
+
   const handleMouseDown = (e) => {
     const containerRect = containerRef.current.getBoundingClientRect();
+    console.log(containerRect)
+
+    if (
+      e.clientX - containerRect.left < tshirtBounds.left ||
+      e.clientX - containerRect.left > tshirtBounds.right ||
+      e.clientY - containerRect.top < tshirtBounds.top ||
+      e.clientY - containerRect.top > tshirtBounds.bottom
+    ) {
+      return;
+    }
+
 
     setIsDragging(true);
     setStartX(e.clientX - containerRect.left);
@@ -26,9 +64,18 @@ const BoxDrawing = ({ imageUrl, onValuesChange ,imggg }) => {
     if (isDragging) {
       const containerRect = containerRef.current.getBoundingClientRect();
 
+      let newEndX = e.clientX - containerRect.left;
+      let newEndY = e.clientY - containerRect.top;
 
-      setEndX(e.clientX - containerRect.left);
-      setEndY(e.clientY - containerRect.top);
+      // Clamp the values to ensure they don't go outside the T-shirt bounds
+      if (newEndX < tshirtBounds.left) newEndX = tshirtBounds.left;
+      if (newEndX > tshirtBounds.right) newEndX = tshirtBounds.right;
+      if (newEndY < tshirtBounds.top) newEndY = tshirtBounds.top;
+      if (newEndY > tshirtBounds.bottom) newEndY = tshirtBounds.bottom;
+
+      // Update the end coordinates
+      setEndX(newEndX);
+      setEndY(newEndY);
     }
   };
 
@@ -39,13 +86,13 @@ const BoxDrawing = ({ imageUrl, onValuesChange ,imggg }) => {
 
   return (
 
-    <div 
+    <div
       ref={containerRef}
 
       onMouseDown={imggg ? handleMouseDown : undefined}
       onMouseMove={imggg ? handleMouseMove : undefined}
       onMouseUp={imggg ? handleMouseUp : undefined}
->      
+    >
       {/* <TransformWrapper
         disablePadding	="true"
       >
@@ -56,11 +103,42 @@ const BoxDrawing = ({ imageUrl, onValuesChange ,imggg }) => {
         id="tshirtImage"
         src={imageUrl}
         alt="Your Image"
-        style={{ width: 'auto', height: 'auto'}}
+        style={{ width: 'auto', height: 'auto' }}
         draggable="false"
       />
-     {/* </TransformComponent>
+      {/* </TransformComponent>
       </TransformWrapper> */}
+
+      {imggg && (
+        <div
+          style={{
+            position: 'absolute',
+            left: tshirtBounds.left - 5,
+            top: tshirtBounds.top - 5,
+            width: (tshirtBounds.right + 10) - tshirtBounds.left,
+            height: (tshirtBounds.bottom + 10) - tshirtBounds.top,
+            border: '2px dashed red',
+            // backgroundColor: 'rgba(255, 0, 0, 0.1)', 
+            pointerEvents: 'none',
+          }}
+        >
+          <span
+            style={{
+              position: 'absolute',
+              bottom: '5px',
+              right: '5px',
+              backgroundColor: 'rgba(0, 0, 0, 0.6)', // semi-transparent black background
+              color: 'white',
+              padding: '2px 5px',
+              fontSize: '10px',
+              borderRadius: '3px',
+            }}
+          >
+            Selectable Area
+          </span>
+        </div>
+      )
+      }
 
       {imggg && isDragging && (
         <div
@@ -70,8 +148,8 @@ const BoxDrawing = ({ imageUrl, onValuesChange ,imggg }) => {
             top: Math.min(startY, endY),
             width: Math.abs(endX - startX),
             height: Math.abs(endY - startY),
-            border: '2px solid RGBA(167,198,2370,0.3)',
-            backgroundColor:"RGBA(167,198,2370,0.3)",
+            border: '2px solid rgba(167, 198, 237, 1)',  // Corrected RGBA
+            backgroundColor: 'rgba(167, 198, 237, 0.3)', // Corrected RGBA
           }}
         />
       )}
