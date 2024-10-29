@@ -9,7 +9,7 @@ const CProduct = ({ product }) => {
       <Link href={{ pathname: '/DynamicProductPage', query: { id: product._id } }}>
         <div className="cproduct-card">
           <img
-            src={product.image}
+            src={product.frontImage}
             width={250}
             height={250}
             className="cproduct-image"

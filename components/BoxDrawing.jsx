@@ -113,10 +113,10 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side }) => {
         <div
           style={{
             position: 'absolute',
-            left: tshirtBounds.left - 5,
-            top: tshirtBounds.top - 5,
-            width: (tshirtBounds.right + 10) - tshirtBounds.left,
-            height: (tshirtBounds.bottom + 10) - tshirtBounds.top,
+            left: tshirtBounds.left - 3,
+            top: tshirtBounds.top - 3,
+            width: (tshirtBounds.right + 6) - tshirtBounds.left,
+            height: (tshirtBounds.bottom + 6) - tshirtBounds.top,
             border: '2px dashed red',
             // backgroundColor: 'rgba(255, 0, 0, 0.1)', 
             pointerEvents: 'none',

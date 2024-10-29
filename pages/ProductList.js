@@ -29,7 +29,7 @@ const ProductList = () => {
             <Link key={product._id} href={`/admin/product/update/${product._id}`}>
               <div className="admin-product-card">
                 <img
-                  src={product.image}
+                  src={product.frontImage}
                   alt={product.name}
                   className="admin-product-image"
                 />

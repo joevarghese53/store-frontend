@@ -23,6 +23,13 @@ const DynamicProductPage = () => {
   const [qty, setQty] = useState(1);
   const [addToCart] = useAddToCartMutation();
   const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    if (product) {
+      setSelectedImage(product.frontImage);
+    }
+  }, [product]);
 
   const handleAddToCart = async () => {
     if (!userInfo) {
@@ -66,18 +73,20 @@ return (
   <div className="product-detail-container">
     <div className='image-container'>
       <div className='big-image-container'>
-        <img src={product.image} className="product-detail-image" />
+        <img src={selectedImage} className="product-detail-image" />
       </div>
-      {/* <div className="small-images-container">
-        {product.image?.map((item, i) => (
-          <img
-            key={i}
-            src={urlFor(item)}
-            className={i === index ? 'small-image selected-image' : 'small-image'}
-            onMouseEnter={() => setIndex(i)}
+      <div className="small-images-container">
+        <img
+            src={product.frontImage}
+            className={selectedImage === product.frontImage ? 'small-image selected-image' : 'small-image'}
+            onClick={() => setSelectedImage(product.frontImage)}
           />
-        ))}
-      </div> */}
+          <img
+            src={product.backImage}
+            className={selectedImage === product.backImage ? 'small-image selected-image' : 'small-image'}
+            onClick={() => setSelectedImage(product.backImage)}
+          />
+      </div>
     </div>
 
     <div className="product-detail-desc">
@@ -86,7 +95,7 @@ return (
       <p className="price">₹{product.price}</p>
       <p className="tax">Inclusive of all taxes</p>
       <div className="size-chart">
-      <SizeSelector onSizeSelect={setSelectedSize} />
+      <SizeSelector onSizeSelect={setSelectedSize} category={product.category}/>
       </div>
       <div className="quantity">
         {product.countInStock > 0 && (

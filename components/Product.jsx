@@ -4,8 +4,9 @@ import { AiFillStar } from 'react-icons/ai';
 
 const Product = ({ product }) => {
   // Assume product.image already contains the full URL
-  const imageUrl = product.image;
+  const imageUrl = product.frontImage;
 
+  console.log("product", product);
 
 
   return (

@@ -53,7 +53,7 @@ const MyOrders = () => {
                                 <div className="order-items">
                                     {order.orderItems.map((item) => (
                                         <div key={item.product} className="order-item">
-                                            <img src={item.image} alt={item.name} className="order-product-image" />
+                                            <img src={item.frontImage} alt={item.name} className="order-product-image" />
                                             <div className="order-item-desc">
                                                 <h3>{item.name}</h3>
                                                 <p>{item.category}</p>

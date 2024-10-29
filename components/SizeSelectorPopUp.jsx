@@ -18,7 +18,7 @@ const SizeSelectorPopUp = ({ show, onClose, onConfirm, product }) => {
             </Modal.Header>
             <Modal.Body>
                 <p>Please select a size:</p>
-                {['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map((size) => (
+                {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
                     <button
                         key={size}
                         className={`size-button ${selectedSize === size ? 'selected' : ''}`}

@@ -7,8 +7,24 @@ import Loader from '@/components/Loader';
 
 const OrderDetails = () => {
     const router = useRouter();
-    const { order_id: orderId } = router.query;
+    const { order_id: orderId, admin: admin } = router.query;
     const { data: orderDetails, error, isLoading } = useGetOrderDetailsQuery(orderId);
+    console.log(orderDetails);
+    console.log(admin);
+
+    const downloadImage = async (url, name) => {
+        try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = name;
+            link.click();
+            URL.revokeObjectURL(link.href); // Cleanup
+        } catch (error) {
+            console.error("Error downloading image:", error);
+        }
+    };
 
     const generateInvoice = () => {
         if (!orderDetails) return;
@@ -108,13 +124,71 @@ const OrderDetails = () => {
                         <h2>Order Items</h2>
                         {orderDetails.orderItems.map((item) => (
                             <div key={item.product} className="order-item">
-                                <img src={item.image} alt={item.name} className="order-product-image" />
-                                <div className="order-item-desc">
-                                    <h3>{item.name}</h3>
-                                    <p>{item.category}</p>
-                                    <p>Quantity : {item.qty}</p>
-                                    <p>Size : {item.size}</p>
+                                <div className='order-item-imageanddesc'>
+                                    <img src={item.frontImage} alt={item.name} className="order-product-image" />
+                                    <div className="order-item-desc">
+                                        <h3>{item.name}</h3>
+                                        <p>{item.category}</p>
+                                        <p>Quantity : {item.qty}</p>
+                                        <p>Size : {item.size}</p>
+                                        <p>Price : ₹{item.price}</p>
+                                    </div>
                                 </div>
+                                {admin && (
+                                    <div className="images-download-container">
+                                        {item.frontImage && item.frontImage != "undefined" && (
+                                            <button
+                                                className="download-image-button"
+                                                onClick={() => downloadImage(item.frontImage, `${item.name}-front.png`)}
+                                            >
+                                                Download Front Image
+                                            </button>
+                                        )}
+                                        {item.backImage && item.backImage != "undefined" && (
+                                            <button
+                                                className="download-image-button"
+                                                onClick={() => downloadImage(item.backImage, `${item.name}-back.png`)}
+                                            >
+                                                Download Back Image
+                                            </button>
+                                        )}
+                                        {item.frontDesign && item.frontDesign != "undefined" && (
+                                            <button
+                                                className="download-image-button"
+                                                onClick={() => downloadImage(item.frontDesign, `${item.name}-front-design.png`)}
+                                            >
+                                                Download Front Design
+                                            </button>
+                                        )}
+                                        {item.backDesign && item.backDesign != "undefined" && (
+                                            <button
+                                                className="download-image-button"
+                                                onClick={() => downloadImage(item.backDesign, `${item.name}-back-design.png`)}
+                                            >
+                                                Download Back Design
+                                            </button>
+                                        )}
+                                        {item.frontUpload && item.frontUpload != "undefined" && (
+                                            <button
+                                                className="download-image-button"
+                                                onClick={() => downloadImage(item.frontUpload, `${item.name}-front-upload.png`)}
+                                            >
+                                                Download Front Upload
+                                            </button>
+                                        )}
+                                        {item.backUpload && item.backUpload != "undefined" && (
+                                            <button
+                                                className="download-image-button"
+                                                onClick={() => downloadImage(item.backUpload, `${item.name}-back-upload.png`)}
+                                            >
+                                                Download Back Upload
+                                            </button>
+                                        )}
+                                    </div>
+                                )
+
+                                }
+
                             </div>
                         ))}
                     </div>

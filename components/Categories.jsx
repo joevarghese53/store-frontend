@@ -11,12 +11,12 @@ const Categories = ({ gender }) => {
         male: {
             'Regular T-Shirts': '/img/male-regular.jpg',
             'Oversized T-shirts': '/img/male-oversized.jpg',
-            'Hoodies': '/img/male-hoodie.jpg'
+            'Oversized Hoodies': '/img/male-hoodie.jpg'
         },
         female: {
             'Regular T-Shirts': '/img/female-regular.jpg',
             'Oversized T-shirts': '/img/female-oversized.jpg',
-            'Hoodies': '/img/female-hoodie.jpg'
+            'Oversized Hoodies': '/img/female-hoodie.jpg'
         }
     };
 

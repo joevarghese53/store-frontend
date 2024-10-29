@@ -35,7 +35,6 @@ const CategoryList = () => {
       } else {
         setName("");
         toast.success(`${result.name} is created.`);
-        router.reload();
       }
     } catch (error) {
       console.error(error);
@@ -64,7 +63,6 @@ const CategoryList = () => {
         setSelectedCategory(null);
         setUpdatingName("");
         setModalVisible(false);
-        router.reload();
       }
     } catch (error) {
       console.error(error);
@@ -81,7 +79,6 @@ const CategoryList = () => {
         toast.success(`${result.name} is deleted.`);
         setSelectedCategory(null);
         setModalVisible(false);
-        router.reload();
       }
     } catch (error) {
       console.error(error);

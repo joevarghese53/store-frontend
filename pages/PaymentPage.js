@@ -79,7 +79,7 @@ const PaymentPage = () => {
             {orderDetails && orderDetails.orderItems ? (
               orderDetails.orderItems.map((item) => (
                 <div className="payment-cart-item" key={item._id}>
-                  <img src={item.image} className="payment-cart-product-image" />
+                  <img src={item.frontImage} className="payment-cart-product-image" />
                   <div className="payment-item-desc">
                     <h5>{item.name}</h5>
                     <p id='payment-cart-item-category'>{item.category}</p>

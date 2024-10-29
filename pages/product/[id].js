@@ -24,6 +24,7 @@ const ProductDetails = () => {
   const { id: productId } = router.query;
   console.log(productId);
   const { data: product, isLoading, refetch, error, } = useGetProductDetailsQuery(productId);
+  console.log(product);
   const { userInfo } = useSelector((state) => state.auth);
   const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
   const dispatch = useDispatch();
@@ -36,10 +37,13 @@ const ProductDetails = () => {
   const [addToWishlist] = useAddToWishlistMutation();
   const [removeFromWishlist] = useRemoveFromWishlistMutation();
   const { data: wishlistData } = useCheckItemInWishlistQuery(productId);
-  console.log("item exists? : ", wishlistData);
   const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
+    if (product) {
+      setSelectedImage(product.frontImage);
+    }
     if (product?.category) {
       setCategoryId(product.category);
     }
@@ -126,7 +130,27 @@ const ProductDetails = () => {
       <div className="product-detail-container">
         <div className='image-container'>
           <div className='big-image-container'>
-            <img src={product.image} className="product-detail-image" />
+            <img src={selectedImage} className="product-detail-image" />
+          </div>
+          <div className="small-images-container">
+            <img
+              src={product.frontImage}
+              className={selectedImage === product.frontImage ? 'small-image selected-image' : 'small-image'}
+              onClick={() => setSelectedImage(product.frontImage)}
+            />
+            <img
+              src={product.backImage}
+              className={selectedImage === product.backImage ? 'small-image selected-image' : 'small-image'}
+              onClick={() => setSelectedImage(product.backImage)}
+            />
+            {product.images?.map((item, i) => (
+              <img
+                key={i}
+                src={item}
+                className={i === index ? 'small-image selected-image' : 'small-image'}
+                onClick={() => setSelectedImage(item)}
+              />
+            ))}
           </div>
           {/* <div className="small-images-container">
             {product.image?.map((item, i) => (
@@ -155,7 +179,7 @@ const ProductDetails = () => {
           <p className="price">₹{product.price}</p>
           <p className="tax">Inclusive of all taxes</p>
           <div className="size-chart">
-          <SizeSelector onSizeSelect={setSelectedSize} />
+            <SizeSelector onSizeSelect={setSelectedSize} category = {category?.name}/>
           </div>
           <div className="quantity">
             {product.countInStock > 0 && (

@@ -153,7 +153,7 @@ const ManageOrders = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        <Link href={{ pathname: '/OrderDetails', query: { order_id: order._id } }} key={order._id}>
+                                        <Link href={{ pathname: '/OrderDetails', query: { order_id: order._id, admin : true } }} key={order._id}>
                                             <button className="manage-orders-view-button">View</button>
                                         </Link>
                                     </td>

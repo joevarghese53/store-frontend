@@ -14,6 +14,11 @@ import {
   useUploadProductImageMutation,
 } from "../redux/api/productApiSlice";
 import { toast } from "react-toastify";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { TbReload } from "react-icons/tb";
+import { MdDelete } from "react-icons/md";
+
+
 
 
 const Workshop = ({ setActiveTab }) => {
@@ -27,6 +32,13 @@ const Workshop = ({ setActiveTab }) => {
   const [textareaValue, setTextareaValue] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageData, setImageData] = useState(null);
+  const [designData, setDesignData] = useState(null);
+  const [finalImageFront, setFinalImageFront] = useState(null);
+  const [finalImageBack, setFinalImageBack] = useState(null);
+  const [finalDesignFront, setFinalDesignFront] = useState(null);
+  const [finalDesignBack, setFinalDesignBack] = useState(null);
+  const [finalUploadFront, setFinalUploadFront] = useState(null);
+  const [finalUploadBack, setFinalUploadBack] = useState(null);
   const [animbool, setanimbool] = useState(false);
   const [showBusyMessage, setShowBusyMessage] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('regular');
@@ -43,12 +55,32 @@ const Workshop = ({ setActiveTab }) => {
     hoodies: ['white', 'black', 'dark_greenh', 'lavender', 'sky_blue', 'dark_grey', 'aqua_green'],
   };
 
+  const showColorSets = {
+    'white' : 'White [HEX: #FFFFFF]',
+    'black' : 'Black [HEX: #000000]',
+    'dark_greenr' : 'Dark Green [HEX: #05270B]',
+    'brown' : 'Brown [HEX: #290C06]',
+    'lavender' : 'Lavender [HEX: #9E68C6]',
+    'beige' : 'Beige [HEX: #BBA576]',
+    'grey' : 'Grey [HEX: #353A4A]',
+    'peach' : 'Peach [HEX: #F78266]',
+    'violet' : 'Violet [HEX: #3F0051]',
+    'hot_pink' : 'Hot Pink [HEX: #D01957]',
+    'green' : 'Green [HEX: #00A15A]',
+    'royal_blue' : 'Royal Blue [HEX: #095BE5]',
+    'baby_pink' : 'Baby Pink [HEX: #F8CDD5]',
+    'dark_greenh' : 'Dark Green [HEX: #003920]',
+    'sky_blue' : 'Sky Blue [HEX: #8CB4F4]',
+    'dark_grey' : 'Dark Grey [HEX: #14141C]',
+    'aqua_green' : 'Aqua Green [HEX: #75EDB8]',
+  }
+
   const currentColorSet = colorSets[selectedCategory] || colorSets.regular;
 
   const categoryMap = {
     "Regular T-Shirts": "regular",
     "Oversized T-shirts": "oversized",
-    "Hoodies": "hoodies",
+    "Oversized Hoodies": "hoodies",
   };
 
   const handleFileChange = (e) => {
@@ -57,12 +89,20 @@ const Workshop = ({ setActiveTab }) => {
 
   const handleColorClick = (color) => {
     if (color !== activeColor) {
-      setActiveColor(color);  
+      setActiveColor(color);
+      setSelectedFile(null);
+      setImageData(null);
+      setFinalImageFront(null);
+      setFinalImageBack(null);
+      setFinalDesignFront(null);
+      setFinalDesignBack(null);
     }
   };
 
   const handleSideChange = (e) => {
     setActiveSide(e.target.value);
+    setSelectedFile(null);
+    setImageData(null);
   };
 
   const handleTextareaChange = (e) => {
@@ -74,6 +114,23 @@ const Workshop = ({ setActiveTab }) => {
     let scrollHeight = e.target.scrollHeight;
     e.target.style.height = `${scrollHeight}px`;
   };
+
+  const handleImageDataReload = () => {
+    setImageData(null);
+  };
+
+  const handleFinalImageFrontDelete = () => {
+    setFinalImageFront(null);
+    setFinalDesignFront(null);
+    setFinalUploadFront(null);
+  };
+
+  const handleFinalImageBackDelete = () => {
+    setFinalImageBack(null);
+    setFinalDesignBack(null);
+    setFinalUploadBack(null);
+  };
+
 
   const handleSubmit = () => {
     // Check if the prompt (textareaValue) is empty
@@ -94,10 +151,10 @@ const Workshop = ({ setActiveTab }) => {
     const formattedBoxDrawingValues = boxDrawingValuesArray.join('_');
     const formattedTextareaValue = textareaValue.replace(/ /g, '_');
 
-    const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory}`;
+    const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide}`;
     console.log(postData);
 
-    fetch('https://4375-35-185-228-15.ngrok-free.app/submit-prompt', {
+    fetch('https://b017-34-125-91-24.ngrok-free.app/submit-prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -112,13 +169,11 @@ const Workshop = ({ setActiveTab }) => {
       })
       .then(data => {
         var html_code = data;
-        var regex = /src="(.*?)"\sclass=/;
-        var match = html_code.match(regex);
+        var regex = /src="(data:image\/[^"]+)"/g;
+        var matches = [...html_code.matchAll(regex)];
 
-        // Assuming match[1] contains the base64 image
-        console.log(match[1])
-
-        setImageData(match[1]);
+        setImageData(matches[0][1]);
+        setDesignData(matches[1][1]);
         setanimbool(false)
 
       })
@@ -146,29 +201,158 @@ const Workshop = ({ setActiveTab }) => {
     return new File([u8arr], filename, { type: mime });
   };
 
-  const handleFinalise = async () => {
+  const handleFinalise = () => {
+    if (activeSide === 'front') {
+      setFinalImageFront(imageData);
+      setFinalDesignFront(designData);
+      setImageData(null);
+      setDesignData(null);
+      setFinalUploadFront(null);
+    } else {
+      setFinalImageBack(imageData);
+      setFinalDesignBack(designData);
+      setImageData(null);
+      setDesignData(null);
+      setFinalUploadBack(null);
+    }
+  }
+
+  async function fetchImageAsFile(url, filename) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new File([blob], filename, { type: blob.type });
+  }
+
+  async function blobUrlToFile(blobUrl, fileName) {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    return new File([blob], fileName, { type: blob.type });
+  }
+
+  const handleCreateProduct = async () => {
     try {
-      if (!imageData) {
-        throw new Error("No image data to upload");
-      }
+
+      console.log("Final Image Front: ", finalImageFront);
+      console.log("Final Image Back: ", finalImageBack);
+      console.log("Final Design Front: ", finalDesignFront);
+      console.log("Final Design Back: ", finalDesignBack);
+      console.log("Final Upload Front: ", finalUploadFront);
+      console.log("Final Upload Back: ", finalUploadBack);
+
+      let frontImagefile;
+      let backImagefile;
+      let frontDesignfile;
+      let backDesignfile;
+      let uploadFrontFile;
+      let uploadBackFile;
+
+      const formData = new FormData();
 
       // Convert Base64 to File
-      const file = base64ToFile(imageData, 'generated-image.png');
-      const formData = new FormData();
-      formData.append("image", file);
-      console.log("generated image", file);
+      if(finalImageFront){
+        frontImagefile = base64ToFile(finalImageFront, 'generated-front-image.png');
+      } else {
+        frontImagefile = await fetchImageAsFile(`./img/${activeColor}_tshirt_${selectedCategory}_front.png`, 'generated-front-image.png');
+      }
+      formData.append("frontImage", frontImagefile);
+
+      if(finalImageBack){
+        backImagefile = base64ToFile(finalImageBack, 'generated-back-image.png');
+      } else {
+        backImagefile = await fetchImageAsFile(`./img/${activeColor}_tshirt_${selectedCategory}_back.png`, 'generated-back-image.png');
+      }
+      formData.append("backImage", backImagefile);
+
+      if(finalDesignFront){
+        frontDesignfile = base64ToFile(finalDesignFront, 'generated-front-design.png');
+        formData.append("frontDesign", frontDesignfile);
+      } 
+
+      if(finalDesignBack){
+        backDesignfile = base64ToFile(finalDesignBack, 'generated-back-design.png');
+        formData.append("backDesign", backDesignfile);
+      }
+
+      if(finalUploadFront){
+        uploadFrontFile = await blobUrlToFile(finalUploadFront, 'generated-front-upload.png');
+        formData.append("frontUpload", uploadFrontFile);
+      }
+
+      if(finalUploadBack){
+        uploadBackFile = await blobUrlToFile(finalUploadBack, 'generated-back-upload.png');
+        formData.append("backUpload", uploadBackFile);
+      }
+
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
-      const uploadedImagePath = res.image;
+      console.log("Response: ", res);
+      console.log("frontImage: ", res.imageUrls.frontImage[0]);
+      console.log("backImage: ", res.imageUrls.backImage[0]);
+      const frontImagePath = res.imageUrls.frontImage[0];
+      const backImagePath = res.imageUrls.backImage[0];
+      let frontDesignPath;
+      let backDesignPath;
+      let frontUploadPath;
+      let backUploadPath;
+      if(res.imageUrls.frontDesign){
+        frontDesignPath = res.imageUrls.frontDesign[0];
+      } else {
+        frontDesignPath = "undefined";
+      }
+      if(res.imageUrls.backDesign){
+        backDesignPath = res.imageUrls.backDesign[0];
+      } else {
+        backDesignPath = "undefined";
+      }
+      if(res.imageUrls.frontUpload){
+        frontUploadPath = res.imageUrls.frontUpload[0];
+      } else {
+        frontUploadPath = "undefined";
+      }
+      if(res.imageUrls.backUpload){
+        backUploadPath = res.imageUrls.backUpload[0];
+      } else {
+        backUploadPath = "undefined";
+      }
 
+      
       const productData = new FormData();
-      productData.append("image", uploadedImagePath);
-      console.log("Image Path: ", uploadedImagePath);
+      productData.append("frontImage", frontImagePath);
+      productData.append("backImage", backImagePath);
+      productData.append("frontDesign", frontDesignPath);
+      productData.append("backDesign", backDesignPath);
+      productData.append("frontUpload", frontUploadPath);
+      productData.append("backUpload", backUploadPath);
       productData.append("name", 'CUSTOMS');
-      productData.append("description", 'CUSTOMS');
-      productData.append("price", 799);
+      if (selectedCategory === 'regular') {
+        productData.append("description", '• 180 GSM\n• 100% Cotton Material\n• Pre-shrunk\n• Bio-Washed\n• Super Combed Cotton\n• No Colour Fading');
+        if(frontDesignPath && (backDesignPath || backUploadPath)){
+          productData.append("price", 899);
+        } else if(frontUploadPath && (backDesignPath || backUploadPath)){
+          productData.append("price", 899);
+        } else {
+          productData.append("price", 699);
+        }
+      } else if (selectedCategory === 'oversized') {
+        productData.append("description", '• 240 GSM\n• 100% Cotton Material\n• Pre-shrunk\n• Double Stitching\n• Super Combed Cotton\n• No Colour Fading');
+        if(frontDesignPath && (backDesignPath || backUploadPath)){
+          productData.append("price", 1099);
+        } else if(frontUploadPath && (backDesignPath || backUploadPath)){
+          productData.append("price", 1099);
+        } else {
+          productData.append("price", 899);
+        }
+      } else if (selectedCategory === 'hoodies') {
+        productData.append("description", '• 350 GSM\n• 60% Cotton 40% Poly\n• Pre-shrunk\n• Double Hood\n• Super Combed Cotton\n• Cross Neck');
+        if(frontDesignPath && (backDesignPath || backUploadPath)){
+          productData.append("price", 1299);
+        } else if(frontUploadPath && (backDesignPath || backUploadPath)){
+          productData.append("price", 1299);
+        } else {
+          productData.append("price", 1099);
+        }
+      }
       productData.append("category", category);
-      console.log("Category: ", category);
       productData.append("offers", 'No offers available right now');
       productData.append("returnpolicy", 'Return policy not available for this item');
       productData.append("countInStock", 10);
@@ -219,142 +403,179 @@ const Workshop = ({ setActiveTab }) => {
   return (
     <>
       {userInfo ? (
-        <div className="workshop-main-container">
+        <>
+          <div className="workshop-main-container">
 
-          {/* ------------------------------------Left Tabs Start-------------------------------------- */}
+            {/* ------------------------------------Left Tabs Start-------------------------------------- */}
 
-          <Tabs className="workshop-tabs">
-            <TabList className="workshop-tabs-list">
-              <Tab>
-                <MdCategory size={24} />
-                <div>Select Category</div>
-              </Tab>
-              <Tab>
-                <FaUpload size={24} />
-                <div>Upload File</div>
-              </Tab>
-              <Tab>
-                <FaPalette size={24} />
-                <div>Select Color</div>
-              </Tab>
-              <Tab>
-                <FaCog size={24} />
-                <div>Generate</div>
-              </Tab>
-            </TabList>
+            <Tabs className="workshop-tabs">
+              <TabList className="workshop-tabs-list">
+                <Tab>
+                  <MdCategory size={24} />
+                  <div>Select Category</div>
+                </Tab>
+                <Tab>
+                  <FaUpload size={24} />
+                  <div>Upload File</div>
+                </Tab>
+                <Tab>
+                  <FaPalette size={24} />
+                  <div>Select Color</div>
+                </Tab>
+                <Tab>
+                  <FaCog size={24} />
+                  <div>Generate</div>
+                </Tab>
+              </TabList>
 
-            <TabPanel className="workshop-tab-panel">
-              <div className="workshop-category-content">
-                <h1>SELECT CATEGORY</h1>
-                <div className="workshop-category-groups">
-                  {categoriesData?.map((category) => (
-                    <div
-                      key={category._id}
-                      className={`workshop-category-card ${selectedCategory === categoryMap[category.name] ? "selected" : ""
-                        }`}
-                      onClick={() => { setSelectedCategory(categoryMap[category.name]); setCategory(category._id); setActiveColor('black'); }}
-                    >
-                      <h4>{category.name.toUpperCase()}</h4>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </TabPanel>
-
-            <TabPanel className="workshop-tab-panel">
-              <input type="file" onChange={handleFileChange} />
-            </TabPanel>
-
-            <TabPanel className="workshop-tab-panel">
-              <div className="workshop-color-content">
-                <h4>SELECT COLOR</h4>
-                <div className="workshop-color-groups">
-                  {currentColorSet.map((color) => (
-                    <div
-                      key={color}
-                      className={`color color-${color} ${color === activeColor ? 'active-color' : ''}`}
-                      onClick={() => handleColorClick(color)}
-                    ></div>
-                  ))}
-                </div>
-              </div>
-            </TabPanel>
-
-            <TabPanel className="workshop-tab-panel">
-              <input
-                spellCheck="false"
-                type="text"
-                value={textareaValue}
-                onChange={handleTextareaChange}
-                placeholder="Type something here..."
-                onKeyUp={handleTextareaResize}
-              />
-              <button id='prompt-submit-button' onClick={handleSubmit}>Submit</button>
-            </TabPanel>
-          </Tabs>
-
-          {/* ------------------------------------Left Tabs Start-------------------------------------- */}
-
-
-          <div className="workshop-image-area">
-            <div className="workshop-image-header">
-              <span>Canvas</span>
-              <span>Preview</span>
-            </div>
-
-            <div className="workshop-side-selection">
-              <label>Select Side:</label>
-              <select value={activeSide} onChange={handleSideChange}>
-                <option value="front">Front</option>
-                <option value="back">Back</option>
-              </select>
-            </div>
-
-            <div className="workshop-images">
-              <div className="imagecomponent">
-                <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side = {`${activeSide}`}/>
-              </div>
-              {animbool && (
-                <div className="ring-loader">
-                  <RingLoader color='#00fffc' />
-                </div>
-              )}
-              {showBusyMessage && (
-                <div className="busy-message">
-                  Server is busy, please try again.🙂
-                </div>
-              )}
-              <div className="generated-image" >
-                {imageData ? (
-                  <React.Fragment>
-                    {!selectedFile && (
-                      <div>
-                        <img src={`${imageData}`} alt="Generated Image" />
-                        <div className='finalise'>
-                          <button type='button' className='finalise-button' onClick={() => { handleFinalise(); }}>CREATE PRODUCT</button>
-                        </div>
+              <TabPanel className="workshop-tab-panel">
+                <div className="workshop-category-content">
+                  <h1>SELECT CATEGORY</h1>
+                  <div className="workshop-category-groups">
+                    {categoriesData?.map((category) => (
+                      <div
+                        key={category._id}
+                        className={`workshop-category-card ${selectedCategory === categoryMap[category.name] ? "selected" : ""
+                          }`}
+                        onClick={() => { setSelectedCategory(categoryMap[category.name]); setCategory(category._id); setActiveColor('black'); setImageData(null); setSelectedFile(null); setFinalImageFront(null); setFinalImageBack(null); setImageData(null); setDesignData(null); setFinalDesignFront(null); setFinalDesignBack(null); setFinalUploadFront(null); setFinalUploadBack(null); }}
+                      >
+                        <h4>{category.name.toUpperCase()}</h4>
                       </div>
-                    )}
-                    {selectedFile && (
-                      <div style={{ position: 'absolute', top: 0, left: 0 }}>
-                        <Dragg upload={selectedFile} back={`${imageData}`} category={category} />
+                    ))}
+                  </div>
+                </div>
+              </TabPanel>
+
+              <TabPanel className="workshop-tab-panel">
+                <input type="file" onChange={handleFileChange} />
+              </TabPanel>
+
+              <TabPanel className="workshop-tab-panel">
+                <div className="workshop-color-content">
+                  <h4>SELECT COLOR</h4>
+                  <div className="workshop-color-groups">
+                    {currentColorSet.map((color) => (
+                      <div
+                        key={color}
+                        className={`color color-${color} ${color === activeColor ? 'active-color' : ''}`}
+                        onClick={() => handleColorClick(color)}
+                      >
+                        <span className="tooltip">{showColorSets[color]}</span>
                       </div>
-                    )}
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    {!selectedFile && <img src={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} alt="Generated Image" draggable="false" />}
-                    {selectedFile && (
-                      <div style={{ position: 'absolute', top: 0, left: 0 }}>
-                        <Dragg upload={selectedFile} back={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} category={category} />
-                      </div>
-                    )}
-                  </React.Fragment>
+                    ))}
+                  </div>
+                </div>
+              </TabPanel>
+
+              <TabPanel className="workshop-tab-panel">
+                <input
+                  spellCheck="false"
+                  type="text"
+                  value={textareaValue}
+                  onChange={handleTextareaChange}
+                  placeholder="Type something here..."
+                  onKeyUp={handleTextareaResize}
+                />
+                <button id='prompt-submit-button' onClick={handleSubmit}>Submit</button>
+              </TabPanel>
+            </Tabs>
+
+            {/* ------------------------------------Left Tabs Start-------------------------------------- */}
+
+
+            <div className="workshop-image-area">
+              <div className="workshop-image-header">
+                <span>Canvas</span>
+                <span>Preview</span>
+              </div>
+
+              <div className="workshop-side-selection">
+                <label>Select Side:</label>
+                <select value={activeSide} onChange={handleSideChange}>
+                  <option value="front">Front</option>
+                  <option value="back">Back</option>
+                </select>
+              </div>
+
+              <div className="workshop-images">
+                <div className="imagecomponent">
+                  <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} />
+                </div>
+                {animbool && (
+                  <div className="ring-loader">
+                    <RingLoader color='#00fffc' />
+                  </div>
                 )}
+                {showBusyMessage && (
+                  <div className="busy-message">
+                    Server is busy, please try again.🙂
+                  </div>
+                )}
+                <div className="generated-image" >
+                  {imageData ? (
+                    <React.Fragment>
+                      {!selectedFile && (
+                        <div>
+                          <img src={`${imageData}`} alt="Generated Image" />
+                          <div className='finalise'>
+                            <button type='button' className='finalise-button' onClick={() => { handleFinalise(); }}>CONFIRM DESIGN</button>
+                          </div>
+                          <div className='reload'>
+                            <TbReload size={34} onClick={handleImageDataReload} />
+                          </div>
+                        </div>
+                      )}
+                      {selectedFile && (
+                        <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                          <Dragg upload={selectedFile} back={`${imageData}`} design = {designData} side={activeSide} setFinalImageFront={setFinalImageFront} setFinalImageBack={setFinalImageBack} setFinalDesignFront = {setFinalDesignFront} setFinalDesignBack = {setFinalDesignBack} setFinalUploadFront = {setFinalUploadFront} setFinalUploadBack={setFinalUploadBack} />
+                        </div>
+                      )}
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      {!selectedFile && <img src={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} alt="Generated Image" draggable="false" />}
+                      {selectedFile && (
+                        <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                          <Dragg upload={selectedFile} back={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} design = {designData} side={activeSide} setFinalImageFront={setFinalImageFront} setFinalImageBack={setFinalImageBack} setFinalDesignFront = {setFinalDesignFront} setFinalDesignBack = {setFinalDesignBack} setFinalUploadFront = {setFinalUploadFront} setFinalUploadBack={setFinalUploadBack}/>
+                        </div>
+                      )}
+                    </React.Fragment>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <div className="final-product-main-container">
+            <div className="final-product-images">
+              <div className="final-product-front">
+                {finalImageFront &&
+                  <div className="final-image-container">
+                    <img src={finalImageFront} alt="Final Product Front" />
+                    <div className='final-image-delete'>
+                      <MdDelete size={34} onClick={handleFinalImageFrontDelete} color='red' />
+                    </div>
+                  </div>
+                }
+                {!finalImageFront && <img src={`./img/${activeColor}_tshirt_${selectedCategory}_front.png`} alt="Final Product Front" />}
+              </div>
+              <div className="final-product-back">
+                {finalImageBack &&
+                  <div className="final-image-container">
+                    <img src={finalImageBack} alt="Final Product Back" />
+                    <div className='final-image-delete'>
+                      <MdDelete size={34} onClick={handleFinalImageBackDelete} color='red' />
+                    </div>
+                  </div>
+                }
+                {!finalImageBack && <img src={`./img/${activeColor}_tshirt_${selectedCategory}_back.png`} alt="Final Product Back" />}
+              </div>
+            </div>
+            <div className="final-product-create">
+              <button type='button' onClick={handleCreateProduct}>CREATE PRODUCT <FaArrowRightLong size={24} /></button>
+
+            </div>
+          </div>
+        </>
       ) : (
         <div className="login-redirect">
           <h1>Please <Link href="/LoginPage">

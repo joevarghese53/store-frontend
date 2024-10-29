@@ -15,13 +15,12 @@ export const productApiSlice = apiSlice.injectEndpoints({
 
     getProductById: builder.query({
       query: (productId) => `${PRODUCT_URL}/${productId}`,
-      providesTags: (result, error, productId) => [
-        { type: "Product", id: productId },
-      ],
+      providesTags: ["Products"],
     }),
 
     allProducts: builder.query({
       query: () => `${PRODUCT_URL}/allProducts`,
+      providesTags: ["Products"],
     }),
 
     getProductDetails: builder.query({
@@ -29,6 +28,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `${PRODUCT_URL}/${productId}`,
       }),
       keepUnusedDataFor: 5,
+      providesTags: ["Products"],
     }),
 
     createProduct: builder.mutation({
@@ -37,7 +37,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: productData,
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: ["Products"],
     }),
 
     updateProduct: builder.mutation({
@@ -46,6 +46,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: formData,
       }),
+      invalidatesTags: ["Products"],
     }),
 
     uploadProductImage: builder.mutation({
@@ -61,7 +62,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `${PRODUCT_URL}/${productId}`,
         method: "DELETE",
       }),
-      providesTags: ["Product"],
+      invalidatesTags: ["Products"],
     }),
 
     createReview: builder.mutation({
@@ -79,11 +80,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
         return `${PRODUCT_URL}/top${genderParam}`;
       },
       keepUnusedDataFor: 5,
+      providesTags: ["Products"],
     }),
 
     getNewProducts: builder.query({
       query: () => `${PRODUCT_URL}/new`,
       keepUnusedDataFor: 5,
+      providesTags: ["Products"],
     }),
 
     getFilteredProducts: builder.query({
@@ -92,6 +95,8 @@ export const productApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { checked, radio, gender },
       }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Products"],
     }),
   }),
 });

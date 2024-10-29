@@ -275,13 +275,13 @@ span.text-red {
   width: 200px;
   padding: 10px 20px;
   background-color: #f02d34;
-  color: white;
   font-size: 18px;
   font-weight: 500;
   cursor: pointer;
-  transition: transform 0.5s ease;
+  /* transition: transform 0.5s ease; */
   margin-left: 100px;
-  margin-top: 50px;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
 .finalise-button:hover {
@@ -1275,7 +1275,12 @@ span.text-red {
   display: flex;
   gap: 20px;
   border-bottom: 1px solid #d6d6d6;
-  height: 150px;
+  justify-content: space-between;
+}
+
+.order-item-imageanddesc {
+  display: flex;
+  gap: 40px;
 }
 
 .order-product-image {
@@ -1614,6 +1619,21 @@ span.text-red {
   background-color: #2a3266;
 }
 
+.images-download-container {
+  display: flex;
+  gap: 20px;
+  height: 70px;
+}
+
+.download-image-button {
+  padding: 10px;
+  background-color: #000c5b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 /* OrderDetails.js end */
 
 /* OrderStatusBar.jsx start */
@@ -1804,6 +1824,7 @@ span.text-red {
 
 .collapsible-content {
   padding: 10px 0;
+  white-space: pre-line;
 }
 
 /* Product Info Collapsible end */
@@ -2958,7 +2979,8 @@ form input {
 /* CreateProduct.js start */
 
 .create-product-container {
-  margin: 150px 50px;
+  margin: 150px auto;
+  max-width: 1000px;
   padding: 20px;
   color: #000000;
   border-radius: 10px;
@@ -2969,15 +2991,36 @@ form input {
   margin-bottom: 20px;
 }
 
-.create-product-image {
+.create-product-images-display {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  max-height: 300px;
+  /* Adjust as needed */
+  overflow-y: scroll;
+  padding: 10px;
+  gap: 10px;
+  border: 10px solid #ccc;
   margin-bottom: 20px;
 }
 
+.create-product-image {
+  flex: 1 0 10%;
+  /* Adjust to fit the layout */
+  max-width: 100%;
+}
+
 .create-product-image img {
-  height: 211px;
-  border-radius: 10px;
+  width: auto;
+  height: 200px;
+  object-fit: cover;
+}
+
+.create-product-image p{
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .create-product-image-upload {
@@ -2989,6 +3032,7 @@ form input {
   border-radius: 6px;
   background-color: #323737;
   font-size: 20px;
+  gap: 30px;
 }
 
 .create-product-image-upload label {
@@ -3008,6 +3052,13 @@ form input {
   gap: 20px;
 }
 
+.create-product-details-gender select{
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #8d02dc;
+  cursor: pointer;
+}
 
 .create-product-details-row1,
 .create-product-details-row2,
@@ -3585,6 +3636,7 @@ form input {
   color: #2c2a2a;
   justify-content: center;
   margin-top: 130px;
+  min-height: 150vh;
 }
 
 .product-details-tabs {
@@ -3607,9 +3659,7 @@ form input {
   height: 619px;
 }
 
-.product-detail-image:hover {
-  background-color: #f02d34;
-}
+
 
 .custom-image-container img {
   width: 400px;
@@ -3632,9 +3682,7 @@ form input {
   cursor: pointer;
 }
 
-.selected-image {
-  background-color: #f02d34;
-}
+
 
 .on-card-reviews {
   border: 1px solid #9f9c9c;
@@ -4069,10 +4117,12 @@ form input {
   color: #ffffff;
 }
 
+.customs-content {
+  min-height: 100vh;
+}
 
 .workshop-main-container {
   display: flex;
-  min-height: 100vh;
 }
 
 .workshop-tabs {
@@ -4095,28 +4145,36 @@ form input {
   margin-left: 10px;
 }
 
+.reload {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  color: blue;
+}
+
 .workshop-image-area {
   width: 100%;
 }
 
-.workshop-image-header{
+.workshop-image-header {
   display: flex;
   justify-content: space-around;
   margin-top: 50px;
   font-size: 30px;
 }
 
-.workshop-image-header span{
+.workshop-image-header span {
   color: #04003b;
   font-family: monospace;
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .workshop-images {
   display: flex;
-    margin-top: 20px;
-    width: 100%;
-    justify-content: space-around;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: space-around;
 }
 
 .workshop-category-content h1 {
@@ -4356,6 +4414,29 @@ button:focus {
   cursor: pointer;
   border: 1px solid #000;
   border-radius: 50%;
+  position: relative;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 100%; /* Position above the color box */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+  transition: opacity 0s; /* Remove delay on appearance */
+}
+
+.color:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 .color-white {
@@ -4454,6 +4535,57 @@ button:focus {
   filter: drop-shadow(0px 6px 15px rgba(0, 0, 0, 0.5));
   max-width: 100%;
 }
+
+.final-product-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.final-product-images {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+  border: 2px dashed #000;
+  border-radius: 40px;
+}
+
+.final-product-create button {
+  padding: 10px 20px;
+  background-color: #cc0808;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.final-image-container {
+  position: relative;
+  display: inline-block;
+  /* Ensures the container wraps around the image */
+}
+
+/* Image styling */
+.final-image-container img {
+  display: block;
+  width: 100%;
+  /* Adjust width as needed */
+  height: auto;
+}
+
+/* Positioning the delete icon */
+.final-image-delete {
+  position: absolute;
+  bottom: 0px;
+  right: 60px;
+  cursor: pointer;
+}
+
+
+
 
 
 

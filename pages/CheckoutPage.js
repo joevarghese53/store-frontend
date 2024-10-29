@@ -58,7 +58,12 @@ const CheckoutPage = () => {
             const cartItems = cartData.items.map(item => ({
                 name: item.productId.name,
                 qty: item.quantity,
-                image: item.productId.image,
+                frontImage: item.productId.frontImage,
+                backImage: item.productId.backImage,
+                frontDesign: item.productId.frontDesign,    
+                backDesign: item.productId.backDesign,
+                frontUpload: item.productId.frontUpload,
+                backUpload: item.productId.backUpload,
                 _id: item.productId._id,
                 size: item.size,
                 category: item.productId.category,

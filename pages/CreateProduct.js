@@ -9,29 +9,55 @@ import { toast } from "react-toastify";
 import { useRouter } from 'next/router';
 
 const CreateProduct = () => {
-  const [image, setImage] = useState(null);
+  const [frontImage, setFrontImage] = useState(null);
+  const [backImage, setBackImage] = useState(null);
+  const [frontDesign, setFrontDesign] = useState(null);
+  const [backDesign, setBackDesign] = useState(null);
+  const [images, setImages] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("66adfb21a1698be6bdfa8e59");
   const [gender, setGender] = useState(""); // Initialize state for gender
   const [offers, setOffers] = useState("");
   const [returnpolicy, setReturnPolicy] = useState("");
   const [stock, setStock] = useState(0);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [frontImageUrlToDisplay, setFrontImageUrlToDisplay] = useState(null);
+  const [backImageUrlToDisplay, setBackImageUrlToDisplay] = useState(null);
+  const [frontDesignUrlToDisplay, setFrontDesignUrlToDisplay] = useState(null);
+  const [backDesignUrlToDisplay, setBackDesignUrlToDisplay] = useState(null);
+  const [imagesUrlToDisplay, setImagesUrlToDisplay] = useState([]);
   const router = useRouter();
   const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct] = useCreateProductMutation();
   const { data: categories } = useFetchCategoriesQuery();
 
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+
+      const formData = new FormData();
+      formData.append("frontImage", frontImage);
+      formData.append("backImage", backImage);
+      formData.append("frontDesign", frontDesign);
+      formData.append("backDesign", backDesign);
+      if (images.length) {
+        images.forEach((image) => {
+          formData.append("images", image);
+        });
+      }
+      const res = await uploadProductImage(formData).unwrap();
+
       const productData = new FormData();
-      productData.append("image", image);
+      productData.append("frontImage", res.imageUrls.frontImage[0]);
+      productData.append("backImage", res.imageUrls.backImage[0]);
+      productData.append("frontDesign", res.imageUrls.frontDesign[0]);
+      productData.append("backDesign", res.imageUrls.backDesign[0]);
+      if (res.imageUrls?.images?.length) {
+        productData.append("images", JSON.stringify(res.imageUrls.images));
+      }
       productData.append("name", name);
       productData.append("description", description);
       productData.append("price", price);
@@ -40,6 +66,11 @@ const CreateProduct = () => {
       productData.append("offers", offers);
       productData.append("returnpolicy", returnpolicy);
       productData.append("countInStock", stock);
+
+      console.log("productData");
+      for (let [key, value] of productData.entries()) {
+        console.log(`${key}:`, value);
+      }
 
       const { data } = await createProduct(productData);
 
@@ -57,46 +88,139 @@ const CreateProduct = () => {
     }
   };
 
-  const uploadFileHandler = async (e) => {
-    const formData = new FormData();
+  const uploadFrontImageHandler = async (e) => {
     const file = e.target.files[0];
-    formData.append("image", file);
-    console.log("this is the image file", file);
-
-    try {
-      const res = await uploadProductImage(formData).unwrap();
-      toast.success(res.message);
-      setImage(res.image);
-      setImageUrl(URL.createObjectURL(file));
-    } catch (error) {
-      toast.error(error?.data?.message || error.error);
-    }
+    setFrontImage(file);
+    setFrontImageUrlToDisplay(URL.createObjectURL(file));
   };
+
+  const uploadBackImageHandler = async (e) => {
+    const file = e.target.files[0];
+    setBackImage(file);
+    setBackImageUrlToDisplay(URL.createObjectURL(file));
+  };
+
+  const uploadFrontDesignHandler = async (e) => {
+    const file = e.target.files[0];
+    setFrontDesign(file);
+    setFrontDesignUrlToDisplay(URL.createObjectURL(file));
+  };
+
+  const uploadBackDesignHandler = async (e) => {
+    const file = e.target.files[0];
+    setBackDesign(file);
+    setBackDesignUrlToDisplay(URL.createObjectURL(file));
+  };
+
+  const uploadImagesHandler = async (e) => {
+    const files = Array.from(e.target.files);
+    setImages((prevImages) => [...prevImages, ...files]);
+    const urls = files.map((file) => URL.createObjectURL(file));
+    setImagesUrlToDisplay((prevImages) => [...prevImages, ...urls]);
+  };
+
+
 
   return (
     <div className="create-product-container">
       <h2 className="create-product-heading">Create Product</h2>
-
-      {imageUrl && (
-        <div className="create-product-image">
-          <img
-            src={imageUrl}
-            alt="product"
-          />
-        </div>
-      )}
+      <div className="create-product-images-display">
+        {frontImageUrlToDisplay && (
+          <div className="create-product-image">
+            <img
+              src={frontImageUrlToDisplay}
+              alt="product"
+            />
+            <p>FRONT IMAGE</p>
+          </div>
+        )}
+        {backImageUrlToDisplay && (
+          <div className="create-product-image">
+            <img
+              src={backImageUrlToDisplay}
+              alt="product"
+            />
+            <p>BACK IMAGE</p>
+          </div>
+        )}
+        {frontDesignUrlToDisplay && (
+          <div className="create-product-image">
+            <img
+              src={frontDesignUrlToDisplay}
+              alt="product"
+            />
+            <p>FRONT DESIGN</p>
+          </div>
+        )}
+        {backDesignUrlToDisplay && (
+          <div className="create-product-image">
+            <img
+              src={backDesignUrlToDisplay}
+              alt="product"
+            />
+            <p>BACK DESIGN</p>
+          </div>
+        )}
+        {imagesUrlToDisplay.map((url, index) => (
+          <div key={index} className="create-product-image">
+            <img
+              src={url}
+              alt="product"
+            />
+            <p>IMAGE {index + 1}</p>
+          </div>
+        ))}
+      </div>
 
       <div className="create-product-image-upload">
         <label>
-          Upload Image
+          Front Image
           <input
             type="file"
             name="image"
             accept="image/*"
-            onChange={uploadFileHandler}
+            onChange={uploadFrontImageHandler}
+          />
+        </label>
+        <label>
+          Back Image
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={uploadBackImageHandler}
+          />
+        </label>
+        <label>
+          Front Design
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={uploadFrontDesignHandler}
+          />
+        </label>
+        <label>
+          Back Design
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={uploadBackDesignHandler}
+          />
+        </label>
+        <label>
+          Images
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            multiple
+            onChange={uploadImagesHandler}
           />
         </label>
       </div>
+
 
       <div className="create-product-details">
         <div className="create-product-details-row1">
