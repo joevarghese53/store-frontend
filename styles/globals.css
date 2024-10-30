@@ -112,8 +112,25 @@ span.text-red {
   font-weight: 700;
 }
 
+@media (max-width: 425px) {
 
-/* index.js home start */
+  .products-heading {
+    margin: 20px 0px;
+  }
+
+  .products-heading h2 {
+    font-size: 24px;
+  }
+
+  .categories-heading {
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+
+}
+
+
+/* index.js home end */
 
 
 
@@ -1524,6 +1541,7 @@ span.text-red {
 @media (max-width: 425px) {
   .categories {
     gap: 7px;
+    margin-bottom: 20px;
   }
 
   .category-image {
