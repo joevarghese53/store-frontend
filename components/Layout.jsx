@@ -14,7 +14,8 @@ const Layout = ({ children }) => {
   return (
     <div className="layout">
       <Head>
-        <title>DGen Store</title>
+        <title>JayVee</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <header>
         <Navbar />
