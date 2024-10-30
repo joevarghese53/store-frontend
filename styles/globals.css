@@ -1518,12 +1518,12 @@ span.text-red {
 
 @media (max-width: 425px) {
   .categories {
-    gap: 5px;
+    gap: 7px;
   }
 
   .category-image {
-    height: 230px;
-    margin-bottom: 10px;
+    height: 220px;
+    margin-bottom: 8px;
   }
 
   .category-title {
