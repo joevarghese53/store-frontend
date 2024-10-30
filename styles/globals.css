@@ -364,6 +364,38 @@ span.text-red {
 
 }
 
+@media (max-width: 425px) {
+  .footer-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-section {
+    width: 100%;
+  }
+
+  .footer-section h3 {
+    font-size: 14px;
+  }
+
+  .footer-section a {
+    font-size: 13px;
+  }
+
+  .footer-row .icons {
+    font-size: 20px;
+  }
+
+  .phonepe-logo {
+    width: 80px;
+  }
+
+  .phonepe-logo img {
+    width: 100%;
+  }
+  
+}
+
 
 /* footer.jsx end */
 
@@ -770,7 +802,7 @@ span.text-red {
 
 @media (max-width: 425px) {
   .image-slider-main-container {
-    height: 380px;
+    height: 310px;
   }
 
   .hero-banner-button-container button {
@@ -1225,13 +1257,29 @@ span.text-red {
 
 }
 
+@media (max-width: 425px) {
 
+  .bottom-left-links {
+    gap: 40px;
+  }  
 
-@media (max-width: 425px) {}
+  .hamburger-menu-mobile {
+    width: 80%;
+  }
 
-@media (max-width: 375px) {}
+}
 
-@media (max-width: 320px) {}
+@media (max-width: 320px) {
+
+  .bottom-left-links {
+    gap: 25px;
+  }  
+  
+  .top-left-links a {
+    padding: 14px 15px;
+  }
+}
+
 
 /* navbar.jsx end */
 
@@ -1332,9 +1380,56 @@ span.text-red {
 }
 
 .product-price {
-  font-weight: 800;
+  font-weight: 700;
   margin-top: -12px;
   color: black;
+}
+
+@media (max-width: 1440px) {
+  .product-card {
+    height: 320px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .product-card {
+    height: 255px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    height: 300px;
+  }
+}
+
+@media (max-width: 425px) {
+  .product-card {
+    height: 170px;
+    margin-bottom: 70px;
+  }
+
+  .product-name {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  .product-cat {
+    font-size: 12px;
+    margin-top: -13px;
+  }
+
+  .product-price {
+    font-size: 15px;
+  }
+  
+}
+
+@media (max-width: 375px) {
+  .product-card {
+    height: 140px;
+    margin-bottom: 50px;
+  }  
 }
 
 /* main page product card end */
@@ -1345,7 +1440,7 @@ span.text-red {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 75px;
+  gap: 50px;
   margin-bottom: 100px;
   /* margin: 20px 20px; */
 }
@@ -1363,6 +1458,7 @@ span.text-red {
 .category-image {
   width: 100%;
   height: 650px;
+  border-radius: 5px;
 }
 
 .category-title {
@@ -1378,6 +1474,47 @@ span.text-red {
   text-align: center;
   /* Center the text within its container */
 }
+
+@media (max-width: 1440px) {
+  .category-image {
+    height: 500px;
+}
+  
+}
+
+@media (max-width: 1024px) {
+  .category-image {
+    height: 360px;
+}
+}
+
+@media (max-width: 768px) {
+  .categories {
+    gap: 20px;
+  }
+  .category-image {
+    height: 285px;
+}
+  .category-title {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 425px) {
+  .categories{
+    gap: 5px;
+  }
+  .category-image {
+    height: 250px;
+    margin-bottom: 10px;
+}
+
+.category-title{
+  font-size: 9px;
+}
+  
+}
+
 
 
 /* Categories.jsx end */

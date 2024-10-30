@@ -21,9 +21,9 @@ export function ImageSlider({ media }) {
 
   return (
     <section aria-label="Image Slider" className="image-slider-main-container">
-      <a href="#after-media-slider-controls" className="skip-link">
+      {/* <a href="#after-media-slider-controls" className="skip-link">
         Skip Media Slider Controls
-      </a>
+      </a> */}
       <div style={{ width: "100%", height: "100%", display: "flex", overflow: "hidden", }}>
         {media.map(({ type, url, alt }, index) => (
           type === 'image' ? (
@@ -50,9 +50,7 @@ export function ImageSlider({ media }) {
           )
         ))}
       </div>
-      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}></div>
       <div className="hero-banner-button-container">
-
         <div>
           <Link href={`/customs`}>
             <button type="button">Explore</button>
@@ -80,7 +78,7 @@ export function ImageSlider({ media }) {
       >
         <ArrowBigRight aria-hidden />
       </button>
-      <div
+      {/* <div
         style={{
           position: "absolute",
           bottom: ".5rem",
@@ -90,7 +88,7 @@ export function ImageSlider({ media }) {
           gap: ".25rem",
         }}
       >
-        {/* {media.map((_, index) => (
+         {media.map((_, index) => (
           <button
             key={index}
             className="img-slider-dot-btn"
@@ -103,9 +101,9 @@ export function ImageSlider({ media }) {
               <Circle aria-hidden />
             )}
           </button>
-        ))} */}
-      </div>
-      <div id="after-media-slider-controls" />
+        ))}
+      </div> */}
+      {/* <div id="after-media-slider-controls" /> */}
     </section>
   );
 }
