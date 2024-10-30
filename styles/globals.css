@@ -1284,6 +1284,11 @@ span.text-red {
     width: 80%;
   }
 
+  .login-icon {
+    font-size: 15px;
+    margin-top: 3px;
+  }
+
 }
 
 @media (max-width: 320px) {
