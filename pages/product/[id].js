@@ -74,6 +74,11 @@ const ProductDetails = () => {
   };
 
   const handleAddToWishlist = async () => {
+    if (!userInfo) {
+      // Display a toast message if the user is not logged in
+      toast.error('Please login to continue.');
+      return;
+    }
     try {
       await addToWishlist({ productId }).unwrap();
       toast.success(`Item added to wishlist`);

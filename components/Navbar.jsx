@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { CgProfile } from "react-icons/cg";
@@ -6,10 +6,13 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { FiBox } from "react-icons/fi";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
+import { RiCustomerService2Line } from "react-icons/ri";
+import { IoClose } from "react-icons/io5";
 import Link from 'next/link';
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from '@/redux/features/auth/authSlice';
 import { useLogoutMutation } from '../redux/api/usersApiSlice';
+import { FaBars } from 'react-icons/fa';
 
 
 const Navbar = () => {
@@ -18,6 +21,7 @@ const Navbar = () => {
   const router = useRouter();
   const [scrolling, setScrolling] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const [hamburgerOpen, setHamburgerOpen] = React.useState(false);
 
 
   React.useEffect(() => {
@@ -54,6 +58,9 @@ const Navbar = () => {
   return (
     <div className="navbar-container">
       <div className={`top-navbar ${scrolling ? 'hidden' : ''}`}>
+        <div className="nav-logo-mobile">
+          <Link href="/"><img src="/logo.png" alt="Logo" /></Link>
+        </div>
         <div className="top-left-links">
           <a
             href="#"
@@ -83,7 +90,53 @@ const Navbar = () => {
       </div>
       <div className="red-line"></div>
       <div className="bottom-navbar">
-        <div className="nav-logo">
+        <div className="hamburger-menu" onClick={() => setHamburgerOpen(!hamburgerOpen)}>
+          <FaBars size={24} />
+        </div>
+        {hamburgerOpen && (
+  userInfo ? (
+          <div className="hamburger-menu-mobile">
+            <div className="hamburger-menu-links">
+              <h1 className="hamburger-menu-heading">Hello, {userInfo.username}</h1>
+              <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose/></button>
+              <Link href="/ProfilePage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <CgProfile className='hamburger-menu-icons'/> <span>My Profile</span>
+              </Link>
+              <Link href="/MyOrders" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <FiBox className='hamburger-menu-icons' /> <span>Orders</span>
+              </Link>
+              <Link href="/WishlistPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <IoMdHeartEmpty className='hamburger-menu-icons' /> <span>WishList</span>
+              </Link>
+              <Link href="/CartPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <AiOutlineShoppingCart className='hamburger-menu-icons' /> <span>Cart</span>
+              </Link>
+              <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
+              </Link>
+
+              <button onClick={handleLogout} className='logout-btn'>
+                <IoIosLogOut className='hamburger-menu-icons' />
+                Logout</button>
+            </div>
+          </div>
+        ) : (
+          <div className="hamburger-menu-mobile">
+            <div className="hamburger-menu-links">
+              <h1 className="hamburger-menu-heading">Hello, Guest</h1>
+              <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose/></button>
+              <Link href="/LoginPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <CgProfile className='hamburger-menu-icons'/> <span>Login</span>
+              </Link>
+              <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
+              </Link>
+            </div>
+          </div>
+     )
+    )}
+
+        <div className="nav-logo-desktop">
           <Link href="/"><img src="/logo.png" alt="Logo" /></Link>
         </div>
         <div className="bottom-left-links">
@@ -116,7 +169,7 @@ const Navbar = () => {
               onMouseEnter={() => setDropdownOpen(true)}
               onMouseLeave={() => setDropdownOpen(false)}
             >
-              
+
               <span style={{
                 color: 'black',
                 fontWeight: '600',
@@ -137,14 +190,14 @@ const Navbar = () => {
                     Orders
                   </Link>
                   <Link href="/WishlistPage">
-                  <IoMdHeartEmpty style={{ marginRight: '10px' }} />
-                  WishList</Link>
+                    <IoMdHeartEmpty style={{ marginRight: '10px' }} />
+                    WishList</Link>
                   <Link href="/CartPage">
-                  <AiOutlineShoppingCart style={{ marginRight: '10px' }} />
-                  Cart</Link>
+                    <AiOutlineShoppingCart style={{ marginRight: '10px' }} />
+                    Cart</Link>
                   <button onClick={handleLogout}>
-                  <IoIosLogOut style={{ marginRight: '10px' }} />
-                  Logout</button>
+                    <IoIosLogOut style={{ marginRight: '10px' }} />
+                    Logout</button>
                 </div>
               )}
             </div>
@@ -155,10 +208,18 @@ const Navbar = () => {
               </div>
             </Link>
           )}
+          {userInfo && (
+            <Link href="/WishlistPage">
+            <div className="wishlist-icon-mobile">
+              <IoMdHeartEmpty size={24} />
+            </div>
+          </Link>
+          )}
+          
           <Link href="/CartPage">
             <div className="cart-icon">
               <AiOutlineShoppingCart style={{ marginRight: '10px', marginBottom: '4px' }} />
-              Cart
+              <span>Cart</span>
               {/* <span className="cart-item-qty">{totalQuantities}</span> */}
             </div>
           </Link>
