@@ -13,6 +13,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from '@/redux/features/auth/authSlice';
 import { useLogoutMutation } from '../redux/api/usersApiSlice';
 import { FaBars } from 'react-icons/fa';
+import {
+  UserCircle,
+  Package,
+  Heart,
+  ShoppingCart,
+  MessageCircle,
+  LogOut,
+  X
+} from 'lucide-react'
 
 
 const Navbar = () => {
@@ -94,47 +103,57 @@ const Navbar = () => {
           <FaBars size={24} />
         </div>
         {hamburgerOpen && (
-  userInfo ? (
-          <div className="hamburger-menu-mobile">
-            <div className="hamburger-menu-links">
-              <h1 className="hamburger-menu-heading">Hello, {userInfo.username}</h1>
-              <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose/></button>
-              <Link href="/ProfilePage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                <CgProfile className='hamburger-menu-icons'/> <span>My Profile</span>
-              </Link>
-              <Link href="/MyOrders" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                <FiBox className='hamburger-menu-icons' /> <span>Orders</span>
-              </Link>
-              <Link href="/WishlistPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                <IoMdHeartEmpty className='hamburger-menu-icons' /> <span>WishList</span>
-              </Link>
-              <Link href="/CartPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                <AiOutlineShoppingCart className='hamburger-menu-icons' /> <span>Cart</span>
-              </Link>
-              <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
-              </Link>
+          userInfo ? (
+            <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`}>
+              <div className="hamburger-menu-header">
+                <div className="hamburger-menu-header-user-info">
+                  <div className="hamburger-menu-header-avatar">
+                    {userInfo.username && userInfo.username.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="hamburger-menu-header-welcome-text">
+                    <span>Hello,</span>
+                    <span className="hamburger-menu-header-user-name">{userInfo.username}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="hamburger-menu-links">
+                <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose /></button>
+                <Link href="/ProfilePage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                  <CgProfile className='hamburger-menu-icons' /> <span>My Profile</span>
+                </Link>
+                <Link href="/MyOrders" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                  <FiBox className='hamburger-menu-icons' /> <span>Orders</span>
+                </Link>
+                <Link href="/WishlistPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                  <IoMdHeartEmpty className='hamburger-menu-icons' /> <span>WishList</span>
+                </Link>
+                <Link href="/CartPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                  <AiOutlineShoppingCart className='hamburger-menu-icons' /> <span>Cart</span>
+                </Link>
+                <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                  <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
+                </Link>
 
-              <button onClick={handleLogout} className='logout-btn'>
-                <IoIosLogOut className='hamburger-menu-icons' />
-                Logout</button>
+                <button onClick={handleLogout} className='logout-btn'>
+                  <IoIosLogOut className='hamburger-menu-logout-icon' />
+                  Logout</button>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="hamburger-menu-mobile">
-            <div className="hamburger-menu-links">
-              <h1 className="hamburger-menu-heading">Hello, Guest</h1>
-              <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose/></button>
-              <Link href="/LoginPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                <CgProfile className='hamburger-menu-icons'/> <span>Login</span>
-              </Link>
-              <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
-              </Link>
+          ) : (
+            <div className="hamburger-menu-mobile">
+              <div className="hamburger-menu-links">
+                <h1 className="hamburger-menu-heading">Hello, Guest</h1>
+                <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose /></button>
+                <Link href="/LoginPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                  <CgProfile className='hamburger-menu-icons' /> <span>Login</span>
+                </Link>
+                <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                  <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
+                </Link>
+              </div>
             </div>
-          </div>
-     )
-    )}
+          )
+        )}
 
         <div className="nav-logo-desktop">
           <Link href="/"><img src="/logo.png" alt="Logo" /></Link>
@@ -210,12 +229,12 @@ const Navbar = () => {
           )}
           {userInfo && (
             <Link href="/WishlistPage">
-            <div className="wishlist-icon-mobile">
-              <IoMdHeartEmpty size={24} />
-            </div>
-          </Link>
+              <div className="wishlist-icon-mobile">
+                <IoMdHeartEmpty size={24} />
+              </div>
+            </Link>
           )}
-          
+
           <Link href="/CartPage">
             <div className="cart-icon">
               <AiOutlineShoppingCart style={{ marginRight: '10px', marginBottom: '4px' }} />
