@@ -393,7 +393,7 @@ span.text-red {
   .phonepe-logo img {
     width: 100%;
   }
-  
+
 }
 
 
@@ -1156,6 +1156,7 @@ span.text-red {
   .hamburger-menu-mobile.open {
     transform: translateX(0);
   }
+
   .hamburger-menu-header {
     padding: 16px;
     display: flex;
@@ -1269,13 +1270,13 @@ span.text-red {
   }
 
 
-  .top-left-links a{
+  .top-left-links a {
     padding: 11px 15px;
   }
 
   .bottom-left-links {
     gap: 15px;
-  }  
+  }
 
   .hamburger-menu-mobile {
     width: 80%;
@@ -1284,7 +1285,7 @@ span.text-red {
 }
 
 @media (max-width: 320px) {
-  
+
   .top-left-links a {
     padding: 14px 15px;
   }
@@ -1366,9 +1367,6 @@ span.text-red {
   margin-bottom: 100px;
 }
 
-/* .product-card:hover {
-  transform: scale(1.05, 1.05)
-} */
 
 .product-image {
   width: 100%;
@@ -1415,32 +1413,36 @@ span.text-red {
 
 @media (max-width: 425px) {
   .product-card {
-    height: 170px;
-    margin-bottom: 70px;
+    width: 167px;
+    height: 205px;
+    margin-bottom: 85px;
+  }
+
+  .product-image {
+    border-radius: 5px;
   }
 
   .product-name {
-    font-size: 16px;
+    font-size: 13px;
     margin-top: 5px;
   }
 
   .product-cat {
-    font-size: 12px;
+    font-size: 9px;
     margin-top: -13px;
   }
 
   .product-price {
-    font-size: 15px;
+    font-size: 12px;
+    width: fit-content;
+    position: relative;
+    bottom: 38px;
+    left: 130px;
+    font-family: cursive;
   }
-  
+
 }
 
-@media (max-width: 375px) {
-  .product-card {
-    height: 140px;
-    margin-bottom: 50px;
-  }  
-}
 
 /* main page product card end */
 
@@ -1488,41 +1490,44 @@ span.text-red {
 @media (max-width: 1440px) {
   .category-image {
     height: 500px;
-}
-  
+  }
+
 }
 
 @media (max-width: 1024px) {
   .category-image {
     height: 360px;
-}
+  }
 }
 
 @media (max-width: 768px) {
   .categories {
     gap: 20px;
   }
+
   .category-image {
     height: 285px;
-}
+  }
+
   .category-title {
     font-size: 15px;
   }
 }
 
 @media (max-width: 425px) {
-  .categories{
+  .categories {
     gap: 5px;
   }
-  .category-image {
-    height: 250px;
-    margin-bottom: 10px;
-}
 
-.category-title{
-  font-size: 9px;
-}
-  
+  .category-image {
+    height: 230px;
+    margin-bottom: 10px;
+  }
+
+  .category-title {
+    font-size: 7px;
+  }
+
 }
 
 
@@ -1575,6 +1580,14 @@ span.text-red {
   justify-content: center;
   gap: 50px;
   margin: 20px 20px;
+}
+
+@media (max-width: 425px) {
+  .best-sellers {
+    gap: 10px;
+    margin: 0px 5px;
+  }
+
 }
 
 /* BestSeller.jsx end */
