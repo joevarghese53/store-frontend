@@ -701,10 +701,7 @@ span.text-red {
   transition: background-color 100ms ease-in-out;
 }
 
-.img-slider-btn:hover,
-.img-slider-btn:focus-visible {
-  background-color: rgb(0, 0, 0, 0.2);
-}
+
 
 .img-slider-btn>* {
   stroke: white;
@@ -1271,11 +1268,16 @@ span.text-red {
 
 
   .top-left-links a {
-    padding: 11px 15px;
+    padding: 12px 15px;
+    font-size: 12px;
   }
 
   .bottom-left-links {
     gap: 15px;
+  }
+
+  .bottom-left-links a{
+    font-size: 12px;
   }
 
   .hamburger-menu-mobile {
@@ -1438,7 +1440,7 @@ span.text-red {
     position: relative;
     bottom: 38px;
     left: 130px;
-    font-family: cursive;
+    font-family: unset;
   }
 
 }
@@ -4706,9 +4708,6 @@ button {
   transition: background-color 0.2s;
 }
 
-button:hover {
-  background-color: #2553a3;
-}
 
 button:focus {
   outline: none;

@@ -100,7 +100,7 @@ const Navbar = () => {
       <div className="red-line"></div>
       <div className="bottom-navbar">
         <div className="hamburger-menu" onClick={() => setHamburgerOpen(!hamburgerOpen)}>
-          <FaBars size={24} />
+          <FaBars size={20} />
         </div>
      
 
