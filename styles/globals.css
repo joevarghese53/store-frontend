@@ -803,6 +803,7 @@ span.text-red {
 @media (max-width: 425px) {
   .image-slider-main-container {
     height: 310px;
+    margin-top: 89px;
   }
 
   .hero-banner-button-container button {
@@ -1113,9 +1114,9 @@ span.text-red {
 
   .top-left-links {
     justify-content: center;
-    /* Center top-left-links */
     width: 100%;
     text-align: center;
+
   }
 
   .profile-icon {
@@ -1146,8 +1147,8 @@ span.text-red {
     background-color: #fff;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    transform: translateX(100%);
-    transition: transform 7.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: translateX(-100%);
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
   }
@@ -1259,8 +1260,21 @@ span.text-red {
 
 @media (max-width: 425px) {
 
+  .top-navbar {
+    padding: 5px 10px;
+  }
+
+  .bottom-navbar {
+    padding: 10px 10px;
+  }
+
+
+  .top-left-links a{
+    padding: 11px 15px;
+  }
+
   .bottom-left-links {
-    gap: 40px;
+    gap: 15px;
   }  
 
   .hamburger-menu-mobile {
@@ -1270,10 +1284,6 @@ span.text-red {
 }
 
 @media (max-width: 320px) {
-
-  .bottom-left-links {
-    gap: 25px;
-  }  
   
   .top-left-links a {
     padding: 14px 15px;

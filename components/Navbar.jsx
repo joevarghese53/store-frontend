@@ -102,9 +102,10 @@ const Navbar = () => {
         <div className="hamburger-menu" onClick={() => setHamburgerOpen(!hamburgerOpen)}>
           <FaBars size={24} />
         </div>
-        {hamburgerOpen && (
-          userInfo ? (
-            <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`}>
+     
+
+          {userInfo && (
+            <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`} >
               <div className="hamburger-menu-header">
                 <div className="hamburger-menu-header-user-info">
                   <div className="hamburger-menu-header-avatar">
@@ -139,8 +140,9 @@ const Navbar = () => {
                   Logout</button>
               </div>
             </div>
-          ) : (
-            <div className="hamburger-menu-mobile">
+          ) } 
+          {!userInfo && (
+            <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`}>
               <div className="hamburger-menu-links">
                 <h1 className="hamburger-menu-heading">Hello, Guest</h1>
                 <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose /></button>
@@ -153,7 +155,7 @@ const Navbar = () => {
               </div>
             </div>
           )
-        )}
+        }
 
         <div className="nav-logo-desktop">
           <Link href="/"><img src="/logo.png" alt="Logo" /></Link>
