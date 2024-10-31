@@ -18,7 +18,10 @@ const SizeSelector = ({ onSizeSelect, category }) => {
 
     return (
         <div className="size-selection">
-            <p>Please select a size. <span className="size-chart-link" onClick={toggleSizeChart}>SIZE CHART</span></p>
+            <div className="size-title">
+            <p>Select Size </p>
+            <span className="size-chart-link" onClick={toggleSizeChart}>SIZE GUIDE</span>
+            </div>
             <div className="size-options">
                 {['S', 'M', 'L', 'XL', 'XXL'].map((size, index) => (
                     <button key={index} className={`size-button ${selectedSize === size ? 'selected' : ''}`} onClick={() => handleSizeSelect(size)}>{size}</button>

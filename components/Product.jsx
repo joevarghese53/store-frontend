@@ -22,7 +22,7 @@ const Product = ({ product }) => {
           />
           <div className="product-card-reviews">
             <div>
-              <AiFillStar />
+              <AiFillStar className='product-card-reviews-star'/>
             </div>
             <p>{product.rating}</p>
           </div>

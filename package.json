@@ -66,6 +66,7 @@
     "react-toastify": "^10.0.5",
     "react-zoom-pan-pinch": "^3.4.2",
     "slug": "^8.2.3",
+    "swiper": "^11.1.14",
     "tinycolor2": "^1.6.0",
     "typescript": "^5.4.2"
   },

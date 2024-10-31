@@ -17,6 +17,10 @@ import { useAddToCartMutation } from '../../redux/api/cartApiSlice';
 import { useGetCategoryByIdQuery } from '../../redux/api/categoryApiSlice';
 import { useRemoveFromWishlistMutation, useCheckItemInWishlistQuery, useAddToWishlistMutation } from '../../redux/api/wishlistApiSlice';
 import { GoHeart, GoHeartFill } from "react-icons/go";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 
 const ProductDetails = () => {
@@ -133,7 +137,7 @@ const ProductDetails = () => {
   return (
     <div>
       <div className="product-detail-container">
-        <div className='image-container'>
+        <div className='image-container-desktop'>
           <div className='big-image-container'>
             <img src={selectedImage} className="product-detail-image" />
           </div>
@@ -157,16 +161,21 @@ const ProductDetails = () => {
               />
             ))}
           </div>
-          {/* <div className="small-images-container">
-            {product.image?.map((item, i) => (
-              <img
-                key={i}
-                src={urlFor(item)}
-                className={i === index ? 'small-image selected-image' : 'small-image'}
-                onMouseEnter={() => setIndex(i)}
-              />
+        </div>
+        <div className="image-container-mobile">
+          <Swiper spaceBetween={10} slidesPerView={1} pagination={{ clickable: true }} modules={[Pagination]} >
+            <SwiperSlide>
+              <img src={product.frontImage} className="product-detail-image-mobile" alt="Front view" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src={product.backImage} className="product-detail-image-mobile" alt="Back view" />
+            </SwiperSlide>
+            {product.images?.map((image, i) => (
+              <SwiperSlide key={i}>
+                <img src={image} className="product-detail-image-mobile" alt={`Image ${i}`} />
+              </SwiperSlide>
             ))}
-          </div> */}
+          </Swiper>
         </div>
 
         <div className="product-detail-desc">
@@ -184,9 +193,10 @@ const ProductDetails = () => {
           <p className="price">₹{product.price}</p>
           <p className="tax">Inclusive of all taxes</p>
           <div className="size-chart">
-            <SizeSelector onSizeSelect={setSelectedSize} category = {category?.name}/>
+            <SizeSelector onSizeSelect={setSelectedSize} category={category?.name} />
           </div>
           <div className="quantity">
+            <span>Quantity:</span>
             {product.countInStock > 0 && (
               <div>
                 <select
@@ -203,7 +213,7 @@ const ProductDetails = () => {
               </div>
             )}
           </div>
-          <div className="buttons">
+          <div className="product-detail-desc-buttons-desktop">
             <button
               type="button"
               disabled={product.countInStock === 0}
@@ -213,17 +223,38 @@ const ProductDetails = () => {
               Add to Cart
             </button>
             {wishlistData && wishlistData.exists ? (
-              <button type="button" className="buy-now" onClick={handleRemoveFromWishlist}>
+              <button type="button" className="add-to-wishlist" onClick={handleRemoveFromWishlist}>
                 <GoHeartFill style={{ marginRight: '10px' }} />
                 Added to Wishlist
               </button>
             ) : (
-              <button type="button" className="buy-now" onClick={handleAddToWishlist}>
+              <button type="button" className="add-to-wishlist" onClick={handleAddToWishlist}>
                 <GoHeart style={{ marginRight: '10px' }} />
                 Add to Wishlist
               </button>
             )}
 
+          </div>
+          <div className="product-detail-desc-buttons-mobile">
+            {wishlistData && wishlistData.exists ? (
+              <button type="button" className="add-to-wishlist" onClick={handleRemoveFromWishlist}>
+                <GoHeartFill style={{ marginRight: '10px' }} />
+                Added to Wishlist
+              </button>
+            ) : (
+              <button type="button" className="add-to-wishlist" onClick={handleAddToWishlist}>
+                <GoHeart style={{ marginRight: '10px' }} />
+                Add to Wishlist
+              </button>
+            )}
+            <button
+              type="button"
+              disabled={product.countInStock === 0}
+              className="add-to-cart"
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </button>
           </div>
           <PinCodeCheck />
           <div className="product-details">
@@ -231,19 +262,17 @@ const ProductDetails = () => {
             <ProductInfo title="Product Description" content={product.description} />
             <ProductInfo title="Returns & Exchange" content={product.returnpolicy} />
           </div>
+          <ReviewTabs
+            loadingProductReview={loadingProductReview}
+            userInfo={userInfo}
+            submitHandler={submitHandler}
+            rating={rating}
+            setRating={setRating}
+            comment={comment}
+            setComment={setComment}
+            product={product}
+          />
         </div>
-      </div>
-      <div className="product-details-tabs">
-        <ReviewTabs
-          loadingProductReview={loadingProductReview}
-          userInfo={userInfo}
-          submitHandler={submitHandler}
-          rating={rating}
-          setRating={setRating}
-          comment={comment}
-          setComment={setComment}
-          product={product}
-        />
       </div>
 
       {/* <div className="maylike-products-wrapper">
