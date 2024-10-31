@@ -154,22 +154,22 @@ const Cart = () => {
                 ))}
               </div>
               <div className="cart-summary" ref={billingRef}>
-                <h6>BILLING DETAILS</h6>
+                <h4>BILLING DETAILS</h4>
                 <div className="billing-details-row">
-                  <h8>Cart Total (Excl. of all taxes)</h8>
-                  <h8>₹{itemsPrice}</h8>
+                  <h6>Cart Total (Excl. of all taxes)</h6>
+                  <h6>₹{itemsPrice}</h6>
                 </div>
                 <div className="billing-details-row">
-                  <h8>GST</h8>
-                  <h8>₹{taxPrice}</h8>
+                  <h6>GST</h6>
+                  <h6>₹{taxPrice}</h6>
                 </div>
                 <div className="billing-details-row">
-                  <h8>Shipping Charges</h8>
-                  <h8>₹{shippingPrice}</h8>
+                  <h6>Shipping Charges</h6>
+                  <h6>₹{shippingPrice}</h6>
                 </div>
                 <div className="billing-details-row">
-                  <h8>Total Amount</h8>
-                  <h8>₹{totalPrice}</h8>
+                  <h6>Total Amount</h6>
+                  <h6>₹{totalPrice}</h6>
                 </div>
                 <Link href="/AddressPage">
                   <button type="button" className="cart-page-btn-desktop">
