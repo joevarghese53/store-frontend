@@ -4,7 +4,7 @@ import { useGetFilteredProductsQuery } from '../redux/api/productApiSlice';
 import { useFetchCategoriesQuery } from '../redux/api/categoryApiSlice';
 import Loader from '../components/Loader';
 import { Product } from '../components';
-import { setCategories, setProducts, setChecked, setPriceRange } from '../redux/features/shop/shopSlice';
+import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
 import { RiFilter2Line } from "react-icons/ri";
 
@@ -51,6 +51,10 @@ const FilteredProductsFemale = () => {
   const handlePriceChange = (range) => {
     dispatch(setPriceRange(range));
   };
+  
+  const handleReset = () => {
+    dispatch(resetFilters());
+  };
 
   if (categoriesQuery.isLoading || filteredProductsQuery.isLoading) {
     return <Loader />;
@@ -89,12 +93,12 @@ const FilteredProductsFemale = () => {
           </div>
         </div>
         <div className="filter-option">
-          <button
-            className="button"
-            onClick={() => window.location.reload()}
+          <div
+            className="filter-reset-btn"
+            onClick={handleReset}
           >
-            Reset
-          </button>
+            Clear All
+          </div>
         </div>
       </div>
       <div className="filtered-products">
@@ -115,44 +119,45 @@ const FilteredProductsFemale = () => {
       <div className={`filter-menu-mobile ${filterOpen ? 'open' : ''}`} >
         {/* <button onClick={() => setFilterOpen(false)} className='close-btn'><IoClose /></button> */}
         <div className="filter-options">
-        <div className="filter-option">
-          <h6>CATEGORIES</h6>
-          {categories?.map((c) => (
-            <div key={c._id}>
-              <input
-                type="checkbox"
-                id={`checkbox-${c._id}`}
-                onChange={(e) => handleCheck(e.target.checked, c._id)}
-                className="checkbox"
-                checked={checked.includes(c._id)}
-              />
-              <label htmlFor={`checkbox-${c._id}`} className="checkbox-label">
-                {c.name}
-              </label>
+          <div className="filter-option">
+            <h6>CATEGORIES</h6>
+            {categories?.map((c) => (
+              <div key={c._id}>
+                <input
+                  type="checkbox"
+                  id={`checkbox-${c._id}`}
+                  onChange={(e) => handleCheck(e.target.checked, c._id)}
+                  className="checkbox"
+                  checked={checked.includes(c._id)}
+                />
+                <label htmlFor={`checkbox-${c._id}`} className="checkbox-label">
+                  {c.name}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div className="filter-option">
+            <h6>PRICE RANGE</h6>
+            <div>
+              <input type="radio" name="price" onChange={() => handlePriceChange([500, 600])} /> 500-600
             </div>
-          ))}
-        </div>
-        <div className="filter-option">
-          <h6>PRICE RANGE</h6>
-          <div>
-            <input type="radio" name="price" onChange={() => handlePriceChange([500, 600])} /> 500-600
+            <div>
+              <input type="radio" name="price" onChange={() => handlePriceChange([600, 700])} /> 600-700
+            </div>
+            <div>
+              <input type="radio" name="price" onChange={() => handlePriceChange([700, 800])} /> 700-800
+            </div>
           </div>
-          <div>
-            <input type="radio" name="price" onChange={() => handlePriceChange([600, 700])} /> 600-700
-          </div>
-          <div>
-            <input type="radio" name="price" onChange={() => handlePriceChange([700, 800])} /> 700-800
+
+          <div className="filter-option">
+            <div
+              className="filter-reset-btn"
+              onClick={handleReset}
+            >
+              Clear All
+            </div>
           </div>
         </div>
-        </div>
-        {/* <div className="filter-option">
-          <button
-            className="button"
-            onClick={() => window.location.reload()}
-          >
-            Reset
-          </button>
-        </div> */}
         <div className="filter-menu-bottom-buttons">
           {/* <button onClick={() => setFilterOpen(false)} className='reset-btn'>Close</button> */}
           <button onClick={() => setFilterOpen(false)} className='apply-btn'>APPLY</button>

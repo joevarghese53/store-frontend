@@ -24,6 +24,10 @@ const shopSlice = createSlice({
       state.priceRange = action.payload;
       console.log(state.priceRange);
     },
+    resetFilters: (state) => {
+      state.checked = [];
+      state.priceRange = [];
+    }
   },
 });
 
@@ -31,7 +35,8 @@ export const {
   setCategories,
   setProducts,
   setChecked,
-  setPriceRange, // Export the new action
+  setPriceRange,
+  resetFilters,
 } = shopSlice.actions;
 
 export default shopSlice.reducer;

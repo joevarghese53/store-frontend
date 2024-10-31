@@ -4,7 +4,7 @@ import { useGetFilteredProductsQuery } from '../redux/api/productApiSlice';
 import { useFetchCategoriesQuery } from '../redux/api/categoryApiSlice';
 import Loader from '../components/Loader';
 import { Product } from '../components';
-import { setCategories, setProducts, setChecked, setPriceRange } from '../redux/features/shop/shopSlice';
+import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
 import { RiFilter2Line } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
@@ -54,6 +54,10 @@ const FilteredProductsMale = () => {
     dispatch(setPriceRange(range));
   };
 
+  const handleReset = () => {
+    dispatch(resetFilters());
+  };
+
   if (categoriesQuery.isLoading || filteredProductsQuery.isLoading) {
     return <Loader />;
   }
@@ -91,12 +95,12 @@ const FilteredProductsMale = () => {
           </div>
         </div>
         <div className="filter-option">
-          <button
-            className="button"
-            onClick={() => window.location.reload()}
+          <div
+            className="filter-reset-btn"
+            onClick={handleReset}
           >
-            Reset
-          </button>
+            Clear All
+          </div>
         </div>
       </div>
       <div className="filtered-products">
@@ -146,15 +150,15 @@ const FilteredProductsMale = () => {
             <input type="radio" name="price" onChange={() => handlePriceChange([700, 800])} /> 700-800
           </div>
         </div>
-        </div>
-        {/* <div className="filter-option">
-          <button
-            className="button"
-            onClick={() => window.location.reload()}
+        <div className="filter-option">
+          <div
+            className="filter-reset-btn"
+            onClick={handleReset}
           >
-            Reset
-          </button>
-        </div> */}
+            Clear All
+          </div>
+        </div>
+        </div>
         <div className="filter-menu-bottom-buttons">
           {/* <button onClick={() => setFilterOpen(false)} className='reset-btn'>Close</button> */}
           <button onClick={() => setFilterOpen(false)} className='apply-btn'>APPLY</button>
