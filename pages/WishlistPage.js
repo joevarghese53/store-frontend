@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { FaRegFaceSadTear } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import SizeSelectorPopUp from '@/components/SizeSelectorPopUp';
+import { RiDeleteBin6Line } from "react-icons/ri";
+
 
 const WishlistPage = () => {
 
@@ -74,8 +76,14 @@ const WishlistPage = () => {
         {data.items.map((product) => (
           <div key={product.productId._id} className='wishlist-item'>
             <Product product={product.productId} />
-            <button className="wishlist-movetocart-button" onClick={() => handleMoveToCartClick(product.productId)}>Move to Cart</button>
-            <button className="wishlist-remove-button" onClick={() => handleRemoveFromWishlist(product.productId._id)}>Remove</button>
+            <div className="wishlist-btns">
+              <div className="wishlist-remove" onClick={() => handleRemoveFromWishlist(product.productId._id)}>
+                <RiDeleteBin6Line />
+              </div>
+              <div className="wishlist-move-to-cart" onClick={() => handleMoveToCartClick(product.productId)}>
+                MOVE TO CART
+              </div>
+            </div>
           </div>
         ))}
       </div>

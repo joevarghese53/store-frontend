@@ -10,7 +10,7 @@ const Product = ({ product }) => {
 
 
   return (
-    <div>
+    <div className='product-card-main-container'>
       <Link href={`/product/${product._id}`}>
         <div className="product-card">
           <img

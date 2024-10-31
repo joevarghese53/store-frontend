@@ -1460,7 +1460,7 @@ span.text-red {
   .product-card {
     width: 167px;
     height: 205px;
-    margin-bottom: 85px;
+    margin-bottom: 50px;
   }
 
   .product-image {
@@ -3002,31 +3002,56 @@ form input {
   flex-direction: column;
 }
 
-.wishlist-remove-button {
-  margin-top: 10px;
-  padding: 10px 30px;
-  min-width: 280px;
-  border: none;
-  background-color: #8e0000;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 15px;
-  font-weight: 600;
+.wishlist-btns {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  width: 100%;
 }
 
-.wishlist-movetocart-button {
-  padding: 10px 30px;
-  min-width: 280px;
-  border: none;
-  background-color: #155100;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 15px;
-  font-weight: 600;
+.wishlist-remove {
+  display: flex;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    
+    width: 30%;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
+.wishlist-move-to-cart {
+  display: flex;
+  color: rgb(0 161 160);
+  cursor: pointer;
+  
+  width: 70%;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+@media (max-width: 425px) {
+  .wishlist-items {
+    gap: 5px;
+    margin: 0px 5px;
+  }
+
+  .wishlist-item {
+    margin-bottom: 10px;
+  }
+  
+  .wishlist-move-to-cart {
+    font-size: 12px;
+  }
+
+  .wishlist-remove {
+    font-size: 12px;
+  }
+}
 
 
 /* WishlistPage.js start */
