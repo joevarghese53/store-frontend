@@ -114,6 +114,7 @@ const CheckoutPage = () => {
                 <h4 id='address-header-one'>MY CART ------- ADDRESS ------- CHECKOUT</h4>
                 <h4 id='address-header-two'>  ------- PAYMENT </h4>
             </div>
+            <div className='checkout-content'>
             <div className='checkout-address-summary'>
                 <p>{userInfo.username}</p>
                 <h6>ADDRESS DETAILS </h6>
@@ -122,14 +123,32 @@ const CheckoutPage = () => {
             </div>
             <div className="checkout-cart-summary">
                 <h6>BILLING DETAILS</h6>
-                <p>Cart Total (Excl. of all taxes) <span>₹{itemsPrice}</span></p>
-                <p>GST <span>₹{taxPrice}</span></p>
-                <p>Shipping Charges <span>₹{shippingPrice}</span></p>
-                <p>Total Amount: <span>₹{totalPrice}</span></p>
+                <div className="billing-details-row">
+                  <h8>Cart Total (Excl. of all taxes)</h8>
+                  <h8>₹{itemsPrice}</h8>
+                </div>
+                <div className="billing-details-row">
+                  <h8>GST</h8>
+                  <h8>₹{taxPrice}</h8>
+                </div>
+                <div className="billing-details-row">
+                  <h8>Shipping Charges</h8>
+                  <h8>₹{shippingPrice}</h8>
+                </div>
+                <div className="billing-details-row">
+                  <h8>Total Amount</h8>
+                  <h8>₹{totalPrice}</h8>
+                </div>
             </div>
-            <button type="button" className="btn1" onClick={placeOrderHandler} >
+            </div>
+            <button type="button" className="checkout-page-btn1" onClick={placeOrderHandler} >
                 PLACE ORDER
             </button>
+            <div className="cart-page-mobile-bottom">
+                <button type="button" className="cart-page-btn-mobile" onClick={placeOrderHandler} >
+                  PROCEED TO CHECKOUT
+                </button>
+            </div>
         </div>
     )
 }
