@@ -385,7 +385,6 @@ span.text-red {
   .footer-row {
     flex-direction: column;
     gap: 20px;
-    margin-bottom: 40px;
   }
 
   .footer-section {
