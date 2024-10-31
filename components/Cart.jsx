@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
@@ -9,40 +9,50 @@ const Cart = () => {
   const { data, isLoading, error, refetch } = useGetCartQuery();
   const [removeCartItem] = useRemoveFromCartMutation();
   const router = useRouter();
+  const billingRef = useRef(null);
 
   console.log(data);
+
+  const scrollToBilling = () => {
+    if (billingRef.current) {
+      const yOffset = -100;
+      const y = billingRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   function calcPrices(data) {
     const items = data.items;
     let itemsPriceWithTax = 0;
     let taxPrice = 0;
     items.forEach((item) => {
-    const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
+      const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
 
-    // Calculate the price before tax for each item
-    const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
+      // Calculate the price before tax for each item
+      const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
 
-    // Calculate the GST for each item
-    const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
+      // Calculate the GST for each item
+      const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
 
-    // Sum up the total price and tax for all items
-    itemsPriceWithTax += item.productId.price * item.quantity;
-    taxPrice += itemTaxPrice * item.quantity;
-  });
+      // Sum up the total price and tax for all items
+      itemsPriceWithTax += item.productId.price * item.quantity;
+      taxPrice += itemTaxPrice * item.quantity;
+    });
 
-  const shippingPrice = itemsPriceWithTax > 1000 ? 0 : 150;
-  const totalPrice = (
-    parseFloat(itemsPriceWithTax) + 
-    parseFloat(shippingPrice)
-  ).toFixed(2);
+    const shippingPrice = itemsPriceWithTax > 1000 ? 0 : 150;
+    const totalPrice = (
+      parseFloat(itemsPriceWithTax) +
+      parseFloat(shippingPrice)
+    ).toFixed(2);
 
-  return {
-    itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
-    shippingPrice: shippingPrice.toFixed(2), // Shipping charges
-    taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
-    totalPrice, // Final price including tax and shipping
-  };
-}
+    return {
+      itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
+      shippingPrice: shippingPrice.toFixed(2), // Shipping charges
+      taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
+      totalPrice, // Final price including tax and shipping
+    };
+  }
 
   const handleRemoveFromCart = async (itemId, size) => {
     try {
@@ -78,7 +88,7 @@ const Cart = () => {
         </div>
       </div>
     </div>
-    );
+  );
 
   if (error) return (
     <div className="checkout-container">
@@ -94,9 +104,9 @@ const Cart = () => {
         </div>
       </div>
     </div>
-    );
+  );
 
-    const { itemsPrice, shippingPrice, taxPrice, totalPrice } = data ? calcPrices(data) : {};
+  const { itemsPrice, shippingPrice, taxPrice, totalPrice } = data ? calcPrices(data) : {};
 
   return (
     <div className="checkout-container">
@@ -116,20 +126,26 @@ const Cart = () => {
           <>
             <div className='address-header'>
               <h4 id='address-header-one'>MY CART </h4>
-              <h4 id='address-header-two'>  ------- ADDRESS ------- CHECKOUT ------- PAYMENT </h4>
+              <h4 id='address-header-two'>  ----- ADDRESS ----- CHECKOUT ----- PAYMENT </h4>
             </div>
             <div className='cart-content-summary'>
               <div className="cart-content">
                 {data.items.map((item) => (
-                  <div className="cart-item" key={item._id}>
-                    <img src={item.productId.frontImage} className="cart-product-image" />
-                    <div className="item-desc">
-                      <h5>{item.productId.name}</h5>
-                      <p id='cart-item-category'>{item.productId.category}</p>
-                      <p id='cart-item-quantity'>Quantity: {item.quantity}</p>
-                      <p id='cart-item-size'>Size: {item.size}</p>
-                      <h4>₹{item.productId.price}</h4>
-                      <h3>MRP inclusive of all taxes</h3>
+                  <div className="cart-item-container">
+                    <div className="cart-item" key={item._id}>
+                      <img src={item.productId.frontImage} className="cart-product-image" />
+                      <div className="item-desc">
+                        <h5>{item.productId.name}</h5>
+                        <p id='cart-item-category'>{item.productId.category}</p>
+                        <p id='cart-item-quantity'>Quantity: {item.quantity}</p>
+                        <p id='cart-item-size'>Size: {item.size}</p>
+                      </div>
+                    </div>
+                    <div className="item-price-and-remove">
+                      <div className="item-price">
+                        <h4>₹{item.productId.price}</h4>
+                        <h3>MRP inclusive of all taxes</h3>
+                      </div>
                       <button type="button" className="remove-item" onClick={() => handleRemoveFromCart(item.productId._id, item.size)}>
                         Remove
                       </button>
@@ -137,23 +153,46 @@ const Cart = () => {
                   </div>
                 ))}
               </div>
-              <div className="cart-summary">
+              <div className="cart-summary" ref={billingRef}>
                 <h6>BILLING DETAILS</h6>
-                <h8>Cart Total (Excl. of all taxes)       <span>₹{itemsPrice}</span></h8>
-                <h8>GST                                   <span>₹{taxPrice}</span></h8>
-                <h8>Shipping Charges                      <span>₹{shippingPrice}</span></h8>
-                <h8>Total Amount:                         <span>₹{totalPrice}</span></h8>
+                <div className="billing-details-row">
+                  <h8>Cart Total (Excl. of all taxes)</h8>
+                  <h8>₹{itemsPrice}</h8>
+                </div>
+                <div className="billing-details-row">
+                  <h8>GST</h8>
+                  <h8>₹{taxPrice}</h8>
+                </div>
+                <div className="billing-details-row">
+                  <h8>Shipping Charges</h8>
+                  <h8>₹{shippingPrice}</h8>
+                </div>
+                <div className="billing-details-row">
+                  <h8>Total Amount</h8>
+                  <h8>₹{totalPrice}</h8>
+                </div>
                 <Link href="/AddressPage">
-                  <button type="button" className="btn">
+                  <button type="button" className="cart-page-btn-desktop">
                     PROCEED TO CHECKOUT
                   </button>
                 </Link>
               </div>
             </div>
+            <div className="cart-page-mobile-bottom">
+              <div className='cart-page-mobile-bottom-price'>
+                <h6>₹{totalPrice}</h6>
+                <span onClick={scrollToBilling}>VIEW DETAILS</span>
+              </div>
+              <Link href="/AddressPage">
+                <button type="button" className="cart-page-btn-mobile">
+                  PROCEED TO CHECKOUT
+                </button>
+              </Link>
+            </div>
           </>
         )}
       </div>
-    </div>
+    </div >
   );
 }
 
