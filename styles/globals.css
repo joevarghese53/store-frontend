@@ -4593,6 +4593,7 @@ form input {
     bottom: 0px;
     left: 0;
     padding: 10px;
+    width: 100vw;
   }
 
   .product-detail-desc-buttons-mobile .add-to-cart {
