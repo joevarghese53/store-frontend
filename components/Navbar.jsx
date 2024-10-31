@@ -13,15 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from '@/redux/features/auth/authSlice';
 import { useLogoutMutation } from '../redux/api/usersApiSlice';
 import { FaBars } from 'react-icons/fa';
-import {
-  UserCircle,
-  Package,
-  Heart,
-  ShoppingCart,
-  MessageCircle,
-  LogOut,
-  X
-} from 'lucide-react'
+
 
 
 const Navbar = () => {

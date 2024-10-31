@@ -1607,9 +1607,14 @@ span.text-red {
   min-height: 100vh;
 }
 
-.filter-options {
+.filter-options-desktop {
+  display: block;
   width: 15%;
   margin-left: 20px;
+}
+
+.filter-options-mobile {
+  display: none;
 }
 
 .filter-option {
@@ -1630,6 +1635,105 @@ span.text-red {
   flex-wrap: wrap;
   justify-content: center;
   gap: 50px;
+}
+
+.filter-menu-mobile{
+  display: none;
+}
+
+
+@media (max-width: 425px) {
+
+  .filtered-products-main-container {
+    display: block;
+    margin-top: 100px;
+  }
+
+  .filter-options-desktop {
+    display: none;
+  }
+
+  .filtered-products {
+    gap: 8px;
+    margin: 0px auto;
+  }
+
+  .filter-options-mobile {
+    display: flex;
+    background: white;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #0000003b;
+  }
+
+  .filter-options-mobile h4 {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: monospace;
+    margin: 10px 0px;
+  }
+
+  .filter-menu-mobile {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  
+  .filter-menu-mobile.open {
+    transform: translateY(0);
+  }
+
+  .filter-menu-mobile .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: none;
+    color: black;
+    font-size: x-large;
+  }
+
+  .filter-menu-bottom-buttons{
+    display: flex;
+    justify-content: center;
+    background-color: #f0f0f0;
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    border: 1px solid #00000030;
+  }
+
+  .filter-menu-bottom-buttons .apply-btn {
+    padding: 10px 20px;
+        background-color: #ffffff;
+        color: #00a398;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        font-family: monospace;
+        font-weight: 700;
+  }
+
+  .filter-options{
+    margin-top: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+  }
+
 }
 
 
@@ -4541,8 +4645,6 @@ form input {
     /* Ensures image fills the width of the slide */
     height: auto;
     /* Keeps the image aspect ratio */
-    border-radius: 10px;
-    /* Removes border radius */
     object-fit: cover;
     /* Ensures the image scales to cover the slide area */
   }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetFilteredProductsQuery } from '../redux/api/productApiSlice';
 import { useFetchCategoriesQuery } from '../redux/api/categoryApiSlice';
@@ -6,6 +6,9 @@ import Loader from '../components/Loader';
 import { Product } from '../components';
 import { setCategories, setProducts, setChecked, setPriceRange } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
+import { RiFilter2Line } from "react-icons/ri";
+import { IoClose } from "react-icons/io5";
+
 
 const FilteredProductsMale = () => {
   const dispatch = useDispatch();
@@ -13,6 +16,7 @@ const FilteredProductsMale = () => {
   const categoriesQuery = useFetchCategoriesQuery();
   const router = useRouter();
   const { category } = router.query;
+  const [filterOpen, setFilterOpen] = useState(false);
 
   // Fetch filtered products based on checked categories and price range
   const filteredProductsQuery = useGetFilteredProductsQuery({ checked, radio: priceRange, gender: 'male' });
@@ -56,7 +60,7 @@ const FilteredProductsMale = () => {
 
   return (
     <div className="filtered-products-main-container">
-      <div className="filter-options">
+      <div className="filter-options-desktop">
         <div className="filter-option">
           <h6>CATEGORIES</h6>
           {categories?.map((c) => (
@@ -105,6 +109,56 @@ const FilteredProductsMale = () => {
             </div>
           ))
         )}
+      </div>
+      <div className="filter-options-mobile" onClick={() => setFilterOpen(true)}>
+        <RiFilter2Line size={24} />
+        <h4>FILTER</h4>
+      </div>
+      <div className={`filter-menu-mobile ${filterOpen ? 'open' : ''}`} >
+        {/* <button onClick={() => setFilterOpen(false)} className='close-btn'><IoClose /></button> */}
+        <div className="filter-options">
+        <div className="filter-option">
+          <h6>CATEGORIES</h6>
+          {categories?.map((c) => (
+            <div key={c._id}>
+              <input
+                type="checkbox"
+                id={`checkbox-${c._id}`}
+                onChange={(e) => handleCheck(e.target.checked, c._id)}
+                className="checkbox"
+                checked={checked.includes(c._id)}
+              />
+              <label htmlFor={`checkbox-${c._id}`} className="checkbox-label">
+                {c.name}
+              </label>
+            </div>
+          ))}
+        </div>
+        <div className="filter-option">
+          <h6>PRICE RANGE</h6>
+          <div>
+            <input type="radio" name="price" onChange={() => handlePriceChange([500, 600])} /> 500-600
+          </div>
+          <div>
+            <input type="radio" name="price" onChange={() => handlePriceChange([600, 700])} /> 600-700
+          </div>
+          <div>
+            <input type="radio" name="price" onChange={() => handlePriceChange([700, 800])} /> 700-800
+          </div>
+        </div>
+        </div>
+        {/* <div className="filter-option">
+          <button
+            className="button"
+            onClick={() => window.location.reload()}
+          >
+            Reset
+          </button>
+        </div> */}
+        <div className="filter-menu-bottom-buttons">
+          {/* <button onClick={() => setFilterOpen(false)} className='reset-btn'>Close</button> */}
+          <button onClick={() => setFilterOpen(false)} className='apply-btn'>APPLY</button>
+        </div>
       </div>
     </div>
   );
