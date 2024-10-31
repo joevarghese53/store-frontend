@@ -385,6 +385,7 @@ span.text-red {
   .footer-row {
     flex-direction: column;
     gap: 20px;
+    margin-bottom: 40px;
   }
 
   .footer-section {
@@ -4592,8 +4593,8 @@ form input {
     position: fixed;
     bottom: 0px;
     left: 0;
-    padding: 10px;
     width: 100vw;
+    padding: 10px 20px;
   }
 
   .product-detail-desc-buttons-mobile .add-to-cart {
