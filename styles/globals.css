@@ -1240,7 +1240,7 @@ span.text-red {
     color: red;
   }
 
-  .hamburger-menu-links .close-btn {
+  .hamburger-menu-links-close-btn {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -2917,7 +2917,7 @@ form input {
 
 .checkout-page {
   min-height: 100vh;
-    margin-top: 170px;
+  margin-top: 170px;
 }
 
 .checkout-page-btn1 {
@@ -2976,10 +2976,10 @@ form input {
 
 .checkout-change-address-link {
   text-decoration: underline;
-    position: relative;
-    bottom: 30px;
-    left: 145px;
-    color: #838383;
+  position: relative;
+  bottom: 30px;
+  left: 145px;
+  color: #838383;
 }
 
 
@@ -3122,17 +3122,20 @@ form input {
   .checkout-page {
     margin-top: 130px;
   }
-  .checkout-page-btn1{
+
+  .checkout-page-btn1 {
     display: none;
   }
 
-  .checkout-content{
+  .checkout-content {
     flex-direction: column;
   }
-  .checkout-cart-summary{
+
+  .checkout-cart-summary {
     margin: auto;
   }
-  .checkout-address-summary{
+
+  .checkout-address-summary {
     margin: auto;
   }
 }
@@ -4170,9 +4173,10 @@ form input {
 
 @media (max-width: 768px) {
 
-  .address-page-main-container{
+  .address-page-main-container {
     margin-top: 130px;
   }
+
   #address-header-one {
     font-size: 10px;
     font-weight: 600;
@@ -4264,10 +4268,10 @@ form input {
 
 .payment-page-left-container {
   display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 67%;
-    margin-top: 40px;
+  flex-direction: column;
+  gap: 20px;
+  width: 67%;
+  margin-top: 40px;
 }
 
 .payment-page-right-container {
@@ -4366,39 +4370,39 @@ form input {
 
 .pay-now-button-desktop {
   margin-top: 10px;
-    padding: 10px 0px;
-    width: 200px;
-    border: none;
-    background-color: #155100;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: 600;
+  padding: 10px 0px;
+  width: 200px;
+  border: none;
+  background-color: #155100;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 @media (max-width:768px) {
-  .payment-page-main-container{
+  .payment-page-main-container {
     margin-top: 130px;
   }
 
-  .payment-page-bottom-container{
+  .payment-page-bottom-container {
     flex-direction: column;
   }
-  
-  .payment-page-left-container{
+
+  .payment-page-left-container {
     gap: 10px;
     margin: auto;
     width: 90%;
     margin-top: 10px;
   }
 
-  .payment-page-right-container{
+  .payment-page-right-container {
     width: 90%;
     margin: auto;
   }
 
-  .pay-now-button-desktop{
+  .pay-now-button-desktop {
     display: none;
   }
 }
@@ -5016,7 +5020,7 @@ form input {
   display: flex;
 }
 
-.workshop-tabs {
+.workshop-tabs-desktop {
   position: relative;
   top: 160px;
   display: flex;
@@ -5048,24 +5052,16 @@ form input {
   width: 100%;
 }
 
-.workshop-image-header {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 50px;
-  font-size: 30px;
-}
-
-.workshop-image-header span {
-  color: #04003b;
-  font-family: monospace;
-  font-weight: 600;
-}
-
 .workshop-images {
   display: flex;
   margin-top: 20px;
   width: 100%;
   justify-content: space-around;
+}
+
+.workshop-images span {
+  margin: 15px;
+  font-weight: 500;
 }
 
 .workshop-category-content h1 {
@@ -5269,6 +5265,10 @@ button:focus {
 
 .header {
   display: flex;
+}
+
+.file-upload-input{
+  width: fit-content;
 }
 
 .workshop-color-content {
@@ -5580,68 +5580,171 @@ button {
 }
 
 
+.workshop-tabs-mobile {
+  display: none;
+}
 
-/* Add this CSS at the end of your existing CSS */
 
 /* Responsive Styles */
-@media screen and (max-width: 768px) {
 
-  /* Adjustments for screens with a maximum width of 768 pixels */
-  .workshop-color-groups {
-    height: auto;
-    top: 0;
+@media screen and (max-width: 425px) {
+
+  .customs-main-container {
+    margin-top: 88px;
   }
 
-  .workshop-color-content h2 {
-    top: 0;
+  .customs-tabs {
+    border-bottom: 2px solid transparent;
   }
 
-  .colorselector {
+  .customs-tab.active {
+    background: #eeeeee;
+    color: #000;
+    font-weight: 600;
+  }
+
+  .customs-tab {
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 0px;
+    position: relative;
+    height: 45px;
+    width: 100vw;
+    padding: 0;
+  }
+
+  .customs-tab:not(:last-child) {
+    border-right: 1px solid #00000036;
+    /* Adjust color and width as needed */
+  }
+
+  .customs-tab.active::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+  }
+
+  .workshop-tabs-desktop {
+    display: none;
+  }
+
+  .workshop-images {
     flex-direction: column;
+    gap: 20px;
+  }
+
+
+  .imagecomponent {
+    width: 350px;
+    height: 350px;
+  }
+
+  .generated-image {
+    width: 350px;
+    height: 350px;
+  }
+
+  .final-product-main-container {
+    flex-direction: column;
+    margin-top: 0;
+    margin-bottom: 30px;
+  }
+
+  .final-product-images {
+    flex-direction: column;
+    padding: 30px 0px;
+  }
+
+  .final-product-images img {
+    width: 350px;
+    height: 350px;
+  }
+
+  .workshop-tabs-mobile {
+    display: flex;
+    height: 50px;
+    width: 100vw;
+    background: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    justify-content: space-evenly;
+  }
+
+  .workshop-tabs-category-mobile,
+  .workshop-tabs-color-mobile,
+  .workshop-tabs-upload-mobile,
+  .workshop-tabs-generate-mobile {
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    font-weight: 700;
+    justify-content: center;
     align-items: center;
   }
 
-  .imagecomponent,
-  .generated-image {
+  .workshop-tabs-mobile-category-slider{
+    display: block;
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    position: static;
-    float: none;
+    height: 50%;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+  }
+  
+  .workshop-tabs-mobile-category-slider.open{
+    transform: translateY(0);
+  }
+  .workshop-category-content{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-top: 20px;
-    /* Adjust as needed */
+    align-items: center;
   }
 
-  .both-image::after {
-    content: "";
-    display: table;
-    clear: both;
+  .workshop-category-content h1 {
+    margin-left: 0;
+  }
+  .workshop-category-card{
+    margin-left: 0;
+  }
+  .file-upload-input{
+    display: flex;
+    margin: 170px auto;
+  }
+  .workshop-color-content{
+    position: none;
+    left: 0;
+    margin: 105px 15px;
   }
 
-  .Filepicker {
-    width: 100%;
-    border: dashed;
+  .mobile-prompt-input{
+    margin-top: 80px;
+    margin-left: 30px;
+    width: 300px;
+    height: auto;
+    min-height: 150px;
+    border-radius: 5px;
   }
-
-
-  .wrapper textarea {
-    width: 100%;
-  }
-
-  .wrapper button {
-    width: 100%;
-  }
-
-  .MuiBox-root.css-1n3h4wo {
-    width: 100%;
-  }
-
-  .product-container {
-    margin-top: 10px;
-    overflow: auto;
-    max-height: none;
+  #prompt-submit-button{
+    margin-left: 120px;
+    margin-top: 30px;
   }
 }
 
-/* Add more media queries for other screen sizes if needed */
 
 /* Customs.js end */
 

@@ -117,7 +117,7 @@ const FilteredProductsFemale = () => {
         <h4>FILTER</h4>
       </div>
       <div className={`filter-menu-mobile ${filterOpen ? 'open' : ''}`} >
-        {/* <button onClick={() => setFilterOpen(false)} className='close-btn'><IoClose /></button> */}
+        {/* <button onClick={() => setFilterOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button> */}
         <div className="filter-options">
           <div className="filter-option">
             <h6>CATEGORIES</h6>

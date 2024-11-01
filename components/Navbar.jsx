@@ -110,7 +110,7 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="hamburger-menu-links">
-                <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose /></button>
+                <button onClick={() => setHamburgerOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
                 <Link href="/ProfilePage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
                   <CgProfile className='hamburger-menu-icons' /> <span>My Profile</span>
                 </Link>
