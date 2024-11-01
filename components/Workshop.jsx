@@ -614,6 +614,7 @@ const Workshop = ({ setActiveTab }) => {
           <div className={`workshop-tabs-mobile-category-slider ${showUploadMobile ? 'open' : ''}`} >
             <button onClick={() => setShowUploadMobile(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
             <input className='file-upload-input' type="file" onChange={handleFileChange} />
+            <button onClick={() => setShowUploadMobile(false)} className='file-upload-close'>DONE</button>
           </div>
           <div className={`workshop-tabs-mobile-category-slider ${showColorMobile ? 'open' : ''}`} >
             <button onClick={() => setShowColorMobile(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>

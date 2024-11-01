@@ -129,7 +129,8 @@ function Dragg({ upload, back, design, side, setFinalImageFront, setFinalImageBa
 
   return (
     <>
-      <canvas ref={canvasRef} width={400} height={400} ></canvas>
+      <canvas ref={canvasRef} className="canvas-desktop" width={400} height={400} ></canvas>
+      <canvas ref={canvasRef} className="canvas-mobile" width={350} height={350} ></canvas>
       <div className='finalise'>
         <button type='button' className='finalise-button' onClick={() => { handleFinalise(); }}>CONFIRM DESIGN</button>
 

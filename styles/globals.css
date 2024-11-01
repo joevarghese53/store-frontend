@@ -264,7 +264,6 @@ span.text-red {
   border-radius: 15px;
   border: none;
   font-size: 20px;
-  margin-top: 10px;
   margin-top: 40px;
   text-transform: uppercase;
   background-color: #f02d34;
@@ -5587,13 +5586,30 @@ button {
 .workshop-tabs-mobile {
   display: none;
 }
-.workshop-tabs-mobile-category-slider{
+
+.workshop-tabs-mobile-category-slider {
+  display: none;
+}
+
+.canvas-desktop {
+  display: block;
+}
+
+.canvas-mobile {
   display: none;
 }
 
 /* Responsive Styles */
 
 @media screen and (max-width: 425px) {
+
+  .canvas-desktop {
+    display: none;
+  }
+
+  .canvas-mobile {
+    display: block;
+  }
 
   .customs-main-container {
     margin-top: 88px;
@@ -5669,7 +5685,7 @@ button {
 
   .final-product-main-container {
     flex-direction: column;
-    margin-top: 0;
+    margin-top: 40px;
     margin-bottom: 30px;
   }
 
@@ -5743,13 +5759,31 @@ button {
 
   .file-upload-input {
     display: flex;
-    margin: 170px auto;
+    margin: 140px auto;
+  }
+
+  .file-upload-close {
+    width: 150px;
+    border-radius: 15px;
+    border: none;
+    font-size: 17px;
+    margin-top: 10px;
+    margin-left: 90px;
+    background-color: #f02d34;
+    color: #fff;
   }
 
   .workshop-color-content {
     position: none;
     left: 0;
     margin: 105px 15px;
+  }
+
+  .finalise-button {
+    width: 185px;
+    padding: 8px 11px;
+    font-size: 16px;
+    margin-left: 81px;
   }
 
   .mobile-prompt-input {
