@@ -506,9 +506,12 @@ const Workshop = ({ setActiveTab }) => {
 
                 <div className="canvas">
                   <span>Canvas:</span>
-                  <div className="imagecomponent">
+                  <div className="imagecomponent-desktop">
+                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen='desktop' />
+                  </div>
+                  <div className="imagecomponent-mobile">
 
-                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} />
+                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen = 'mobile' />
                   </div>
                   {animbool && (
                     <div className="ring-loader">

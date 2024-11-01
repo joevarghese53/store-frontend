@@ -5267,7 +5267,7 @@ button:focus {
   display: flex;
 }
 
-.file-upload-input{
+.file-upload-input {
   width: fit-content;
 }
 
@@ -5408,10 +5408,14 @@ button:focus {
   margin-top: 50px;
 }
 
-.imagecomponent {
+.imagecomponent-desktop {
   width: 400px;
   height: 400px;
   position: relative;
+}
+
+.imagecomponent-mobile {
+  display: none;
 }
 
 .generated-image {
@@ -5420,7 +5424,7 @@ button:focus {
   position: relative;
 }
 
-.imagecomponent img,
+.imagecomponent-desktop img,
 .generated-image img {
   filter: drop-shadow(0px 6px 15px rgba(0, 0, 0, 0.5));
   max-width: 100%;
@@ -5583,7 +5587,9 @@ button {
 .workshop-tabs-mobile {
   display: none;
 }
-
+.workshop-tabs-mobile-category-slider{
+  display: none;
+}
 
 /* Responsive Styles */
 
@@ -5640,9 +5646,20 @@ button {
   }
 
 
-  .imagecomponent {
+  .imagecomponent-desktop {
+    display: none;
+  }
+
+  .imagecomponent-mobile {
+    display: block;
     width: 350px;
     height: 350px;
+    position: relative;
+  }
+
+  .imagecomponent-mobile img {
+    filter: drop-shadow(0px 6px 15px rgba(0, 0, 0, 0.5));
+    max-width: 100%;
   }
 
   .generated-image {
@@ -5689,7 +5706,7 @@ button {
     align-items: center;
   }
 
-  .workshop-tabs-mobile-category-slider{
+  .workshop-tabs-mobile-category-slider {
     display: block;
     position: fixed;
     bottom: 0;
@@ -5703,11 +5720,12 @@ button {
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
   }
-  
-  .workshop-tabs-mobile-category-slider.open{
+
+  .workshop-tabs-mobile-category-slider.open {
     transform: translateY(0);
   }
-  .workshop-category-content{
+
+  .workshop-category-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -5718,20 +5736,23 @@ button {
   .workshop-category-content h1 {
     margin-left: 0;
   }
-  .workshop-category-card{
+
+  .workshop-category-card {
     margin-left: 0;
   }
-  .file-upload-input{
+
+  .file-upload-input {
     display: flex;
     margin: 170px auto;
   }
-  .workshop-color-content{
+
+  .workshop-color-content {
     position: none;
     left: 0;
     margin: 105px 15px;
   }
 
-  .mobile-prompt-input{
+  .mobile-prompt-input {
     margin-top: 80px;
     margin-left: 30px;
     width: 300px;
@@ -5739,7 +5760,8 @@ button {
     min-height: 150px;
     border-radius: 5px;
   }
-  #prompt-submit-button{
+
+  #prompt-submit-button {
     margin-left: 120px;
     margin-top: 30px;
   }

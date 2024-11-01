@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
-const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side }) => {
+const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [startY, setStartY] = useState(0);
@@ -11,30 +11,47 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side }) => {
 
   const containerRef = useRef(null);
 
-  const getTshirtBounds = (category, side) => {
+  const getTshirtBounds = (screen, category, side) => {
     const bounds = {
-      regular: {
-        front: { left: 110, top: 140, right: 285, bottom: 380 },
-        back: { left: 115, top: 50, right: 285, bottom: 370 }
+      desktop: {
+        regular: {
+          front: { left: 110, top: 140, right: 285, bottom: 380 },
+          back: { left: 115, top: 50, right: 285, bottom: 370 }
+        },
+        oversized: {
+          front: { left: 115, top: 140, right: 280, bottom: 375 },
+          back: { left: 120, top: 60, right: 280, bottom: 375 }
+        },
+        hoodies: {
+          front: { left: 100, top: 150, right: 290, bottom: 240 },
+          back: { left: 105, top: 105, right: 290, bottom: 340 }
+        }
       },
-      oversized: {
-        front: { left: 115, top: 140, right: 280, bottom: 375 },
-        back: { left: 120, top: 60, right: 280, bottom: 375 }
-      },
-      hoodies: {
-        front: { left: 100, top: 150, right: 290, bottom: 240 },
-        back: { left: 105, top: 105, right: 290, bottom: 340 }
+      mobile: {
+        regular: {
+          front: { left: 98, top: 120, right: 248, bottom: 330 },
+          back: { left: 103, top: 43, right: 248, bottom: 320 }
+        },
+        oversized: {
+          front: { left: 103, top: 120, right: 245, bottom: 330 },
+          back: { left: 105, top: 50, right: 245, bottom: 330 }
+        },
+        hoodies: {
+          front: { left: 88, top: 130, right: 253, bottom: 210 },
+          back: { left: 94, top: 95, right: 253, bottom: 300 }
+        }
       },
       default: {
         front: { left: 120, top: 70, right: 290, bottom: 355 },
         back: { left: 115, top: 65, right: 285, bottom: 345 }
       }
     };
-
-    return bounds[category]?.[side] || bounds.default[side];
+  
+    // Ensure we have a valid screen, category, and side, and return a safe default if not
+    return (bounds[screen]?.[category]?.[side]) || bounds.default[side] || { left: 0, top: 0, right: 0, bottom: 0 };
   };
-
-  const tshirtBounds = getTshirtBounds(category, side);
+  
+  const tshirtBounds = getTshirtBounds(screen, category, side);
 
   console.log(tshirtBounds)
 
@@ -84,11 +101,27 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side }) => {
     onValuesChange({ startX, startY, endX, endY });
   };
 
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    handleMouseDown({ clientX: touch.clientX, clientY: touch.clientY });
+  };
+
+  const handleTouchMove = (e) => {
+    const touch = e.touches[0];
+    handleMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
+  };
+
+  const handleTouchEnd = () => {
+    handleMouseUp();
+  };
+
   return (
 
     <div
       ref={containerRef}
-
+      onTouchStart={imggg ? handleTouchStart : undefined}
+      onTouchMove={imggg ? handleTouchMove : undefined}
+      onTouchEnd={imggg ? handleTouchEnd : undefined}
       onMouseDown={imggg ? handleMouseDown : undefined}
       onMouseMove={imggg ? handleMouseMove : undefined}
       onMouseUp={imggg ? handleMouseUp : undefined}
