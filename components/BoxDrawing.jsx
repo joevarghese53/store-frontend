@@ -107,8 +107,13 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
   };
 
   const handleTouchMove = (e) => {
-    const touch = e.touches[0];
-    handleMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
+    if (isDragging && !dragRequestRef.current) {
+      const touch = e.touches[0];
+      dragRequestRef.current = requestAnimationFrame(() => {
+        handleDragMove(touch.clientX, touch.clientY);
+        dragRequestRef.current = null;
+      });
+    }
   };
 
   const handleTouchEnd = () => {
