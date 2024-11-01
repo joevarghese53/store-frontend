@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
@@ -10,6 +10,7 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
   const [endY, setEndY] = useState(0);
 
   const containerRef = useRef(null);
+  const dragRequestRef = useRef(null);
 
   const getTshirtBounds = (screen, category, side) => {
     const bounds = {
@@ -77,22 +78,27 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
     setEndY(e.clientY - containerRect.top);
   };
 
+  const handleDragMove = useCallback((clientX, clientY) => {
+    const containerRect = containerRef.current.getBoundingClientRect();
+
+    let newEndX = clientX - containerRect.left;
+    let newEndY = clientY - containerRect.top;
+
+    // Clamp the values to ensure they don't go outside the T-shirt bounds
+    newEndX = Math.max(tshirtBounds.left, Math.min(newEndX, tshirtBounds.right));
+    newEndY = Math.max(tshirtBounds.top, Math.min(newEndY, tshirtBounds.bottom));
+
+    // Update the end coordinates without setting state on every move
+    setEndX(newEndX);
+    setEndY(newEndY);
+  }, [tshirtBounds]);
+
   const handleMouseMove = (e) => {
-    if (isDragging) {
-      const containerRect = containerRef.current.getBoundingClientRect();
-
-      let newEndX = e.clientX - containerRect.left;
-      let newEndY = e.clientY - containerRect.top;
-
-      // Clamp the values to ensure they don't go outside the T-shirt bounds
-      if (newEndX < tshirtBounds.left) newEndX = tshirtBounds.left;
-      if (newEndX > tshirtBounds.right) newEndX = tshirtBounds.right;
-      if (newEndY < tshirtBounds.top) newEndY = tshirtBounds.top;
-      if (newEndY > tshirtBounds.bottom) newEndY = tshirtBounds.bottom;
-
-      // Update the end coordinates
-      setEndX(newEndX);
-      setEndY(newEndY);
+    if (isDragging && !dragRequestRef.current) {
+      dragRequestRef.current = requestAnimationFrame(() => {
+        handleDragMove(e.clientX, e.clientY);
+        dragRequestRef.current = null;
+      });
     }
   };
 
@@ -107,8 +113,13 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
   };
 
   const handleTouchMove = (e) => {
-    const touch = e.touches[0];
-    handleMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
+    if (isDragging && !dragRequestRef.current) {
+      const touch = e.touches[0];
+      dragRequestRef.current = requestAnimationFrame(() => {
+        handleDragMove(touch.clientX, touch.clientY);
+        dragRequestRef.current = null;
+      });
+    }
   };
 
   const handleTouchEnd = () => {
@@ -125,6 +136,7 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
       onMouseDown={imggg ? handleMouseDown : undefined}
       onMouseMove={imggg ? handleMouseMove : undefined}
       onMouseUp={imggg ? handleMouseUp : undefined}
+      style={{ position: 'relative' }}
     >
       {/* <TransformWrapper
         disablePadding	="true"
