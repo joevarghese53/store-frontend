@@ -159,7 +159,7 @@ const Workshop = ({ setActiveTab }) => {
     const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide}`;
     console.log(postData);
 
-    fetch('https://b017-34-125-91-24.ngrok-free.app/submit-prompt', {
+    fetch('https://1d4b-34-141-212-49.ngrok-free.app/submit-prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
