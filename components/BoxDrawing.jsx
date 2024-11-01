@@ -138,7 +138,7 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
       onMouseDown={imggg ? handleMouseDown : undefined}
       onMouseMove={imggg ? handleMouseMove : undefined}
       onMouseUp={imggg ? handleMouseUp : undefined}
-      style={{ position: 'relative' }}
+      style={{ position: 'relative', touchAction: 'none' }}
     >
       {/* <TransformWrapper
         disablePadding	="true"

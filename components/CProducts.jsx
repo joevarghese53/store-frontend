@@ -5,8 +5,9 @@ import { useRemoveFromWishlistMutation } from '../redux/api/wishlistApiSlice'
 import { useDeleteCProductMutation } from '../redux/api/cProductApiSlice'
 import { toast } from 'react-toastify'
 import Loader from './Loader'
-import CProduct  from '../components/CProduct';
+import CProduct from '../components/CProduct';
 import SizeSelectorPopUp from './SizeSelectorPopUp'
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 
 const Cproducts = () => {
@@ -19,7 +20,7 @@ const Cproducts = () => {
   const [showSizeModal, setShowSizeModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  
+
   const handleAddToCart = async (product_id, size) => {
     try {
       console.log(`Adding product to cart: productId=${product_id}, quantity= 1, size=${size}`);
@@ -32,8 +33,8 @@ const Cproducts = () => {
 
   const handleDeleteCProduct = async (product_id) => {
     try {
-      const removeFromCartResponse =  await removeAllOfProductFromCart({productId: product_id}).unwrap(); 
-      if(removeFromCartResponse.success) {
+      const removeFromCartResponse = await removeAllOfProductFromCart({ productId: product_id }).unwrap();
+      if (removeFromCartResponse.success) {
         console.log(`Deleting custom product: productId=${product_id}`);
         await deleteCProduct(product_id).unwrap();
         toast.success(`Custom Product deleted successfully`);
@@ -46,7 +47,7 @@ const Cproducts = () => {
   const handleAddToCartClick = (product) => {
     setSelectedProduct(product); // Set the selected product
     setShowSizeModal(true); // Show the size selection modal
-};
+  };
 
   if (isLoading) {
     return (
@@ -66,26 +67,32 @@ const Cproducts = () => {
 
   return (
     <div className="cproducts-main-container">
-            {data.customProducts.length === 0 && (  
-                <h1 style={{ height: '200px', paddingTop: '100px' }}>No Products Designed</h1>
-            )}
-            {data.customProducts.map((product) => (
-                <div key={product._id} className='cproduct-item'>
-                    <CProduct product={product} />
-                    <button className="wishlist-movetocart-button" onClick={() => handleAddToCartClick(product)}>Add to Cart</button>
-                    <button className="wishlist-remove-button" onClick={() => handleDeleteCProduct(product._id)}>Delete</button>
-                </div>
-            ))}
-            {selectedProduct && (
-                <SizeSelectorPopUp
-                    show={showSizeModal}
-                    onClose={() => setShowSizeModal(false)}
-                    onConfirm={handleAddToCart}
-                    product={selectedProduct}
-                />
-            )}
+      {data.customProducts.length === 0 && (
+        <h1 style={{ height: '200px', paddingTop: '100px' }}>No Products Designed</h1>
+      )}
+      {data.customProducts.map((product) => (
+        <div key={product._id} className='cproduct-item'>
+          <CProduct product={product} />
+          <div className="wishlist-btns">
+            <div className="wishlist-remove" onClick={() => handleDeleteCProduct(product._id)}>
+              <RiDeleteBin6Line />
+            </div>
+            <div className="wishlist-move-to-cart" onClick={() => handleAddToCartClick(product)}>
+              MOVE TO CART
+            </div>
+          </div>
         </div>
-    );
+      ))}
+      {selectedProduct && (
+        <SizeSelectorPopUp
+          show={showSizeModal}
+          onClose={() => setShowSizeModal(false)}
+          onConfirm={handleAddToCart}
+          product={selectedProduct}
+        />
+      )}
+    </div>
+  );
 };
 
 
