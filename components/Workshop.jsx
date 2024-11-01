@@ -644,7 +644,7 @@ const Workshop = ({ setActiveTab }) => {
                   onKeyUp={handleTextareaResize}
                   className='mobile-prompt-input'
                 />
-                <button id='prompt-submit-button' onClick={handleSubmit}>Submit</button>
+                <button id='prompt-submit-button' onClick={() => { handleSubmit(); setShowGenerateMobile(false); }}>Submit</button>
           </div>
 
           <div className="workshop-tabs-mobile">
