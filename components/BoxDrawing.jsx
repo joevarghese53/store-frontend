@@ -108,12 +108,14 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
   };
 
   const handleTouchStart = (e) => {
+    e.preventDefault();
     const touch = e.touches[0];
     handleMouseDown({ clientX: touch.clientX, clientY: touch.clientY });
   };
 
   const handleTouchMove = (e) => {
     if (isDragging && !dragRequestRef.current) {
+      e.preventDefault();
       const touch = e.touches[0];
       dragRequestRef.current = requestAnimationFrame(() => {
         handleDragMove(touch.clientX, touch.clientY);
@@ -136,7 +138,7 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
       onMouseDown={imggg ? handleMouseDown : undefined}
       onMouseMove={imggg ? handleMouseMove : undefined}
       onMouseUp={imggg ? handleMouseUp : undefined}
-      style={{ position: 'relative' }}
+      style={{ position: 'relative', touchAction: 'none' }}
     >
       {/* <TransformWrapper
         disablePadding	="true"
