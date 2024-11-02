@@ -661,10 +661,12 @@ span.text-red {
 /* imageslider.jsx start */
 
 .image-slider-main-container {
-  width: 100%;
-  height: 660px;
+  max-width: 1500px;
+  height: 650px;
   position: relative;
   margin-top: 110px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
