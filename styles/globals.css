@@ -96,19 +96,20 @@ span.text-red {
 }
 
 .products-heading h2 {
-  font-size: 27px;
+  font-size: 25px;
   font-weight: 700;
+  color: #000000c9;
 }
 
 .categories-heading {
   text-align: center;
-  color: #000000;
+  color: #000000c9;
   margin-top: 80px;
   margin-bottom: 40px;
 }
 
 .categories-heading h2 {
-  font-size: 27px;
+  font-size: 25px;
   font-weight: 700;
 }
 
@@ -374,7 +375,7 @@ span.text-red {
 
 }
 
-@media (max-width: 425px) {
+@media (max-width: 768px) {
   .footer-row {
     flex-direction: column;
     gap: 20px;
@@ -666,6 +667,8 @@ span.text-red {
   margin-top: 110px;
 }
 
+
+
 .hero-banner-button-container button {
   position: absolute;
   bottom: 50px;
@@ -714,10 +717,11 @@ span.text-red {
 
 
 .img-slider-btn>* {
-  stroke: white;
-  fill: black;
+  stroke: #ffffff; /* Set arrow outline to white */
+  fill: #ffffff;   /* Set arrow fill to white */
   width: 2rem;
   height: 2rem;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 @keyframes squish {
@@ -742,7 +746,7 @@ span.text-red {
 
 .img-slider-dot-btn>* {
   stroke: white;
-  fill: black;
+  fill: #000000c9;
   height: 100%;
   width: 100%;
 }
@@ -926,12 +930,13 @@ span.text-red {
 .bottom-left-links a {
   font-weight: bold;
   position: relative;
+  color: #000000c9;
 }
 
 /* Active link styling for left links */
 .top-left-links a.active {
   background-image: linear-gradient(to right, rgb(189 191 225), rgb(255, 255, 255));
-  color: black;
+  color: #000000c9;
 }
 
 .bottom-left-links a::after {
@@ -1057,7 +1062,7 @@ span.text-red {
 .dropdown-menu button {
   display: block;
   padding: 10px 20px;
-  color: black;
+  color: #000000c9;
   cursor: pointer;
   width: 100%;
   text-align: left;
@@ -1233,7 +1238,7 @@ span.text-red {
     display: flex;
     padding: 0;
     gap: 15px;
-    color: black;
+    color: #000000c9;
     cursor: pointer;
     background: none;
     color: red;
@@ -1245,7 +1250,7 @@ span.text-red {
     right: 10px;
     cursor: pointer;
     background: none;
-    color: black;
+    color: #000000c9;
     font-size: x-large;
   }
 
@@ -1379,35 +1384,36 @@ span.text-red {
 .product-card {
   cursor: pointer;
   transition: transform 0.5s ease;
-  height: 370px;
+  height: 450px;
   position: relative;
   margin-bottom: 100px;
 }
 
 
 .product-image {
-  width: 100%;
+  width: fit-content;
   height: 100%;
 }
 
 .product-name {
   font-weight: 500;
-  color: #000;
-  font-size: 20px;
+  color: #000000cc;
+  font-size: 18px;
   margin-top: 10px;
 }
 
 .product-cat {
-  color: #000000b0;
+  color: #000000ad;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
   margin-top: -7px;
 }
 
 .product-price {
-  font-weight: 700;
+  font-weight: 500;
   margin-top: -12px;
-  color: black;
+  font-size: 13px;
+  color: #000000b3;
 }
 
 .product-card-reviews {
@@ -1433,27 +1439,72 @@ span.text-red {
 
 @media (max-width: 1440px) {
   .product-card {
-    height: 320px;
+    height: 315px;
   }
+
+  .product-name {
+    font-size: 14px;
+  }
+
+  .product-cat {
+    font-size: 12px;
+  }
+
+  .product-price {
+    font-size: 12px;
+  }
+
 }
 
 @media (max-width: 1024px) {
   .product-card {
-    height: 255px;
+    height: 230px;
+  }
+
+  .product-name {
+    font-size: 11px;
+  }
+
+  .product-cat {
+    font-size: 10px;
+  }
+
+  .product-price {
+    font-size: 10px;
   }
 }
 
 @media (max-width: 768px) {
+
+  .best-sellers {
+    gap: 7px !important;
+    margin: 0 !important;
+  }
+
   .product-card {
-    height: 300px;
+    height: 235px;
+  }
+
+  .product-card-reviews{
+    width: 36px;
+    height: 14px;
+  }
+
+  .product-card-reviews p{
+    font-size: 13px;
+  }
+
+  .product-card-reviews-star {
+    font-size: 12px;
   }
 }
 
 @media (max-width: 425px) {
+
+
   .product-card {
-    width: 167px;
     height: 205px;
-    margin-bottom: 50px;
+    margin-bottom: 55px;
   }
 
   .product-image {
@@ -1461,21 +1512,17 @@ span.text-red {
   }
 
   .product-name {
-    font-size: 13px;
+    font-size: 10px;
     margin-top: 5px;
   }
 
   .product-cat {
-    font-size: 9px;
+    font-size: 7px;
     margin-top: -13px;
   }
 
   .product-price {
-    font-size: 12px;
-    width: fit-content;
-    position: relative;
-    bottom: 38px;
-    left: 130px;
+    font-size: 9px;
     font-family: unset;
   }
 
@@ -1511,24 +1558,27 @@ span.text-red {
 
 .category-card {
   cursor: pointer;
-  transition: transform 0.5s ease;
+  overflow: hidden;
   position: relative;
+  border-radius: 7px;
 }
 
-.category-card:hover {
-  transform: scale(1.05, 1.05)
-}
 
 .category-image {
   width: 100%;
-  height: 650px;
-  border-radius: 5px;
+  height: 520px;
+  transition: transform 0.5s ease;
+  object-fit: cover;
+}
+
+.category-card:hover .category-image {
+  transform: scale(1.05);
 }
 
 .category-title {
   font-weight: 700;
   color: #ffffff;
-  font-size: 24px;
+  font-size: 13px;
   position: absolute;
   bottom: 10px;
   left: 50%;
@@ -1541,15 +1591,28 @@ span.text-red {
 
 @media (max-width: 1440px) {
   .category-image {
-    height: 500px;
+    height: 420px;
   }
 
+  .categories {
+    gap: 30px;
+  }
 }
 
 @media (max-width: 1024px) {
-  .category-image {
-    height: 360px;
+
+  .categories {
+    gap: 7px;
   }
+
+  .category-image {
+    height: 330px;
+  }
+
+  .category-title {
+    font-size: 12px;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -1558,11 +1621,11 @@ span.text-red {
   }
 
   .category-image {
-    height: 285px;
+    height: 260px;
   }
 
   .category-title {
-    font-size: 15px;
+    font-size: 9px;
   }
 }
 
@@ -1705,7 +1768,7 @@ span.text-red {
     right: 10px;
     cursor: pointer;
     background: none;
-    color: black;
+    color: #000000c9;
     font-size: x-large;
   }
 
@@ -1750,14 +1813,13 @@ span.text-red {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 50px;
+  gap: 13px;
   margin: 20px 20px;
 }
 
 @media (max-width: 425px) {
   .best-sellers {
-    gap: 10px;
-    margin: 0px 5px;
+    margin-bottom: 20px !important;
   }
 
 }
@@ -1910,10 +1972,12 @@ span.text-red {
     height: 7px;
     margin-right: 5px;
   }
-  .order-item-desc h3{
+
+  .order-item-desc h3 {
     margin-bottom: 0;
   }
-  .order-item-desc p{
+
+  .order-item-desc p {
     margin-bottom: 7px;
 
   }
@@ -2240,9 +2304,10 @@ span.text-red {
 }
 
 @media screen and (max-width: 768px) {
-  .order-details-container{
+  .order-details-container {
     margin: 8px;
   }
+
   .order-details-row1 {
     flex-direction: column;
   }
@@ -2251,7 +2316,7 @@ span.text-red {
   .order-detail-items {
     margin: 32px 5%;
   }
-  
+
 }
 
 /* OrderDetails.js end */
@@ -3381,7 +3446,7 @@ form input {
   text-decoration: underline;
 }
 
-#forgot-password{
+#forgot-password {
   text-decoration: underline;
 }
 
@@ -3493,7 +3558,7 @@ form input {
   .register-form {
     margin-top: 100px;
   }
-  
+
 }
 
 
@@ -3761,7 +3826,7 @@ form input {
 }
 
 .modal-close-button {
-  color: black;
+  color: #000000c9;
   font-weight: 600;
   transition: color 0.3s;
   margin-right: 0.5rem;
@@ -3778,7 +3843,7 @@ form input {
 /* Modal.jsx end */
 
 /* UpdateProfile.js start  */
-.update-profile-main-container{
+.update-profile-main-container {
   display: flex;
   flex-direction: column;
   margin-top: 200px;
@@ -3788,7 +3853,7 @@ form input {
   margin-right: auto;
 }
 
-.update-form-input input{
+.update-form-input input {
   width: 100%;
 }
 
@@ -3797,14 +3862,14 @@ form input {
     margin-top: 120px;
     max-width: 90%;
   }
-  
+
 }
 
 @media screen and (max-width: 425px) {
   .update-profile-main-container {
     margin-top: 100px;
   }
-  
+
 }
 
 /* AdminProcutPage.js start */
@@ -4970,7 +5035,7 @@ form input {
 
   .flex h4 {
     font-size: 16px;
-    color: black;
+    color: #000000c9;
   }
 
   .cart-bottom {
@@ -5155,7 +5220,7 @@ form input {
   cursor: pointer;
   background-color: #efefef;
   font-size: 18px;
-  color: black;
+  color: #000000c9;
   border-radius: 5px;
   font-weight: 700;
   font-family: system-ui;
@@ -5172,26 +5237,25 @@ form input {
 
 .workshop-main-container {
   display: flex;
+  flex-direction: column;
 }
 
 .workshop-tabs-desktop {
-  position: relative;
-  top: 160px;
   display: flex;
-  flex-direction: row;
-  width: 550px;
+  flex-direction: column;
   background-color: #ffffff;
   border-right: 1px solid #ddd;
   height: 100%;
+  margin-top: 30px;
 }
 
 .workshop-tabs-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: auto;
   display: flex;
-  flex-direction: column;
-  margin-left: 10px;
+  flex-direction: row;
+  align-items: center;
 }
 
 .reload {
@@ -5208,14 +5272,21 @@ form input {
 
 .workshop-images {
   display: flex;
+  width: fit-content;
+  margin: auto;
   margin-top: 20px;
-  width: 100%;
   justify-content: space-around;
 }
 
-.workshop-images span {
+.canvas-title {
   margin: 15px;
   font-weight: 500;
+}
+
+.workshop-tab-panel {
+  width: fit-content;
+  margin: auto;
+  margin-top: 15px;
 }
 
 .workshop-category-content h1 {
@@ -5223,7 +5294,9 @@ form input {
   font-weight: 900;
   font-family: monospace;
   color: #000000;
-  margin-left: 40px;
+  margin: auto;
+
+  width: fit-content;
 }
 
 .workshop-category-content h4 {
@@ -5239,7 +5312,7 @@ form input {
   flex-direction: column;
   border: 1px solid #ccc;
   border-radius: 8px;
-  margin-left: 20px;
+
   cursor: pointer;
 }
 
@@ -5285,7 +5358,6 @@ form input {
   background-color: #fff;
   font-weight: bold;
   color: #306cce;
-  width: 135px;
 }
 
 .react-tabs__tab:focus {
@@ -5586,17 +5658,17 @@ button:focus {
 
 .final-product-main-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin: 50px auto;
 }
 
 .final-product-images {
-  padding: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 50px;
+  margin-bottom: 50px;
   border: 2px dashed #000;
   border-radius: 40px;
 }
@@ -5756,7 +5828,15 @@ button {
 
 /* Responsive Styles */
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 820px) {
+
+  .final-product-images img {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media screen and (max-width: 800px) {
 
   .canvas-desktop {
     display: none;
@@ -5767,7 +5847,7 @@ button {
   }
 
   .customs-main-container {
-    margin-top: 88px;
+    margin-top: 115px;
   }
 
   .customs-tabs {
@@ -5956,6 +6036,13 @@ button {
   }
 }
 
+@media screen and(max-width:425px) {
+  .customs-main-container {
+    margin-top: 88px;
+  }
+
+}
+
 
 /* Customs.js end */
 
@@ -6010,7 +6097,7 @@ button {
 .cproduct-price {
   font-weight: 800;
   margin-top: -12px;
-  color: black;
+  color: #000000c9;
 }
 
 @media screen and (max-width: 425px) {

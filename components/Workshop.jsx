@@ -411,6 +411,79 @@ const Workshop = ({ setActiveTab }) => {
         <>
           <div className="workshop-main-container">
 
+            <div className="workshop-image-area">
+              <div className="workshop-image-header">
+
+
+              </div>
+
+              <div className="workshop-side-selection">
+                <label>Select Side:</label>
+                <select value={activeSide} onChange={handleSideChange}>
+                  <option value="front">Front</option>
+                  <option value="back">Back</option>
+                </select>
+              </div>
+
+              <div className="workshop-images">
+
+                <div className="canvas">
+                  <span className='canvas-title'>Canvas:</span>
+                  <div className="imagecomponent-desktop">
+                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen='desktop' />
+                  </div>
+                  <div className="imagecomponent-mobile">
+
+                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen = 'mobile' />
+                  </div>
+                  {animbool && (
+                    <div className="ring-loader">
+                      <RingLoader color='#00fffc' />
+                    </div>
+                  )}
+                  {showBusyMessage && (
+                    <div className="busy-message">
+                      Server is busy, please try again.🙂
+                    </div>
+                  )}
+                </div>
+                <div className="preview">
+                  <span className='canvas-title' >Preview:</span>
+                  <div className="generated-image" >
+
+                    {imageData ? (
+                      <React.Fragment>
+                        {!selectedFile && (
+                          <div>
+                            <img src={`${imageData}`} alt="Generated Image" />
+                            <div className='finalise'>
+                              <button type='button' className='finalise-button' onClick={() => { handleFinalise(); }}>CONFIRM DESIGN</button>
+                            </div>
+                            <div className='reload'>
+                              <TbReload size={34} onClick={handleImageDataReload} />
+                            </div>
+                          </div>
+                        )}
+                        {selectedFile && (
+                          <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                            <Dragg upload={selectedFile} back={`${imageData}`} design={designData} side={activeSide} setFinalImageFront={setFinalImageFront} setFinalImageBack={setFinalImageBack} setFinalDesignFront={setFinalDesignFront} setFinalDesignBack={setFinalDesignBack} setFinalUploadFront={setFinalUploadFront} setFinalUploadBack={setFinalUploadBack} />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        {!selectedFile && <img src={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} alt="Generated Image" draggable="false" />}
+                        {selectedFile && (
+                          <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                            <Dragg upload={selectedFile} back={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} design={designData} side={activeSide} setFinalImageFront={setFinalImageFront} setFinalImageBack={setFinalImageBack} setFinalDesignFront={setFinalDesignFront} setFinalDesignBack={setFinalDesignBack} setFinalUploadFront={setFinalUploadFront} setFinalUploadBack={setFinalUploadBack} />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
             {/* ------------------------------------Left Tabs Start-------------------------------------- */}
 
             <Tabs className="workshop-tabs-desktop">
@@ -486,82 +559,8 @@ const Workshop = ({ setActiveTab }) => {
             </Tabs>
 
             {/* ------------------------------------Left Tabs Start-------------------------------------- */}
-
-
-            <div className="workshop-image-area">
-              <div className="workshop-image-header">
-
-
-              </div>
-
-              <div className="workshop-side-selection">
-                <label>Select Side:</label>
-                <select value={activeSide} onChange={handleSideChange}>
-                  <option value="front">Front</option>
-                  <option value="back">Back</option>
-                </select>
-              </div>
-
-              <div className="workshop-images">
-
-                <div className="canvas">
-                  <span>Canvas:</span>
-                  <div className="imagecomponent-desktop">
-                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen='desktop' />
-                  </div>
-                  <div className="imagecomponent-mobile">
-
-                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen = 'mobile' />
-                  </div>
-                  {animbool && (
-                    <div className="ring-loader">
-                      <RingLoader color='#00fffc' />
-                    </div>
-                  )}
-                  {showBusyMessage && (
-                    <div className="busy-message">
-                      Server is busy, please try again.🙂
-                    </div>
-                  )}
-                </div>
-                <div className="preview">
-                  <span>Preview:</span>
-                  <div className="generated-image" >
-
-                    {imageData ? (
-                      <React.Fragment>
-                        {!selectedFile && (
-                          <div>
-                            <img src={`${imageData}`} alt="Generated Image" />
-                            <div className='finalise'>
-                              <button type='button' className='finalise-button' onClick={() => { handleFinalise(); }}>CONFIRM DESIGN</button>
-                            </div>
-                            <div className='reload'>
-                              <TbReload size={34} onClick={handleImageDataReload} />
-                            </div>
-                          </div>
-                        )}
-                        {selectedFile && (
-                          <div style={{ position: 'absolute', top: 0, left: 0 }}>
-                            <Dragg upload={selectedFile} back={`${imageData}`} design={designData} side={activeSide} setFinalImageFront={setFinalImageFront} setFinalImageBack={setFinalImageBack} setFinalDesignFront={setFinalDesignFront} setFinalDesignBack={setFinalDesignBack} setFinalUploadFront={setFinalUploadFront} setFinalUploadBack={setFinalUploadBack} />
-                          </div>
-                        )}
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment>
-                        {!selectedFile && <img src={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} alt="Generated Image" draggable="false" />}
-                        {selectedFile && (
-                          <div style={{ position: 'absolute', top: 0, left: 0 }}>
-                            <Dragg upload={selectedFile} back={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} design={designData} side={activeSide} setFinalImageFront={setFinalImageFront} setFinalImageBack={setFinalImageBack} setFinalDesignFront={setFinalDesignFront} setFinalDesignBack={setFinalDesignBack} setFinalUploadFront={setFinalUploadFront} setFinalUploadBack={setFinalUploadBack} />
-                          </div>
-                        )}
-                      </React.Fragment>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
+
           <div className="final-product-main-container">
             <div className="final-product-images">
               <div className="final-product-front">

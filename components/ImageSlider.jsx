@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { ArrowBigLeft, ArrowBigRight, Circle, CircleDot } from "lucide-react";
+import { ArrowBigRight, Circle, CircleDot } from "lucide-react";
 import Link from 'next/link';
+import { FaChevronLeft, FaChevronRight  } from "react-icons/fa";
+
 
 export function ImageSlider({ media }) {
   const [mediaIndex, setMediaIndex] = useState(0);
@@ -65,10 +67,9 @@ export function ImageSlider({ media }) {
       <button
         onClick={showPrevMedia}
         className="img-slider-btn"
-        style={{ left: 0 }}
         aria-label="View Previous Media"
       >
-        <ArrowBigLeft aria-hidden />
+        <FaChevronLeft aria-hidden  />
       </button>
       <button
         onClick={showNextMedia}
@@ -76,7 +77,7 @@ export function ImageSlider({ media }) {
         style={{ right: 0 }}
         aria-label="View Next Media"
       >
-        <ArrowBigRight aria-hidden />
+        <FaChevronRight  aria-hidden />
       </button>
       {/* <div
         style={{

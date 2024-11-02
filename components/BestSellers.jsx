@@ -26,7 +26,7 @@ const BestSellers = ({ gender }) => { // Accept gender as a prop
     return (
         <div className="best-sellers">
             {data.map((product) => (
-                <div key={product._id}>
+                <div key={product._id} className='best-sellers-item'>
                     <Product product={product} />
                 </div>
             ))}
