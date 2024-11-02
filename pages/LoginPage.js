@@ -77,6 +77,7 @@ const LoginPage = () => {
           </button>
         </form>
         <p>Don't have an account? <Link id='signup' href="/RegisterPage">Sign up</Link></p>
+        <p>Forgot your password? <Link id='forgot-password' href="/">Reset password</Link></p>
       </div>
       {/* <div className="login-image">
         <img src={slide1} alt="Login Page Image" />

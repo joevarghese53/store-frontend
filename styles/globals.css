@@ -3381,6 +3381,10 @@ form input {
   text-decoration: underline;
 }
 
+#forgot-password{
+  text-decoration: underline;
+}
+
 .login-form button {
   width: 100%;
   padding: 10px;
