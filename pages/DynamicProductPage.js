@@ -10,9 +10,13 @@ import { useRouter } from 'next/router';
 import { useAddToCartMutation } from '../redux/api/cartApiSlice';
 import { CiShoppingCart } from "react-icons/ci";
 import { useGetCProductDetailsQuery } from '../redux/api/cProductApiSlice';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination'
 
 const DynamicProductPage = () => {
- 
+
   const router = useRouter();
   const { id: productId } = router.query;
   console.log(productId);
@@ -67,79 +71,109 @@ const DynamicProductPage = () => {
     return <h1>No product found</h1>;
   }
 
-return (
-  
-  <div>
-  <div className="product-detail-container">
-    <div className='image-container'>
-      <div className='big-image-container'>
-        <img src={selectedImage} className="product-detail-image" />
-      </div>
-      <div className="small-images-container">
-        <img
-            src={product.frontImage}
-            className={selectedImage === product.frontImage ? 'small-image selected-image' : 'small-image'}
-            onClick={() => setSelectedImage(product.frontImage)}
-          />
-          <img
-            src={product.backImage}
-            className={selectedImage === product.backImage ? 'small-image selected-image' : 'small-image'}
-            onClick={() => setSelectedImage(product.backImage)}
-          />
-      </div>
-    </div>
+  return (
 
-    <div className="product-detail-desc">
-      <h1>{product.name}</h1>
-      <p id="category">{product.category}</p>
-      <p className="price">₹{product.price}</p>
-      <p className="tax">Inclusive of all taxes</p>
-      <div className="size-chart">
-      <SizeSelector onSizeSelect={setSelectedSize} category={product.category}/>
-      </div>
-      <div className="quantity">
-        {product.countInStock > 0 && (
-          <div>
-            <select
-              value={qty}
-              onChange={(e) => setQty(Number(e.target.value))}
-              className="select-quantity"
-            >
-              {[...Array(product.countInStock).keys()].map((x) => (
-                <option key={x + 1} value={x + 1}>
-                  {x + 1}
-                </option>
-              ))}
-            </select>
+    <div>
+      <div className="product-detail-container">
+        <div className='image-container-desktop'>
+          <div className='big-image-container'>
+            <img src={selectedImage} className="product-detail-image" />
           </div>
-        )}
+          <div className="small-images-container">
+            <img
+              src={product.frontImage}
+              className={selectedImage === product.frontImage ? 'small-image selected-image' : 'small-image'}
+              onClick={() => setSelectedImage(product.frontImage)}
+            />
+            <img
+              src={product.backImage}
+              className={selectedImage === product.backImage ? 'small-image selected-image' : 'small-image'}
+              onClick={() => setSelectedImage(product.backImage)}
+            />
+          </div>
+        </div>
+        <div className="image-container-mobile">
+          <Swiper spaceBetween={10} slidesPerView={1} pagination={{ clickable: true }} modules={[Pagination]} >
+            <SwiperSlide>
+              <img src={product.frontImage} className="product-detail-image-mobile" alt="Front view" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src={product.backImage} className="product-detail-image-mobile" alt="Back view" />
+            </SwiperSlide>
+            {product.images?.map((image, i) => (
+              <SwiperSlide key={i}>
+                <img src={image} className="product-detail-image-mobile" alt={`Image ${i}`} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+        <div className="product-detail-desc">
+          <h1>{product.name}</h1>
+          <p id="category">{product.category}</p>
+          <p className="price">₹{product.price}</p>
+          <p className="tax">Inclusive of all taxes</p>
+          <div className="size-chart">
+            <SizeSelector onSizeSelect={setSelectedSize} category={product.category} />
+          </div>
+          <div className="quantity">
+            {product.countInStock > 0 && (
+              <div>
+                <select
+                  value={qty}
+                  onChange={(e) => setQty(Number(e.target.value))}
+                  className="select-quantity"
+                >
+                  {[...Array(product.countInStock).keys()].map((x) => (
+                    <option key={x + 1} value={x + 1}>
+                      {x + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+          <div className="product-detail-desc-buttons-desktop">
+            <button
+              type="button"
+              disabled={product.countInStock === 0}
+              className="add-to-cart"
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </button>
+            <Link href="/CartPage">
+              <button type="button" className="add-to-wishlist" >
+                <CiShoppingCart style={{ marginRight: '10px' }} />
+                Go to Cart
+              </button>
+            </Link>
+          </div>
+          <div className="product-detail-desc-buttons-mobile">
+            <Link href="/CartPage">
+              <button type="button" className="add-to-wishlist" >
+                <CiShoppingCart style={{ marginRight: '10px' }} />
+                Go to Cart
+              </button>
+            </Link>
+            <button
+              type="button"
+              disabled={product.countInStock === 0}
+              className="add-to-cart"
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </button>
+          </div>
+          <PinCodeCheck />
+          <div className="product-details">
+            <ProductInfo title="Product Description" content={product.description} />
+            <ProductInfo title="Offers" content={product.offers} />
+            <ProductInfo title="Returns & Exchange" content={product.returnpolicy} />
+          </div>
+        </div>
       </div>
-      <div className="buttons">
-        <button
-          type="button"
-          disabled={product.countInStock === 0}
-          className="add-to-cart"
-          onClick={handleAddToCart}
-        >
-          Add to Cart
-        </button>
-        <Link href="/CartPage">
-          <button type="button" className="buy-now" >
-            <CiShoppingCart style={{ marginRight: '10px' }} />
-            Go to Cart
-          </button>
-        </Link>
-      </div>
-      <PinCodeCheck />
-      <div className="product-details">
-        <ProductInfo title="Offers" content={product.offers} />
-        <ProductInfo title="Product Description" content={product.description} />
-        <ProductInfo title="Returns & Exchange" content={product.returnpolicy} />
-      </div>
-    </div>
-  </div>
 
-  {/* <div className="maylike-products-wrapper">
+      {/* <div className="maylike-products-wrapper">
     <h2>You may also like</h2>
     <div className="marquee">
       <div className="maylike-products-container track">
@@ -149,8 +183,8 @@ return (
       </div>
     </div>
   </div> */}
-</div>
-);
+    </div>
+  );
 };
 
 

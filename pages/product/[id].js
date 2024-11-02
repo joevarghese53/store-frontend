@@ -258,8 +258,8 @@ const ProductDetails = () => {
           </div>
           <PinCodeCheck />
           <div className="product-details">
-            <ProductInfo title="Offers" content={product.offers} />
             <ProductInfo title="Product Description" content={product.description} />
+            <ProductInfo title="Offers" content={product.offers} />
             <ProductInfo title="Returns & Exchange" content={product.returnpolicy} />
           </div>
           <ReviewTabs

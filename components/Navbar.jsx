@@ -137,7 +137,7 @@ const Navbar = () => {
             <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`}>
               <div className="hamburger-menu-links">
                 <h1 className="hamburger-menu-heading">Hello, Guest</h1>
-                <button onClick={() => setHamburgerOpen(false)} className='close-btn'><IoClose /></button>
+                <button onClick={() => setHamburgerOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
                 <Link href="/LoginPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
                   <CgProfile className='hamburger-menu-icons' /> <span>Login</span>
                 </Link>

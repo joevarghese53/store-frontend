@@ -63,63 +63,41 @@ const MyOrders = () => {
                                         </div>
                                     ))}
                                 </div>
+                                <div className='order-price-status'>
                                 <div className='order-price'>
                                     <p>₹{order.totalPrice.toFixed(2)}</p>
                                 </div>
                                 <div className='order-status'>
                                     {order.isDelivered ? (
                                         <>
-                                            <span style={{
-                                                display: 'inline-block',
-                                                width: '15px',
-                                                height: '15px',
+                                            <span className='order-status-dot' style={{
                                                 backgroundColor: '#28a745',
-                                                borderRadius: '50%',
-                                                marginRight: '10px',
-                                                marginTop: '2px'
                                             }}></span>
                                             <h2>Order Delivered on {new Date(order.deliveredAt).toLocaleDateString()}</h2>
                                         </>
                                     ) : order.isOutForDelivery ? (
                                         <>
-                                            <span style={{
-                                                display: 'inline-block',
-                                                width: '15px',
-                                                height: '15px',
+                                            <span className='order-status-dot' style={{
                                                 backgroundColor: '#ff9800',
-                                                borderRadius: '50%',
-                                                marginRight: '10px',
-                                                marginTop: '2px'
                                             }}></span>
                                             <h2>Order Out For Delivery on {new Date(order.outForDeliveryAt).toLocaleDateString()}</h2>
                                         </>
                                     ) : order.isShipped ? (
                                         <>
-                                            <span style={{
-                                                display: 'inline-block',
-                                                width: '15px',
-                                                height: '15px',
+                                            <span className='order-status-dot' style={{
                                                 backgroundColor: '#17a2b8',
-                                                borderRadius: '50%',
-                                                marginRight: '10px',
-                                                marginTop: '2px'
                                             }}></span>
                                             <h2>Order Shipped on {new Date(order.shippedAt).toLocaleDateString()}</h2>
                                         </>
                                     ) : order.isPaid ? (
                                         <>
-                                            <span style={{
-                                                display: 'inline-block',
-                                                width: '15px',
-                                                height: '15px',
+                                            <span className='order-status-dot' style={{
                                                 backgroundColor: '#ffc107',
-                                                borderRadius: '50%',
-                                                marginRight: '10px',
-                                                marginTop: '2px'
                                             }}></span>
                                             <h2>Order Confirmed on {new Date(order.paidAt).toLocaleDateString()}</h2>
                                         </>
                                     ) : null}
+                                </div>
                                 </div>
                             </div>
                         </Link>
