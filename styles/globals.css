@@ -1518,6 +1518,10 @@ span.text-red {
   }
 
   .product-image {
+    width: 100%; /* Ensures the image fills the product card */
+    height: 100%;
+    max-width: 100%; /* Limits width to avoid overflow */
+    object-fit: cover; /* Keeps image proportions */
     border-radius: 5px;
   }
 
