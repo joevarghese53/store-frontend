@@ -2,13 +2,13 @@ import React from 'react';
 
 import { ImageSlider } from './ImageSlider';
 
-const slide1 = '/img/slide-01.jpg';
-const slide2 = '/img/slide-02.jpg';
-const slide3 = '/img/slide-03.jpg';
-const slide4 = '/img/slide-04.jpg';
-const slide5 = '/img/slide-05.jpg';
-const slide6 = '/img/slide-06.jpg';
-const slide7 = '/img/slide-07.jpg';
+const slide1 = '/img/slide-01.png';
+const slide2 = '/img/slide-02.png';
+const slide3 = '/img/slide-03.png';
+const slide4 = '/img/slide-04.png';
+const slide5 = '/img/slide-05.png';
+const slide6 = '/img/slide-06.png';
+const slide7 = '/img/slide-07.png';
 
 const video1 = '/videos/video-01.mp4';
 const video2 = '/videos/video-02.mp4';

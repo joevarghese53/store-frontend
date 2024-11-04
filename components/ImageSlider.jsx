@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { ArrowBigRight, Circle, CircleDot } from "lucide-react";
 import Link from 'next/link';
 import { FaChevronLeft, FaChevronRight  } from "react-icons/fa";
+import Router from "next/router";
 
 
 export function ImageSlider({ media }) {
   const [mediaIndex, setMediaIndex] = useState(0);
+  const router = Router;
 
   function showNextMedia() {
     setMediaIndex(index => {
@@ -21,18 +23,24 @@ export function ImageSlider({ media }) {
     });
   }
 
+  function handleImageClick() {
+    router.push('/Customs');
+  }
+
+
   return (
     <section aria-label="Image Slider" className="image-slider-main-container">
       {/* <a href="#after-media-slider-controls" className="skip-link">
         Skip Media Slider Controls
       </a> */}
-      <div style={{ width: "100%", height: "100%", display: "flex", overflow: "hidden", }}>
+      <div style={{ display: "flex", overflow: "hidden", }}>
         {media.map(({ type, url, alt }, index) => (
           type === 'image' ? (
             <img
               key={url}
               src={url}
               alt={alt}
+              onClick={handleImageClick}
               aria-hidden={mediaIndex !== index}
               className="img-slider-img"
               style={{ transform: `translateX(${-100 * mediaIndex}%)` }}
@@ -42,6 +50,7 @@ export function ImageSlider({ media }) {
               key={url}
               src={url}
               alt={alt}
+              onClick={handleImageClick}
               aria-hidden={mediaIndex !== index}
               className="img-slider-video"
               style={{ transform: `translateX(${-100 * mediaIndex}%)` }}
@@ -52,7 +61,7 @@ export function ImageSlider({ media }) {
           )
         ))}
       </div>
-      <div className="hero-banner-button-container">
+      {/* <div className="hero-banner-button-container">
         <div>
           <Link href={`/Customs`}>
             <button type="button">Explore</button>
@@ -62,7 +71,7 @@ export function ImageSlider({ media }) {
           </div>
 
         </div>
-      </div>
+      </div> */}
 
       <button
         onClick={showPrevMedia}
