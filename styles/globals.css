@@ -909,9 +909,9 @@ span.text-red {
 }
 
 /* Hide the top navbar on scroll */
-.top-navbar.hidden {
+/* .top-navbar.hidden {
   display: none;
-}
+} */
 
 /* Red line below the top navbar */
 .red-line {
@@ -922,9 +922,9 @@ span.text-red {
 }
 
 /* Hide the red line when the top navbar is hidden */
-.top-navbar.hidden+.red-line {
+/* .top-navbar.hidden+.red-line {
   display: none;
-}
+} */
 
 /* Bottom Navbar */
 .bottom-navbar {
