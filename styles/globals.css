@@ -1492,7 +1492,7 @@ span.text-red {
   }
 
   .product-card {
-    height: 235px;
+    height: 248px;
   }
 
   .product-card-reviews{
@@ -1519,6 +1519,8 @@ span.text-red {
   }
 
   .product-image {
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
   }
 
