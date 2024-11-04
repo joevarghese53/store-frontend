@@ -8,7 +8,7 @@ const Women = () => {
     <div>
       <HeroBanner />
       <div className="products-heading">
-        <h2>Best Seller Products</h2>
+        <h2>BEST RATED</h2>
       </div>
 
       <BestSellers gender="female" />
