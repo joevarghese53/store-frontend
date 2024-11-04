@@ -1916,6 +1916,7 @@ span.text-red {
 
 .order-price-status {
   display: flex;
+  gap: 30px;
 }
 
 .order-status-dot {
@@ -1954,6 +1955,7 @@ span.text-red {
 
   .order-card {
     padding: 0;
+    flex-direction: column-reverse;
   }
 
   .order-product-image {
@@ -1966,12 +1968,13 @@ span.text-red {
   }
 
   .order-status h2 {
-    font-size: 8px;
+    font-size: 10px;
     font-weight: 500;
   }
 
   .order-price-status {
-    flex-direction: column;
+    flex-direction: row-reverse;
+    justify-content: space-between;
     align-items: flex-end;
   }
 
@@ -1979,10 +1982,6 @@ span.text-red {
     font-size: 12px;
   }
 
-  .order-status {
-    margin-left: 35px;
-
-  }
 
   .order-status-dot {
     width: 9px;
