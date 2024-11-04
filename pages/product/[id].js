@@ -118,7 +118,8 @@ const ProductDetails = () => {
       console.log("Product added to cart");
     } catch (error) {
       console.log("Error adding product to cart: ", error);
-      toast.error(error?.data || error.message);
+      const errorMessage = error.data?.message || `Error: ${error.status}`;
+      toast.error(errorMessage);
     }
   };
 
