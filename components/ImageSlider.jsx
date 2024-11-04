@@ -23,8 +23,8 @@ export function ImageSlider({ media }) {
     });
   }
 
-  function handleImageClick() {
-    router.push('/Customs');
+  function handleImageClick(page) {
+    router.push(page);
   }
 
 
@@ -34,13 +34,13 @@ export function ImageSlider({ media }) {
         Skip Media Slider Controls
       </a> */}
       <div style={{ display: "flex", overflow: "hidden", }}>
-        {media.map(({ type, url, alt }, index) => (
+        {media.map(({ type, url, page }, index) => (
           type === 'image' ? (
             <img
               key={url}
               src={url}
-              alt={alt}
-              onClick={handleImageClick}
+              alt='slides'
+              onClick={() => handleImageClick(page)}
               aria-hidden={mediaIndex !== index}
               className="img-slider-img"
               style={{ transform: `translateX(${-100 * mediaIndex}%)` }}
@@ -49,8 +49,8 @@ export function ImageSlider({ media }) {
             <video
               key={url}
               src={url}
-              alt={alt}
-              onClick={handleImageClick}
+              alt='slides'
+              onClick={() => handleImageClick(page)}
               aria-hidden={mediaIndex !== index}
               className="img-slider-video"
               style={{ transform: `translateX(${-100 * mediaIndex}%)` }}

@@ -29,21 +29,21 @@ const mvideo3 = '/videos/mvideo-03.mp4';
 const HeroBanner = () => {
   const desktopMedia = [
     // { type: 'video', url: video1, alt: "video1" },
-    { type: 'image', url: slide1, alt: "slide1" },
-    { type: 'image', url: slide2, alt: "slide2" },
-    { type: 'image', url: slide3, alt: "slide3" },
-    { type: 'image', url: slide4, alt: "slide4" },
-    { type: 'image', url: slide5, alt: "slide5" },
-    { type: 'image', url: slide6, alt: "slide6" },
+    { type: 'image', url: slide1, page: "/Customs" },
+    { type: 'image', url: slide2, page: "/FilteredProductsMale?category=66adfb21a1698be6bdfa8e59" },
+    { type: 'image', url: slide3, page: "/FilteredProductsMale?category=66afb54bc0aa9bfafb408a1f" },
+    { type: 'image', url: slide4, page: "/FilteredProductsMale?category=66afb550c0aa9bfafb408a24" },
+    { type: 'image', url: slide5, page: "/Customs" },
+    { type: 'image', url: slide6, page: "/Customs" },
   ];
 
   const mobileMedia = [
-    { type: 'image', url: mslide1, alt: "mslide1" },
-    { type: 'image', url: mslide2, alt: "mslide2" },
-    { type: 'image', url: mslide3, alt: "mslide3" },
-    { type: 'image', url: mslide4, alt: "mslide4" },
-    { type: 'image', url: mslide5, alt: "mslide5" },
-    { type: 'image', url: mslide6, alt: "mslide6" },
+    { type: 'image', url: mslide1, page: "/Customs" },
+    { type: 'image', url: mslide2, page: "/FilteredProductsMale?category=66adfb21a1698be6bdfa8e59" },
+    { type: 'image', url: mslide3, page: "/FilteredProductsMale?category=66afb54bc0aa9bfafb408a1f" },
+    { type: 'image', url: mslide4, page: "/FilteredProductsMale?category=66afb550c0aa9bfafb408a24" },
+    { type: 'image', url: mslide5, page: "/Customs" },
+    { type: 'image', url: mslide6, page: "/Customs" },
   ];
 
   return (
