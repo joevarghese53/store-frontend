@@ -931,7 +931,7 @@ span.text-red {
   background-color: white;
   display: flex;
   align-items: center;
-  padding: 20px 20px;
+  padding: 7px 20px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 23%);
   justify-content: space-around;
 }
@@ -968,7 +968,7 @@ span.text-red {
 
 /* Logo */
 .nav-logo-desktop img {
-  height: 50px;
+  height: 55px;
 }
 
 .nav-logo-mobile {
@@ -1114,6 +1114,10 @@ span.text-red {
   .nav-logo-mobile {
     display: block;
     font-size: 6px;
+  }
+
+  .nav-logo-mobile img{
+    height: 25px;
   }
 
   .cart-icon span {

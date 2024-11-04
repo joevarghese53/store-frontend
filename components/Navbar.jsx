@@ -60,7 +60,7 @@ const Navbar = () => {
     <div className="navbar-container">
       <div className={`top-navbar ${scrolling ? 'hidden' : ''}`}>
         <div className="nav-logo-mobile">
-          <Link href="/"><img src="/logo.png" alt="Logo" /></Link>
+          <Link href="/"><img src="./img/logo.png" alt="Logo" /></Link>
         </div>
         <div className="top-left-links">
           <a
@@ -150,7 +150,7 @@ const Navbar = () => {
         }
 
         <div className="nav-logo-desktop">
-          <Link href="/"><img src="/logo.png" alt="Logo" /></Link>
+          <Link href="/"><img src="./img/logo.png" alt="Logo" /></Link>
         </div>
         <div className="bottom-left-links">
           <a
