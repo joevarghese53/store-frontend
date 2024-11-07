@@ -693,6 +693,7 @@ span.text-red {
   display: block;
   flex-shrink: 0;
   flex-grow: 0;
+  cursor: pointer;
 }
 
 .img-slider-video {
@@ -5262,7 +5263,7 @@ form input {
   background-color: #ffffff;
   border-right: 1px solid #ddd;
   height: 100%;
-  margin-top: 30px;
+  margin-top: 75px;
 }
 
 .workshop-tabs-list {

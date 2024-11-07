@@ -159,7 +159,7 @@ const Workshop = ({ setActiveTab }) => {
     const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide}`;
     console.log(postData);
 
-    fetch('https://45b6-34-168-223-225.ngrok-free.app/submit-prompt', {
+    fetch('https://1467-34-125-106-160.ngrok-free.app/submit-prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -554,7 +554,7 @@ const Workshop = ({ setActiveTab }) => {
                   placeholder="Enter your prompt..."
                   onKeyUp={handleTextareaResize}
                 />
-                <button id='prompt-submit-button' onClick={handleSubmit}>Submit</button>
+                <button id='prompt-submit-button' type='submit' onClick={handleSubmit}>Submit</button>
               </TabPanel>
             </Tabs>
 
