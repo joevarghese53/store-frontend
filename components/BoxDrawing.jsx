@@ -54,12 +54,12 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
   
   const tshirtBounds = getTshirtBounds(screen, category, side);
 
-  console.log(tshirtBounds)
+
 
 
   const handleMouseDown = (e) => {
     const containerRect = containerRef.current.getBoundingClientRect();
-    console.log(containerRect)
+    
 
     if (
       e.clientX - containerRect.left < tshirtBounds.left ||

@@ -18,6 +18,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
+import { set } from 'mongoose';
 
 
 
@@ -159,7 +160,7 @@ const Workshop = ({ setActiveTab }) => {
     const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide}`;
     console.log(postData);
 
-    fetch('https://1467-34-125-106-160.ngrok-free.app/submit-prompt', {
+    fetch('https://59aa-35-197-133-38.ngrok-free.app/submit-prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -173,14 +174,12 @@ const Workshop = ({ setActiveTab }) => {
         return response.text();
       })
       .then(data => {
-        var html_code = data;
-        var regex = /src="(data:image\/[^"]+)"/g;
-        var matches = [...html_code.matchAll(regex)];
-
-        setImageData(matches[0][1]);
-        setDesignData(matches[1][1]);
-        setanimbool(false)
-
+        const response = JSON.parse(data);
+        console.log('Final Image:', response.final_image);
+        console.log('Overlay Image:', response.overlay_image);
+        setImageData(response.final_image);
+        setDesignData(response.overlay_image);
+        setanimbool(false);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -191,7 +190,6 @@ const Workshop = ({ setActiveTab }) => {
 
   const handleBoxDrawingValuesChange = (values) => {
     setBoxDrawingValues(values);
-    console.log('BoxDrawing values:', values);
   };
 
   const base64ToFile = (base64String, filename) => {
@@ -434,7 +432,7 @@ const Workshop = ({ setActiveTab }) => {
                   </div>
                   <div className="imagecomponent-mobile">
 
-                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen = 'mobile' />
+                    <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen='mobile' />
                   </div>
                   {animbool && (
                     <div className="ring-loader">
@@ -595,20 +593,20 @@ const Workshop = ({ setActiveTab }) => {
           <div className={`workshop-tabs-mobile-category-slider ${showCategoryMobile ? 'open' : ''}`} >
             <button onClick={() => setShowCategoryMobile(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
             <div className="workshop-category-content">
-                  <h1>SELECT CATEGORY</h1>
-                  <div className="workshop-category-groups">
-                    {categoriesData?.map((category) => (
-                      <div
-                        key={category._id}
-                        className={`workshop-category-card ${selectedCategory === categoryMap[category.name] ? "selected" : ""
-                          }`}
-                        onClick={() => { setSelectedCategory(categoryMap[category.name]); setCategory(category._id); setActiveColor('black'); setImageData(null); setSelectedFile(null); setFinalImageFront(null); setFinalImageBack(null); setImageData(null); setDesignData(null); setFinalDesignFront(null); setFinalDesignBack(null); setFinalUploadFront(null); setFinalUploadBack(null); }}
-                      >
-                        <h4>{category.name.toUpperCase()}</h4>
-                      </div>
-                    ))}
+              <h1>SELECT CATEGORY</h1>
+              <div className="workshop-category-groups">
+                {categoriesData?.map((category) => (
+                  <div
+                    key={category._id}
+                    className={`workshop-category-card ${selectedCategory === categoryMap[category.name] ? "selected" : ""
+                      }`}
+                    onClick={() => { setSelectedCategory(categoryMap[category.name]); setCategory(category._id); setActiveColor('black'); setImageData(null); setSelectedFile(null); setFinalImageFront(null); setFinalImageBack(null); setImageData(null); setDesignData(null); setFinalDesignFront(null); setFinalDesignBack(null); setFinalUploadFront(null); setFinalUploadBack(null); }}
+                  >
+                    <h4>{category.name.toUpperCase()}</h4>
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
           </div>
           <div className={`workshop-tabs-mobile-category-slider ${showUploadMobile ? 'open' : ''}`} >
             <button onClick={() => setShowUploadMobile(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
@@ -618,32 +616,32 @@ const Workshop = ({ setActiveTab }) => {
           <div className={`workshop-tabs-mobile-category-slider ${showColorMobile ? 'open' : ''}`} >
             <button onClick={() => setShowColorMobile(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
             <div className="workshop-color-content">
-                  <h4>SELECT COLOR</h4>
-                  <div className="workshop-color-groups">
-                    {currentColorSet.map((color) => (
-                      <div
-                        key={color}
-                        className={`color color-${color} ${color === activeColor ? 'active-color' : ''}`}
-                        onClick={() => handleColorClick(color)}
-                      >
-                        <span className="tooltip">{showColorSets[color]}</span>
-                      </div>
-                    ))}
+              <h4>SELECT COLOR</h4>
+              <div className="workshop-color-groups">
+                {currentColorSet.map((color) => (
+                  <div
+                    key={color}
+                    className={`color color-${color} ${color === activeColor ? 'active-color' : ''}`}
+                    onClick={() => handleColorClick(color)}
+                  >
+                    <span className="tooltip">{showColorSets[color]}</span>
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
           </div>
           <div className={`workshop-tabs-mobile-category-slider ${showGenerateMobile ? 'open' : ''}`} >
             <button onClick={() => setShowGenerateMobile(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
             <input
-                  spellCheck="false"
-                  type="text"
-                  value={textareaValue}
-                  onChange={handleTextareaChange}
-                  placeholder="Enter your prompt..."
-                  onKeyUp={handleTextareaResize}
-                  className='mobile-prompt-input'
-                />
-                <button id='prompt-submit-button' onClick={() => { handleSubmit(); setShowGenerateMobile(false); }}>Submit</button>
+              spellCheck="false"
+              type="text"
+              value={textareaValue}
+              onChange={handleTextareaChange}
+              placeholder="Enter your prompt..."
+              onKeyUp={handleTextareaResize}
+              className='mobile-prompt-input'
+            />
+            <button id='prompt-submit-button' onClick={() => { handleSubmit(); setShowGenerateMobile(false); }}>Submit</button>
           </div>
 
           <div className="workshop-tabs-mobile">
