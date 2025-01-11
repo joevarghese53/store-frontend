@@ -18,7 +18,6 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import { set } from 'mongoose';
 
 
 
@@ -49,6 +48,8 @@ const Workshop = ({ setActiveTab }) => {
   const [showUploadMobile, setShowUploadMobile] = useState(false);
   const [showColorMobile, setShowColorMobile] = useState(false);
   const [showGenerateMobile, setShowGenerateMobile] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("10");
   const [boxDrawingValues, setBoxDrawingValues] = useState({
     startX: 0,
     startY: 0,
@@ -80,6 +81,25 @@ const Workshop = ({ setActiveTab }) => {
     'dark_grey': 'Dark Grey [HEX: #14141C]',
     'aqua_green': 'Aqua Green [HEX: #75EDB8]',
   }
+
+  const tableData = {
+    10: [
+      { feature: "Generation Attempts", value: "10" },
+    ],
+    20: [
+      { feature: "Generation Attempts", value: "20" },
+    ],
+    30: [
+      { feature: "Generation Attempts", value: "30" },
+    ],
+  };
+
+  const pricing = {
+    10: 10,
+    20: 20,
+    30: 30
+  };
+  
 
   const currentColorSet = colorSets[selectedCategory] || colorSets.regular;
 
@@ -137,6 +157,17 @@ const Workshop = ({ setActiveTab }) => {
     setFinalUploadBack(null);
   };
 
+  const handleOptionClick = (option) => {
+    setSelectedOption(option); // Update selected option
+  };
+
+  const OpenPopup = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false); // Close the popup
+  };
 
   const handleSubmit = () => {
     // Check if the prompt (textareaValue) is empty
@@ -160,7 +191,7 @@ const Workshop = ({ setActiveTab }) => {
     const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide}`;
     console.log(postData);
 
-    fetch('https://59aa-35-197-133-38.ngrok-free.app/submit-prompt', {
+    fetch('http://127.0.0.1:8080/submit-prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -552,11 +583,71 @@ const Workshop = ({ setActiveTab }) => {
                   placeholder="Enter your prompt..."
                   onKeyUp={handleTextareaResize}
                 />
-                <button id='prompt-submit-button' type='submit' onClick={handleSubmit}>Submit</button>
+                <button id='prompt-submit-button' type='submit' onClick={handleSubmit}>Generate</button>
+                <p className='prompt-tries'>Tries left today: 3<br></br>You can generate 3 designs per day. More tries can be earned by purchasing our products or by purchasing tries separately.</p>
+                <button id='prompt-buy-button' onClick={OpenPopup}>Get More Tries</button>
+                {showPopup && (
+                  <div className="payfortries-popup-overlay">
+                    <div className="payfortries-popup-content">
+                      <p>Pricing</p>
+                      <h2>JayVee</h2>
+                      <p>Select your preferred payment method:</p>
+                      <div className="payfortries-options-container">
+                        <button
+                          className={`payfortries-option-button ${selectedOption === "10" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("10")}
+                        >
+                          BASIC
+                        </button>
+                        <button
+                          className={`payfortries-option-button ${selectedOption === "20" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("20")}
+                        >
+                          ADVANCED
+                        </button>
+                        <button
+                          className={`payfortries-option-button ${selectedOption === "30" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("30")}
+                        >
+                          PRO
+                        </button>
+                      </div>
+                      <table className="payfortries-options-table">
+                        <thead>
+                          <tr>
+                            <th>ITEM</th>
+                            <th>QUANTITY</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {tableData[selectedOption]?.map((row, index) => (
+                            <tr key={index}>
+                              <td>{row.feature}</td>
+                              <td>{row.value}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td colSpan="2" style={{ textAlign: "right", fontWeight: "bold" }}>
+                              Price: ₹{pricing[selectedOption]}
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                      <button className="payfortries-confirm-button" onClick={closePopup}>
+                        Pay Now
+                      </button>
+                      <button className="payfortries-cancel-button" onClick={closePopup}>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
               </TabPanel>
             </Tabs>
 
-            {/* ------------------------------------Left Tabs Start-------------------------------------- */}
+            {/* ------------------------------------Left Tabs End-------------------------------------- */}
           </div>
 
           <div className="final-product-main-container">
