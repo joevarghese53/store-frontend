@@ -175,11 +175,11 @@ const Workshop = ({ setActiveTab }) => {
 
   const handlePaymentForTries = async () => {
     const data = {
-      featureId: "generation_attempts_"+selectedOption,
-      amount: pricing[selectedOption]* 100,
-      userId : userInfo._id,
-      name : userInfo.username,
-      triesToPurchase : tableData[selectedOption][0].value,
+      featureId: "generation_attempts_" + selectedOption,
+      amount: pricing[selectedOption] * 100,
+      userId: userInfo._id,
+      name: userInfo.username,
+      triesToPurchase: tableData[selectedOption][0].value,
     };
     console.log('Payment data:', data);
 
@@ -193,7 +193,7 @@ const Workshop = ({ setActiveTab }) => {
       console.log(error);
     }
   };
-  
+
   const handleSubmit = async () => {
     // Check if the prompt (textareaValue) is empty
     if (!textareaValue.trim()) {
@@ -234,7 +234,7 @@ const Workshop = ({ setActiveTab }) => {
       console.log('Final Image:', parsedResponse.final_image);
       console.log('Overlay Image:', parsedResponse.overlay_image);
 
-      await useTries(); 
+      await useTries();
 
       setImageData(parsedResponse.final_image);
       setDesignData(parsedResponse.overlay_image);
@@ -610,7 +610,14 @@ const Workshop = ({ setActiveTab }) => {
                   placeholder="Enter your prompt..."
                   onKeyUp={handleTextareaResize}
                 />
-                <button id='prompt-submit-button' type='submit' onClick={handleSubmit}>Generate</button>
+                <button
+                  id='prompt-submit-button'
+                  type='submit'
+                  onClick={handleSubmit}
+                  disabled={triesData?.freeTriesRemaining === 0 && triesData?.purchasedTriesRemaining === 0}
+                >
+                  Generate
+                </button>
                 <p className='prompt-tries-info'>Free Tries left: {triesData?.freeTriesRemaining} <br></br>Purchased Tries left:{triesData?.purchasedTriesRemaining} </p>
                 <p className='prompt-tries-desc'>Free tries reset every day at 12:00 AM. You can purchase more tries below.</p>
                 <button id='prompt-buy-button' onClick={OpenPopup}>Get More Tries</button>
