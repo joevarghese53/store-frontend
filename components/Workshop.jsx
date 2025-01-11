@@ -13,12 +13,14 @@ import { useCreateCProductMutation, } from '@/redux/api/cProductApiSlice';
 import {
   useUploadProductImageMutation,
 } from "../redux/api/productApiSlice";
+import { useGetTriesQuery, useUseTriesMutation, usePurchaseTriesMutation } from '@/redux/api/triesApiSlice';
 import { toast } from "react-toastify";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-
+import axios from 'axios';
+import { BASE_URL } from "../redux/constants.js";
 
 
 
@@ -28,6 +30,8 @@ const Workshop = ({ setActiveTab }) => {
   const [uploadProductImage] = useUploadProductImageMutation();
   const { userInfo } = useSelector((state) => state.auth);
   const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
+  const { data: triesData, isLoading: triesLoading, error: triesError } = useGetTriesQuery();
+  const [useTries] = useUseTriesMutation();
   const [activeColor, setActiveColor] = useState('black');
   const [activeSide, setActiveSide] = useState('front');
   const [textareaValue, setTextareaValue] = useState('');
@@ -49,7 +53,7 @@ const Workshop = ({ setActiveTab }) => {
   const [showColorMobile, setShowColorMobile] = useState(false);
   const [showGenerateMobile, setShowGenerateMobile] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("10");
+  const [selectedOption, setSelectedOption] = useState("basic");
   const [boxDrawingValues, setBoxDrawingValues] = useState({
     startX: 0,
     startY: 0,
@@ -83,23 +87,23 @@ const Workshop = ({ setActiveTab }) => {
   }
 
   const tableData = {
-    10: [
+    basic: [
       { feature: "Generation Attempts", value: "10" },
     ],
-    20: [
-      { feature: "Generation Attempts", value: "20" },
+    advanced: [
+      { feature: "Generation Attempts", value: "50" },
     ],
-    30: [
-      { feature: "Generation Attempts", value: "30" },
+    pro: [
+      { feature: "Generation Attempts", value: "100" },
     ],
   };
 
   const pricing = {
-    10: 10,
-    20: 20,
-    30: 30
+    "basic": 35,
+    "advanced": 149,
+    "pro": 299
   };
-  
+
 
   const currentColorSet = colorSets[selectedCategory] || colorSets.regular;
 
@@ -169,7 +173,28 @@ const Workshop = ({ setActiveTab }) => {
     setShowPopup(false); // Close the popup
   };
 
-  const handleSubmit = () => {
+  const handlePaymentForTries = async () => {
+    const data = {
+      featureId: "generation_attempts_"+selectedOption,
+      amount: pricing[selectedOption]* 100,
+      userId : userInfo._id,
+      name : userInfo.username,
+      triesToPurchase : tableData[selectedOption][0].value,
+    };
+    console.log('Payment data:', data);
+
+    try {
+      const res = await axios.post(`${BASE_URL}/api/tries/initiate-payment`, data);
+      console.log('Payment response:', res.data);
+      if (res.data.success) {
+        window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  const handleSubmit = async () => {
     // Check if the prompt (textareaValue) is empty
     if (!textareaValue.trim()) {
       toast.error("Please enter a prompt.");
@@ -191,32 +216,34 @@ const Workshop = ({ setActiveTab }) => {
     const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide}`;
     console.log(postData);
 
-    fetch('http://127.0.0.1:8080/submit-prompt', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: postData,
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-      })
-      .then(data => {
-        const response = JSON.parse(data);
-        console.log('Final Image:', response.final_image);
-        console.log('Overlay Image:', response.overlay_image);
-        setImageData(response.final_image);
-        setDesignData(response.overlay_image);
-        setanimbool(false);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        setanimbool(false);
-        setShowBusyMessage(true);
+    try {
+      const response = await fetch('https://cf50-34-34-98-96.ngrok-free.app/submit-prompt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: postData,
       });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.text();
+      const parsedResponse = JSON.parse(data);
+      console.log('Final Image:', parsedResponse.final_image);
+      console.log('Overlay Image:', parsedResponse.overlay_image);
+
+      await useTries(); 
+
+      setImageData(parsedResponse.final_image);
+      setDesignData(parsedResponse.overlay_image);
+    } catch (error) {
+      console.error('Error:', error);
+      setShowBusyMessage(true);
+    } finally {
+      setanimbool(false); // Always reset animation state
+    }
   };
 
   const handleBoxDrawingValuesChange = (values) => {
@@ -584,7 +611,8 @@ const Workshop = ({ setActiveTab }) => {
                   onKeyUp={handleTextareaResize}
                 />
                 <button id='prompt-submit-button' type='submit' onClick={handleSubmit}>Generate</button>
-                <p className='prompt-tries'>Tries left today: 3<br></br>You can generate 3 designs per day. More tries can be earned by purchasing our products or by purchasing tries separately.</p>
+                <p className='prompt-tries-info'>Free Tries left: {triesData?.freeTriesRemaining} <br></br>Purchased Tries left:{triesData?.purchasedTriesRemaining} </p>
+                <p className='prompt-tries-desc'>Free tries reset every day at 12:00 AM. You can purchase more tries below.</p>
                 <button id='prompt-buy-button' onClick={OpenPopup}>Get More Tries</button>
                 {showPopup && (
                   <div className="payfortries-popup-overlay">
@@ -594,20 +622,20 @@ const Workshop = ({ setActiveTab }) => {
                       <p>Select your preferred payment method:</p>
                       <div className="payfortries-options-container">
                         <button
-                          className={`payfortries-option-button ${selectedOption === "10" ? "active" : ""}`}
-                          onClick={() => handleOptionClick("10")}
+                          className={`payfortries-option-button ${selectedOption === "basic" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("basic")}
                         >
                           BASIC
                         </button>
                         <button
-                          className={`payfortries-option-button ${selectedOption === "20" ? "active" : ""}`}
-                          onClick={() => handleOptionClick("20")}
+                          className={`payfortries-option-button ${selectedOption === "advanced" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("advanced")}
                         >
                           ADVANCED
                         </button>
                         <button
-                          className={`payfortries-option-button ${selectedOption === "30" ? "active" : ""}`}
-                          onClick={() => handleOptionClick("30")}
+                          className={`payfortries-option-button ${selectedOption === "pro" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("pro")}
                         >
                           PRO
                         </button>
@@ -635,7 +663,7 @@ const Workshop = ({ setActiveTab }) => {
                           </tr>
                         </tfoot>
                       </table>
-                      <button className="payfortries-confirm-button" onClick={closePopup}>
+                      <button className="payfortries-confirm-button" onClick={handlePaymentForTries}>
                         Pay Now
                       </button>
                       <button className="payfortries-cancel-button" onClick={closePopup}>

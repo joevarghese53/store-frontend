@@ -8,5 +8,5 @@ export const UPLOAD_URL = "/api/upload";
 export const ORDERS_URL = "/api/orders";
 export const CART_URL = "/api/cart";
 export const WISHLIST_URL = "/api/wishlist";
-export const PAYPAL_URL = "/api/config/paypal";
 export const SHIPPING_ADDRESS_URL = "/api/shipping";
+export const TRIES_URL = "/api/tries";

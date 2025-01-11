@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { useGetOrderDetailsQuery } from '../redux/api/orderApiSlice';
-import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
 import axios from 'axios';
 import { BASE_URL } from "../redux/constants.js";
 
@@ -10,7 +9,6 @@ import { BASE_URL } from "../redux/constants.js";
 const PaymentPage = () => {
   const router = useRouter();
   const { orderId } = router.query;
-  const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
   console.log('orderId:', orderId);
   const billingRef = useRef(null);
 
@@ -40,30 +38,30 @@ const PaymentPage = () => {
     }
   }, [orderId, orderDetails]);
 
- 
 
-    const handlePayment = async () => {
-      const data = {
-        merchantTransactionId: orderDetails._id,
-        customerUserId: orderDetails.user._id,
-        amount: orderDetails.totalPrice * 100,
-        name: orderDetails.user.username,
-      };
-      console.log('Payment data:', data);
-    
-      try {
-        const res = await axios.post(`${BASE_URL}/api/payment/initiate-payment`, data);
-        console.log('Payment response:', res.data); 
-        if (res.data.success) {
-          window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
-        }
-      } catch (error) {
-        console.log(error);
-      }
+
+  const handlePayment = async () => {
+    const data = {
+      merchantTransactionId: orderDetails._id,
+      customerUserId: orderDetails.user._id,
+      amount: orderDetails.totalPrice * 100,
+      name: orderDetails.user.username,
     };
+    console.log('Payment data:', data);
+
+    try {
+      const res = await axios.post(`${BASE_URL}/api/payment/initiate-payment`, data);
+      console.log('Payment response:', res.data);
+      if (res.data.success) {
+        window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
-    
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -83,29 +81,29 @@ const PaymentPage = () => {
       </div>
       <div className='payment-page-bottom-container'>
         <div className='payment-page-left-container'>
-            {orderDetails && orderDetails.orderItems ? (
-              orderDetails.orderItems.map((item) => (
-                <div className="cart-item-container">
-                    <div className="cart-item" key={item._id}>
-                      <img src={item.frontImage} className="cart-product-image" />
-                      <div className="item-desc">
-                        <h5>{item.name}</h5>
-                        <p id='cart-item-category'>{item.category}</p>
-                        <p id='cart-item-quantity'>Quantity: {item.quantity}</p>
-                        <p id='cart-item-size'>Size: {item.size}</p>
-                      </div>
-                    </div>
-                    <div className="item-price-and-remove">
-                      <div className="item-price">
-                        <h4>₹{item.price}</h4>
-                        <h3>MRP inclusive of all taxes</h3>
-                      </div>
-                    </div>
+          {orderDetails && orderDetails.orderItems ? (
+            orderDetails.orderItems.map((item) => (
+              <div className="cart-item-container">
+                <div className="cart-item" key={item._id}>
+                  <img src={item.frontImage} className="cart-product-image" />
+                  <div className="item-desc">
+                    <h5>{item.name}</h5>
+                    <p id='cart-item-category'>{item.category}</p>
+                    <p id='cart-item-quantity'>Quantity: {item.quantity}</p>
+                    <p id='cart-item-size'>Size: {item.size}</p>
                   </div>
-              ))
-            ) : (
-              <div>No items in the order</div>
-            )}
+                </div>
+                <div className="item-price-and-remove">
+                  <div className="item-price">
+                    <h4>₹{item.price}</h4>
+                    <h3>MRP inclusive of all taxes</h3>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>No items in the order</div>
+          )}
         </div>
         <div className='payment-page-right-container'>
           {orderDetails && orderDetails.user && orderDetails.shippingAddress ? (
@@ -150,14 +148,14 @@ const PaymentPage = () => {
             PAY WITH PHONEPE
           </button>
           <div className="cart-page-mobile-bottom">
-              <div className='cart-page-mobile-bottom-price'>
-                <h6>₹{orderDetails.totalPrice}</h6>
-                <span onClick={scrollToBilling}>VIEW DETAILS</span>
-              </div>
-                <button type="button" className="cart-page-btn-mobile" onClick={handlePayment} >
-                PAY WITH PHONEPE
-                </button>
+            <div className='cart-page-mobile-bottom-price'>
+              <h6>₹{orderDetails.totalPrice}</h6>
+              <span onClick={scrollToBilling}>VIEW DETAILS</span>
             </div>
+            <button type="button" className="cart-page-btn-mobile" onClick={handlePayment} >
+              PAY WITH PHONEPE
+            </button>
+          </div>
         </div>
       </div>
     </div>

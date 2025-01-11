@@ -5443,7 +5443,7 @@ form input {
 #prompt-buy-button {
   margin-left: 23px;
   margin-top: 13px;
-  background-color: rgb(21, 126, 0);
+  background-color: rgb(119 28 113);
   width: calc(100% - 50px);
   height: 46px;
   border-radius: 10px;
@@ -5451,7 +5451,16 @@ form input {
   font-family: sans-serif;
 }
 
-.prompt-tries {
+.prompt-tries-info {
+  margin-left: 23px;
+  margin-top: 13px;
+  margin-bottom: 0;
+  font-size: 13px;
+  color: #000000dc;
+  font-family: sans-serif;
+}
+
+.prompt-tries-desc{
   margin-left: 23px;
   margin-top: 13px;
   margin-bottom: 0;
@@ -5792,7 +5801,7 @@ button:focus {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 50px auto;
+  margin: 80px auto;
 }
 
 .final-product-images {
@@ -5959,7 +5968,7 @@ button {
 
 /* Responsive Styles */
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1200px) {
   .workshop-main-container {
     flex-direction: column;
   }
@@ -5967,6 +5976,7 @@ button {
   .workshop-tabs-desktop {
     margin: auto;
     margin-top: 75px;
+    width: 60%;
   }
 }
 
@@ -5995,7 +6005,7 @@ button {
   }
 
   .customs-main-container {
-    margin-top: 115px;
+    margin-top: 113px;
   }
 
   .customs-tabs {
@@ -6073,7 +6083,7 @@ button {
 
   .final-product-main-container {
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 70px;
     margin-bottom: 30px;
   }
 
@@ -6189,7 +6199,16 @@ button {
   }
 }
 
+@media screen and (max-width:768px){
+
+  .customs-main-container {
+    margin-top: 89px;
+  }
+
+}
+
 @media screen and (max-width:425px) {
+
   .customs-main-container {
     margin-top: 88px;
   }
