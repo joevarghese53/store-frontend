@@ -217,7 +217,7 @@ const Workshop = ({ setActiveTab }) => {
     console.log(postData);
 
     try {
-      const response = await fetch('https://cf50-34-34-98-96.ngrok-free.app/submit-prompt', {
+      const response = await fetch('https://c47e-34-87-8-177.ngrok-free.app/submit-prompt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
