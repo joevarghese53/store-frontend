@@ -1258,15 +1258,7 @@ span.text-red {
     color: red;
   }
 
-  .hamburger-menu-links-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    background: none;
-    color: #000000c9;
-    font-size: x-large;
-  }
+
 
   /* Styling each link item */
   .hamburger-menu-link {
@@ -5441,7 +5433,7 @@ form input {
 }
 
 #prompt-submit-button:disabled {
-  background-color: rgba(255, 0, 0, 0.281); 
+  background-color: rgba(255, 0, 0, 0.281);
   cursor: not-allowed;
 }
 
@@ -5466,7 +5458,7 @@ form input {
   font-family: sans-serif;
 }
 
-.prompt-tries-desc{
+.prompt-tries-desc {
   margin-left: 23px;
   margin-top: 13px;
   margin-bottom: 0;
@@ -5545,12 +5537,14 @@ form input {
   text-align: left;
 }
 
-.payfortries-options-table th, .payfortries-options-table td {
+.payfortries-options-table th,
+.payfortries-options-table td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
 
-.payfortries-confirm-button, .payfortries-cancel-button {
+.payfortries-confirm-button,
+.payfortries-cancel-button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -5997,6 +5991,16 @@ button {
 
 @media screen and (max-width: 800px) {
 
+  .hamburger-menu-links-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: none;
+    color: #000000c9;
+    font-size: x-large;
+  }
+
   .workshop-main-container {
     display: flex;
     flex-direction: column;
@@ -6127,7 +6131,7 @@ button {
   }
 
   .workshop-tabs-mobile-category-slider {
-    display: block;
+    display: flex;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -6139,6 +6143,10 @@ button {
     transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
   .workshop-tabs-mobile-category-slider.open {
@@ -6163,16 +6171,14 @@ button {
 
   .file-upload-input {
     display: flex;
-    margin: 140px auto;
   }
 
   .file-upload-close {
-    width: 150px;
+    width: 70%;
     border-radius: 15px;
     border: none;
-    font-size: 17px;
+    font-size: 18px;
     margin-top: 10px;
-    margin-left: 90px;
     background-color: #f02d34;
     color: #fff;
   }
@@ -6191,21 +6197,28 @@ button {
   }
 
   .mobile-prompt-input {
-    margin-top: 80px;
-    margin-left: 30px;
-    width: 300px;
-    height: auto;
-    min-height: 150px;
+    width: 60%;
+    height: 25%;
     border-radius: 5px;
   }
 
   #prompt-submit-button {
-    margin-left: 120px;
-    margin-top: 30px;
+    margin: 0;
+    width: 60%;
+  }
+
+  .prompt-tries-info,
+  .prompt-tries-desc {
+    margin: 0;
+  }
+
+  #prompt-buy-button {
+    margin: 0;
+    width: 60%;
   }
 }
 
-@media screen and (max-width:768px){
+@media screen and (max-width:768px) {
 
   .customs-main-container {
     margin-top: 89px;

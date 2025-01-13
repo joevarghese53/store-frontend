@@ -768,6 +768,67 @@ const Workshop = ({ setActiveTab }) => {
               className='mobile-prompt-input'
             />
             <button id='prompt-submit-button' onClick={() => { handleSubmit(); setShowGenerateMobile(false); }}>Submit</button>
+            <p className='prompt-tries-info'>Free Tries left: {triesData?.freeTriesRemaining} <br></br>Purchased Tries left:{triesData?.purchasedTriesRemaining} </p>
+                <p className='prompt-tries-desc'>Free tries reset every day at 12:00 AM.<br></br> You can purchase more tries below.</p>
+                <button id='prompt-buy-button' onClick={OpenPopup}>Get More Tries</button>
+                {showPopup && (
+                  <div className="payfortries-popup-overlay">
+                    <div className="payfortries-popup-content">
+                      <p>Pricing</p>
+                      <h2>JayVee</h2>
+                      <p>Select your preferred payment method:</p>
+                      <div className="payfortries-options-container">
+                        <button
+                          className={`payfortries-option-button ${selectedOption === "basic" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("basic")}
+                        >
+                          BASIC
+                        </button>
+                        <button
+                          className={`payfortries-option-button ${selectedOption === "advanced" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("advanced")}
+                        >
+                          ADVANCED
+                        </button>
+                        <button
+                          className={`payfortries-option-button ${selectedOption === "pro" ? "active" : ""}`}
+                          onClick={() => handleOptionClick("pro")}
+                        >
+                          PRO
+                        </button>
+                      </div>
+                      <table className="payfortries-options-table">
+                        <thead>
+                          <tr>
+                            <th>ITEM</th>
+                            <th>QUANTITY</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {tableData[selectedOption]?.map((row, index) => (
+                            <tr key={index}>
+                              <td>{row.feature}</td>
+                              <td>{row.value}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td colSpan="2" style={{ textAlign: "right", fontWeight: "bold" }}>
+                              Price: ₹{pricing[selectedOption]}
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                      <button className="payfortries-confirm-button" onClick={handlePaymentForTries}>
+                        Pay Now
+                      </button>
+                      <button className="payfortries-cancel-button" onClick={closePopup}>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
           </div>
 
           <div className="workshop-tabs-mobile">
