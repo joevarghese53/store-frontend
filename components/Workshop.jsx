@@ -21,6 +21,8 @@ import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import axios from 'axios';
 import { BASE_URL } from "../redux/constants.js";
+import 'intro.js/minified/introjs.min.css';
+import introJs from 'intro.js';
 
 
 
@@ -54,6 +56,7 @@ const Workshop = ({ setActiveTab }) => {
   const [showGenerateMobile, setShowGenerateMobile] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedOption, setSelectedOption] = useState("basic");
+  const [isTutorialStarted, setIsTutorialStarted] = useState(false);
   const [boxDrawingValues, setBoxDrawingValues] = useState({
     startX: 0,
     startY: 0,
@@ -171,6 +174,27 @@ const Workshop = ({ setActiveTab }) => {
 
   const closePopup = () => {
     setShowPopup(false); // Close the popup
+  };
+
+  const startTutorial = () => {
+    introJs()
+      .setOptions({
+        showStepNumbers: false, // Disable step numbers
+        nextLabel: 'Next',
+        prevLabel: 'Back',
+        skipLabel: 'Skip Tutorial',
+        doneLabel: 'Finish',
+      })
+      .oncomplete(() => {
+        // Reset the state when the tutorial is complete
+        setIsTutorialStarted(false);
+      })
+      .onexit(() => {
+        // Reset the state if the user exits the tutorial early
+        setIsTutorialStarted(false);
+      })
+      .start();
+    setIsTutorialStarted(true); // Mark the tutorial as started
   };
 
   const handlePaymentForTries = async () => {
@@ -465,17 +489,29 @@ const Workshop = ({ setActiveTab }) => {
     <>
       {userInfo ? (
         <>
+          {!isTutorialStarted && (
+            <button
+              className="workshop-tutorial-button"
+              onClick={startTutorial} // Start tutorial on button click
+            >
+              Start Tutorial
+            </button>
+          )}
           <div className="workshop-main-container">
 
             <div className="workshop-image-area">
               <div className="workshop-image-header">
 
-
               </div>
 
               <div className="workshop-side-selection">
                 <label>Select Side:</label>
-                <select value={activeSide} onChange={handleSideChange}>
+                <select
+                  data-step="1"
+                  data-intro="Choose the side of the tshirt where you want to design. Note that designing on both sides will increase the cost of the product."
+                  value={activeSide}
+                  onChange={handleSideChange}
+                >
                   <option value="front">Front</option>
                   <option value="back">Back</option>
                 </select>
@@ -485,7 +521,11 @@ const Workshop = ({ setActiveTab }) => {
 
                 <div className="canvas">
                   <span className='canvas-title'>Canvas:</span>
-                  <div className="imagecomponent-desktop">
+                  <div
+                    data-step="5"
+                    data-intro="Select the area where you want to generate the design."
+                    className="imagecomponent-desktop"
+                  >
                     <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen='desktop' />
                   </div>
                   <div className="imagecomponent-mobile">
@@ -544,19 +584,31 @@ const Workshop = ({ setActiveTab }) => {
 
             <Tabs className="workshop-tabs-desktop">
               <TabList className="workshop-tabs-list">
-                <Tab>
+                <Tab
+                  data-step="2"
+                  data-intro="Select the category of tshirt."
+                >
                   <MdCategory size={24} />
                   <p>Select Category</p>
                 </Tab>
-                <Tab>
+                <Tab
+                  data-step="3"
+                  data-intro="(Optional) Upload your own designs or logos."
+                >
                   <FaUpload size={24} />
                   <p>Upload File</p>
                 </Tab>
-                <Tab>
+                <Tab
+                  data-step="4"
+                  data-intro="Select the color of tshirt."
+                >
                   <FaPalette size={24} />
                   <p>Select Color</p>
                 </Tab>
-                <Tab>
+                <Tab
+                  data-step="6"
+                  data-intro="Enter the prompt and click submit. Make the prompt as detailed as possible for better results."
+                >
                   <FaCog size={24} />
                   <p>Generate</p>
                 </Tab>
@@ -769,66 +821,66 @@ const Workshop = ({ setActiveTab }) => {
             />
             <button id='prompt-submit-button' onClick={() => { handleSubmit(); setShowGenerateMobile(false); }}>Submit</button>
             <p className='prompt-tries-info'>Free Tries left: {triesData?.freeTriesRemaining} <br></br>Purchased Tries left:{triesData?.purchasedTriesRemaining} </p>
-                <p className='prompt-tries-desc'>Free tries reset every day at 12:00 AM.<br></br> You can purchase more tries below.</p>
-                <button id='prompt-buy-button' onClick={OpenPopup}>Get More Tries</button>
-                {showPopup && (
-                  <div className="payfortries-popup-overlay">
-                    <div className="payfortries-popup-content">
-                      <p>Pricing</p>
-                      <h2>JayVee</h2>
-                      <p>Select your preferred payment method:</p>
-                      <div className="payfortries-options-container">
-                        <button
-                          className={`payfortries-option-button ${selectedOption === "basic" ? "active" : ""}`}
-                          onClick={() => handleOptionClick("basic")}
-                        >
-                          BASIC
-                        </button>
-                        <button
-                          className={`payfortries-option-button ${selectedOption === "advanced" ? "active" : ""}`}
-                          onClick={() => handleOptionClick("advanced")}
-                        >
-                          ADVANCED
-                        </button>
-                        <button
-                          className={`payfortries-option-button ${selectedOption === "pro" ? "active" : ""}`}
-                          onClick={() => handleOptionClick("pro")}
-                        >
-                          PRO
-                        </button>
-                      </div>
-                      <table className="payfortries-options-table">
-                        <thead>
-                          <tr>
-                            <th>ITEM</th>
-                            <th>QUANTITY</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {tableData[selectedOption]?.map((row, index) => (
-                            <tr key={index}>
-                              <td>{row.feature}</td>
-                              <td>{row.value}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                        <tfoot>
-                          <tr>
-                            <td colSpan="2" style={{ textAlign: "right", fontWeight: "bold" }}>
-                              Price: ₹{pricing[selectedOption]}
-                            </td>
-                          </tr>
-                        </tfoot>
-                      </table>
-                      <button className="payfortries-confirm-button" onClick={handlePaymentForTries}>
-                        Pay Now
-                      </button>
-                      <button className="payfortries-cancel-button" onClick={closePopup}>
-                        Cancel
-                      </button>
-                    </div>
+            <p className='prompt-tries-desc'>Free tries reset every day at 12:00 AM.<br></br> You can purchase more tries below.</p>
+            <button id='prompt-buy-button' onClick={OpenPopup}>Get More Tries</button>
+            {showPopup && (
+              <div className="payfortries-popup-overlay">
+                <div className="payfortries-popup-content">
+                  <p>Pricing</p>
+                  <h2>JayVee</h2>
+                  <p>Select your preferred payment method:</p>
+                  <div className="payfortries-options-container">
+                    <button
+                      className={`payfortries-option-button ${selectedOption === "basic" ? "active" : ""}`}
+                      onClick={() => handleOptionClick("basic")}
+                    >
+                      BASIC
+                    </button>
+                    <button
+                      className={`payfortries-option-button ${selectedOption === "advanced" ? "active" : ""}`}
+                      onClick={() => handleOptionClick("advanced")}
+                    >
+                      ADVANCED
+                    </button>
+                    <button
+                      className={`payfortries-option-button ${selectedOption === "pro" ? "active" : ""}`}
+                      onClick={() => handleOptionClick("pro")}
+                    >
+                      PRO
+                    </button>
                   </div>
-                )}
+                  <table className="payfortries-options-table">
+                    <thead>
+                      <tr>
+                        <th>ITEM</th>
+                        <th>QUANTITY</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tableData[selectedOption]?.map((row, index) => (
+                        <tr key={index}>
+                          <td>{row.feature}</td>
+                          <td>{row.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colSpan="2" style={{ textAlign: "right", fontWeight: "bold" }}>
+                          Price: ₹{pricing[selectedOption]}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                  <button className="payfortries-confirm-button" onClick={handlePaymentForTries}>
+                    Pay Now
+                  </button>
+                  <button className="payfortries-cancel-button" onClick={closePopup}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="workshop-tabs-mobile">
