@@ -5266,6 +5266,7 @@ form input {
   padding: 0;
   display: flex;
   flex-direction: column;
+  width: 36%;
 }
 
 .reload {
@@ -5305,7 +5306,6 @@ form input {
   font-family: monospace;
   color: #000000;
   margin: auto;
-
   width: fit-content;
 }
 

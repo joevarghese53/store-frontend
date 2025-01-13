@@ -546,19 +546,19 @@ const Workshop = ({ setActiveTab }) => {
               <TabList className="workshop-tabs-list">
                 <Tab>
                   <MdCategory size={24} />
-                  <div>Select Category</div>
+                  <p>Select Category</p>
                 </Tab>
                 <Tab>
                   <FaUpload size={24} />
-                  <div>Upload File</div>
+                  <p>Upload File</p>
                 </Tab>
                 <Tab>
                   <FaPalette size={24} />
-                  <div>Select Color</div>
+                  <p>Select Color</p>
                 </Tab>
                 <Tab>
                   <FaCog size={24} />
-                  <div>Generate</div>
+                  <p>Generate</p>
                 </Tab>
               </TabList>
 
