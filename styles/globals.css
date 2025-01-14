@@ -3455,10 +3455,13 @@ form input {
 }
 
 #forgot-password {
+  border: none;
+  background: none;
+  color: #000;
   text-decoration: underline;
 }
 
-.login-form button {
+.login-form-btn {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -3470,7 +3473,7 @@ form input {
 }
 
 
-.login-form button:hover {
+.login-form-btn:hover {
   background-color: #333;
 }
 
@@ -3596,6 +3599,93 @@ form input {
 
 /* RegisterPage.js end */
 
+/* ResetPassword.js start */
+
+.reset-password-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.reset-password-form {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.reset-password-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333333;
+}
+
+.reset-password-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.reset-password-form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.reset-password-form input:focus {
+  outline: none;
+  border-color: #0070f3;
+}
+
+.reset-password-form button {
+  padding: 10px;
+  background-color: #0070f3;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-password-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.reset-password-form button:hover:not(:disabled) {
+  background-color: #005bb5;
+}
+
+.message {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: #34a853;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* ResetPassword.js end */
 
 /* ProfilePage.js start */
 

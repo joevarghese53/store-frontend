@@ -24,6 +24,11 @@ const LoginPage = () => {
     setUser({ ...user, [id]: value });
   };
 
+  const handleResetPassword = () => {
+    router.push('/RequestResetPasswordPage');
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -70,14 +75,14 @@ const LoginPage = () => {
             placeholder="Enter your password"
           />
           <button
-            
+            className='login-form-btn'
             type="submit"
           >
             {isLoading ? "Signing In..." : "Sign In"}
           </button>
         </form>
         <p>Don't have an account? <Link id='signup' href="/RegisterPage">Sign up</Link></p>
-        <p>Forgot your password? <Link id='forgot-password' href="/">Reset password</Link></p>
+        <p>Forgot your password? <button id='forgot-password' onClick={handleResetPassword}>Reset password</button></p>
       </div>
       {/* <div className="login-image">
         <img src={slide1} alt="Login Page Image" />
