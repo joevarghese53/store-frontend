@@ -183,6 +183,7 @@ const Workshop = ({ setActiveTab }) => {
         nextLabel: 'Next',
         prevLabel: 'Back',
         skipLabel: 'Skip Tutorial',
+        startLabel: 'Start Tutorial',
         doneLabel: 'Finish',
       })
       .oncomplete(() => {
@@ -489,14 +490,14 @@ const Workshop = ({ setActiveTab }) => {
     <>
       {userInfo ? (
         <>
-          {!isTutorialStarted && (
-            <button
-              className="workshop-tutorial-button"
-              onClick={startTutorial} // Start tutorial on button click
-            >
-              Start Tutorial
-            </button>
-          )}
+          <button
+            className="workshop-tutorial-button"
+            onClick={startTutorial} 
+            data-step="1"
+            data-intro="Start."
+          >
+            Start Tutorial
+          </button>
           <div className="workshop-main-container">
 
             <div className="workshop-image-area">
@@ -507,7 +508,7 @@ const Workshop = ({ setActiveTab }) => {
               <div className="workshop-side-selection">
                 <label>Select Side:</label>
                 <select
-                  data-step="1"
+                  data-step="2"
                   data-intro="Choose the side of the tshirt where you want to design. Note that designing on both sides will increase the cost of the product."
                   value={activeSide}
                   onChange={handleSideChange}
@@ -522,7 +523,7 @@ const Workshop = ({ setActiveTab }) => {
                 <div className="canvas">
                   <span className='canvas-title'>Canvas:</span>
                   <div
-                    data-step="5"
+                    data-step="6"
                     data-intro="Select the area where you want to generate the design."
                     className="imagecomponent-desktop"
                   >
@@ -585,28 +586,28 @@ const Workshop = ({ setActiveTab }) => {
             <Tabs className="workshop-tabs-desktop">
               <TabList className="workshop-tabs-list">
                 <Tab
-                  data-step="2"
+                  data-step="3"
                   data-intro="Select the category of tshirt."
                 >
                   <MdCategory size={24} />
                   <p>Select Category</p>
                 </Tab>
                 <Tab
-                  data-step="3"
+                  data-step="4"
                   data-intro="(Optional) Upload your own designs or logos."
                 >
                   <FaUpload size={24} />
                   <p>Upload File</p>
                 </Tab>
                 <Tab
-                  data-step="4"
+                  data-step="5"
                   data-intro="Select the color of tshirt."
                 >
                   <FaPalette size={24} />
                   <p>Select Color</p>
                 </Tab>
                 <Tab
-                  data-step="6"
+                  data-step="7"
                   data-intro="Enter the prompt and click submit. Make the prompt as detailed as possible for better results."
                 >
                   <FaCog size={24} />

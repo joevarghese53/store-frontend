@@ -5994,12 +5994,16 @@ button {
 
 /* Overlay style */
 .introjs-overlay {
-  background-color: rgba(0, 0, 0, 0.6) !important; /* Semi-transparent overlay */
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  /* Semi-transparent overlay */
   opacity: 0.8 !important;
 }
 
 /* Button styles */
-.introjs-btn-next, .introjs-btn-prev, .introjs-btn-skip, .introjs-btn-done {
+.introjs-btn-next,
+.introjs-btn-prev,
+.introjs-btn-skip,
+.introjs-btn-done {
   background-color: #2ecc71 !important;
   color: white !important;
   border-radius: 5px !important;
@@ -6007,15 +6011,18 @@ button {
 }
 
 .introjs-btn-prev {
-  background-color: #f39c12 !important; /* Previous button color */
+  background-color: #f39c12 !important;
+  /* Previous button color */
 }
 
 .introjs-btn-skip {
-  background-color: #e74c3c !important; /* Skip button color */
+  background-color: #e74c3c !important;
+  /* Skip button color */
 }
 
 .introjs-btn-done {
-  background-color: #9b59b6 !important; /* Done button color */
+  background-color: #9b59b6 !important;
+  /* Done button color */
 }
 
 .introjs-skipbutton {
@@ -6023,6 +6030,9 @@ button {
   top: 0;
   right: 0;
   display: inline-block;
+  width: 105px;
+  height: 80px;
+  line-height: 25px;
   color: #616161;
   font-size: 16px;
   cursor: pointer;
