@@ -6025,7 +6025,7 @@ button {
   /* Done button color */
 }
 
-.introjs-skipbutton {
+body .introjs-skipbutton {
   position: absolute;
   top: 0;
   right: 0;
