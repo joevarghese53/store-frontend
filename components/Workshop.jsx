@@ -238,11 +238,13 @@ const Workshop = ({ setActiveTab }) => {
     const formattedBoxDrawingValues = boxDrawingValuesArray.join('_');
     const formattedTextareaValue = textareaValue.replace(/ /g, '_');
 
-    const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide}`;
+    const deviceType = window.innerWidth <= 800 ? 'mobile' : 'desktop';
+
+    const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide} ${deviceType}`;
     console.log(postData);
 
     try {
-      const response = await fetch('https://c47e-34-87-8-177.ngrok-free.app/submit-prompt', {
+      const response = await fetch('https://6ebc-34-82-9-12.ngrok-free.app/submit-prompt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

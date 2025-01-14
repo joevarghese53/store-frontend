@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRegisterMutation } from "../redux/api/usersApiSlice";
-import { FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const slide1 = '/img/LoginPageImage.jpg';
 
@@ -16,10 +16,17 @@ const RegisterPage = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [passwordVisible, setPasswordVisible] = useState(false);  // Toggle for password visibility
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);  // Toggle for confirm password visibility
   const [error, setError] = useState('');
   const router = useRouter();
 
   const [register] = useRegisterMutation();
+
+  // Toggle password visibility
+  const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
+  const toggleConfirmPasswordVisibility = () => setConfirmPasswordVisible(!confirmPasswordVisible);
+
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -51,7 +58,7 @@ const RegisterPage = () => {
           <br /> - Be at least 8 characters long.
         </>
       ));
-      
+
       setIsLoading(false);
       return;
     }
@@ -63,7 +70,7 @@ const RegisterPage = () => {
     }
 
     try {
-      const response = await register({username: user.name, email: user.email, password: user.password}).unwrap();
+      const response = await register({ username: user.name, email: user.email, password: user.password }).unwrap();
 
       console.log('User registered successfully:', response.data);
 
@@ -103,22 +110,40 @@ const RegisterPage = () => {
             placeholder="Enter your valid email"
           />
           <label>Password</label>
-          <input
-            id='password'
-            type="password"
-            value={user.password}
-            onChange={handleInputChange}
-            placeholder="Enter new password"
-          />
+          <div className="password-input-container">
+            <input
+              id='password'
+              type={passwordVisible ? "text" : "password"}
+              value={user.password}
+              onChange={handleInputChange}
+              placeholder="Enter new password"
+            />
+            <button
+              type="button"
+              className="password-field-eye-icon"
+              onClick={togglePasswordVisibility}
+            >
+              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
           <label>Confirm Password</label>
-          <input
-            type="password"
-            id='confirmPassword'
-            value={user.confirmPassword}
-            onChange={handleInputChange}
-            placeholder="Confirm password"
-          />
-          <button type="submit" disabled={buttonDisabled}>Sign Up</button>
+          <div className="password-input-container">
+            <input
+              type="password"
+              id='confirmPassword'
+              value={user.confirmPassword}
+              onChange={handleInputChange}
+              placeholder="Confirm password"
+            />
+            <button
+              type="button"
+              className="password-field-eye-icon"
+              onClick={toggleConfirmPasswordVisibility}
+            >
+              {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+          <button type="submit" className='register-form-button' disabled={buttonDisabled}>Sign Up</button>
           {/* <p>---------------------OR----------------------</p>
           <button type="button" className="google-signin">Sign Up with Google 
             <FaGoogle style={{marginLeft: '10px', marginBottom:'2px'}}/>
@@ -126,7 +151,7 @@ const RegisterPage = () => {
         </form>
         <p>Already have an account? <Link id='login' href="/LoginPage">Login</Link></p>
       </div>
-      
+
     </div>
   );
 };

@@ -3532,7 +3532,7 @@ form input {
   text-decoration: underline;
 }
 
-.register-form button {
+.register-form-button {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -3543,11 +3543,11 @@ form input {
   cursor: pointer;
 }
 
-.register-form button:disabled {
+.register-form-button:disabled {
   cursor: not-allowed;
 }
 
-.register-form button:hover {
+.register-form-button:hover {
   background-color: #333;
 }
 
@@ -3560,6 +3560,30 @@ form input {
 .register-image img {
   width: 100%;
   height: 100%;
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field-eye-icon{
+  position: absolute;
+  right: 12px;  /* Adjust as needed for spacing */
+  top: 50%;
+  transform: translateY(-50%);  /* Centers the icon vertically */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #ccc;  /* Light grey color for the icon */
+  font-size: 1.2rem;  /* Adjust size of the icon */
+  transition: color 0.3s ease-in-out;
+}
+
+.password-field-eye-icon:hover {
+  color: #f50057;  /* Pink color on hover, you can adjust this */
 }
 
 @media screen and (max-width: 425px) {
@@ -3861,8 +3885,30 @@ form input {
   margin-right: auto;
 }
 
+.update-form-input {
+  position: relative;
+}
+
 .update-form-input input {
   width: 100%;
+}
+
+.update-profile-password-field-eye-icon{
+  position: absolute;
+  right: 12px;  /* Adjust as needed for spacing */
+  top: 63%;
+  transform: translateY(-50%);  /* Centers the icon vertically */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #ccc;  /* Light grey color for the icon */
+  font-size: 1.2rem;  /* Adjust size of the icon */
+  transition: color 0.3s ease-in-out;
+}
+
+.update-profile-password-field-eye-icon:hover {
+  color: #f50057;  /* Pink color on hover, you can adjust this */
 }
 
 @media screen and (max-width: 768px) {
