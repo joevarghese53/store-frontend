@@ -3571,22 +3571,27 @@ form input {
   align-items: center;
 }
 
-.password-field-eye-icon{
+.password-field-eye-icon {
   position: absolute;
-  right: 12px;  /* Adjust as needed for spacing */
+  right: 12px;
+  /* Adjust as needed for spacing */
   top: 50%;
-  transform: translateY(-50%);  /* Centers the icon vertically */
+  transform: translateY(-50%);
+  /* Centers the icon vertically */
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
-  color: #ccc;  /* Light grey color for the icon */
-  font-size: 1.2rem;  /* Adjust size of the icon */
+  color: #ccc;
+  /* Light grey color for the icon */
+  font-size: 1.2rem;
+  /* Adjust size of the icon */
   transition: color 0.3s ease-in-out;
 }
 
 .password-field-eye-icon:hover {
-  color: #f50057;  /* Pink color on hover, you can adjust this */
+  color: #f50057;
+  /* Pink color on hover, you can adjust this */
 }
 
 @media screen and (max-width: 425px) {
@@ -3983,22 +3988,27 @@ form input {
   width: 100%;
 }
 
-.update-profile-password-field-eye-icon{
+.update-profile-password-field-eye-icon {
   position: absolute;
-  right: 12px;  /* Adjust as needed for spacing */
+  right: 12px;
+  /* Adjust as needed for spacing */
   top: 63%;
-  transform: translateY(-50%);  /* Centers the icon vertically */
+  transform: translateY(-50%);
+  /* Centers the icon vertically */
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
-  color: #ccc;  /* Light grey color for the icon */
-  font-size: 1.2rem;  /* Adjust size of the icon */
+  color: #ccc;
+  /* Light grey color for the icon */
+  font-size: 1.2rem;
+  /* Adjust size of the icon */
   transition: color 0.3s ease-in-out;
 }
 
 .update-profile-password-field-eye-icon:hover {
-  color: #f50057;  /* Pink color on hover, you can adjust this */
+  color: #f50057;
+  /* Pink color on hover, you can adjust this */
 }
 
 @media screen and (max-width: 768px) {
@@ -4094,6 +4104,14 @@ form input {
   margin-bottom: 20px;
 }
 
+.update-product-remove-button {
+  background: none;
+  color: #ff0000;
+  font-weight: 500;
+  padding: 0;
+  text-decoration: underline;
+}
+
 .create-product-image {
   flex: 1 0 10%;
   /* Adjust to fit the layout */
@@ -4107,8 +4125,8 @@ form input {
 }
 
 .create-product-image p {
-  text-align: center;
   font-size: 15px;
+  margin-bottom: 0;
   font-weight: 600;
   color: #000;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -4223,6 +4241,7 @@ form input {
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 #create-product-submit:hover {

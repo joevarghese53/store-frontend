@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useGetProductByIdQuery, useUpdateProductMutation, useDeleteProductMutation, useUploadProductImageMutation } from '../../../../redux/api/productApiSlice';
+import { useGetProductByIdQuery, useUpdateProductMutation, useDeleteProductMutation, useDeleteProductImageMutation, useUploadProductImageMutation } from '../../../../redux/api/productApiSlice';
 import { useRemoveAllOfProductFromAllofCartMutation } from '../../../../redux/api/cartApiSlice';
 import { useFetchCategoriesQuery } from '../../../../redux/api/categoryApiSlice';
 import { useRemoveFromAllWishListMutation } from '../../../../redux/api/wishlistApiSlice';
@@ -47,6 +47,7 @@ const ProductUpdate = () => {
     const [uploadProductImage] = useUploadProductImageMutation();
     const [updateProduct] = useUpdateProductMutation();
     const [deleteProduct] = useDeleteProductMutation();
+    const [deleteProductImage] = useDeleteProductImageMutation();
     const [removeAllOfProductFromAllofCart] = useRemoveAllOfProductFromAllofCartMutation();
     const [removeFromAllWishlist] = useRemoveFromAllWishListMutation();
 
@@ -108,6 +109,16 @@ const ProductUpdate = () => {
         } catch (err) {
             console.log(err);
         }
+    };
+
+    const handleImageRemoval = (url) => () => {
+        const data = { product_id: productId, image_url: url };
+        console.log('Removing image:', data);
+        const filteredImages = imagesUrl.filter((image) => image !== url);
+        setImagesUrl(filteredImages);
+        setImagesUrlToDisplay(filteredImages);
+        const res = deleteProductImage(data).unwrap();
+        console.log('Image removed:', res);
     };
 
     const handleSubmit = async (e) => {
@@ -218,6 +229,7 @@ const ProductUpdate = () => {
                             alt="product"
                         />
                         <p>FRONT IMAGE</p>
+                        <button className='update-product-remove-button' onClick={handleImageRemoval(frontImageUrlToDisplay)}>Remove</button>
                     </div>
                 )}
                 {backImageUrlToDisplay && (
@@ -227,6 +239,7 @@ const ProductUpdate = () => {
                             alt="product"
                         />
                         <p>BACK IMAGE</p>
+                        <button className='update-product-remove-button' onClick={handleImageRemoval(backImageUrlToDisplay)}>Remove</button>
                     </div>
                 )}
                 {frontDesignUrlToDisplay && (
@@ -236,6 +249,7 @@ const ProductUpdate = () => {
                             alt="product"
                         />
                         <p>FRONT DESIGN</p>
+                        <button className='update-product-remove-button' onClick={handleImageRemoval(frontDesignUrlToDisplay)}>Remove</button>
                     </div>
                 )}
                 {backDesignUrlToDisplay && (
@@ -245,6 +259,7 @@ const ProductUpdate = () => {
                             alt="product"
                         />
                         <p>BACK DESIGN</p>
+                        <button className='update-product-remove-button' onClick={handleImageRemoval(backDesignUrlToDisplay)}>Remove</button>
                     </div>
                 )}
                 {imagesUrlToDisplay.map((url, index) => (
@@ -254,6 +269,7 @@ const ProductUpdate = () => {
                             alt="product"
                         />
                         <p>IMAGE {index + 1}</p>
+                        <button className='update-product-remove-button' onClick={handleImageRemoval(url)}>Remove</button>
                     </div>
                 ))}
             </div>
