@@ -35,19 +35,12 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       const response = await login({ email: user.email, password: user.password }).unwrap();
-      // const response = await axios.post('http://localhost:5000/api/users/auth', {
-      //   email: user.email,
-      //   password: user.password
-      // }, {
-      //   withCredentials: true // Include credentials with this request
-      // });
       console.log('User logged in successfully:', response.data);
       dispatch(setCredentials({ ...response }));
-      // Redirect to home page
       router.push('/');
     } catch (error) {
-      console.error('Error logging in user:', error.response ? error.response.data : error.message);
-      setError(error.response ? error.response.data.message : 'An error occurred');
+      console.error('Error logging in user:', error.data.message);
+      setError(error.data.message);
       setIsLoading(false);
     }
   };
