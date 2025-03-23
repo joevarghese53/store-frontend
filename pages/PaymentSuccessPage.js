@@ -10,10 +10,10 @@ const PaymentSuccessPage = () => {
 
   const router = useRouter();
   const { id: orderId } = router.query;
-  console.log('orderId',orderId);
+  console.log('orderId', orderId);
   const { data: orderDetails, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
-  console.log('orderdetails',orderDetails);
+  console.log('orderdetails', orderDetails);
 
   useEffect(() => {
     if (orderDetails) {
@@ -40,7 +40,7 @@ const PaymentSuccessPage = () => {
     return (
       <div className="success-wrapper">
         <div className="success">
-        <Loader />
+          <Loader />
           <Link href="/">
             <button type="button" width="300px" className="btn">
               Continue Shopping
@@ -61,8 +61,8 @@ const PaymentSuccessPage = () => {
         <p className="email-msg">Check your email inbox for the receipt. <br></br>Please do check the updates/promotions/spam folder for the email.<br></br> If you still haven't recieved a confirmation mail, please contact our customer support.</p>
         <p className="description">
           If you have any questions, please email
-          <a className="email" href="mailto:order@example.com">
-            dgencustomercare@gmail.com
+          <a className="email" href="mailto:jayveeapparelscustomercare@gmail.com">
+            jayveeapparelscustomercare@gmail.com
           </a>
         </p>
         <Link href="/">

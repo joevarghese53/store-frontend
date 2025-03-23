@@ -6,7 +6,7 @@ const ContactUs = () => {
     <div className='contact-us-main-container'>
       <div className='contact-us-container'>
         <h1>CONTACT US</h1>
-        <p>For any queries, please contact us at <b>dgencustomercare@gmail.com</b>. We will get back to you within 24 hours. Please refer the FAQ below and see if it answers your queries.</p>
+        <p>For any queries, please contact us at <b>jayveeapparelscustomercare@gmail.com</b>. We will get back to you within 24 hours. Please refer the FAQ below and see if it answers your queries.</p>
       </div>
       <FAQ />
     </div>

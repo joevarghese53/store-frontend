@@ -9,7 +9,7 @@ const FAQ = () => {
             faqs: [
                 {
                     question: 'How do I check the status of my order?',
-                    answer: ' • You can check the status of your order by clicking \'Track Order\' on the Dgen© page post account login. Once your order is placed, we will send you confirmation of your order details by e-mail. Your tracking link may take up to 24 hours from shipping date to get activated. Incase of any unusual event which delays your order, you will receive an update from us.'
+                    answer: ' • You can check the status of your order by clicking \'Track Order\' on the JayVee© page post account login. Once your order is placed, we will send you confirmation of your order details by e-mail. Your tracking link may take up to 24 hours from shipping date to get activated. Incase of any unusual event which delays your order, you will receive an update from us.'
                 },
                 {
                     question: 'What are the charges that will apply on my order?',
@@ -25,15 +25,15 @@ const FAQ = () => {
                 },
                 {
                     question: 'I am unable to add products to my Bag.',
-                    answer: ' • Please clear cache, cookies and update the app and try again. If the issue persists, You can contact us at dgencustomercare@gmail.com.'
+                    answer: ' • Please clear cache, cookies and update the app and try again. If the issue persists, You can contact us at jayveeapparelscustomercare@gmail.com.'
                 },
                 {
                     question: 'I tried to make a transaction, but it failed. What do I do?',
-                    answer: ' • If the amount has been deducted from your bank or card, don\'t worry; it will be refunded to the same account within 3-5 business days. Meanwhile, please wait a while and try again. If the issue persists, please contact us at dgencustomercare@gmail.com.'
+                    answer: ' • If the amount has been deducted from your bank or card, don\'t worry; it will be refunded to the same account within 3-5 business days. Meanwhile, please wait a while and try again. If the issue persists, please contact us at jayveeapparelscustomercare@gmail.com.'
                 },
                 {
                     question: 'How long will it take to receive my order?',
-                    answer: ' • The estimated delivery time is 7-10 business days. This is an estimate and delivery times may vary according to the print on demand service provider and delivery partner. You can track your order by clicking on the \'Track Order\' option on the Dgen© page post account login.'
+                    answer: ' • The estimated delivery time is 7-10 business days. This is an estimate and delivery times may vary according to the print on demand service provider and delivery partner. You can track your order by clicking on the \'Track Order\' option on the JayVee© page post account login.'
                 },
             ],
         },

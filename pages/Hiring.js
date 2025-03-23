@@ -4,7 +4,7 @@ const Hiring = () => {
   return (
     <div className="hiring-page">
       <div className="hiring-page__header">
-        <h1>Join Our Team at Dgen</h1>
+        <h1>Join Our Team at JayVee</h1>
         <h2>Are You Ready to Shape the Future?</h2>
       </div>
 
@@ -42,7 +42,7 @@ const Hiring = () => {
         <p>
           If you’re excited about building something extraordinary and believe you have what it takes, we’d love to hear from you!
         </p>
-        <p><strong>Please send your application and resume to</strong>: <a href="mailto:dgenhiring@gmail.com">dgenhiring@gmail.com</a></p>
+        <p><strong>Please send your application and resume to</strong>: <a href="mailto:jayveeapparelshiring@gmail.com">jayveeapparelshiring@gmail.com</a></p>
       </div>
     </div>
   );

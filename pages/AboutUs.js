@@ -6,14 +6,14 @@ const AboutUs = () => {
       {/* Header Section with Background Image */}
       <header className="about-us-header">
         <h1 className="about-us-title">Our Story</h1>
-        <p className="about-us-subtitle">Express Yourself with Dgen</p>
+        <p className="about-us-subtitle">Express Yourself with JayVee</p>
       </header>
 
       {/* Section 1: The Birth of Your Brand */}
       <section className="about-us-section">
-        <h2 className="section-title">The Birth of Dgen</h2>
+        <h2 className="section-title">The Birth of JayVee</h2>
         <p className="section-text">
-          We started Dgen with one simple idea: to give people the power to express themselves through their clothing. In a world that often follows the trends, we wanted to stand out, offering something unique, bold, and unapologetically personal.
+          We started JayVee with one simple idea: to give people the power to express themselves through their clothing. In a world that often follows the trends, we wanted to stand out, offering something unique, bold, and unapologetically personal.
         </p>
         <img 
           src="/img/story1.jpg" 
@@ -65,7 +65,7 @@ const AboutUs = () => {
       <section className="about-us-closing">
         <h2 className="closing-title">Join Us on This Journey</h2>
         <p className="closing-text">
-          We’re excited to have you with us on this journey of creativity and self-expression. Welcome to Dgen. Welcome to a world of your own making.
+          We’re excited to have you with us on this journey of creativity and self-expression. Welcome to JayVee. Welcome to a world of your own making.
         </p>
       </section>
     </div>
