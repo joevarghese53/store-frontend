@@ -2820,6 +2820,7 @@ span.text-red {
 }
 
 .cart-summary {
+  padding: 10px;
   margin-top: 40px;
 }
 
@@ -4692,7 +4693,7 @@ form input {
 }
 
 .shipping-summary {
-  margin-left: 11%;
+  padding: 10px;
   margin-top: 2%;
   display: flex;
 }
