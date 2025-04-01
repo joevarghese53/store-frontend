@@ -3240,6 +3240,7 @@ form input {
   .cart-content-summary {
     flex-direction: column;
     margin-bottom: 0px;
+    padding: 10px;
   }
 
   .cart-content {

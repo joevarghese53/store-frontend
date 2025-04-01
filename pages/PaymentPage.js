@@ -145,7 +145,7 @@ const PaymentPage = () => {
             <div>Loading order details...</div>
           )}
           <button type="button" className="pay-now-button-desktop" onClick={handlePayment} >
-            PAY WITH PHONEPE
+            PAY
           </button>
           <div className="cart-page-mobile-bottom">
             <div className='cart-page-mobile-bottom-price'>
@@ -153,7 +153,7 @@ const PaymentPage = () => {
               <span onClick={scrollToBilling}>VIEW DETAILS</span>
             </div>
             <button type="button" className="cart-page-btn-mobile" onClick={handlePayment} >
-              PAY WITH PHONEPE
+              PAY
             </button>
           </div>
         </div>
