@@ -54,7 +54,15 @@ const WishlistPage = () => {
   if (error) {
     return (
       <div className="wishlist-main-container">
-        <h1 style={{ height: '200px', paddingTop: '100px' }}>ERROR</h1>
+        <div className="empty-cart">
+          <FaRegFaceSadTear size={150} />
+          <h3>Your wishlist is empty</h3>
+          <Link href="/">
+            <button type="button" className="btn">
+              Continue Shopping
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }

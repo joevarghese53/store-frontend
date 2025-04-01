@@ -149,7 +149,7 @@ const PaymentPage = () => {
           </button>
           <div className="cart-page-mobile-bottom">
             <div className='cart-page-mobile-bottom-price'>
-              <h6>₹{orderDetails.totalPrice}</h6>
+              <h6>₹{orderDetails?.totalPrice}</h6>
               <span onClick={scrollToBilling}>VIEW DETAILS</span>
             </div>
             <button type="button" className="cart-page-btn-mobile" onClick={handlePayment} >
