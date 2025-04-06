@@ -3087,6 +3087,7 @@ form input {
   gap: 20px;
   width: 67%;
   margin-top: 40px;
+  padding: 10px;
 }
 
 .cart-item-container {

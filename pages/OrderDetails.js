@@ -158,26 +158,28 @@ const OrderDetails = () => {
                             <div className='order-detail-items'>
                                 <h2>Order Items</h2>
                                 {orderDetails.orderItems.map((item) => (
-                                    <div key={item.product} className="order-item">
-                                        <div className='order-card-item'>
-                                            <div className='order-card-middle-left'>
-                                                <img src={item.frontImage} alt={item.name} className="order-product-image" />
+                                    <>
+                                        <div key={item.product} className="order-item">
+                                            <div className='order-card-item'>
+                                                <div className='order-card-middle-left'>
+                                                    <img src={item.frontImage} alt={item.name} className="order-product-image" />
+                                                </div>
+                                                <div className='order-card-middle-right'>
+                                                    <div className='order-card-middle-right-1'>
+                                                        <p style={{ fontWeight: '500', marginBottom: '0' }}>{item.name}</p>
+                                                    </div>
+                                                    <div className='order-card-middle-right-2'>
+                                                        <p style={{ color: 'grey', marginBottom: '30px' }}>{item.category}</p>
+                                                    </div>
+                                                    <div className='order-card-middle-right-3'>
+                                                        <p>Size : {item.size}</p>
+                                                        <p>Quantity : {item.qty}</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className='order-card-middle-right'>
-                                                <div className='order-card-middle-right-1'>
-                                                    <p style={{ fontWeight: '500', marginBottom: '0' }}>{item.name}</p>
-                                                </div>
-                                                <div className='order-card-middle-right-2'>
-                                                    <p style={{ color: 'grey', marginBottom: '30px' }}>{item.category}</p>
-                                                </div>
-                                                <div className='order-card-middle-right-3'>
-                                                    <p>Size : {item.size}</p>
-                                                    <p>Quantity : {item.qty}</p>
-                                                </div>
+                                            <div className='order-card-item-price'>
+                                                <p style={{ fontWeight: '500', marginBottom: '0' }}>₹{item.price}</p>
                                             </div>
-                                        </div>
-                                        <div className='order-card-item-price'>
-                                            <p style={{ fontWeight: '500', marginBottom: '0' }}>₹{item.price}</p>
                                         </div>
                                         {admin && (
                                             <div className="images-download-container">
@@ -231,7 +233,7 @@ const OrderDetails = () => {
                                                 )}
                                             </div>
                                         )}
-                                    </div>
+                                    </>
                                 ))}
                                 <div className='order-details-subtotal'>
                                     <div className='order-details-subtotal-row'>
