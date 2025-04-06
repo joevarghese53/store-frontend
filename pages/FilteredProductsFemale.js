@@ -51,7 +51,7 @@ const FilteredProductsFemale = () => {
   const handlePriceChange = (range) => {
     dispatch(setPriceRange(range));
   };
-  
+
   const handleReset = () => {
     dispatch(resetFilters());
     dispatch(setPriceRange([]));
@@ -84,13 +84,16 @@ const FilteredProductsFemale = () => {
         <div className="filter-option">
           <h6>PRICE RANGE</h6>
           <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} /> 500-600
+            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
+            <label className='price-input-label'>Rs. 500 - Rs. 600</label>
           </div>
           <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} /> 600-700
+            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
+            <label className='price-input-label'>Rs. 600 - Rs. 700</label>
           </div>
           <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} /> 700-800
+            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
+            <label className='price-input-label'>Rs. 700 - Rs. 800</label>
           </div>
         </div>
         <div className="filter-option">
@@ -140,16 +143,18 @@ const FilteredProductsFemale = () => {
           <div className="filter-option">
             <h6>PRICE RANGE</h6>
             <div>
-              <input type="radio" name="price" onChange={() => handlePriceChange([500, 600])} /> 500-600
+              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
+              <label className='price-input-label'>Rs. 500 - Rs. 600</label>
             </div>
             <div>
-              <input type="radio" name="price" onChange={() => handlePriceChange([600, 700])} /> 600-700
+              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
+              <label className='price-input-label'>Rs. 600 - Rs. 700</label>
             </div>
             <div>
-              <input type="radio" name="price" onChange={() => handlePriceChange([700, 800])} /> 700-800
+              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
+              <label className='price-input-label'>Rs. 700 - Rs. 800</label>
             </div>
           </div>
-
           <div className="filter-option">
             <div
               className="filter-reset-btn"

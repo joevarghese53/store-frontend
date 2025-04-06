@@ -86,13 +86,16 @@ const FilteredProductsMale = () => {
         <div className="filter-option">
           <h6>PRICE RANGE</h6>
           <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} /> 500-600
+            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
+            <label className='price-input-label'>Rs. 500 - Rs. 600</label>
           </div>
           <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} /> 600-700
+            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
+            <label className='price-input-label'>Rs. 600 - Rs. 700</label>
           </div>
           <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} /> 700-800
+            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
+            <label className='price-input-label'>Rs. 700 - Rs. 800</label>
           </div>
         </div>
         <div className="filter-option">
@@ -122,43 +125,46 @@ const FilteredProductsMale = () => {
       <div className={`filter-menu-mobile ${filterOpen ? 'open' : ''}`} >
         {/* <button onClick={() => setFilterOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button> */}
         <div className="filter-options">
-        <div className="filter-option">
-          <h6>CATEGORIES</h6>
-          {categories?.map((c) => (
-            <div key={c._id}>
-              <input
-                type="checkbox"
-                id={`checkbox-${c._id}`}
-                onChange={(e) => handleCheck(e.target.checked, c._id)}
-                className="checkbox"
-                checked={checked.includes(c._id)}
-              />
-              <label htmlFor={`checkbox-${c._id}`} className="checkbox-label">
-                {c.name}
-              </label>
+          <div className="filter-option">
+            <h6>CATEGORIES</h6>
+            {categories?.map((c) => (
+              <div key={c._id}>
+                <input
+                  type="checkbox"
+                  id={`checkbox-${c._id}`}
+                  onChange={(e) => handleCheck(e.target.checked, c._id)}
+                  className="checkbox"
+                  checked={checked.includes(c._id)}
+                />
+                <label htmlFor={`checkbox-${c._id}`} className="checkbox-label">
+                  {c.name}
+                </label>
+              </div>
+            ))}
+          </div>
+          <div className="filter-option">
+            <h6>PRICE RANGE</h6>
+            <div>
+              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
+              <label className='price-input-label'>Rs. 500 - Rs. 600</label>
             </div>
-          ))}
-        </div>
-        <div className="filter-option">
-          <h6>PRICE RANGE</h6>
-          <div>
-            <input type="radio" name="price" onChange={() => handlePriceChange([500, 600])} /> 500-600
+            <div>
+              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
+              <label className='price-input-label'>Rs. 600 - Rs. 700</label>
+            </div>
+            <div>
+              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
+              <label className='price-input-label'>Rs. 700 - Rs. 800</label>
+            </div>
           </div>
-          <div>
-            <input type="radio" name="price" onChange={() => handlePriceChange([600, 700])} /> 600-700
+          <div className="filter-option">
+            <div
+              className="filter-reset-btn"
+              onClick={handleReset}
+            >
+              Clear All
+            </div>
           </div>
-          <div>
-            <input type="radio" name="price" onChange={() => handlePriceChange([700, 800])} /> 700-800
-          </div>
-        </div>
-        <div className="filter-option">
-          <div
-            className="filter-reset-btn"
-            onClick={handleReset}
-          >
-            Clear All
-          </div>
-        </div>
         </div>
         <div className="filter-menu-bottom-buttons">
           {/* <button onClick={() => setFilterOpen(false)} className='reset-btn'>Close</button> */}
