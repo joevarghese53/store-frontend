@@ -110,6 +110,15 @@ span.text-red {
   margin-right: 10px;
 }
 
+.Toastify__toast-container--bottom-center {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 1rem !important;
+  width: auto !important;
+  max-width: 90vw; /* Prevent it from overflowing on mobile */
+  padding: 0 1rem;
+}
+
  /* Toast css end  */
 
 
