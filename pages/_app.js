@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
           closeOnClick={true}
           pauseOnHover={false}
           pauseOnFocusLoss={false}
+          closeButton={false}
           toastClassName="custom-toast"
           bodyClassName="custom-toast-body"
         />
