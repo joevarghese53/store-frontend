@@ -83,6 +83,35 @@ span.text-red {
 
 /* Loader.jsx end */
 
+ /* Toast css start*/
+/* Toast container custom style */
+.Toastify__toast.custom-toast {
+  background: #1f2937 !important;
+  color: #f9fafb !important;
+  /* border-left: 6px solid #3b82f6 !important; */
+  border-radius: 50px !important;
+  padding: 15px !important;
+  font-family: 'Poppins', sans-serif !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease-in-out !important;
+  width: fit-content;
+}
+
+/* Toast body text */
+.Toastify__toast-body.custom-toast-body {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Optional: icon spacing */
+.Toastify__toast-icon {
+  margin-right: 10px;
+}
+
+ /* Toast css end  */
+
 
 /* index.js home start */
 

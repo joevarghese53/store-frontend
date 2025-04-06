@@ -12,11 +12,19 @@ axios.defaults.withCredentials = true;
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-        <Layout>
-          <Toaster />
-          <ToastContainer />
-          <Component {...pageProps} />
-        </Layout>
+      <Layout>
+        <Toaster />
+        <ToastContainer
+          position='bottom-center'
+          autoClose='2000'
+          closeOnClick={true}
+          pauseOnHover={false}
+          pauseOnFocusLoss={false}
+          toastClassName="custom-toast"
+          bodyClassName="custom-toast-body"
+        />
+        <Component {...pageProps} />
+      </Layout>
     </Provider>
   )
 }
