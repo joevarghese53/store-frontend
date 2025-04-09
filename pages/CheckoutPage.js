@@ -116,9 +116,9 @@ const CheckoutPage = () => {
             </div>
             <div className='checkout-content'>
             <div className='checkout-address-summary'>
-                <p>{userInfo.username}</p>
                 <h6>ADDRESS DETAILS </h6>
                 <Link href="/AddressPage" className='checkout-change-address-link'>change</Link>
+                <p>{userInfo.username}</p>
                 <p>{`${selectedAddress.address}, ${selectedAddress.city}, ${selectedAddress.postalCode}, ${selectedAddress.state}, ${selectedAddress.country}, ${selectedAddress.phoneno}`}</p>
             </div>
             <div className="checkout-cart-summary">

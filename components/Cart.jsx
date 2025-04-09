@@ -4,6 +4,7 @@ import { AiOutlineShopping } from 'react-icons/ai';
 import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
 import { useRouter } from 'next/router';
 import Loader from './Loader';
+import { toast } from 'react-toastify'
 
 const Cart = () => {
   const { data, isLoading, error, refetch } = useGetCartQuery();
@@ -63,6 +64,7 @@ const Cart = () => {
 
       const { data } = await removeCartItem({ productId: itemId, size: size }).unwrap();
       console.log('Product deleted successfully', data);
+      toast.success(`Item removed from cart successfully.`);
     } catch (err) {
       console.log(err);
     }

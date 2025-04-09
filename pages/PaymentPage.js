@@ -108,17 +108,21 @@ const PaymentPage = () => {
         <div className='payment-page-right-container'>
           {orderDetails && orderDetails.user && orderDetails.shippingAddress ? (
             <div className='payment-page-summary'>
-              <h1 id='shipping-summary-heading'>SHIPPING</h1>
               <div className='shipping-summary'>
-                <div className='shipping-summary-left'>
-                  <h2>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</h2>
-                  <h2>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</h2>
-                  <h2>Address&nbsp;&nbsp;&nbsp;:</h2>
+                <div>
+                  <h1 id='shipping-summary-heading'>SHIPPING</h1>
                 </div>
-                <div className='shipping-summary-right'>
-                  <h3>{orderDetails.user.username}</h3>
-                  <h3>{orderDetails.user.email}</h3>
-                  <p id='address'>{orderDetails.shippingAddress.address}.<br /> {orderDetails.shippingAddress.city} - {orderDetails.shippingAddress.postalCode}, {orderDetails.shippingAddress.state}, {orderDetails.shippingAddress.country}.<br /> CONTACT : {orderDetails.shippingAddress.phoneno}</p>
+                <div className='shipping-summary-rows'>
+                  <div className='shipping-summary-left'>
+                    <h2>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</h2>
+                    <h2>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</h2>
+                    <h2>Address&nbsp;&nbsp;&nbsp;:</h2>
+                  </div>
+                  <div className='shipping-summary-right'>
+                    <h3>{orderDetails.user.username}</h3>
+                    <h3>{orderDetails.user.email}</h3>
+                    <p id='address'>{orderDetails.shippingAddress.address}.<br /> {orderDetails.shippingAddress.city} - {orderDetails.shippingAddress.postalCode}, {orderDetails.shippingAddress.state}, {orderDetails.shippingAddress.country}.<br /> CONTACT : {orderDetails.shippingAddress.phoneno}</p>
+                  </div>
                 </div>
               </div>
               <div className="cart-summary" ref={billingRef} >

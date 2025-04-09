@@ -83,7 +83,7 @@ span.text-red {
 
 /* Loader.jsx end */
 
- /* Toast css start*/
+/* Toast css start*/
 /* Toast container custom style */
 .Toastify__toast.custom-toast {
   background: #1f2937 !important;
@@ -95,7 +95,8 @@ span.text-red {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   transition: all 0.3s ease-in-out !important;
   width: fit-content;
-  min-height: unset !important; /* <-- override default min height */
+  min-height: unset !important;
+  /* <-- override default min height */
   height: auto !important;
 }
 
@@ -120,10 +121,11 @@ span.text-red {
   transform: translateX(-50%) !important;
   bottom: 1rem !important;
   width: auto !important;
-  max-width: 90vw; /* Prevent it from overflowing on mobile */
+  max-width: 90vw;
+  /* Prevent it from overflowing on mobile */
 }
 
- /* Toast css end  */
+/* Toast css end  */
 
 
 /* index.js home start */
@@ -279,9 +281,7 @@ span.text-red {
   font-size: 15px;
 }
 
-.remove-item:hover {
-  background-color: #f02d34;
-}
+
 
 .cart-bottom {
   position: absolute;
@@ -2490,7 +2490,7 @@ span.text-red {
   border-bottom: 1px solid #e1e4e8;
 }
 
-.order-details-subtotal-row{
+.order-details-subtotal-row {
   display: flex;
   justify-content: space-between;
 }
@@ -2546,12 +2546,12 @@ span.text-red {
 }
 
 @media screen and (max-width: 768px) {
-  .order-details-container{
+  .order-details-container {
     flex-direction: column;
     gap: 0px;
   }
 
-  .order-details-left{
+  .order-details-left {
     width: auto;
   }
 
@@ -2950,7 +2950,7 @@ span.text-red {
 }
 
 .cart-content-summary {
-  position: relative;
+  margin: 10px;
   margin-bottom: 100px;
   display: flex;
   gap: 50px;
@@ -3050,14 +3050,25 @@ span.text-red {
 }
 
 .cart-summary {
-  padding: 10px;
+  padding: 20px;
   margin-top: 40px;
+  border: 1px solid #0000001a;
+  border-radius: 10px;
+  height: fit-content;
+}
+
+.cart-summary h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: grey;
 }
 
 .billing-details-row {
   display: flex;
   justify-content: space-between;
   gap: 30px;
+  border-bottom: 1px solid #0000002b;
+  padding: 12px 0px;
 }
 
 .cart-summary h8 {
@@ -3129,11 +3140,16 @@ form input {
   gap: 20px;
   width: 67%;
   margin-top: 40px;
-  padding: 10px;
+  padding: 20px;
+  border: 1px solid #00000014;
+  border-radius: 10px;
 }
 
 .cart-item-container {
   display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #0000003b;
+  padding-bottom: 20px;
 }
 
 .cart-item {
@@ -3361,6 +3377,9 @@ form input {
 
 .checkout-cart-summary {
   width: 320px;
+  border: 1px solid #0000001c;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .checkout-cart-summary h6 {
@@ -3375,6 +3394,9 @@ form input {
 
 .checkout-address-summary {
   width: 290px;
+  border: 1px solid #0000001c;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .checkout-change-address-link {
@@ -4655,6 +4677,7 @@ form input {
   display: flex;
   flex-direction: column;
   margin: auto;
+  margin-bottom: 100px;
 }
 
 .address-content-body {
@@ -4854,7 +4877,6 @@ form input {
   font-family: monospace;
   color: #000000;
   text-align: center;
-  margin-top: 60px;
 }
 
 #billing-summary-heading {
@@ -4896,11 +4918,6 @@ form input {
 
 }
 
-.payment-page-summary {
-  background: #eeeeee;
-}
-
-
 .payment-item-desc {
   display: flex;
   flex-direction: column;
@@ -4926,7 +4943,12 @@ form input {
 
 .shipping-summary {
   padding: 10px;
-  margin-top: 2%;
+  margin-top: 35px;
+  border: 1px solid #0000001c;
+  border-radius: 10px;
+}
+
+.shipping-summary-rows {
   display: flex;
 }
 
