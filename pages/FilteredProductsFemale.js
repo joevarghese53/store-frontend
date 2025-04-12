@@ -67,7 +67,7 @@ const FilteredProductsFemale = () => {
         <div className="filter-option">
           <h6>CATEGORIES</h6>
           {categories?.map((c) => (
-            <div key={c._id}>
+            <div className='filter-option-row' key={c._id}>
               <input
                 type="checkbox"
                 id={`checkbox-${c._id}`}
@@ -83,16 +83,16 @@ const FilteredProductsFemale = () => {
         </div>
         <div className="filter-option">
           <h6>PRICE RANGE</h6>
-          <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
+          <div className='filter-option-row'>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
             <label className='price-input-label'>Rs. 500 - Rs. 600</label>
           </div>
-          <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
+          <div className='filter-option-row'>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
             <label className='price-input-label'>Rs. 600 - Rs. 700</label>
           </div>
-          <div>
-            <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
+          <div className='filter-option-row'>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
             <label className='price-input-label'>Rs. 700 - Rs. 800</label>
           </div>
         </div>
