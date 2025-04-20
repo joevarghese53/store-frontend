@@ -105,6 +105,7 @@ const AddressPage = () => {
         <h4 id='address-header-two'>  ------- CHECKOUT ------- PAYMENT </h4>
       </div>
       <div className='address-content'>
+        <h3 style={{fontSize: '1.5rem', fontWeight: '700', margin: 'auto', width: 'fit-content', color: '#000000e0', marginBottom: '20px'}}>SELECT ADDRESS</h3>
         <h3 id='deliver-to-heading'>Deliver To : </h3>
         <div className='address-content-body'>
           {isLoading ? (

@@ -3016,6 +3016,10 @@ span.text-red {
   font-weight: 600;
 }
 
+.address-page-main-container-btn:disabled {
+  cursor: not-allowed;
+}
+
 .cart-page-btn-desktop,
 .checkout-page .btn,
 .empty-cart .btn {
