@@ -243,13 +243,25 @@ const Workshop = ({ setActiveTab }) => {
     const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide} ${deviceType}`;
     console.log(postData);
 
+    const payload = {
+      prompt: formattedTextareaValue,
+      color: activeColor,
+      coords: formattedBoxDrawingValues.split('_').map(Number),
+      category: selectedCategory,
+      side: activeSide,
+      device: deviceType
+    };
+    
+    console.log(JSON.stringify(payload));
+
     try {
-      const response = await fetch('https://6ebc-34-82-9-12.ngrok-free.app/submit-prompt', {
+      const response = await fetch('https://api.runpod.ai/v2/wz5a00qxil7lyz/run/submit-prompt', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer rpa_HFC80CM5WE7BGW9IM9RYF62CQ5H6FTNKQ51ZD7631exon5`,
         },
-        body: postData,
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
