@@ -237,11 +237,7 @@ const Workshop = ({ setActiveTab }) => {
     const boxDrawingValuesArray = Object.values(boxDrawingValues);
     const formattedBoxDrawingValues = boxDrawingValuesArray.join('_');
     const formattedTextareaValue = textareaValue.replace(/ /g, '_');
-
     const deviceType = window.innerWidth <= 800 ? 'mobile' : 'desktop';
-
-    const postData = `prompt-input=${formattedTextareaValue} ${activeColor} ${formattedBoxDrawingValues} ${selectedCategory} ${activeSide} ${deviceType}`;
-    console.log(postData);
 
     const payload = {
       prompt: formattedTextareaValue,
@@ -252,31 +248,34 @@ const Workshop = ({ setActiveTab }) => {
       device: deviceType
     };
     
-    console.log(JSON.stringify(payload));
+    console.log("Sending Payload:", JSON.stringify(payload));
 
     try {
-      const response = await fetch('https://api.runpod.ai/v2/6cal1ofd3fiu7e/run', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/generate-image", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer rpa_HFC80CM5WE7BGW9IM9RYF62CQ5H6FTNKQ51ZD7631exon5`,
         },
-        body: JSON.stringify({ input: payload }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
 
-      const data = await response.text();
-      const parsedResponse = JSON.parse(data);
-      console.log('Final Image:', parsedResponse.final_image);
-      console.log('Overlay Image:', parsedResponse.overlay_image);
-
-      await useTries();
-
-      setImageData(parsedResponse.final_image);
-      setDesignData(parsedResponse.overlay_image);
+      const data = await response.json();
+      console.log("Data: ", data);
+      if (data.success) {
+        await useTries();
+        console.log("Final Image: ", data.finalImage);
+        console.log("Overlay Image: ", data.overlayImage);
+        setImageData(data.finalImage);
+        setDesignData(data.overlayImage);
+      } else {
+        toast.error("Failed to generate image.");
+        console.error('Backend error:', data.message || data.error);
+      }
+  
     } catch (error) {
       console.error('Error:', error);
       setShowBusyMessage(true);
