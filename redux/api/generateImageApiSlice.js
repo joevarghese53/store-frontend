@@ -12,3 +12,5 @@ export const generateImageApiSlice = apiSlice.injectEndpoints({
         }),
     }),
 }); 
+
+export const { useGenerateImageMutation } = generateImageApiSlice;

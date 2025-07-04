@@ -260,15 +260,16 @@ const Workshop = ({ setActiveTab }) => {
         await useTries();
         console.log("Final Image: ", res.finalImage);
         console.log("Overlay Image: ", res.overlayImage);
-        setImageData(data.finalImage);
-        setDesignData(data.overlayImage);
+        setImageData(res.finalImage);
+        setDesignData(res.overlayImage);
       } else {
         toast.error("Failed to generate image.");
-        console.error('Backend error:', data.message || data.error);
+        console.error('Backend error:', res.message || res.error);
       }
   
     } catch (error) {
       console.error('Error:', error);
+      toast.error("Something went wrong while generating the image.");
       setShowBusyMessage(true);
     } finally {
       setanimbool(false); // Always reset animation state
