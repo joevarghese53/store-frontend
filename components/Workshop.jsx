@@ -255,13 +255,13 @@ const Workshop = ({ setActiveTab }) => {
     console.log(JSON.stringify(payload));
 
     try {
-      const response = await fetch('https://api.runpod.ai/v2/wz5a00qxil7lyz/run/submit-prompt', {
+      const response = await fetch('https://api.runpod.ai/v2/wz5a00qxil7lyz/run', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer rpa_HFC80CM5WE7BGW9IM9RYF62CQ5H6FTNKQ51ZD7631exon5`,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ input: payload }),
       });
 
       if (!response.ok) {
