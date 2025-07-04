@@ -14,6 +14,7 @@ import {
   useUploadProductImageMutation,
 } from "../redux/api/productApiSlice";
 import { useGetTriesQuery, useUseTriesMutation, usePurchaseTriesMutation } from '@/redux/api/triesApiSlice';
+import { useGenerateImageMutation } from '@/redux/api/generateImageApiSlice';
 import { toast } from "react-toastify";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
@@ -30,6 +31,7 @@ const Workshop = ({ setActiveTab }) => {
 
   const [createCProduct] = useCreateCProductMutation();
   const [uploadProductImage] = useUploadProductImageMutation();
+  const [generateImage] = useGenerateImageMutation();
   const { userInfo } = useSelector((state) => state.auth);
   const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
   const { data: triesData, isLoading: triesLoading, error: triesError } = useGetTriesQuery();
@@ -251,24 +253,13 @@ const Workshop = ({ setActiveTab }) => {
     console.log("Sending Payload:", JSON.stringify(payload));
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/generate-image", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
+      const res = await generateImage(payload).unwrap();
+      console.log("Response: ", res);
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      console.log("Data: ", data);
-      if (data.success) {
+      if (res.success) {
         await useTries();
-        console.log("Final Image: ", data.finalImage);
-        console.log("Overlay Image: ", data.overlayImage);
+        console.log("Final Image: ", res.finalImage);
+        console.log("Overlay Image: ", res.overlayImage);
         setImageData(data.finalImage);
         setDesignData(data.overlayImage);
       } else {
