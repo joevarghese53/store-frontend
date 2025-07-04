@@ -255,7 +255,7 @@ const Workshop = ({ setActiveTab }) => {
     console.log(JSON.stringify(payload));
 
     try {
-      const response = await fetch('https://api.runpod.ai/v2/wz5a00qxil7lyz/run', {
+      const response = await fetch('https://api.runpod.ai/v2/84pv1c8xjn51nm/run', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
