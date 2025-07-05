@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
+import { FiTrash2, FiArrowRight, FiShoppingBag } from 'react-icons/fi';
 import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
 import { useRouter } from 'next/router';
 import Loader from './Loader';
@@ -12,13 +13,10 @@ const Cart = () => {
   const router = useRouter();
   const billingRef = useRef(null);
 
-  console.log(data);
-
   const scrollToBilling = () => {
     if (billingRef.current) {
       const yOffset = -100;
       const y = billingRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
@@ -28,15 +26,9 @@ const Cart = () => {
     let itemsPriceWithTax = 0;
     let taxPrice = 0;
     items.forEach((item) => {
-      const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
-
-      // Calculate the price before tax for each item
+      const gstRate = item.productId.price > 1000 ? 0.12 : 0.05;
       const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
-
-      // Calculate the GST for each item
       const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
-
-      // Sum up the total price and tax for all items
       itemsPriceWithTax += item.productId.price * item.quantity;
       taxPrice += itemTaxPrice * item.quantity;
     });
@@ -48,18 +40,16 @@ const Cart = () => {
     ).toFixed(2);
 
     return {
-      itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
-      shippingPrice: shippingPrice.toFixed(2), // Shipping charges
-      taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
-      totalPrice, // Final price including tax and shipping
+      itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2),
+      shippingPrice: shippingPrice.toFixed(2),
+      taxPrice: taxPrice.toFixed(2),
+      totalPrice,
     };
   }
 
   const handleRemoveFromCart = async (itemId, size) => {
     try {
-      let answer = window.confirm(
-        "Are you sure you want to delete this product?"
-      );
+      let answer = window.confirm("Are you sure you want to remove this item from your cart?");
       if (!answer) return;
 
       const { data } = await removeCartItem({ productId: itemId, size: size }).unwrap();
@@ -67,6 +57,7 @@ const Cart = () => {
       toast.success(`Item removed from cart successfully.`);
     } catch (err) {
       console.log(err);
+      toast.error('Failed to remove item from cart.');
     }
   };
 
@@ -75,35 +66,24 @@ const Cart = () => {
   }, []);
 
   if (isLoading) return (
-    <div className="checkout-container">
-      <div className="cart-page">
-        <div className="empty-cart">
-          <AiOutlineShopping size={150} />
-          <div className="loader-container">
-            <Loader />
-          </div>
-          <Link href="/">
-            <button type="button" className="btn">
-              Continue Shopping
-            </button>
-          </Link>
-        </div>
+    <div className="cart-page-container">
+      <div className="cart-loading-state">
+        <div className="cart-loading-spinner"></div>
+        <h3>Loading your cart...</h3>
+        <p>Please wait while we fetch your items</p>
       </div>
     </div>
   );
 
   if (error) return (
-    <div className="checkout-container">
-      <div className="cart-page">
-        <div className="empty-cart">
-          <AiOutlineShopping size={150} />
-          <h3>Your shopping bag is empty</h3>
-          <Link href="/">
-            <button type="button" className="btn">
-              Continue Shopping
-            </button>
-          </Link>
-        </div>
+    <div className="cart-page-container">
+      <div className="cart-error-state">
+        <AiOutlineShopping className="cart-error-icon" />
+        <h3>Something went wrong</h3>
+        <p>Unable to load your cart. Please try again.</p>
+        <button onClick={() => refetch()} className="cart-retry-button">
+          Try Again
+        </button>
       </div>
     </div>
   );
@@ -111,90 +91,121 @@ const Cart = () => {
   const { itemsPrice, shippingPrice, taxPrice, totalPrice } = data ? calcPrices(data) : {};
 
   return (
-    <div className="checkout-container">
-      <div className="cart-page">
-        {data.items.length < 1 && (
-          <div className="empty-cart">
-            <AiOutlineShopping size={150} />
-            <h3>Your shopping bag is empty</h3>
-            <Link href="/">
-              <button type="button" className="btn">
-                Continue Shopping
-              </button>
+    <div className="cart-page-container">
+      {data.items.length < 1 ? (
+        <div className="cart-empty-state">
+          <div className="cart-empty-card">
+            <FiShoppingBag className="cart-empty-icon" />
+            <h2>Your shopping cart is empty</h2>
+            <p>Looks like you haven't added any items to your cart yet. Start shopping to see your items here.</p>
+            <Link href="/" className="cart-continue-shopping">
+              <FiArrowRight className="cart-arrow-icon" />
+              Continue Shopping
             </Link>
           </div>
-        )}
-        {data.items.length >= 1 && (
-          <>
-            <div className='address-header'>
-              <h4 id='address-header-one'>MY CART </h4>
-              <h4 id='address-header-two'>  ----- ADDRESS ----- CHECKOUT ----- PAYMENT </h4>
-            </div>
-            <div className='cart-content-summary'>
-              <div className="cart-content">
+        </div>
+      ) : (
+        <>
+          <div className='address-header'>
+            <h4 id='address-header-one'>MY CART </h4>
+            <h4 id='address-header-two'>  ----- ADDRESS ----- CHECKOUT ----- PAYMENT </h4>
+          </div>
+
+          <div className="cart-content-wrapper">
+            <div className="cart-items-section">
+              <div className="cart-items-header">
+                <h3>Cart Items</h3>
+                <span className="cart-items-count">{data.items.length} {data.items.length === 1 ? 'item' : 'items'}</span>
+              </div>
+              
+              <div className="cart-items-list">
                 {data.items.map((item) => (
-                  <div className="cart-item-container">
-                    <div className="cart-item" key={item._id}>
-                      <img src={item.productId.frontImage} className="cart-product-image" />
-                      <div className="item-desc">
-                        <h5>{item.productId.name}</h5>
-                        <p id='cart-item-category'>{item.productId.category}</p>
-                        <p id='cart-item-quantity'>Quantity: {item.quantity}</p>
-                        <p id='cart-item-size'>Size: {item.size}</p>
+                  <div className="cart-item-card" key={`${item.productId._id}-${item.size}`}>
+                    <div className="cart-item-image">
+                      <img src={item.productId.frontImage} alt={item.productId.name} />
+                    </div>
+                    
+                    <div className="cart-item-details">
+                      <div className="cart-item-info">
+                        <h4 className="cart-item-name">{item.productId.name}</h4>
+                        <p className="cart-item-category">{item.productId.category}</p>
+                        <div className="cart-item-meta">
+                          <span className="cart-item-size">Size: {item.size}</span>
+                          <span className="cart-item-quantity">Qty: {item.quantity}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="cart-item-price">
+                        <span className="cart-item-price-amount">₹{item.productId.price}</span>
+                        <span className="cart-item-price-note">MRP inclusive of all taxes</span>
                       </div>
                     </div>
-                    <div className="item-price-and-remove">
-                      <div className="item-price">
-                        <h4>₹{item.productId.price}</h4>
-                        <h3>MRP inclusive of all taxes</h3>
-                      </div>
-                      <button type="button" className="remove-item" onClick={() => handleRemoveFromCart(item.productId._id, item.size)}>
-                        Remove
-                      </button>
-                    </div>
+                    
+                    <button 
+                      className="cart-item-remove"
+                      onClick={() => handleRemoveFromCart(item.productId._id, item.size)}
+                      title="Remove item"
+                    >
+                      <FiTrash2 />
+                    </button>
                   </div>
                 ))}
               </div>
-              <div className="cart-summary" ref={billingRef}>
-                <h4>BILLING DETAILS</h4>
-                <div className="billing-details-row">
-                  <h6>Cart Total (Excl. of all taxes)</h6>
-                  <h6>₹{itemsPrice}</h6>
+            </div>
+
+            <div className="cart-summary-section" ref={billingRef}>
+              <div className="cart-summary-card">
+                <h3 className="cart-summary-title">Order Summary</h3>
+                
+                <div className="cart-summary-details">
+                  <div className="cart-summary-row">
+                    <span>Subtotal</span>
+                    <span>₹{itemsPrice}</span>
+                  </div>
+                  <div className="cart-summary-row">
+                    <span>GST</span>
+                    <span>₹{taxPrice}</span>
+                  </div>
+                  <div className="cart-summary-row">
+                    <span>Shipping</span>
+                    <span>{shippingPrice > 0 ? `₹${shippingPrice}` : 'Free'}</span>
+                  </div>
+                  
+                  <div className="cart-summary-divider"></div>
+                  
+                  <div className="cart-summary-row cart-summary-total">
+                    <span>Total Amount</span>
+                    <span>₹{totalPrice}</span>
+                  </div>
                 </div>
-                <div className="billing-details-row">
-                  <h6>GST</h6>
-                  <h6>₹{taxPrice}</h6>
-                </div>
-                <div className="billing-details-row">
-                  <h6>Shipping Charges</h6>
-                  <h6>₹{shippingPrice}</h6>
-                </div>
-                <div className="billing-details-row">
-                  <h6>Total Amount</h6>
-                  <h6>₹{totalPrice}</h6>
-                </div>
-                <Link href="/AddressPage">
-                  <button type="button" className="cart-page-btn-desktop">
-                    PROCEED TO CHECKOUT
-                  </button>
+                
+                <Link href="/AddressPage" className="cart-checkout-button">
+                  Proceed to Checkout
+                  <FiArrowRight />
                 </Link>
+                
+                <div className="cart-summary-note">
+                  <p>Free shipping on orders above ₹1000</p>
+                </div>
               </div>
             </div>
-            <div className="cart-page-mobile-bottom">
-              <div className='cart-page-mobile-bottom-price'>
-                <h6>₹{totalPrice}</h6>
-                <span onClick={scrollToBilling}>VIEW DETAILS</span>
-              </div>
-              <Link href="/AddressPage">
-                <button type="button" className="cart-page-btn-mobile">
-                  PROCEED TO CHECKOUT
-                </button>
-              </Link>
+          </div>
+
+          {/* Mobile Bottom Bar */}
+          <div className="cart-mobile-bottom">
+            <div className="cart-mobile-price">
+              <span className="cart-mobile-total">₹{totalPrice}</span>
+              <button onClick={scrollToBilling} className="cart-mobile-details">
+                View Details
+              </button>
             </div>
-          </>
-        )}
-      </div>
-    </div >
+            <Link href="/AddressPage" className="cart-mobile-checkout">
+              Checkout
+            </Link>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 

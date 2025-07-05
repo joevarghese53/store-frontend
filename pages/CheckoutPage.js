@@ -6,6 +6,7 @@ import { selectSelectedAddress } from '../redux/slices/checkoutSlice';
 import { useCreateOrderMutation } from "../redux/api/orderApiSlice";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { FiUser, FiMapPin, FiEdit2 } from 'react-icons/fi';
 
 const CheckoutPage = () => {
 
@@ -105,7 +106,12 @@ const CheckoutPage = () => {
     };
 
     if (!userInfo || isCartLoading || !selectedAddress) {
-        return <div>Loading...</div>;
+        return (
+            <div className="checkout-loading-container">
+                <div className="checkout-loading-spinner"></div>
+                <p>Loading checkout...</p>
+            </div>
+        );
     }
 
     return (
@@ -115,40 +121,48 @@ const CheckoutPage = () => {
                 <h4 id='address-header-two'>  ------- PAYMENT </h4>
             </div>
             <div className='checkout-content'>
-            <div className='checkout-address-summary'>
-                <h6>ADDRESS DETAILS </h6>
-                <Link href="/AddressPage" className='checkout-change-address-link'>change</Link>
-                <p>{userInfo.username}</p>
-                <p>{`${selectedAddress.address}, ${selectedAddress.city}, ${selectedAddress.postalCode}, ${selectedAddress.state}, ${selectedAddress.country}, ${selectedAddress.phoneno}`}</p>
+                <div className='checkout-address-card'>
+                    <div className="checkout-address-header">
+                        <span className="checkout-address-title"><FiMapPin /> Address Details</span>
+                        <Link href="/AddressPage" className="checkout-change-address-btn">
+                            <FiEdit2 /> Change
+                        </Link>
+                    </div>
+                    <div className="checkout-address-user">
+                        <FiUser className="checkout-address-user-icon" />
+                        <span>{userInfo.username}</span>
+                    </div>
+                    <div className="checkout-address-info">
+                        <span>{selectedAddress.address}, {selectedAddress.city}, {selectedAddress.postalCode}</span><br />
+                        <span>{selectedAddress.state}, {selectedAddress.country}</span><br />
+                        <span>{selectedAddress.phoneno}</span>
+                    </div>
+                </div>
+                <div className="checkout-summary-card">
+                    <div className="checkout-summary-header">Order Summary</div>
+                    <div className="summary-table">
+                        <div className="summary-row">
+                            <span className="summary-label">Cart Total (Excl. of all taxes)</span>
+                            <span className="summary-value">₹{itemsPrice}</span>
+                        </div>
+                        <div className="summary-row">
+                            <span className="summary-label">GST</span>
+                            <span className="summary-value">₹{taxPrice}</span>
+                        </div>
+                        <div className="summary-row">
+                            <span className="summary-label">Shipping Charges</span>
+                            <span className="summary-value">₹{shippingPrice}</span>
+                        </div>
+                        <div className="summary-row total">
+                            <span className="summary-label">Total Amount</span>
+                            <span className="summary-value">₹{totalPrice}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="checkout-cart-summary">
-                <h6>BILLING DETAILS</h6>
-                <div className="billing-details-row">
-                  <h8>Cart Total (Excl. of all taxes)</h8>
-                  <h8>₹{itemsPrice}</h8>
-                </div>
-                <div className="billing-details-row">
-                  <h8>GST</h8>
-                  <h8>₹{taxPrice}</h8>
-                </div>
-                <div className="billing-details-row">
-                  <h8>Shipping Charges</h8>
-                  <h8>₹{shippingPrice}</h8>
-                </div>
-                <div className="billing-details-row">
-                  <h8>Total Amount</h8>
-                  <h8>₹{totalPrice}</h8>
-                </div>
-            </div>
-            </div>
-            <button type="button" className="checkout-page-btn1" onClick={placeOrderHandler} >
-                PLACE ORDER
+            <button type="button" className="checkout-placeorder-btn" onClick={placeOrderHandler}>
+                Place Order
             </button>
-            <div className="cart-page-mobile-bottom">
-                <button type="button" className="cart-page-btn-mobile" onClick={placeOrderHandler} >
-                  PROCEED TO CHECKOUT
-                </button>
-            </div>
         </div>
     )
 }

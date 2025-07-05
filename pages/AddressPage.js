@@ -9,6 +9,7 @@ import {
 import { selectShippingAddress } from '../redux/slices/checkoutSlice';
 import { useGetCartQuery } from '../redux/api/cartApiSlice';
 import Link from 'next/link';
+import { FiMapPin, FiEdit3, FiTrash2, FiCheck, FiPlus, FiUser, FiPhone, FiHome } from 'react-icons/fi';
 
 const AddressPage = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const AddressPage = () => {
   const selectedAddress = useSelector((state) => state.checkout.selectedAddress);
 
   const [editingAddress, setEditingAddress] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const [newAddress, setNewAddress] = useState({
     address: '',
     city: '',
@@ -43,27 +45,39 @@ const AddressPage = () => {
       await createShippingAddress(newAddress);
     }
     setNewAddress({ address: '', city: '', postalCode: '', state: '', country: '', phoneno: '' });
+    setShowForm(false);
   };
 
   const handleEdit = (address) => {
     setEditingAddress(address);
     setNewAddress(address);
+    setShowForm(true);
   };
 
   const handleDelete = async (id) => {
     const addressToDelete = addresses.find(address => address._id === id);
-
     await deleteShippingAddress(id);
 
     if (selectedAddress && selectedAddress._id === id) {
-      dispatch(selectShippingAddress(null)); // Clear from Redux
-      localStorage.removeItem('selectedAddress'); // Clear from local storage
+      dispatch(selectShippingAddress(null));
+      localStorage.removeItem('selectedAddress');
     }
-
   };
 
   const handleSelectAddress = (address) => {
     dispatch(selectShippingAddress(address));
+  };
+
+  const handleAddNew = () => {
+    setEditingAddress(null);
+    setNewAddress({ address: '', city: '', postalCode: '', state: '', country: '', phoneno: '' });
+    setShowForm(true);
+  };
+
+  const handleCancel = () => {
+    setEditingAddress(null);
+    setShowForm(false);
+    setNewAddress({ address: '', city: '', postalCode: '', state: '', country: '', phoneno: '' });
   };
 
   function calcPrices(data) {
@@ -71,15 +85,9 @@ const AddressPage = () => {
     let itemsPriceWithTax = 0;
     let taxPrice = 0;
     items.forEach((item) => {
-      const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
-
-      // Calculate the price before tax for each item
+      const gstRate = item.productId.price > 1000 ? 0.12 : 0.05;
       const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
-
-      // Calculate the GST for each item
       const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
-
-      // Sum up the total price and tax for all items
       itemsPriceWithTax += item.productId.price * item.quantity;
       taxPrice += itemTaxPrice * item.quantity;
     });
@@ -91,108 +99,281 @@ const AddressPage = () => {
     ).toFixed(2);
 
     return {
-      itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
-      shippingPrice: shippingPrice.toFixed(2), // Shipping charges
-      taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
-      totalPrice, // Final price including tax and shipping
+      itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2),
+      shippingPrice: shippingPrice.toFixed(2),
+      taxPrice: taxPrice.toFixed(2),
+      totalPrice,
     };
   }
+
   const { itemsPrice, shippingPrice, taxPrice, totalPrice } = cartData ? calcPrices(cartData) : {};
+
+  if (isLoading) {
+    return (
+      <div className="address-loading-container">
+        <div className="address-loading-spinner"></div>
+        <p>Loading your addresses...</p>
+      </div>
+    );
+  }
+
   return (
     <div className='address-page-main-container'>
       <div className='address-header'>
         <h4 id='address-header-one'>MY CART ------- ADDRESS</h4>
         <h4 id='address-header-two'>  ------- CHECKOUT ------- PAYMENT </h4>
       </div>
+      
       <div className='address-content'>
-        <h3 style={{fontSize: '1.5rem', fontWeight: '700', margin: 'auto', width: 'fit-content', color: '#000000e0', marginBottom: '20px'}}>SELECT ADDRESS</h3>
-        <h3 id='deliver-to-heading'>Deliver To : </h3>
+        <div className="address-header-section">
+          <h3 className="address-page-title">Select Delivery Address</h3>
+          <p className="address-page-subtitle">Choose where you'd like your order delivered</p>
+        </div>
+
         <div className='address-content-body'>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <div className='addresses-container'>
-              {addresses.map((address) => (
-                <div key={address._id} className='address-select-container' style={{ border: selectedAddress?._id === address._id ? '2px solid #2d8700f2' : '' }}>
-                  <p id='address'>{address.address}.<br></br> {address.city} - {address.postalCode}, {address.state}, {address.country}.<br></br> CONTACT : {address.phoneno}</p>
-                  <div className='button-container'>
-                    <button className='address-page-button' onClick={() => handleEdit(address)}>EDIT</button>
-                    <button className='address-page-button' onClick={() => handleDelete(address._id)}>REMOVE</button>
-                    <button className='address-page-button' onClick={() => handleSelectAddress(address)}>SELECT</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          <div className="address-cart-summary-desktop">
-            <Link href={selectedAddress ? "/CheckoutPage" : "#"} onClick={(e) => !selectedAddress && e.preventDefault()}>
-              <button
-                type="button"
-                className="address-page-main-container-btn"
-                disabled={!selectedAddress} // Disable if no address is selected
-              >
-                PROCEED TO CHECKOUT
+          <div className="addresses-section">
+            <div className="addresses-header">
+              <h3 id='deliver-to-heading'>Deliver To:</h3>
+              <button className="add-address-button" onClick={handleAddNew}>
+                <FiPlus />
+                Add New Address
               </button>
-            </Link>
+            </div>
+
+            {isLoading ? (
+              <div className="address-loading-state">
+                <div className="address-loading-spinner"></div>
+                <p>Loading addresses...</p>
+              </div>
+            ) : addresses && addresses.length > 0 ? (
+              <div className='addresses-container'>
+                {addresses.map((address) => (
+                  <div 
+                    key={address._id} 
+                    className={`address-select-container ${selectedAddress?._id === address._id ? 'selected' : ''}`}
+                  >
+                    <div className="address-card-header">
+                      <div className="address-icon">
+                        <FiMapPin />
+                      </div>
+                      <div className="address-selection-indicator">
+                        {selectedAddress?._id === address._id && <FiCheck />}
+                      </div>
+                    </div>
+                    
+                    <div className="address-content">
+                      <p id='address' className="address-text">
+                        {address.address}.<br />
+                        {address.city} - {address.postalCode}, {address.state}, {address.country}.<br />
+                        <span className="contact-info">
+                          <FiPhone className="contact-icon" />
+                          {address.phoneno}
+                        </span>
+                      </p>
+                    </div>
+
+                    <div className='button-container'>
+                      <button 
+                        className='address-page-button edit-button' 
+                        onClick={() => handleEdit(address)}
+                      >
+                        <FiEdit3 />
+                        Edit
+                      </button>
+                      <button 
+                        className='address-page-button remove-button' 
+                        onClick={() => handleDelete(address._id)}
+                      >
+                        <FiTrash2 />
+                        Remove
+                      </button>
+                      <button 
+                        className={`address-page-button select-button ${selectedAddress?._id === address._id ? 'selected' : ''}`}
+                        onClick={() => handleSelectAddress(address)}
+                      >
+                        {selectedAddress?._id === address._id ? <FiCheck /> : <FiMapPin />}
+                        {selectedAddress?._id === address._id ? 'Selected' : 'Select'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="address-empty-state">
+                <div className="address-empty-icon">
+                  <FiMapPin />
+                </div>
+                <h3>No addresses found</h3>
+                <p>Add your first delivery address to continue</p>
+                <button className="add-address-button primary" onClick={handleAddNew}>
+                  <FiPlus />
+                  Add Address
+                </button>
+              </div>
+            )}
+
+            {showForm && (
+              <div className="address-form-container">
+                <form onSubmit={handleSubmit} className='address-form'>
+                  <div className="form-header">
+                    <h2 id='address-form-heading'>
+                      {editingAddress ? 'Edit Address' : 'Add New Address'}
+                    </h2>
+                    <button type="button" className="form-close-button" onClick={handleCancel}>
+                      ×
+                    </button>
+                  </div>
+                  
+                  <div className="form-grid">
+                    <div className="form-group">
+                      <label htmlFor="address">
+                        <FiHome className="input-icon" />
+                        Address
+                      </label>
+                      <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        placeholder="Enter your full address"
+                        value={newAddress.address}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="city">
+                        <FiMapPin className="input-icon" />
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="Enter city"
+                        value={newAddress.city}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="postalCode">
+                        <FiMapPin className="input-icon" />
+                        Postal Code
+                      </label>
+                      <input
+                        type="text"
+                        id="postalCode"
+                        name="postalCode"
+                        placeholder="Enter postal code"
+                        value={newAddress.postalCode}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="state">
+                        <FiMapPin className="input-icon" />
+                        State
+                      </label>
+                      <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        placeholder="Enter state"
+                        value={newAddress.state}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="country">
+                        <FiMapPin className="input-icon" />
+                        Country
+                      </label>
+                      <input
+                        type="text"
+                        id="country"
+                        name="country"
+                        placeholder="Enter country"
+                        value={newAddress.country}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="phoneno">
+                        <FiPhone className="input-icon" />
+                        Contact Number
+                      </label>
+                      <input
+                        type="text"
+                        id="phoneno"
+                        name="phoneno"
+                        placeholder="Enter contact number"
+                        value={newAddress.phoneno}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-actions">
+                    <button type="button" className="form-cancel-button" onClick={handleCancel}>
+                      Cancel
+                    </button>
+                    <button className='address-form-submit' type="submit">
+                      {editingAddress ? 'Update Address' : 'Add Address'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+
+          <div className="address-cart-summary-desktop">
+            <div className="cart-summary-card">
+              <h4>Order Summary</h4>
+              <div className="summary-table">
+                <div className="summary-row">
+                  <span className="summary-label">Items Price:</span>
+                  <span className="summary-value">₹{itemsPrice}</span>
+                </div>
+                <div className="summary-row">
+                  <span className="summary-label">Shipping:</span>
+                  <span className="summary-value">₹{shippingPrice}</span>
+                </div>
+                <div className="summary-row">
+                  <span className="summary-label">Tax:</span>
+                  <span className="summary-value">₹{taxPrice}</span>
+                </div>
+                <div className="summary-row total">
+                  <span className="summary-label">Total:</span>
+                  <span className="summary-value">₹{totalPrice}</span>
+                </div>
+              </div>
+              <Link href={selectedAddress ? "/CheckoutPage" : "#"} onClick={(e) => !selectedAddress && e.preventDefault()}>
+                <button
+                  type="button"
+                  className="address-page-main-container-btn checkout-btn"
+                  disabled={!selectedAddress}
+                >
+                  {selectedAddress ? 'Proceed to Checkout' : 'Select Address to Continue'}
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className='address-form'>
-          <h2 id='address-form-heading'>{editingAddress ? 'Edit Address' : 'Add New Address'}</h2>
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            value={newAddress.address}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={newAddress.city}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="postalCode"
-            placeholder="Postal Code"
-            value={newAddress.postalCode}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="state"
-            placeholder="State"
-            value={newAddress.state}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="country"
-            placeholder="Country"
-            value={newAddress.country}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="phoneno"
-            placeholder="Contact Number"
-            value={newAddress.phoneno}
-            onChange={handleInputChange}
-            required
-          />
-          <button className='address-form-submit' type="submit">{editingAddress ? 'Update Address' : 'Add Address'}</button>
-        </form>
       </div>
+      
       <div className="cart-page-mobile-bottom">
         <Link href={selectedAddress ? "/CheckoutPage" : "#"} onClick={(e) => !selectedAddress && e.preventDefault()}>
-          <button type="button" className="cart-page-btn-mobile" disabled={!selectedAddress} >
-            PROCEED TO CHECKOUT
+          <button type="button" className="cart-page-btn-mobile" disabled={!selectedAddress}>
+            {selectedAddress ? 'Proceed to Checkout' : 'Select Address'}
           </button>
         </Link>
       </div>
