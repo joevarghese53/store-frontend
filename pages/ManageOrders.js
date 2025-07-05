@@ -120,7 +120,7 @@ const ManageOrders = () => {
                             filteredOrders.map((order) => (
                                 <tr key={order._id} className="manage-orders-table-row">
                                     <td>{order._id}</td>
-                                    <td>{order.user.email}</td>
+                                    <td>{order?.user?.email}</td>
                                     <td>{order.paidAt ? new Date(order.paidAt).toDateString() : 'N/A'}</td>
                                     <td>{order.totalPrice}</td>
                                     <td><span className={order.isPaid ? 'manage-orders-status-true' : 'manage-orders-status-false'}>{order.isPaid ? '✓' : '×'}</span></td>
