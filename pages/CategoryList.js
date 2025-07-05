@@ -4,8 +4,7 @@ import { toast } from "react-toastify";
 import CategoryForm from "../components/CategoryForm";
 import Modal from "../components/Modal";
 import { useRouter } from 'next/router';
-
-
+import { FaPlus, FaEdit, FaTrash, FaTags } from "react-icons/fa";
 
 const CategoryList = () => {
   const { data: categories } = useFetchCategoriesQuery();
@@ -87,32 +86,54 @@ const CategoryList = () => {
   };
 
   return (
-    <div className="container md">
-      <div className="content md">
-        <div className="heading">Manage Categories</div>
-        <CategoryForm
-          value={name}
-          setValue={setName}
-          handleSubmit={handleCreateCategory}
-        />
-        <br />
-        <hr />
+    <div className="category-list-main-container">
+      <div className="category-list-card">
+        <div className="category-list-header">
+          <div className="category-list-title">
+            <FaTags className="category-list-icon" />
+            <h1>Manage Categories</h1>
+          </div>
+          <p className="category-list-subtitle">Create, edit, and manage your product categories</p>
+        </div>
 
-        <div className="flex flex-wrap">
-          {categories?.map((category) => (
-            <div key={category._id}>
-              <button
-                className="button"
-                onClick={() => {
-                  setModalVisible(true);
-                  setSelectedCategory(category);
-                  setUpdatingName(category.name);
-                }}
-              >
-                {category.name}
-              </button>
+        <div className="category-create-section">
+          <h3 className="category-create-title">Add New Category</h3>
+          <CategoryForm
+            value={name}
+            setValue={setName}
+            handleSubmit={handleCreateCategory}
+          />
+        </div>
+
+        <div className="category-list-section">
+          <h3 className="category-list-title-section">Existing Categories</h3>
+          <div className="category-grid">
+            {categories?.map((category) => (
+              <div key={category._id} className="category-item">
+                <div className="category-item-content">
+                  <FaTags className="category-item-icon" />
+                  <span className="category-item-name">{category.name}</span>
+                </div>
+                <button
+                  className="category-edit-button"
+                  onClick={() => {
+                    setModalVisible(true);
+                    setSelectedCategory(category);
+                    setUpdatingName(category.name);
+                  }}
+                  title="Edit category"
+                >
+                  <FaEdit />
+                </button>
+              </div>
+            ))}
+          </div>
+          {categories?.length === 0 && (
+            <div className="category-empty-state">
+              <FaTags className="category-empty-icon" />
+              <p>No categories found. Create your first category above.</p>
             </div>
-          ))}
+          )}
         </div>
 
         <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>

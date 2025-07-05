@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaTrash, FaCheck, FaTimes } from "react-icons/fa";
+import { FaTrash, FaCheck, FaTimes, FaUser, FaEnvelope, FaCrown, FaEdit, FaSave, FaUsers } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -24,10 +24,11 @@ const UserList = () => {
   }, [refetch]);
 
   const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure")) {
+    if (window.confirm("Are you sure you want to delete this user?")) {
       try {
         await deleteUser(id);
         refetch();
+        toast.success("User deleted successfully");
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -49,117 +50,176 @@ const UserList = () => {
       });
       setEditableUserId(null);
       refetch();
+      toast.success("User updated successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
 
+  const cancelEdit = () => {
+    setEditableUserId(null);
+    setEditableUserName("");
+    setEditableUserEmail("");
+  };
+
   return (
-    <div className="user-list-container">
-      <h1 className="user-list-heading">Users</h1>
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">{error?.data?.message || error.error}</Message>
-      ) : (
-        <div className="user-list-content">
-          <table className="user-list-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>EMAIL</th>
-                <th>ADMIN</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user._id}</td>
-                  <td>
-                    {editableUserId === user._id ? (
-                      <div className="user-list-edit-item">
-                        <input
-                          type="text"
-                          value={editableUserName}
-                          onChange={(e) => setEditableUserName(e.target.value)}
-                          className="input"
-                        />
-                        <button
-                          onClick={() => updateHandler(user._id)}
-                          className="btn-blue"
-                        >
-                          <FaCheck />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="user-list-edit-item">
-                        {user.username}
-                        <button
-                          onClick={() =>
-                            toggleEdit(user._id, user.username, user.email)
-                          }
-                        >
-                          <MdModeEdit />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                  <td>
-                    {editableUserId === user._id ? (
-                      <div className="user-list-edit-item">
-                        <input
-                          type="text"
-                          value={editableUserEmail}
-                          onChange={(e) => setEditableUserEmail(e.target.value)}
-                          className="input"
-                        />
-                        <button
-                          onClick={() => updateHandler(user._id)}
-                          className="btn-blue"
-                        >
-                          <FaCheck />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="user-list-edit-item">
-                        <a href={`mailto:${user.email}`}>{user.email}</a>
-                        <button
-                          onClick={() =>
-                            toggleEdit(user._id, user.username, user.email)
-                          }
-                        >
-                          <MdModeEdit />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                  <td>
-                    {user.isAdmin ? (
-                      <FaCheck className="text-green-500" />
-                    ) : (
-                      <FaTimes className="text-red-500" />
-                    )}
-                  </td>
-                  <td>
-                    {!user.isAdmin && (
-                      <div className="user-list-edit-item">
-                        <button
-                          onClick={() => deleteHandler(user._id)}
-                          className="btn-red"
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="user-list-main-container">
+      <div className="user-list-card">
+        <div className="user-list-header">
+          <div className="user-list-title">
+            <FaUsers className="user-list-icon" />
+            <h1>User Management</h1>
+          </div>
+          <p className="user-list-subtitle">Manage user accounts, permissions, and information</p>
         </div>
-      )}
+
+        {isLoading ? (
+          <div className="user-list-loading">
+            <Loader />
+          </div>
+        ) : error ? (
+          <Message variant="danger">{error?.data?.message || error.error}</Message>
+        ) : (
+          <div className="user-list-content">
+            <div className="user-stats">
+              <div className="user-stat-item">
+                <span className="user-stat-number">{users?.length || 0}</span>
+                <span className="user-stat-label">Total Users</span>
+              </div>
+              <div className="user-stat-item">
+                <span className="user-stat-number">
+                  {users?.filter(user => user.isAdmin).length || 0}
+                </span>
+                <span className="user-stat-label">Admins</span>
+              </div>
+              <div className="user-stat-item">
+                <span className="user-stat-number">
+                  {users?.filter(user => !user.isAdmin).length || 0}
+                </span>
+                <span className="user-stat-label">Regular Users</span>
+              </div>
+            </div>
+
+            <div className="user-grid">
+              {users?.map((user) => (
+                <div key={user._id} className="user-card">
+                  <div className="user-card-header">
+                    <div className="user-avatar">
+                      <FaUser className="user-avatar-icon" />
+                    </div>
+                    <div className="user-admin-badge">
+                      {user.isAdmin && <FaCrown className="admin-icon" title="Admin" />}
+                    </div>
+                  </div>
+
+                  <div className="user-card-content">
+                    <div className="user-info-section">
+                      <label className="user-info-label">Name</label>
+                      {editableUserId === user._id ? (
+                        <div className="user-edit-input-group">
+                          <input
+                            type="text"
+                            value={editableUserName}
+                            onChange={(e) => setEditableUserName(e.target.value)}
+                            className="user-edit-input"
+                            placeholder="Enter name"
+                          />
+                        </div>
+                      ) : (
+                        <div className="user-info-value">{user.username}</div>
+                      )}
+                    </div>
+
+                    <div className="user-info-section">
+                      <label className="user-info-label">Email</label>
+                      {editableUserId === user._id ? (
+                        <div className="user-edit-input-group">
+                          <input
+                            type="email"
+                            value={editableUserEmail}
+                            onChange={(e) => setEditableUserEmail(e.target.value)}
+                            className="user-edit-input"
+                            placeholder="Enter email"
+                          />
+                        </div>
+                      ) : (
+                        <div className="user-info-value">
+                          <FaEnvelope className="user-email-icon" />
+                          <a href={`mailto:${user.email}`}>{user.email}</a>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="user-info-section">
+                      <label className="user-info-label">Role</label>
+                      <div className="user-role-badge">
+                        {user.isAdmin ? (
+                          <span className="role-admin">
+                            <FaCrown className="role-icon" />
+                            Admin
+                          </span>
+                        ) : (
+                          <span className="role-user">
+                            <FaUser className="role-icon" />
+                            User
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="user-card-actions">
+                      {editableUserId === user._id ? (
+                        <div className="user-edit-actions">
+                          <button
+                            onClick={() => updateHandler(user._id)}
+                            className="user-save-button"
+                            title="Save changes"
+                          >
+                            <FaSave />
+                          </button>
+                          <button
+                            onClick={cancelEdit}
+                            className="user-cancel-button"
+                            title="Cancel"
+                          >
+                            <FaTimes />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="user-actions">
+                          <button
+                            onClick={() => toggleEdit(user._id, user.username, user.email)}
+                            className="user-edit-button"
+                            title="Edit user"
+                          >
+                            <FaEdit />
+                          </button>
+                          {!user.isAdmin && (
+                            <button
+                              onClick={() => deleteHandler(user._id)}
+                              className="user-delete-button"
+                              title="Delete user"
+                            >
+                              <FaTrash />
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {users?.length === 0 && (
+              <div className="user-empty-state">
+                <FaUsers className="user-empty-icon" />
+                <p>No users found.</p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

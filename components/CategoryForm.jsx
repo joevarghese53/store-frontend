@@ -8,25 +8,29 @@ const CategoryForm = ({
   handleDelete,
 }) => {
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit} className="form">
-        <input
-          type="text"
-          className="input"
-          placeholder="Write category name"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+    <div className="category-form-container">
+      <form onSubmit={handleSubmit} className="category-form">
+        <div className="category-input-group">
+          <input
+            type="text"
+            className="category-input"
+            placeholder="Write category name"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            autoComplete="off"
+          />
+        </div>
 
-        <div className="buttons-container">
-          <button className="button-submit">
+        <div className="category-buttons-container">
+          <button type="submit" className="category-submit-button">
             {buttonText}
           </button>
 
           {handleDelete && (
             <button
+              type="button"
               onClick={handleDelete}
-              className="button-delete"
+              className="category-delete-button"
             >
               Delete
             </button>

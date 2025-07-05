@@ -5,22 +5,20 @@ import Loader from "../components/Loader";
 import { useProfileMutation } from "../redux/api/usersApiSlice";
 import { setCredentials } from "../redux/features/auth/authSlice";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import styles from "../styles/Auth.module.css";
 
 const Profile = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(""); // for password validation error
-  const [passwordVisible, setPasswordVisible] = useState(false); // Toggle for password visibility
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); // Toggle for confirm password visibility
+  const [error, setError] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const { userInfo } = useSelector((state) => state.auth);
+  const [updateProfile, { isLoading: loadingUpdateProfile }] = useProfileMutation();
 
-  const [updateProfile, { isLoading: loadingUpdateProfile }] =
-    useProfileMutation();
-
-  // Toggle password visibility
   const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
   const toggleConfirmPasswordVisibility = () => setConfirmPasswordVisible(!confirmPasswordVisible);
 
@@ -35,25 +33,14 @@ const Profile = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     setError("");
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
     if (!passwordPattern.test(password)) {
-      setError((
-        <>
-          Password must include:
-          <br /> - At least one uppercase letter
-          <br /> - One lowercase letter
-          <br /> - One number
-          <br /> - One special character
-          <br /> - Be at least 8 characters long.
-        </>
-      ));
-
+      setError(
+        "Password must include: At least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long."
+      );
       return;
     }
-
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
     } else {
@@ -73,82 +60,83 @@ const Profile = () => {
       }
     }
   };
-  
 
   return (
-    <div className="update-profile-main-container">
-      <h2 className="text-2xl font-semibold mb-4">Update Profile</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={submitHandler}>
-        <div className="update-form-input">
-          <label className="block text-black mb-2">Name</label>
-          <input
-            type="text"
-            placeholder="Enter name"
-            className="form-input p-4 rounded-sm w-full"
-            value={username}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </div>
-
-        <div className="update-form-input">
-          <label className="block text-black mb-2">Email Address</label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            className="form-input p-4 rounded-sm w-full"
-            value={email}
-            readOnly
-          />
-        </div>
-
-        <div className="update-form-input">
-          <label className="block text-black mb-2">Password</label>
-          <input
-            type={passwordVisible ? "text" : "password"}
-            placeholder="Enter new password"
-            className="form-input p-4 rounded-sm w-full"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            type="button"
-            className="update-profile-password-field-eye-icon"
-            onClick={togglePasswordVisibility}
-          >
-            {passwordVisible ? <FaEyeSlash /> : <FaEye />} {/* Toggle icon */}
-          </button>
-        </div>
-
-        <div className="update-form-input">
-          <label className="block text-black mb-2">Confirm Password</label>
-          <input
-            type={confirmPasswordVisible ? "text" : "password"}  // Toggle between text and password
-            placeholder="Confirm new password"
-            className="form-input p-4 rounded-sm w-full"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <button
-            type="button"
-            className="update-profile-password-field-eye-icon"
-            onClick={toggleConfirmPasswordVisibility}
-          >
-            {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />} {/* Toggle icon */}
-          </button>
-        </div>
-
-        <div className="flex justify-between">
+    <div className={styles["auth-bg"]}>
+      <div className={styles["auth-card"]}>
+        <h2 className={styles["auth-title"]}>Update Profile</h2>
+        {error && <div className={styles["auth-error"]}>{error}</div>}
+        <form className={styles["auth-form"]} onSubmit={submitHandler} autoComplete="off">
+          <div>
+            <label className={styles["auth-label"]}>Name</label>
+            <input
+              type="text"
+              placeholder="Enter name"
+              className={styles["auth-input"]}
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
+              autoComplete="off"
+            />
+          </div>
+          <div>
+            <label className={styles["auth-label"]}>Email Address</label>
+            <input
+              type="email"
+              placeholder="Enter email"
+              className={styles["auth-input"]}
+              value={email}
+              readOnly
+            />
+          </div>
+          <div style={{ position: "relative" }}>
+            <label className={styles["auth-label"]}>Password</label>
+            <input
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Enter new password"
+              className={styles["auth-input"]}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="new-password"
+            />
+            <button
+              type="button"
+              className={styles["auth-eye"]}
+              onClick={togglePasswordVisibility}
+              tabIndex={-1}
+              aria-label={passwordVisible ? "Hide password" : "Show password"}
+            >
+              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+          <div style={{ position: "relative" }}>
+            <label className={styles["auth-label"]}>Confirm Password</label>
+            <input
+              type={confirmPasswordVisible ? "text" : "password"}
+              placeholder="Confirm new password"
+              className={styles["auth-input"]}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              autoComplete="new-password"
+            />
+            <button
+              type="button"
+              className={styles["auth-eye"]}
+              onClick={toggleConfirmPasswordVisibility}
+              tabIndex={-1}
+              aria-label={confirmPasswordVisible ? "Hide password" : "Show password"}
+            >
+              {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
           <button
             type="submit"
-            className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600"
+            className={styles["auth-button"]}
+            disabled={loadingUpdateProfile}
           >
-            Update
+            {loadingUpdateProfile ? <Loader /> : "Update"}
           </button>
-
-        </div>
-        {loadingUpdateProfile && <Loader />}
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
