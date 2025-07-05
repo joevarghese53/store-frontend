@@ -233,7 +233,7 @@ const Navbar = () => {
           <Link href="/CartPage">
             <div className="cart-icon">
               <AiOutlineShoppingCart style={{ marginRight: '10px', marginBottom: '4px' }} />
-              <span>Cart</span>
+              <span style={{fontWeight: '600'}}>Cart</span>
               {/* <span className="cart-item-qty">{totalQuantities}</span> */}
             </div>
           </Link>

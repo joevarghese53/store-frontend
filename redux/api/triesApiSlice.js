@@ -8,10 +8,10 @@ export const triesApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Tries"],
     }),
     purchaseTries: builder.mutation({
-      query: ({ quantity }) => ({
-        url: `${TRIES_URL}/purchase`,
+      query: (data) => ({
+        url: `${TRIES_URL}/purchase-tries`,
         method: 'POST',
-        body: { quantity },
+        body: data,
         credentials: 'include',
       }),
       invalidatesTags: ["Tries"],

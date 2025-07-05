@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState} from 'react';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BoxDrawing from '@/components/BoxDrawing';
@@ -20,12 +20,10 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import axios from 'axios';
 import { BASE_URL } from "../redux/constants.js";
 import 'intro.js/minified/introjs.min.css';
 import introJs from 'intro.js';
-import { motion } from "framer-motion"
-import { Sparkles } from "lucide-react"
+
 
 
 
@@ -38,6 +36,7 @@ const Workshop = ({ setActiveTab }) => {
   const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
   const { data: triesData, isLoading: triesLoading, error: triesError } = useGetTriesQuery();
   const [useTries] = useUseTriesMutation();
+  const [purchaseTries] = usePurchaseTriesMutation();
   const [activeColor, setActiveColor] = useState('black');
   const [activeSide, setActiveSide] = useState('front');
   const [textareaValue, setTextareaValue] = useState('');
@@ -59,7 +58,6 @@ const Workshop = ({ setActiveTab }) => {
   const [showGenerateMobile, setShowGenerateMobile] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedOption, setSelectedOption] = useState("basic");
-  const [isTutorialStarted, setIsTutorialStarted] = useState(false);
   const [queuePosition, setQueuePosition] = useState(null);
   const [progress, setProgress] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
@@ -112,9 +110,9 @@ const Workshop = ({ setActiveTab }) => {
   };
 
   const pricing = {
-    "basic": 35,
-    "advanced": 149,
-    "pro": 299
+    "basic": 30,
+    "advanced": 139,
+    "pro": 249
   };
 
   const currentColorSet = colorSets[selectedCategory] || colorSets.regular;
@@ -196,15 +194,10 @@ const Workshop = ({ setActiveTab }) => {
         doneLabel: 'Finish',
       })
       .oncomplete(() => {
-        // Reset the state when the tutorial is complete
-        setIsTutorialStarted(false);
       })
       .onexit(() => {
-        // Reset the state if the user exits the tutorial early
-        setIsTutorialStarted(false);
       })
       .start();
-    setIsTutorialStarted(true); // Mark the tutorial as started
   };
 
   const handlePaymentForTries = async () => {
@@ -218,10 +211,10 @@ const Workshop = ({ setActiveTab }) => {
     console.log('Payment data:', data);
 
     try {
-      const res = await axios.post(`${BASE_URL}/api/tries/initiate-payment`, data);
-      console.log('Payment response:', res.data);
-      if (res.data.success) {
-        window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
+      const res = await purchaseTries(data).unwrap();
+      console.log('Payment response:', res);
+      if (res.success) {
+        window.location.href = res.data.instrumentResponse.redirectInfo.url;
       }
     } catch (error) {
       console.log(error);
