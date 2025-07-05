@@ -24,6 +24,8 @@ import axios from 'axios';
 import { BASE_URL } from "../redux/constants.js";
 import 'intro.js/minified/introjs.min.css';
 import introJs from 'intro.js';
+import { motion } from "framer-motion"
+import { Sparkles } from "lucide-react"
 
 
 
@@ -49,7 +51,6 @@ const Workshop = ({ setActiveTab }) => {
   const [finalUploadFront, setFinalUploadFront] = useState(null);
   const [finalUploadBack, setFinalUploadBack] = useState(null);
   const [animbool, setanimbool] = useState(false);
-  const [showBusyMessage, setShowBusyMessage] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('regular');
   const [category, setCategory] = useState('66adfb21a1698be6bdfa8e59');
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
@@ -59,12 +60,19 @@ const Workshop = ({ setActiveTab }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedOption, setSelectedOption] = useState("basic");
   const [isTutorialStarted, setIsTutorialStarted] = useState(false);
+  const [queuePosition, setQueuePosition] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
   const [boxDrawingValues, setBoxDrawingValues] = useState({
     startX: 0,
     startY: 0,
     endX: 0,
     endY: 0,
   });
+
+  const averageTimePerJobInQueue = 15; // seconds per job
+  const processingDuration = 15; // seconds to move from 70% to 100%
+
   const colorSets = {
     regular: ['white', 'black', 'dark_greenr', 'brown', 'lavender', 'beige', 'grey', 'peach', 'violet', 'hot_pink'],
     oversized: ['white', 'black', 'green', 'brown', 'lavender', 'beige', 'royal_blue', 'baby_pink'],
@@ -108,7 +116,6 @@ const Workshop = ({ setActiveTab }) => {
     "advanced": 149,
     "pro": 299
   };
-
 
   const currentColorSet = colorSets[selectedCategory] || colorSets.regular;
 
@@ -222,6 +229,7 @@ const Workshop = ({ setActiveTab }) => {
   };
 
   const handleSubmit = async () => {
+
     // Check if the prompt (textareaValue) is empty
     if (!textareaValue.trim()) {
       toast.error("Please enter a prompt.");
@@ -234,8 +242,11 @@ const Workshop = ({ setActiveTab }) => {
       return;
     }
 
-    setShowBusyMessage(false);
     setanimbool(true)
+    setProgress(0);
+    setQueuePosition(null);
+    setErrorMessage(null);
+
     const boxDrawingValuesArray = Object.values(boxDrawingValues);
     const formattedBoxDrawingValues = boxDrawingValuesArray.join('_');
     const formattedTextareaValue = textareaValue.replace(/ /g, '_');
@@ -249,30 +260,99 @@ const Workshop = ({ setActiveTab }) => {
       side: activeSide,
       device: deviceType
     };
-    
+
     console.log("Sending Payload:", JSON.stringify(payload));
 
     try {
       const res = await generateImage(payload).unwrap();
-      console.log("Response: ", res);
+      console.log("Initial Response: ", res);
 
-      if (res.success) {
-        await useTries();
-        console.log("Final Image: ", res.finalImage);
-        console.log("Overlay Image: ", res.overlayImage);
-        setImageData(res.finalImage);
-        setDesignData(res.overlayImage);
-      } else {
-        toast.error("Failed to generate image.");
-        console.error('Backend error:', res.message || res.error);
+      if (!res.success || !res.jobId) {
+        toast.error("Failed to queue the job.");
+        return;
       }
-  
+
+      let queueStartTime = Date.now();
+      let totalQueueWaitTime = res.position * averageTimePerJobInQueue * 1000; // in ms
+      const jobId = res.jobId;
+      let attempts = 0;
+      let processingStartTime = null;
+
+      setQueuePosition(res.position);
+
+      const pollJobStatus = async () => {
+        try {
+          const statusRes = await fetch(`${BASE_URL}/api/generate-image/status/${jobId}`, {
+            credentials: 'include'
+          });
+          const statusData = await statusRes.json();
+
+          if (statusData.status === "COMPLETED") {
+            setImageData(statusData.finalImage);
+            setDesignData(statusData.overlayImage);
+            setProgress(100);
+            toast.success("Image generated successfully!");
+            await useTries();
+            setTimeout(() => {
+              setanimbool(false);
+              setQueuePosition(null);
+              setProgress(0);
+              setErrorMessage(null);
+            }, 1000); // after 2s, clean up the UI
+            return true;
+          } else if (statusData.status === "FAILED") {
+            toast.error("Image generation failed: " + statusData.error);
+            setErrorMessage(statusData.error || "Unknown error occurred");
+            setProgress(0);
+            setTimeout(() => {
+              setQueuePosition(null);
+              setanimbool(false);
+              setErrorMessage(null);
+            }, 5000); // after 2s, clean up the UI
+            return true;
+          } else if (statusData.status === "PROCESSING") {
+            setQueuePosition(0);
+            if (!processingStartTime) {
+              processingStartTime = Date.now();
+            }
+            const elapsedProcessing = (Date.now() - processingStartTime) / 1000; // in seconds
+            const progressVal = Math.min((elapsedProcessing / processingDuration) * 100, 99);
+            setProgress(progressVal);
+          } else if (statusData.status === "IN_QUEUE" && statusData.position !== undefined && statusData.position !== null) {
+            const position = statusData.position;
+
+            console.log("Current Queue Position:", position);
+            if (typeof position === "number" && !isNaN(position)) {
+              setQueuePosition(position);
+            }
+          }
+          return false;
+        } catch (err) {
+          console.error("Polling error:", err);
+          setErrorMessage("Connection lost or server unavailable.");
+          setanimbool(false);
+          return true;
+        }
+      };
+
+      const intervalId = setInterval(async () => {
+        attempts++;
+        const done = await pollJobStatus();
+
+        if (done || attempts >= 60) {
+          clearInterval(intervalId);
+          if (!done) {
+            setErrorMessage("Image generation timed out.");
+            toast.error("Image generation timed out.");
+            setanimbool(false);
+          }
+        }
+      }, 3000);
+
     } catch (error) {
-      console.error('Error:', error);
-      toast.error("Something went wrong while generating the image.");
-      setShowBusyMessage(true);
-    } finally {
-      setanimbool(false); // Always reset animation state
+      console.error("Error submitting job:", error);
+      toast.error("Server is down. Please try again later");
+      setanimbool(false);
     }
   };
 
@@ -466,30 +546,6 @@ const Workshop = ({ setActiveTab }) => {
     }
   };
 
-  useEffect(() => {
-    if (animbool) {
-      const timeout = setTimeout(() => {
-        setanimbool(false);
-        setShowBusyMessage(true);  // Show busy message if timeout occurs
-
-        // Hide the busy message after 3 seconds
-        setTimeout(() => {
-          setShowBusyMessage(false);
-        }, 1500);
-
-      }, 90000);  // 1 minute 30 seconds
-      return () => clearTimeout(timeout);
-    }
-  }, [animbool]);
-
-  useEffect(() => {
-    if (showBusyMessage) {
-      const hideMessageTimeout = setTimeout(() => {
-        setShowBusyMessage(false);
-      }, 1500);  // Hide after 3 seconds
-      return () => clearTimeout(hideMessageTimeout);
-    }
-  }, [showBusyMessage]);
 
   return (
     <>
@@ -497,7 +553,7 @@ const Workshop = ({ setActiveTab }) => {
         <>
           <button
             className="workshop-tutorial-button"
-            onClick={startTutorial} 
+            onClick={startTutorial}
             data-step="1"
             data-intro="Start."
           >
@@ -539,13 +595,59 @@ const Workshop = ({ setActiveTab }) => {
                     <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen='mobile' />
                   </div>
                   {animbool && (
-                    <div className="ring-loader">
-                      <RingLoader color='#00fffc' />
-                    </div>
-                  )}
-                  {showBusyMessage && (
-                    <div className="busy-message">
-                      Server is busy, please try again.🙂
+                    <div className="loading-screen-overlay">
+                      <div className="loading-box">
+                        <RingLoader className='ring-loader' color='#00d0ff'></RingLoader>
+                        <h2>Generating your design.</h2>
+                        <p>This may take a moment while we craft your perfect design</p>
+
+                        {typeof queuePosition === "number" && !isNaN(queuePosition) ? (
+                          queuePosition === 0 ? (
+                            <div className="queue-info">
+                              <span>🧙‍♂️<strong>Processing</strong></span>
+                              <span className="eta">~{queuePosition * averageTimePerJobInQueue}s</span>
+                            </div>
+                          ) : (
+                            <div className="queue-info">
+                              <span>📌 Queue Position: <strong>#{queuePosition}</strong></span>
+                              <span className="eta">~{queuePosition * averageTimePerJobInQueue}s</span>
+                            </div>
+                          )
+                        ) : (
+                          <div className="queue-info">
+                            <span>📌 Calculating queue position...</span>
+                          </div>
+                        )}
+
+                        {typeof progress === "number" && !isNaN(progress) ? (
+                          <div className="progress-wrapper">
+                            <div className="progress-bar">
+                              <div
+                                className="progress-fill"
+                                style={{ width: `${Math.max(1, progress)}%` }}
+                              ></div>
+                            </div>
+                            <div className="progress-text">{Math.round(progress)}%</div>
+                          </div>
+                        ) : (
+                          <div className="progress-wrapper">
+                            <div className="progress-bar">
+                              <div className="progress-fill" style={{ width: "1%" }}></div>
+                            </div>
+                            <div className="progress-text">Starting...</div>
+                          </div>
+                        )}
+
+                        <div className="tip-box">
+                          <p><strong>💡Tip:</strong> Higher quality designs take a bit longer but are worth the wait!</p>
+                        </div>
+
+                        {errorMessage && (
+                          <div className="error-message">
+                            ❌ {errorMessage}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
