@@ -272,8 +272,6 @@ const Workshop = ({ setActiveTab }) => {
         return;
       }
 
-      let queueStartTime = Date.now();
-      let totalQueueWaitTime = res.position * averageTimePerJobInQueue * 1000; // in ms
       const jobId = res.jobId;
       let attempts = 0;
       let processingStartTime = null;

@@ -187,6 +187,7 @@ const Navbar = () => {
                 color: 'black',
                 fontWeight: '600',
                 fontSize: '18px',
+                fontFamily: 'Sans-serif',
                 margin: '0 10px'
               }}>
                 {userInfo.username}
