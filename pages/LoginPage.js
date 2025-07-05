@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { useLoginMutation } from "../redux/api/usersApiSlice";
 import { setCredentials } from "../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import styles from '../styles/Auth.module.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 // import axios from 'axios';
 
 const slide1 = '/img/LoginPageImage.jpg';
@@ -18,6 +20,7 @@ const LoginPage = () => {
   const [login] = useLoginMutation();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -46,36 +49,56 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
-        <h2>Please Login</h2>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <label htmlFor='email'>Email</label>
+    <div className={styles['auth-bg']}>
+      <div className={styles['auth-card']}>
+        <h2 className={styles['auth-title']}>Sign In</h2>
+        {error && <div className={styles['auth-error']}>{error}</div>}
+        <form onSubmit={handleSubmit} className={styles['auth-form']} autoComplete="off">
+          <label htmlFor='email' className={styles['auth-label']}>Email</label>
           <input
             id='email'
             type="email"
             value={user.email}
             onChange={handleInputChange}
+            className={styles['auth-input']}
             placeholder="Enter your email"
+            required
           />
-          <label htmlFor='password'>Password</label>
-          <input
-            id='password'
-            type="password"
-            value={user.password}
-            onChange={handleInputChange}
-            placeholder="Enter your password"
-          />
+          <label htmlFor='password' className={styles['auth-label']}>Password</label>
+          <div style={{ position: 'relative' }}>
+            <input
+              id='password'
+              type={isPasswordVisible ? "text" : "password"}
+              value={user.password}
+              onChange={handleInputChange}
+              className={styles['auth-input']}
+              placeholder="Enter your password"
+              required
+            />
+            <button
+              type="button"
+              className={styles['auth-eye']}
+              onClick={() => setIsPasswordVisible((v) => !v)}
+              tabIndex={-1}
+              aria-label="Toggle password visibility"
+            >
+              {isPasswordVisible ? <FaEye /> : <FaEyeSlash />}
+            </button>
+          </div>
           <button
-            className='login-form-btn'
+            className={styles['auth-button']}
             type="submit"
+            disabled={isLoading}
           >
             {isLoading ? "Signing In..." : "Sign In"}
           </button>
         </form>
-        <p>Don't have an account? <Link id='signup' href="/RegisterPage">Sign up</Link></p>
-        <p>Forgot your password? <button id='forgot-password' onClick={handleResetPassword}>Reset password</button></p>
+        <p className={styles['auth-link']}>
+          Don't have an account? <Link href="/RegisterPage">Sign up</Link>
+        </p>
+        <p className={styles['auth-reset']}>
+          <button type="button" onClick={handleResetPassword}>Forgot your password?</button>
+        </p>
       </div>
       {/* <div className="login-image">
         <img src={slide1} alt="Login Page Image" />

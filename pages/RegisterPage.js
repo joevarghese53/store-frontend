@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRegisterMutation } from "../redux/api/usersApiSlice";
+import { useSendEmailOtpMutation } from "../redux/api/emailOtpSlice";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-
-const slide1 = '/img/LoginPageImage.jpg';
+import { useDispatch } from 'react-redux';
+import { setRegisterData } from '../redux/features/auth/registerSlice';
+import styles from '../styles/Auth.module.css';
 
 const RegisterPage = () => {
   const [user, setUser] = useState({
@@ -16,8 +18,10 @@ const RegisterPage = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [passwordVisible, setPasswordVisible] = useState(false);  // Toggle for password visibility
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);  // Toggle for confirm password visibility
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [sendEmailOtp] = useSendEmailOtpMutation();
+  const dispatch = useDispatch();
   const [error, setError] = useState('');
   const router = useRouter();
 
@@ -70,88 +74,115 @@ const RegisterPage = () => {
     }
 
     try {
-      const response = await register({ username: user.name, email: user.email, password: user.password }).unwrap();
 
-      console.log('User registered successfully:', response.data);
+      const userData = {
+        name: user.name,
+        email: user.email,
+        password: user.password
+      };
 
-      router.push('/LoginPage');
-    } catch (error) {
-      console.error('Error registering user:', error);
-      if (error?.data?.message === "User with this email already exists.") {
-        setError("An account with this email already exists. Please try logging in or use a different email.");
-      } else {
-        setError(error?.data?.message || 'An error occurred');
+      // Send email OTP before registration
+      const otpResponse = await sendEmailOtp(userData).unwrap();
+      if (otpResponse.status !== 'success') {
+        throw new Error(otpResponse.message || 'Failed to send OTP');
       }
+      console.log('OTP sent successfully:', otpResponse.data);
+
+      dispatch(setRegisterData(userData));
+
+      router.push('/OtpSubmissionPage');
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+      setError(error.message || 'An error occurred while sending OTP');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="register-container">
-      <div className="register-form">
-        <h2>{isLoading ? "Processing" : "Please Sign Up"}</h2>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <label>Name</label>
+    <div className={styles['auth-bg']}>
+      <div className={styles['auth-card']}>
+        <h2 className={styles['auth-title']}>{isLoading ? "Processing" : "Create your account"}</h2>
+        {error && <div className={styles['auth-error']}>{error}</div>}
+        <form onSubmit={handleSubmit} className={styles['auth-form']} autoComplete="off">
+          <div className={styles['auth-label']} style={{marginBottom: 0}}>
+            <label htmlFor="name">Name</label>
+          </div>
           <input
             id='name'
             type='text'
             value={user.name}
             onChange={handleInputChange}
+            className={styles['auth-input']}
             placeholder="Enter your full name"
+            required
           />
-          <label>Email</label>
+          <div className={styles['auth-label']} style={{marginBottom: 0}}>
+            <label htmlFor="email">Email</label>
+          </div>
           <input
             id='email'
             type="email"
             value={user.email}
             onChange={handleInputChange}
-            placeholder="Enter your valid email"
+            className={styles['auth-input']}
+            placeholder="Enter your email"
+            required
           />
-          <label>Password</label>
-          <div className="password-input-container">
+          <div className={styles['auth-label']} style={{marginBottom: 0}}>
+            <label htmlFor="password">Password</label>
+          </div>
+          <div style={{ position: 'relative' }}>
             <input
               id='password'
               type={passwordVisible ? "text" : "password"}
               value={user.password}
               onChange={handleInputChange}
-              placeholder="Enter new password"
+              className={styles['auth-input']}
+              placeholder="Enter password"
+              required
             />
             <button
               type="button"
-              className="password-field-eye-icon"
-              onClick={togglePasswordVisibility}
+              className={styles['auth-eye']}
+              onClick={() => setPasswordVisible((v) => !v)}
+              tabIndex={-1}
+              aria-label="Toggle password visibility"
             >
-              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              {passwordVisible ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
-          <label>Confirm Password</label>
-          <div className="password-input-container">
+          <div className={styles['auth-label']} style={{marginBottom: 0}}>
+            <label htmlFor="confirmPassword">Confirm Password</label>
+          </div>
+          <div style={{ position: 'relative' }}>
             <input
-              type="password"
               id='confirmPassword'
+              type={confirmPasswordVisible ? "text" : "password"}
               value={user.confirmPassword}
               onChange={handleInputChange}
+              className={styles['auth-input']}
               placeholder="Confirm password"
+              required
             />
             <button
               type="button"
-              className="password-field-eye-icon"
-              onClick={toggleConfirmPasswordVisibility}
+              className={styles['auth-eye']}
+              onClick={() => setConfirmPasswordVisible((v) => !v)}
+              tabIndex={-1}
+              aria-label="Toggle confirm password visibility"
             >
-              {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              {confirmPasswordVisible ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
-          <button type="submit" className='register-form-button' disabled={buttonDisabled}>Sign Up</button>
-          {/* <p>---------------------OR----------------------</p>
-          <button type="button" className="google-signin">Sign Up with Google 
-            <FaGoogle style={{marginLeft: '10px', marginBottom:'2px'}}/>
-          </button> */}
+          <button type="submit" className={styles['auth-button']} disabled={buttonDisabled || isLoading}>
+            {isLoading ? <span>Processing...</span> : 'Sign Up'}
+          </button>
         </form>
-        <p>Already have an account? <Link id='login' href="/LoginPage">Login</Link></p>
+        <p className={styles['auth-link']}>
+          Already have an account? <Link href="/LoginPage">Login</Link>
+        </p>
       </div>
-
     </div>
   );
 };

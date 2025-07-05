@@ -11,3 +11,4 @@ export const WISHLIST_URL = "/api/wishlist";
 export const SHIPPING_ADDRESS_URL = "/api/shipping";
 export const TRIES_URL = "/api/tries";
 export const GENERATE_IMAGE_URL = "/api/generate-image";
+export const EMAIL_OTP_URL = "/api/email-otp";
