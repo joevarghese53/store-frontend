@@ -31,10 +31,13 @@ const CreateProduct = () => {
   const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct] = useCreateProductMutation();
   const { data: categories } = useFetchCategoriesQuery();
+  const [isLoading, setIsLoading] = useState(false);
+
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
 
@@ -78,13 +81,16 @@ const CreateProduct = () => {
         toast.error("Product creation failed. Try again.");
         console.log("Product creation failed. Try again.");
         console.log("Error: ", data.error);
+        setIsLoading(false);
       } else {
         toast.success(`${data.name} is created`);
         router.push('/');
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
       toast.error("Product creation failed. Try again.");
+      setIsLoading(false);
     }
   };
 
@@ -312,6 +318,12 @@ const CreateProduct = () => {
 
         <button id='create-product-submit'
           onClick={handleSubmit}
+          disabled={isLoading}
+          style={{
+            backgroundColor: isLoading ? '#ccc' : '#ed2e30',
+            cursor: isLoading ? 'not-allowed' : 'pointer',
+          }}
+
         >
           Submit
         </button>

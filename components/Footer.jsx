@@ -48,7 +48,7 @@ const Footer = () => {
           <h3>KEEP UP TO DATE</h3>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '50px' }}>
             <input type="email" placeholder="Enter Email Id" style={{ padding: '10px', marginRight: '10px', marginLeft: '0px', border: 'none', borderRadius: '4px', width: '130px' }} />
-            <button style={{ padding: '10px 20px', backgroundColor: '#FFD700', border: 'none', borderRadius: '4px', color: '#000' }}>Subscribe</button>
+            <button style={{ padding: '10px 20px', backgroundColor: '#ff4242', border: 'none', borderRadius: '4px', color: '#000' }}>Subscribe</button>
           </div>
         </div>
       </div>

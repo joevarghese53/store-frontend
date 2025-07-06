@@ -350,7 +350,7 @@ span.text-red {
 .footer-container h1 {
   font-size: 20px;
   font-weight: 700;
-  color: #eeff00;
+  color: #ff4242;
 }
 
 .footer-container-title {
@@ -372,7 +372,7 @@ span.text-red {
 }
 
 .footer-section h3 {
-  color: #eeff00;
+  color: #ff4242;
   font-size: 14px;
   font-family: system-ui;
   margin-bottom: 20px;
@@ -679,22 +679,67 @@ span.text-red {
 
 
 /* ContactUs.js start */
-
 .contact-us-main-container {
-  margin-top: 170px;
-  min-height: 100vh;
+  max-width: 700px;
+  margin: 140px auto 40px auto;
+  padding: 0 16px;
 }
 
 .contact-us-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  background: #181818;
+  border-radius: 1.1rem;
+  box-shadow: 0 4px 24px 0 rgba(40,40,40,0.10);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
 }
 
 .contact-us-container h1 {
-  margin-left: 40%;
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #ff4242;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
 }
 
+.contact-us-container p {
+  color: #e0e0e0;
+  font-size: 1.08rem;
+  margin-bottom: 1.2rem;
+}
+
+.contact-us-email {
+  display: inline-flex;
+  align-items: center;
+  background: #232323;
+  color: #fff;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  font-weight: 600;
+  font-size: 1.08rem;
+  margin: 0.5rem 0 0.5rem 0;
+  box-shadow: 0 1px 4px 0 rgba(40,40,40,0.08);
+}
+
+.contact-us-divider {
+  margin: 2.5rem auto 2rem auto;
+  border: none;
+  border-top: 1.5px solid #333;
+  width: 60%;
+}
+
+@media (max-width: 600px) {
+  .contact-us-main-container {
+    margin: 40px 0 20px 0;
+    padding: 0 4px;
+  }
+  .contact-us-container {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .contact-us-container h1 {
+    font-size: 1.3rem;
+  }
+}
 /* ContactUs.js end */
 
 /* imageslider.jsx start */
@@ -1031,14 +1076,14 @@ span.text-red {
 
 /* Additional link styling */
 .top-right-links a:hover {
-  color: #007bff;
+  color: #ff0000;
 }
 
 
 
 .top-left-links a {
   font-weight: 700;
-  padding: 14px 30px;
+  padding: 6px 30px;
 }
 
 
@@ -1108,23 +1153,39 @@ span.text-red {
   right: 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: none;
+  
 }
 
 .dropdown-menu a,
 .dropdown-menu button {
-  display: block;
-  padding: 10px 20px;
-  color: #000000c9;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1rem;
+  color: #222222cc;
   cursor: pointer;
   width: 100%;
   text-align: left;
   background: none;
   border: none;
+  font-size: 1rem;
+  font-family: monospace;
+  border-radius: 0.4rem;
+  transition: background 0.16s, color 0.16s;
 }
 
 .dropdown-menu a:hover,
 .dropdown-menu button:hover {
-  background-color: #bebebe;
+  background-color: #f7f7f7;
+  color: #f02d34;
+}
+
+
+.dropdown-menu a svg,
+.dropdown-menu button svg {
+  font-size: 1.18rem;
+  color: #222222cc;
+  flex-shrink: 0;
 }
 
 
@@ -1210,15 +1271,13 @@ span.text-red {
     position: fixed;
     top: 0;
     left: 0;
-    width: 56%;
+    width: 50%;
     height: 100%;
     background-color: #fff;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     transform: translateX(-100%);
     transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
   }
 
   .hamburger-menu-mobile.open {
@@ -1248,7 +1307,7 @@ span.text-red {
     height: 50px;
     /* Adjust size as needed */
     border-radius: 50%;
-    background-color: rgb(223 188 0);
+    background-color: rgb(0 0 0 / 87%);
     /* Adjust color as needed */
     color: #fff;
     font-weight: bold;
@@ -1278,14 +1337,13 @@ span.text-red {
   }
 
   .hamburger-menu-icons {
-    font-size: 24px;
-    margin-top: 4px;
+    font-size: 18px;
     margin-left: 20px;
     color: #000000b5;
   }
 
   .hamburger-menu-logout-icon {
-    font-size: 24px;
+    font-size: 18px;
     margin-left: 20px;
     color: red;
   }
@@ -1294,10 +1352,11 @@ span.text-red {
     display: flex;
     padding: 0;
     gap: 15px;
-    color: #000000c9;
+    font-size: 0.9rem;
     cursor: pointer;
     background: none;
     color: red;
+    align-items: center;
   }
 
 
@@ -1306,12 +1365,13 @@ span.text-red {
   .hamburger-menu-link {
     display: flex;
     gap: 15px;
+    align-items: center;
   }
 
   .hamburger-menu-link span {
-    color: #000000d6;
-    font-size: 20px;
-    font-family: math;
+    color: #000000;
+    font-size: 0.9rem;
+    font-weight: 400;
   }
 
 
@@ -1530,7 +1590,7 @@ span.text-red {
   }
 
   .product-card {
-    height: 248px;
+    height: 50vh;
   }
 
   .product-card-reviews {

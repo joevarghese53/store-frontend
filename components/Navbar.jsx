@@ -94,60 +94,67 @@ const Navbar = () => {
         <div className="hamburger-menu" onClick={() => setHamburgerOpen(!hamburgerOpen)}>
           <FaBars size={20} />
         </div>
-     
 
-          {userInfo && (
-            <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`} >
-              <div className="hamburger-menu-header">
-                <div className="hamburger-menu-header-user-info">
-                  <div className="hamburger-menu-header-avatar">
-                    {userInfo.username && userInfo.username.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="hamburger-menu-header-welcome-text">
-                    <span>Hello,</span>
-                    <span className="hamburger-menu-header-user-name">{userInfo.username}</span>
-                  </div>
+        {/* Overlay for hamburger menu */}
+        {hamburgerOpen && (
+          <div
+            className="navbar-overlay"
+            onClick={() => setHamburgerOpen(false)}
+            style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.73)', zIndex: 999 }}
+          />
+        )}
+
+        {userInfo && (
+          <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`} >
+            <div className="hamburger-menu-header">
+              <div className="hamburger-menu-header-user-info">
+                <div className="hamburger-menu-header-avatar">
+                  {userInfo.username && userInfo.username.charAt(0).toUpperCase()}
+                </div>
+                <div className="hamburger-menu-header-welcome-text">
+                  <span>Hello,</span>
+                  <span className="hamburger-menu-header-user-name">{userInfo.username}</span>
                 </div>
               </div>
-              <div className="hamburger-menu-links">
-                <button onClick={() => setHamburgerOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
-                <Link href="/ProfilePage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                  <CgProfile className='hamburger-menu-icons' /> <span>My Profile</span>
-                </Link>
-                <Link href="/MyOrders" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                  <FiBox className='hamburger-menu-icons' /> <span>Orders</span>
-                </Link>
-                <Link href="/WishlistPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                  <IoMdHeartEmpty className='hamburger-menu-icons' /> <span>WishList</span>
-                </Link>
-                <Link href="/CartPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                  <AiOutlineShoppingCart className='hamburger-menu-icons' /> <span>Cart</span>
-                </Link>
-                <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                  <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
-                </Link>
+            </div>
+            <div className="hamburger-menu-links">
+              <button onClick={() => setHamburgerOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
+              <Link href="/ProfilePage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <CgProfile className='hamburger-menu-icons' /> <span>MY PROFILE</span>
+              </Link>
+              <Link href="/MyOrders" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <FiBox className='hamburger-menu-icons' /> <span>ORDERS</span>
+              </Link>
+              <Link href="/WishlistPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <IoMdHeartEmpty className='hamburger-menu-icons' /> <span>WISHLIST</span>
+              </Link>
+              <Link href="/CartPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <AiOutlineShoppingCart className='hamburger-menu-icons' /> <span>CART</span>
+              </Link>
+              <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <RiCustomerService2Line className='hamburger-menu-icons' /> <span>CONTACT US</span>
+              </Link>
 
-                <button onClick={handleLogout} className='logout-btn'>
-                  <IoIosLogOut className='hamburger-menu-logout-icon' />
-                  Logout</button>
-              </div>
+              <button onClick={handleLogout} className='logout-btn'>
+                <IoIosLogOut className='hamburger-menu-logout-icon' />
+                LOGOUT</button>
             </div>
-          ) } 
-          {!userInfo && (
-            <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`}>
-              <div className="hamburger-menu-links">
-                <h1 className="hamburger-menu-heading">Hello, Guest</h1>
-                <button onClick={() => setHamburgerOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
-                <Link href="/LoginPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                  <CgProfile className='hamburger-menu-icons' /> <span>Login</span>
-                </Link>
-                <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
-                  <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
-                </Link>
-              </div>
+          </div>
+        )} 
+        {!userInfo && (
+          <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`}>
+            <div className="hamburger-menu-links">
+              <h1 className="hamburger-menu-heading">Hello, Guest</h1>
+              <button onClick={() => setHamburgerOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
+              <Link href="/LoginPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <CgProfile className='hamburger-menu-icons' /> <span>Login</span>
+              </Link>
+              <Link href="/ContactUs" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
+                <RiCustomerService2Line className='hamburger-menu-icons' /> <span>Contact Us</span>
+              </Link>
             </div>
-          )
-        }
+          </div>
+        )}
 
         <div className="nav-logo-desktop">
           <Link href="/"><img src="/img/logo.png" alt="Logo" /></Link>
@@ -187,7 +194,7 @@ const Navbar = () => {
                 color: 'black',
                 fontWeight: '600',
                 fontSize: '18px',
-                fontFamily: 'Sans-serif',
+                fontFamily: 'monospace',
                 margin: '0 10px'
               }}>
                 {userInfo.username}
@@ -233,7 +240,7 @@ const Navbar = () => {
           <Link href="/CartPage">
             <div className="cart-icon">
               <AiOutlineShoppingCart style={{ marginRight: '10px', marginBottom: '4px' }} />
-              <span style={{fontWeight: '600'}}>Cart</span>
+              <span style={{fontWeight: '600', fontFamily: "monospace"}}>Cart</span>
               {/* <span className="cart-item-qty">{totalQuantities}</span> */}
             </div>
           </Link>
@@ -244,3 +251,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
