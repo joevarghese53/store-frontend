@@ -350,7 +350,7 @@ span.text-red {
 .footer-container h1 {
   font-size: 20px;
   font-weight: 700;
-  color: #ff4242;
+  color: #ffffff;
 }
 
 .footer-container-title {
@@ -372,7 +372,7 @@ span.text-red {
 }
 
 .footer-section h3 {
-  color: #ff4242;
+  color: #ffffff;
   font-size: 14px;
   font-family: system-ui;
   margin-bottom: 20px;
@@ -404,10 +404,6 @@ span.text-red {
     padding-right: 5%;
   }
 
-  .footer-section h3 {
-    font-size: 11px;
-  }
-
   .footer-section a {
     font-size: 10px;
   }
@@ -416,12 +412,12 @@ span.text-red {
 
 @media (max-width: 768px) {
   .footer-row {
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 20px;
   }
 
   .footer-section {
-    width: 100%;
+    width: fit-content;
   }
 
   .footer-section h3 {
