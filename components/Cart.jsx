@@ -6,6 +6,7 @@ import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRe
 import { useRouter } from 'next/router';
 import Loader from './Loader';
 import { toast } from 'react-toastify'
+import ErrorCallback from './ErrorCallBack';
 
 const Cart = () => {
   const { data, isLoading, error, refetch } = useGetCartQuery();
@@ -27,7 +28,7 @@ const Cart = () => {
     let taxPrice = 0;
     items.forEach((item) => {
       const gstRate = item.productId.price > 1000 ? 0.12 : 0.05;
-      const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
+      const itemPriceBeforeTax = item.productId.price / (1 + gstRate);        
       const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
       itemsPriceWithTax += item.productId.price * item.quantity;
       taxPrice += itemTaxPrice * item.quantity;
@@ -67,24 +68,13 @@ const Cart = () => {
 
   if (isLoading) return (
     <div className="cart-page-container">
-      <div className="cart-loading-state">
-        <div className="cart-loading-spinner"></div>
-        <h3>Loading your cart...</h3>
-        <p>Please wait while we fetch your items</p>
-      </div>
+      <Loader />
     </div>
   );
 
   if (error) return (
     <div className="cart-page-container">
-      <div className="cart-error-state">
-        <AiOutlineShopping className="cart-error-icon" />
-        <h3>Something went wrong</h3>
-        <p>Unable to load your cart. Please try again.</p>
-        <button onClick={() => refetch()} className="cart-retry-button">
-          Try Again
-        </button>
-      </div>
+      <ErrorCallback message={error?.data || error.message} onRetry={() => window.location.reload()} />
     </div>
   );
 

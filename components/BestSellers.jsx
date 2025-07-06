@@ -2,6 +2,7 @@ import React from 'react';
 import { useGetTopProductsQuery } from "../redux/api/productApiSlice";
 import Loader from "./Loader";
 import { Product } from '../components';
+import ErrorCallback from './ErrorCallBack';
 
 const BestSellers = ({ gender }) => { // Accept gender as a prop
     // Pass gender as a parameter to the query hook
@@ -18,7 +19,7 @@ const BestSellers = ({ gender }) => { // Accept gender as a prop
     if (error) {
         return (
             <div className="best-sellers">
-                <h1 style={{ height: '200px', paddingTop: '100px' }}>ERROR</h1>
+                <ErrorCallback message={error?.data || error.message} onRetry={() => window.location.reload()} />
             </div>
         );
     }

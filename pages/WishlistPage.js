@@ -4,10 +4,11 @@ import { useAddToCartMutation } from '../redux/api/cartApiSlice'
 import { Product } from '../components';
 import Loader from '../components/Loader';
 import Link from 'next/link';
-import { FaRegFaceSadTear } from "react-icons/fa6";
+import { FaHeartBroken } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import SizeSelectorPopUp from '@/components/SizeSelectorPopUp';
 import { RiDeleteBin6Line } from "react-icons/ri";
+import ErrorCallback from '@/components/ErrorCallBack';
 
 
 const WishlistPage = () => {
@@ -54,32 +55,27 @@ const WishlistPage = () => {
   if (error) {
     return (
       <div className="wishlist-main-container">
-        <div className="empty-cart">
-          <FaRegFaceSadTear size={150} />
-          <h3>Your wishlist is empty</h3>
-          <Link href="/">
-            <button type="button" className="btn">
-              Continue Shopping
-            </button>
-          </Link>
-        </div>
+        <ErrorCallback message={error?.data || error.message} onRetry={() => window.location.reload()} />
       </div>
-    );
+    )
   }
 
   return (
-    <div className="wishlist-main-container">
-      <div className="wishlist-items">
+    <div className="empty-wishlist-main-container">
+      <div className="empty-wishlist-items">
         {data.items.length < 1 && (
-          <div className="empty-cart">
-            <FaRegFaceSadTear size={150} />
-            <h3>Your wishlist is empty</h3>
-            <Link href="/">
-              <button type="button" className="btn">
+          <div className="empty-wishlist-main-container">
+          <div className="empty-wishlist">
+            <FaHeartBroken size={100} className="empty-wishlist-icon" />
+            <h2>Your wishlist is empty</h2>
+            <p>Looks like you haven't added anything yet.</p>
+            <Link href="/" passHref>
+              <button type="button" className="empty-wishlist-btn">
                 Continue Shopping
               </button>
             </Link>
           </div>
+        </div>
         )}
         {data.items.map((product) => (
           <div key={product.productId._id} className='wishlist-item'>

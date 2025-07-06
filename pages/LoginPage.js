@@ -9,7 +9,6 @@ import styles from '../styles/Auth.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 // import axios from 'axios';
 
-const slide1 = '/img/LoginPageImage.jpg';
 
 const LoginPage = () => {
   const [user, setUser] = useState({ email: '', password: '' });

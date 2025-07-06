@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useResetPasswordLinkMutation } from "../redux/api/usersApiSlice";
+import styles from '../styles/Auth.module.css';
+import Link from 'next/link';
 
 const RequestResetPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -17,24 +19,40 @@ const RequestResetPasswordPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
-        <h2>Reset Password</h2>
-        <form onSubmit={handleSubmit}>
+    <div className={styles['auth-bg']}>
+      <div className={styles['auth-card']}>
+        <h2 className={styles['auth-title']}>Reset Password</h2>
+        <form className={styles['auth-form']} onSubmit={handleSubmit}>
           <input
             type="email"
+            className={styles['auth-input']}
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <button type="submit" className="login-form-btn" disabled={isLoading}>
+          <button type="submit" className={styles['auth-button']} disabled={isLoading}>
             {isLoading ? "Processing..." : "Request Password Reset"}
           </button>
         </form>
-        {message && <p className="message">{message}</p>}
-        {isError && <p className="error-message">Error: {error?.data?.message || "Something went wrong."}</p>}
-        {isSuccess && <p className="success-message">Check your email for the reset link.</p>}
+        <p className={styles['auth-link']}>
+          Remembered your password? <Link href="/LoginPage">Sign In</Link>
+        </p>
+        {isError && (
+          <div className={styles['auth-error']}>
+            Error: {error?.data?.message || "Something went wrong."}
+          </div>
+        )}
+        {isSuccess && (
+          <div className={styles['auth-link']}>
+            Check your email for the reset link.
+          </div>
+        )}
+        {message && !isError && !isSuccess && (
+          <div className={styles['auth-link']}>
+            {message}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -70,12 +70,12 @@
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 .auth-input:focus {
-  border: 1.5px solid #667eea;
+  border: 1.5px solid #f02d34;
   background: #fff;
 }
 
 .auth-button {
-  background: #667eea;
+  background: #f02d34;
   color: #fff;
   border: none;
   border-radius: 0.4rem;
@@ -88,10 +88,11 @@
 }
 .auth-button:disabled {
   cursor: not-allowed;
+  background-color: #444;
 }
 .auth-button:hover:not(:disabled),
 .auth-button:focus:not(:disabled) {
-  background: #4f46e5;
+  background: #f02d34;
   transform: translateY(-2px) scale(1.03);
 }
 
@@ -101,7 +102,7 @@
   margin-top: 1.2rem;
 }
 .auth-link a {
-  color: #667eea;
+  color: #f02d34;
   text-decoration: none;
   font-weight: 600;
   margin-left: 0.3rem;
@@ -109,7 +110,7 @@
 }
 .auth-link a:hover {
   text-decoration: underline;
-  color: #4f46e5;
+  color: #f02d34;
 }
 
 .auth-reset {
@@ -119,7 +120,7 @@
 .auth-reset button {
   background: none;
   border: none;
-  color: #667eea;
+  color: #f02d34;
   font-weight: 600;
   cursor: pointer;
   text-decoration: underline;
@@ -128,7 +129,7 @@
   padding: 0;
 }
 .auth-reset button:hover {
-  color: #4f46e5;
+  color: #f02d34;
 }
 
 .auth-eye {
@@ -146,7 +147,7 @@
   transition: color 0.2s, transform 0.2s;
 }
 .auth-eye:hover {
-  color: #667eea;
+  color: #f02d34;
 }
 
 @media (max-width: 600px) {

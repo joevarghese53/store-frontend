@@ -7,6 +7,7 @@ import Loader from '@/components/Loader';
 import { MdOutlineEmail, MdOutlineLocalPhone } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
 import Link from 'next/link';
+import { toast } from 'react-toastify'
 
 const statusMap = {
   delivered: { label: 'Delivered', color: '#28a745' },
@@ -54,7 +55,7 @@ const OrderDetails = () => {
       link.click();
       URL.revokeObjectURL(link.href);
     } catch (error) {
-      console.error("Error downloading image:", error);
+      toast.error("Error downloading image");
     }
   };
 
