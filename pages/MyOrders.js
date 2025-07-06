@@ -123,7 +123,7 @@ const MyOrders = () => {
                                 </div>
                                 <div className='order-card-bottom'>
                                     <Link href={{ pathname: '/OrderDetails', query: { order_id: order._id } }} key={order._id}>
-                                        <button>
+                                        <button className='order-card-bottom-button'>
                                             Track Order
                                         </button>
                                     </Link>
