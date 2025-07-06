@@ -2839,6 +2839,7 @@ span.text-red {
   border-radius: 5px;
   max-width: 600px;
   width: 100%;
+  margin: 6%;
 }
 
 .close-button {
@@ -2879,8 +2880,6 @@ span.text-red {
 }
 
 .size-selection p {
-  font-size: 19px;
-  font-weight: 400;
   margin-bottom: 10px;
 }
 
@@ -3313,43 +3312,6 @@ span.text-red {
 
 /* CreateProduct.js end */
 
-
-/* ReviewTabs.jsx start */
-
-.review-tabs-container {
-  margin-top: 30px;
-}
-
-.review-tabs-heading {
-  display: flex;
-  justify-content: space-around;
-}
-
-.review-tabs-heads {
-  font-size: 20px;
-  font-family: monospace;
-  font-weight: 900;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.review-tabs-head {
-  font-size: 20px;
-  font-family: monospace;
-  font-weight: 900;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.review-submit-btn {
-  background-color: #e40303;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* ReviewTabs.jsx end */
 
 /* AddressPage.js start */
 
@@ -4297,7 +4259,7 @@ span.text-red {
 
 .product-detail-desc-buttons-desktop .add-to-cart {
   padding: 10px 20px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   background-color: #f02d34;
   color: white;
@@ -4317,7 +4279,7 @@ span.text-red {
   color: #f02d34;
   text-align: center;
   border: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transform: scale(1, 1);
@@ -4487,120 +4449,16 @@ span.text-red {
   margin-top: 10px;
 }
 
-@media screen and (max-width:800px) {
+
+
+/* For screens up to 425px wide */
+/* Only apply these styles for mobile screens */
+@media (max-width: 768px) {
 
   .product-detail-container {
     flex-wrap: wrap;
   }
 
-  .product-detail-container .product-detail-image {
-    height: 350px;
-  }
-
-  .small-image {
-    height: 77px;
-  }
-
-  .cart-container {
-    width: 415px;
-    padding: 4px;
-  }
-
-  .cart-heading {
-    margin-top: 35px;
-  }
-
-  .product-container {
-    margin-top: 10px;
-  }
-
-  .product {
-    padding: 20px 5px;
-
-  }
-
-  .product .cart-product-image {
-    width: 25%;
-    height: 25%;
-  }
-
-  .buttons .add-to-cart {
-    width: 150px;
-  }
-
-  .buttons .buy-now {
-    width: 150px;
-  }
-
-  .item-desc .flex {
-    width: 200px;
-  }
-
-  .top {
-    flex-wrap: wrap;
-    gap: 10px;
-
-
-  }
-
-  .item-desc .bottom {
-    margin-top: 30px;
-  }
-
-  .flex h5 {
-    font-size: 16px;
-    color: #324d67;
-  }
-
-  .flex h4 {
-    font-size: 16px;
-    color: #000000c9;
-  }
-
-  .cart-bottom {
-    padding: 30px;
-  }
-
-  .total h3 {
-    font-size: 20px;
-  }
-
-  .track {
-    animation: marquee 10s linear infinite;
-    width: 550%;
-  }
-
-  .success-wrapper,
-  .cancel-wrapper {
-
-    min-height: 69vh;
-  }
-
-  .success,
-  .cancel {
-    width: 370px;
-    margin-top: 100px;
-    padding: 20px;
-  }
-
-  .success {
-    height: 350px;
-  }
-
-  .success h2 {
-    font-size: 17px;
-  }
-
-  .btn-container {
-    width: 300px;
-    margin: auto;
-  }
-}
-
-
-/* For screens up to 425px wide */
-/* Only apply these styles for mobile screens */
-@media (max-width: 650px) {
 
   /* Hide desktop container if present */
   .image-container-desktop {
@@ -4644,12 +4502,11 @@ span.text-red {
 
   .product-detail-desc h1 {
     font-size: 20px;
-    font-weight: 500;
     margin-top: 0px;
   }
 
   #category {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .product-detail-review {
@@ -4662,7 +4519,6 @@ span.text-red {
   }
 
   .product-detail-desc .price {
-    font-weight: 400;
     font-size: 19px;
     margin-top: 11px;
   }
@@ -4690,7 +4546,7 @@ span.text-red {
 
   .product-detail-desc-buttons-mobile .add-to-cart {
     font-size: 15px;
-    width: 160px;
+    width: 40%;
     padding: 10px 20px;
     font-weight: 500;
     background-color: #f02d34;
@@ -4702,7 +4558,7 @@ span.text-red {
   }
 
   .product-detail-desc-buttons-mobile .add-to-wishlist {
-    width: 160px;
+    width: 40%;
     font-size: 14px;
     border-radius: 4px;
     padding: 10px 10px;
@@ -4719,6 +4575,7 @@ span.text-red {
 
   .product-detail-desc {
     width: 100vw;
+    margin: 2% 4%;
   }
 
 }
@@ -4932,7 +4789,11 @@ span.text-red {
   font-family: "Saira";
 }
 
-.loading-box p, span{
+.loading-box p{
+  font-family: "Saira";
+}
+
+.loading-box span{
   font-family: "Saira";
 }
 
@@ -6003,7 +5864,6 @@ body .introjs-skipbutton {
 .category-list-card {
   background: #fff;
   border-radius: 1.1rem;
-  box-shadow: 0px 0px 18px 10px rgba(31, 38, 135, 0.18), 0 1.5px 8px 0 rgba(60, 60, 90, 0.08);
   padding: 2.5rem 2rem 2rem 2rem;
   width: 100%;
   max-width: 800px;
@@ -6293,7 +6153,6 @@ body .introjs-skipbutton {
 .user-list-card {
   background: #fff;
   border-radius: 1.1rem;
-  box-shadow: 0px 0px 18px 10px rgba(31, 38, 135, 0.18), 0 1.5px 8px 0 rgba(60, 60, 90, 0.08);
   padding: 2.5rem 2rem 2rem 2rem;
   width: 100%;
   max-width: 1200px;
@@ -6681,7 +6540,6 @@ body .introjs-skipbutton {
 .profile-card {
   background: #fff;
   border-radius: 1.1rem;
-  box-shadow: 0px 0px 18px 10px rgba(31, 38, 135, 0.18), 0 1.5px 8px 0 rgba(60, 60, 90, 0.08);
   padding: 2.5rem 2rem 2rem 2rem;
   width: 100%;
   max-width: 1200px;

@@ -1,0 +1,365 @@
+.review-tabs-container {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 12px 0 rgba(40, 40, 40, 0.06);
+  padding: 2.5rem 2rem 2.5rem 2rem;
+  color: #111;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.review-tabs-heading-ui {
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1.5px solid #ececec;
+  margin-bottom: 2.5rem;
+  gap: 2.5rem;
+}
+
+.review-tab-ui {
+  flex: none;
+  min-width: 120px;
+  text-align: center;
+  padding: 0.5rem 0;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #000000;
+  background: none;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: color 0.18s;
+  position: relative;
+  margin-bottom: -2px;
+  letter-spacing: 0.01em;
+}
+
+.review-tab-ui.active {
+  color: #000000;
+  font-weight: 600;
+}
+
+.review-tab-ui.active::after {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  margin-top: 0.4rem;
+  width: 60%;
+  height: 2.5px;
+  background: #b71c1c;
+  border-radius: 1.5px;
+}
+
+.review-tab-ui:not(.active):hover {
+  color: #f02d34;
+}
+
+.review-form-ui {
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem 0.5rem 1.5rem 0.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 1px 6px 0 rgba(40, 40, 40, 0.04);
+  border: 1px solid #f3f3f3;
+  color: #111;
+}
+
+.review-form-fields-ui {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group-ui {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label-ui {
+  font-size: 1.04rem;
+  color: #111;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.form-select-ui,
+.form-textarea-ui {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.3rem;
+  border: 1px solid #0000004d;
+  background: #fff;
+  color: #111;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.18s;
+  box-shadow: none;
+}
+
+.form-select-ui:focus,
+.form-textarea-ui:focus {
+  border: 1.2px solid #b71c1c;
+}
+
+.form-textarea-ui {
+  resize: vertical;
+  min-height: 70px;
+  max-height: 200px;
+}
+
+.char-counter-ui {
+  text-align: right;
+  font-size: 0.93rem;
+  color: #bdbdbd;
+  margin-top: 0.1rem;
+}
+
+.review-submit-btn-ui {
+  background: #f02d34;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.05rem;
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.7rem 0;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  box-shadow: none;
+  letter-spacing: 0.01em;
+}
+
+.review-submit-btn-ui:disabled {
+  background: #f3f3f3;
+  color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.review-login-prompt-ui {
+  text-align: center;
+  color: #111;
+  font-size: 1.05rem;
+  background: #fff;
+  border-radius: 0.4rem;
+  padding: 1.1rem 0.5rem;
+  border: 1px solid #f3f3f3;
+}
+
+.login-link-ui {
+  color: #b71c1c;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 0.2rem;
+}
+
+.reviews-list-ui {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  position: relative;
+}
+
+.no-reviews-ui {
+  color: #bdbdbd;
+  text-align: center;
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+
+.review-card-ui {
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 6px 0 rgba(40, 40, 40, 0.04);
+  padding: 1.3rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-width: 100%;
+  border: 1px solid #f3f3f3;
+  color: #111;
+}
+
+.review-card-header-ui {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.review-avatar-ui {
+  width: 2.5rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: #b71c1c;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: none;
+  border: none;
+}
+
+.reviewer-info-ui {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.reviewer-name-ui {
+  color: #111;
+  font-size: 1.01rem;
+  font-weight: 500;
+}
+
+.review-date-ui {
+  color: #bdbdbd;
+  font-size: 0.93rem;
+}
+
+.review-card-body-ui {
+  margin-left: 3.2rem;
+  margin-top: -2rem;
+  padding-top: 0.2rem;
+}
+
+.review-comment-ui {
+  color: #111;
+  font-size: 1.01rem;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+.review-tabs-content-scrollable {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Modal styles */
+.reviews-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.32);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviews-modal {
+  background: #fff;
+  border-radius: 0.7rem;
+  box-shadow: 0 4px 32px 0 rgba(40, 40, 40, 0.18);
+  max-width: 38rem;
+  width: 95vw;
+  max-height: 80vh;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.reviews-modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 1.2rem;
+}
+
+.reviews-modal-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.2rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.18s;
+}
+
+.reviews-modal-close:hover {
+  color: #f02d34;
+}
+
+.reviews-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  overflow-y: auto;
+}
+
+.see-all-reviews-btn {
+  position: sticky;
+  bottom: 0;
+  background: #f02d34;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.01rem;
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.7rem 2.2rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  box-shadow: none;
+  letter-spacing: 0.01em;
+  width: 100%;
+  z-index: 2;
+}
+
+.see-all-reviews-btn:hover {
+  background: #b71c1c;
+}
+
+@media (max-width: 700px) {
+  .review-tabs-container {
+    padding: 1rem 0.2rem 1.5rem 0.2rem;
+    height: 420px;
+  }
+
+  .review-card-ui {
+    padding: 1rem 0.5rem;
+  }
+
+  .review-form-ui {
+    padding: 1rem 0.5rem;
+  }
+
+  .review-tabs-heading-ui {
+    gap: 0.7rem;
+  }
+
+  .review-tab-ui {
+    min-width: 80px;
+    padding: 0.5rem 0.2rem;
+    font-size: 0.98rem;
+  }
+
+  .review-card-body-ui {
+    margin-left: 2.7rem;
+    margin-top: -1.7rem;
+  }
+
+  .reviews-modal {
+    padding: 1.1rem 0.5rem 0.5rem 0.5rem;
+    max-width: 98vw;
+  }
+
+  .see-all-reviews-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.98rem;
+  }
+}

@@ -6,6 +6,7 @@ import { useProfileMutation } from "../redux/api/usersApiSlice";
 import { setCredentials } from "../redux/features/auth/authSlice";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "../styles/Auth.module.css";
+import Link from "next/link";
 
 const Profile = () => {
   const [username, setUserName] = useState("");
@@ -37,7 +38,9 @@ const Profile = () => {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     if (!passwordPattern.test(password)) {
       setError(
-        "Password must include: At least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long."
+        <>
+          Password must include:<br />- At least one uppercase letter<br />- One lowercase letter<br />- One number<br />- One special character<br />- Be at least 8 characters long.
+        </>
       );
       return;
     }
@@ -67,36 +70,43 @@ const Profile = () => {
         <h2 className={styles["auth-title"]}>Update Profile</h2>
         {error && <div className={styles["auth-error"]}>{error}</div>}
         <form className={styles["auth-form"]} onSubmit={submitHandler} autoComplete="off">
-          <div>
-            <label className={styles["auth-label"]}>Name</label>
-            <input
-              type="text"
-              placeholder="Enter name"
-              className={styles["auth-input"]}
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
-              autoComplete="off"
-            />
+          <div className={styles["auth-label"]} style={{marginBottom: 0}}>
+            <label htmlFor="name">Name</label>
           </div>
-          <div>
-            <label className={styles["auth-label"]}>Email Address</label>
-            <input
-              type="email"
-              placeholder="Enter email"
-              className={styles["auth-input"]}
-              value={email}
-              readOnly
-            />
+          <input
+            id="name"
+            type="text"
+            placeholder="Enter name"
+            className={styles["auth-input"]}
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
+            autoComplete="off"
+            required
+          />
+          <div className={styles["auth-label"]} style={{marginBottom: 0}}>
+            <label htmlFor="email">Email Address</label>
+          </div>
+          <input
+            id="email"
+            type="email"
+            placeholder="Enter email"
+            className={styles["auth-input"]}
+            value={email}
+            readOnly
+          />
+          <div className={styles["auth-label"]} style={{marginBottom: 0}}>
+            <label htmlFor="password">Password</label>
           </div>
           <div style={{ position: "relative" }}>
-            <label className={styles["auth-label"]}>Password</label>
             <input
+              id="password"
               type={passwordVisible ? "text" : "password"}
               placeholder="Enter new password"
               className={styles["auth-input"]}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="new-password"
+              required
             />
             <button
               type="button"
@@ -105,18 +115,22 @@ const Profile = () => {
               tabIndex={-1}
               aria-label={passwordVisible ? "Hide password" : "Show password"}
             >
-              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              {passwordVisible ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
+          <div className={styles["auth-label"]} style={{marginBottom: 0}}>
+            <label htmlFor="confirmPassword">Confirm Password</label>
+          </div>
           <div style={{ position: "relative" }}>
-            <label className={styles["auth-label"]}>Confirm Password</label>
             <input
+              id="confirmPassword"
               type={confirmPasswordVisible ? "text" : "password"}
               placeholder="Confirm new password"
               className={styles["auth-input"]}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               autoComplete="new-password"
+              required
             />
             <button
               type="button"
@@ -125,7 +139,7 @@ const Profile = () => {
               tabIndex={-1}
               aria-label={confirmPasswordVisible ? "Hide password" : "Show password"}
             >
-              {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              {confirmPasswordVisible ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
           <button
@@ -136,6 +150,9 @@ const Profile = () => {
             {loadingUpdateProfile ? <Loader /> : "Update"}
           </button>
         </form>
+        <p className={styles['auth-link']}>
+          Want to go back? <Link href="/ProfilePage">Profile</Link>
+        </p>
       </div>
     </div>
   );

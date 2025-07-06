@@ -6,6 +6,7 @@ import styles from '../styles/ProductList.module.css';
 
 const ProductList = () => {
   const { data: products, isLoading, isError } = useAllProductsQuery();
+  console.log("data",products)
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -43,7 +44,7 @@ const ProductList = () => {
                       </p>
                     </div>
                     <p className={styles['admin-product-description']}>
-                      {product.description.substring(0, 160)}...
+                      {product.category.name}
                     </p>
                     <div className={styles['admin-product-footer']}>
                       <Link href={`/admin/product/update/${product._id}`}>

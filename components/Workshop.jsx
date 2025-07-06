@@ -596,7 +596,7 @@ const Workshop = ({ setActiveTab }) => {
                           queuePosition === 0 ? (
                             <div className="queue-info">
                               <span>🧙‍♂️<strong>Processing</strong></span>
-                              <span className="eta">~{queuePosition * averageTimePerJobInQueue}s</span>
+                              <span className="eta">~{averageTimePerJobInQueue}s</span>
                             </div>
                           ) : (
                             <div className="queue-info">
