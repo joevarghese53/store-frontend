@@ -459,10 +459,9 @@ span.text-red {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-}
-
-.faq-container h1 {
-  margin-left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .faq-categories {
@@ -704,7 +703,7 @@ span.text-red {
 
 @media (max-width: 600px) {
   .contact-us-main-container {
-    margin: 40px 0 20px 0;
+    margin: 120px 0 20px 0;
     padding: 0 4px;
   }
 
@@ -714,6 +713,11 @@ span.text-red {
 
   .contact-us-container h1 {
     font-size: 1.3rem;
+  }
+
+  .contact-us-email {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
   }
 }
 
@@ -1508,7 +1512,7 @@ span.text-red {
   display: flex;
   gap: 5px;
   align-items: center;
-  width: 53px;
+  width: fit-content;
   height: 19px;
   padding-left: 7px;
   padding-bottom: 4px;
@@ -1520,6 +1524,7 @@ span.text-red {
 .product-card-reviews p {
   color: #000000;
   margin-top: 19px;
+  margin-right: 10px;
 }
 
 @media (max-width: 1440px) {
@@ -1977,7 +1982,8 @@ span.text-red {
 }
 
 .no-orders-empty-icon {
-  color: #f02d34; /* soft gray */
+  color: #f02d34;
+  /* soft gray */
 }
 
 .no-orders-status-box h2 {
@@ -8266,24 +8272,28 @@ body .introjs-skipbutton {
 }
 
 .empty-wishlist-icon {
-  color: #f02d34; /* gray-400 like tone */
+  color: #f02d34;
+  /* gray-400 like tone */
   margin-bottom: 20px;
 }
 
 .empty-wishlist h2 {
   font-size: 24px;
-  color: #1f2937; /* gray-800 */
+  color: #1f2937;
+  /* gray-800 */
   margin-bottom: 10px;
 }
 
 .empty-wishlist p {
   font-size: 14px;
-  color: #6b7280; /* gray-500 */
+  color: #6b7280;
+  /* gray-500 */
   margin-bottom: 20px;
 }
 
 .empty-wishlist-btn {
-  background-color: #f02d34; /* dark gray/black */
+  background-color: #f02d34;
+  /* dark gray/black */
   color: white;
   border: none;
   padding: 12px 24px;
@@ -8415,7 +8425,8 @@ body .introjs-skipbutton {
 }
 
 .error-icon {
-  color: #ef4444; /* red */
+  color: #ef4444;
+  /* red */
 }
 
 .status-box h2 {
@@ -8455,7 +8466,7 @@ body .introjs-skipbutton {
   justify-content: center;
   align-items: center;
   min-height: 70vh;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   padding: 20px;
 }
 
@@ -8468,8 +8479,10 @@ body .introjs-skipbutton {
 .loader-spinner {
   width: 64px;
   height: 64px;
-  border: 6px solid #e5e7eb; /* light gray */
-  border-top: 6px solid #111827; /* dark gray */
+  border: 6px solid #e5e7eb;
+  /* light gray */
+  border-top: 6px solid #111827;
+  /* dark gray */
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -8477,7 +8490,8 @@ body .introjs-skipbutton {
 .loader-text {
   margin-top: 16px;
   font-size: 14px;
-  color: #6b7280; /* gray */
+  color: #6b7280;
+  /* gray */
   text-align: center;
 }
 

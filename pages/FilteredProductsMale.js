@@ -7,6 +7,7 @@ import { Product } from '../components';
 import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
 import { RiFilter2Line } from "react-icons/ri";
+import ErrorCallback from '@/components/ErrorCallBack';
 
 
 const FilteredProductsMale = () => {
@@ -18,7 +19,7 @@ const FilteredProductsMale = () => {
   const [filterOpen, setFilterOpen] = useState(false);
 
   // Fetch filtered products based on checked categories and price range
-  const filteredProductsQuery = useGetFilteredProductsQuery({ checked, radio: priceRange, gender: 'male' });
+  const { data: filteredProductsQuery, isLoading: isFilteredProductsLoading, isError: isFilteredProductsError, isSuccess: isFilteredProductsSuccess } = useGetFilteredProductsQuery({ checked, radio: priceRange, gender: 'male' });
 
   useEffect(() => {
     // Dispatch categories when fetched
@@ -39,10 +40,10 @@ const FilteredProductsMale = () => {
 
   useEffect(() => {
     // Fetch and set products when checked categories or price range change
-    if (filteredProductsQuery.isSuccess && filteredProductsQuery.data) {
-      dispatch(setProducts(filteredProductsQuery.data));
+    if (isFilteredProductsSuccess && filteredProductsQuery) {
+      dispatch(setProducts(filteredProductsQuery));
     }
-  }, [checked, priceRange, filteredProductsQuery.data, filteredProductsQuery.isSuccess, dispatch]);
+  }, [checked, priceRange, filteredProductsQuery, isFilteredProductsSuccess, dispatch]);
 
   const handleCheck = (value, id) => {
     const updatedChecked = value ? [...checked, id] : checked.filter((c) => c !== id);
@@ -58,12 +59,20 @@ const FilteredProductsMale = () => {
     dispatch(setPriceRange([]));
   };
 
-  if (categoriesQuery.isLoading || filteredProductsQuery.isLoading) {
+  if (categoriesQuery.isLoading || isFilteredProductsLoading) {
     return (
-      <div className="filtered-products-main-container">
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Loader />
       </div>
     )
+  }
+
+  if (categoriesQuery.isError || isFilteredProductsError) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <ErrorCallback message={isFilteredProductsError?.data || isFilteredProductsError.message} onRetry={() => window.location.reload()} />
+      </div>
+    );
   }
 
   return (
