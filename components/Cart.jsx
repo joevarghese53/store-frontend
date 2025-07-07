@@ -28,7 +28,7 @@ const Cart = () => {
     let taxPrice = 0;
     items.forEach((item) => {
       const gstRate = item.productId.price > 1000 ? 0.12 : 0.05;
-      const itemPriceBeforeTax = item.productId.price / (1 + gstRate);        
+      const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
       const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
       itemsPriceWithTax += item.productId.price * item.quantity;
       taxPrice += itemTaxPrice * item.quantity;
@@ -98,46 +98,49 @@ const Cart = () => {
         <>
           <div className='address-header'>
             <h4 id='address-header-one'>MY CART </h4>
-            <h4 id='address-header-two'>  ----- ADDRESS ----- CHECKOUT ----- PAYMENT </h4>
+            <h4 id='address-header-two'>  ------- ADDRESS ------- CHECKOUT ------- PAYMENT </h4>
           </div>
 
           <div className="cart-content-wrapper">
             <div className="cart-items-section">
               <div className="cart-items-header">
-                <h3>Cart Items</h3>
+                <h3>CART ITEMS</h3>
                 <span className="cart-items-count">{data.items.length} {data.items.length === 1 ? 'item' : 'items'}</span>
               </div>
-              
+
               <div className="cart-items-list">
                 {data.items.map((item) => (
                   <div className="cart-item-card" key={`${item.productId._id}-${item.size}`}>
                     <div className="cart-item-image">
                       <img src={item.productId.frontImage} alt={item.productId.name} />
                     </div>
-                    
+
                     <div className="cart-item-details">
                       <div className="cart-item-info">
-                        <h4 className="cart-item-name">{item.productId.name}</h4>
-                        <p className="cart-item-category">{item.productId.category}</p>
+                        <div>
+                          <h4 className="cart-item-name">{item.productId.name}</h4>
+                          <p className="cart-item-category">{item.productId.category}</p>
+                        </div>
                         <div className="cart-item-meta">
                           <span className="cart-item-size">Size: {item.size}</span>
                           <span className="cart-item-quantity">Qty: {item.quantity}</span>
                         </div>
                       </div>
-                      
+
                       <div className="cart-item-price">
+                        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
                         <span className="cart-item-price-amount">₹{item.productId.price}</span>
                         <span className="cart-item-price-note">MRP inclusive of all taxes</span>
+                        </div>
+                        <button
+                          className="cart-item-remove"
+                          onClick={() => handleRemoveFromCart(item.productId._id, item.size)}
+                          title="Remove item"
+                        >
+                          <FiTrash2 />
+                        </button>
                       </div>
                     </div>
-                    
-                    <button 
-                      className="cart-item-remove"
-                      onClick={() => handleRemoveFromCart(item.productId._id, item.size)}
-                      title="Remove item"
-                    >
-                      <FiTrash2 />
-                    </button>
                   </div>
                 ))}
               </div>
@@ -145,8 +148,8 @@ const Cart = () => {
 
             <div className="cart-summary-section" ref={billingRef}>
               <div className="cart-summary-card">
-                <h3 className="cart-summary-title">Order Summary</h3>
-                
+                <h3 className="cart-summary-title">ORDER SUMMARY</h3>
+
                 <div className="cart-summary-details">
                   <div className="cart-summary-row">
                     <span>Subtotal</span>
@@ -160,20 +163,20 @@ const Cart = () => {
                     <span>Shipping</span>
                     <span>{shippingPrice > 0 ? `₹${shippingPrice}` : 'Free'}</span>
                   </div>
-                  
+
                   <div className="cart-summary-divider"></div>
-                  
+
                   <div className="cart-summary-row cart-summary-total">
                     <span>Total Amount</span>
                     <span>₹{totalPrice}</span>
                   </div>
                 </div>
-                
+
                 <Link href="/AddressPage" className="cart-checkout-button">
                   Proceed to Checkout
                   <FiArrowRight />
                 </Link>
-                
+
                 <div className="cart-summary-note">
                   <p>Free shipping on orders above ₹1000</p>
                 </div>

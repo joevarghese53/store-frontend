@@ -22,31 +22,31 @@ const CheckoutPage = () => {
         let itemsPriceWithTax = 0;
         let taxPrice = 0;
         items.forEach((item) => {
-        const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
-    
-        // Calculate the price before tax for each item
-        const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
-    
-        // Calculate the GST for each item
-        const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
-    
-        // Sum up the total price and tax for all items
-        itemsPriceWithTax += item.productId.price * item.quantity;
-        taxPrice += itemTaxPrice * item.quantity;
-      });
-    
-      const shippingPrice = itemsPriceWithTax > 1000 ? 0 : 150;
-      const totalPrice = (
-        parseFloat(itemsPriceWithTax) + 
-        parseFloat(shippingPrice)
-      ).toFixed(2);
-    
-      return {
-        itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
-        shippingPrice: shippingPrice.toFixed(2), // Shipping charges
-        taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
-        totalPrice, // Final price including tax and shipping
-      };
+            const gstRate = item.productId.price > 1000 ? 0.12 : 0.05; // Adjust rates as needed
+
+            // Calculate the price before tax for each item
+            const itemPriceBeforeTax = item.productId.price / (1 + gstRate);
+
+            // Calculate the GST for each item
+            const itemTaxPrice = item.productId.price - itemPriceBeforeTax;
+
+            // Sum up the total price and tax for all items
+            itemsPriceWithTax += item.productId.price * item.quantity;
+            taxPrice += itemTaxPrice * item.quantity;
+        });
+
+        const shippingPrice = itemsPriceWithTax > 1000 ? 0 : 150;
+        const totalPrice = (
+            parseFloat(itemsPriceWithTax) +
+            parseFloat(shippingPrice)
+        ).toFixed(2);
+
+        return {
+            itemsPrice: (itemsPriceWithTax - taxPrice).toFixed(2), // Price before tax
+            shippingPrice: shippingPrice.toFixed(2), // Shipping charges
+            taxPrice: taxPrice.toFixed(2), // Total GST calculated for all items
+            totalPrice, // Final price including tax and shipping
+        };
     }
 
     const { itemsPrice, shippingPrice, taxPrice, totalPrice } = cartData ? calcPrices(cartData) : {};
@@ -61,7 +61,7 @@ const CheckoutPage = () => {
                 qty: item.quantity,
                 frontImage: item.productId.frontImage,
                 backImage: item.productId.backImage,
-                frontDesign: item.productId.frontDesign,    
+                frontDesign: item.productId.frontDesign,
                 backDesign: item.productId.backDesign,
                 frontUpload: item.productId.frontUpload,
                 backUpload: item.productId.backUpload,
@@ -123,7 +123,7 @@ const CheckoutPage = () => {
             <div className='checkout-content'>
                 <div className='checkout-address-card'>
                     <div className="checkout-address-header">
-                        <span className="checkout-address-title"><FiMapPin /> Address Details</span>
+                        <span className="checkout-address-title"><FiMapPin /> ADDRESS DETAILS</span>
                         <Link href="/AddressPage" className="checkout-change-address-btn">
                             <FiEdit2 /> Change
                         </Link>
@@ -139,7 +139,7 @@ const CheckoutPage = () => {
                     </div>
                 </div>
                 <div className="checkout-summary-card">
-                    <div className="checkout-summary-header">Order Summary</div>
+                    <div className="checkout-summary-header">ORDER SUMMARY</div>
                     <div className="summary-table">
                         <div className="summary-row">
                             <span className="summary-label">Cart Total (Excl. of all taxes)</span>
@@ -163,6 +163,11 @@ const CheckoutPage = () => {
             <button type="button" className="checkout-placeorder-btn" onClick={placeOrderHandler}>
                 Place Order
             </button>
+            <div className="cart-mobile-bottom">
+                <button type="button" className="cart-mobile-checkout" onClick={placeOrderHandler}>
+                    Place Order
+                </button>
+            </div>
         </div>
     )
 }

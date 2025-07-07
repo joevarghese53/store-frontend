@@ -9,7 +9,10 @@ import {
 import { selectShippingAddress } from '../redux/slices/checkoutSlice';
 import { useGetCartQuery } from '../redux/api/cartApiSlice';
 import Link from 'next/link';
+import Loader from '../components/Loader';
+import ErrorCallback from '../components/ErrorCallback';
 import { FiMapPin, FiEdit3, FiTrash2, FiCheck, FiPlus, FiUser, FiPhone, FiHome } from 'react-icons/fi';
+import Modal from '../components/Modal';
 
 const AddressPage = () => {
   const dispatch = useDispatch();
@@ -55,7 +58,6 @@ const AddressPage = () => {
   };
 
   const handleDelete = async (id) => {
-    const addressToDelete = addresses.find(address => address._id === id);
     await deleteShippingAddress(id);
 
     if (selectedAddress && selectedAddress._id === id) {
@@ -150,7 +152,7 @@ const AddressPage = () => {
               </button>
             </div>
 
-            {isLoading ? (
+            {isAddressLoading ? (
               <div className="address-loading-state">
                 <div className="address-loading-spinner"></div>
                 <p>Loading addresses...</p>
@@ -223,15 +225,12 @@ const AddressPage = () => {
             )}
 
             {showForm && (
-              <div className="address-form-container">
+              <Modal isOpen={showForm} onClose={handleCancel}>
                 <form onSubmit={handleSubmit} className='address-form'>
                   <div className="form-header">
                     <h2 id='address-form-heading'>
                       {editingAddress ? 'Edit Address' : 'Add New Address'}
                     </h2>
-                    <button type="button" className="form-close-button" onClick={handleCancel}>
-                      ×
-                    </button>
                   </div>
                   
                   <div className="form-grid">
@@ -341,13 +340,13 @@ const AddressPage = () => {
                     </button>
                   </div>
                 </form>
-              </div>
+              </Modal>
             )}
           </div>
 
           <div className="address-cart-summary-desktop">
             <div className="cart-summary-card">
-              <h4>Order Summary</h4>
+              <h4>ORDER SUMMARY</h4>
               <div className="summary-table">
                 <div className="summary-row">
                   <span className="summary-label">Items Price:</span>
@@ -369,7 +368,7 @@ const AddressPage = () => {
               <Link href={selectedAddress ? "/CheckoutPage" : "#"} onClick={(e) => !selectedAddress && e.preventDefault()}>
                 <button
                   type="button"
-                  className="address-page-main-container-btn checkout-btn"
+                  className="address-page-checkout-btn"
                   disabled={!selectedAddress}
                 >
                   {selectedAddress ? 'Proceed to Checkout' : 'Select Address to Continue'}
@@ -380,9 +379,9 @@ const AddressPage = () => {
         </div>
       </div>
       
-      <div className="cart-page-mobile-bottom">
+      <div className="cart-mobile-bottom">
         <Link href={selectedAddress ? "/CheckoutPage" : "#"} onClick={(e) => !selectedAddress && e.preventDefault()}>
-          <button type="button" className="cart-page-btn-mobile" disabled={!selectedAddress}>
+          <button type="button" className="cart-mobile-checkout" disabled={!selectedAddress}>
             {selectedAddress ? 'Proceed to Checkout' : 'Select Address'}
           </button>
         </Link>

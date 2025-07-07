@@ -74,27 +74,40 @@ const PaymentPage = () => {
       </div>
       <div className='payment-page-bottom-container'>
         <div className='payment-page-left-container'>
-          {orderDetails && orderDetails.orderItems ? (
-            orderDetails.orderItems.map((item) => (
-              <div className="payment-item-card" key={item._id}>
-                <div className="payment-item-image">
-                  <img src={item.frontImage} alt={item.name} />
-                </div>
-                <div className="payment-item-desc">
-                  <h5 className="payment-item-name">{item.name}</h5>
-                  <div className="payment-item-meta">
-                    <span className="payment-item-category">{item.category}</span>
-                    <span className="payment-item-size">Size: {item.size}</span>
-                    <span className="payment-item-qty">Qty: {item.quantity}</span>
+          <div className="cart-items-list">
+            {orderDetails && orderDetails.orderItems ? (
+              orderDetails.orderItems.map((item) => (
+                <div className="cart-item-card" key={item._id}>
+                  <div className="cart-item-image">
+                    <img src={item.frontImage} alt={item.name} />
                   </div>
-                  <div className="payment-item-price">₹{item.price}</div>
-                  <div className="payment-item-note">MRP inclusive of all taxes</div>
+                  {/* cart */}
+                  <div className="cart-item-details">
+                    <div className="cart-item-info">
+                      <div>
+                        <h4 className="cart-item-name">{item.name}</h4>
+                        <p className="cart-item-category">{item.category}</p>
+                      </div>
+                      <div className="cart-item-meta">
+                        <span className="cart-item-size">Size: {item.size}</span>
+                        <span className="cart-item-quantity">Qty: {item.quantity}</span>
+                      </div>
+                    </div>
+
+                    <div className="cart-item-price">
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                        <span className="cart-item-price-amount">₹{item.price}</span>
+                        <span className="cart-item-price-note">MRP inclusive of all taxes</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* cart */}
                 </div>
-              </div>
-            ))
-          ) : (
-            <div>No items in the order</div>
-          )}
+              ))
+            ) : (
+              <div>No items in the order</div>
+            )}
+          </div>
         </div>
         <div className='payment-page-right-container'>
           {orderDetails && orderDetails.user && orderDetails.shippingAddress ? (
@@ -148,6 +161,11 @@ const PaymentPage = () => {
             Pay Now
           </button>
         </div>
+      </div>
+      <div className="cart-mobile-bottom">
+        <button type="button" className="cart-mobile-checkout" onClick={handlePayment}>
+          Pay Now
+        </button>
       </div>
     </div>
   );
