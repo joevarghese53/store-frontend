@@ -173,9 +173,10 @@
   }
 
   .auth-bg {
-  background: #ffffff;
-  padding: 0;
-}
+    background: #ffffff;
+    padding-top: 120px;
+    align-items: flex-start;
+  }
 
   .auth-title {
     font-size: 1.3rem;
