@@ -2764,11 +2764,11 @@ span.text-red {
 }
 
 .size-button.selected {
-  background-color: #0070f3;
+  background-color: #f02d34;
   /* Change background color when selected */
   color: #ffffff;
   /* Change text color when selected */
-  border-color: #005bb5;
+  border-color: #f02d34;
   /* Optional: Change border color when selected */
 }
 
