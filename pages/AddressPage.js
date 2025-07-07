@@ -10,7 +10,7 @@ import { selectShippingAddress } from '../redux/slices/checkoutSlice';
 import { useGetCartQuery } from '../redux/api/cartApiSlice';
 import Link from 'next/link';
 import Loader from '../components/Loader';
-import ErrorCallback from '../components/ErrorCallback';
+import ErrorCallBack from '../components/ErrorCallback';
 import { FiMapPin, FiEdit3, FiTrash2, FiCheck, FiPlus, FiUser, FiPhone, FiHome } from 'react-icons/fi';
 import Modal from '../components/Modal';
 
@@ -121,7 +121,7 @@ const AddressPage = () => {
    if (isAddressError || isCartError) {
     return (
       <div className="address-page-main-container">
-        <ErrorCallback 
+        <ErrorCallBack 
           message={isAddressError?.data || isCartError?.data || 'An error occurred while fetching data.'} 
           onRetry={() => window.location.reload()} 
         />

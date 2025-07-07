@@ -6,7 +6,7 @@ import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRe
 import { useRouter } from 'next/router';
 import Loader from './Loader';
 import { toast } from 'react-toastify'
-import ErrorCallback from './ErrorCallBack';
+import ErrorCallBack from './ErrorCallBack';
 
 const Cart = () => {
   const { data, isLoading, error, refetch } = useGetCartQuery();
@@ -74,7 +74,7 @@ const Cart = () => {
 
   if (error) return (
     <div className="cart-page-container">
-      <ErrorCallback message={error?.data || error.message} onRetry={() => window.location.reload()} />
+      <ErrorCallBack message={error?.data || error.message} onRetry={() => window.location.reload()} />
     </div>
   );
 

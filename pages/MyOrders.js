@@ -5,7 +5,7 @@ import Loader from '../components/Loader';
 import { useRouter } from 'next/router';
 import useInitializeUser from '../components/useInitializeUser';
 import { FaBoxOpen } from "react-icons/fa";
-import ErrorCallback from '@/components/ErrorCallBack';
+import ErrorCallBack from '@/components/ErrorCallBack';
 
 const MyOrders = () => {
 
@@ -32,7 +32,7 @@ const MyOrders = () => {
     if (error) {
         return (
             <div className="orders-container">
-                <ErrorCallback message={error?.data || error.message} onRetry={() => window.location.reload()} />
+                <ErrorCallBack message={error?.data || error.message} onRetry={() => window.location.reload()} />
             </div>
         );
     }

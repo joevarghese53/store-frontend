@@ -8,7 +8,7 @@ import { FaHeartBroken } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import SizeSelectorPopUp from '@/components/SizeSelectorPopUp';
 import { RiDeleteBin6Line } from "react-icons/ri";
-import ErrorCallback from '@/components/ErrorCallBack';
+import ErrorCallBack from '@/components/ErrorCallBack';
 
 
 const WishlistPage = () => {
@@ -55,7 +55,7 @@ const WishlistPage = () => {
   if (error) {
     return (
       <div className="wishlist-main-container">
-        <ErrorCallback message={error?.data || error.message} onRetry={() => window.location.reload()} />
+        <ErrorCallBack message={error?.data || error.message} onRetry={() => window.location.reload()} />
       </div>
     )
   }

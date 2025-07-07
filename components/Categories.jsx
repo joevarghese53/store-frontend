@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
 import Loader from "./Loader";
-import ErrorCallback from './ErrorCallBack';
+import ErrorCallBack from './ErrorCallBack';
 
 const Categories = ({ gender }) => {
     const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
@@ -31,7 +31,7 @@ const Categories = ({ gender }) => {
     );
     if (categoriesError) return (
         <div className='categories'>
-           <ErrorCallback message={categoriesError?.data || categoriesError?.message} onRetry={() => window.location.reload()} />
+           <ErrorCallBack message={categoriesError?.data || categoriesError?.message} onRetry={() => window.location.reload()} />
         </div>
     );
     return (

@@ -7,7 +7,7 @@ import { Product } from '../components';
 import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
 import { RiFilter2Line } from "react-icons/ri";
-import ErrorCallback from '@/components/ErrorCallBack';
+import ErrorCallBack from '@/components/ErrorCallBack';
 
 
 const FilteredProductsMale = () => {
@@ -70,7 +70,7 @@ const FilteredProductsMale = () => {
   if (categoriesQuery.isError || isFilteredProductsError) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <ErrorCallback message={isFilteredProductsError?.data || isFilteredProductsError.message} onRetry={() => window.location.reload()} />
+        <ErrorCallBack message={isFilteredProductsError?.data || isFilteredProductsError.message} onRetry={() => window.location.reload()} />
       </div>
     );
   }
