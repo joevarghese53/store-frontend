@@ -13,7 +13,7 @@ import { FiMapPin, FiEdit3, FiTrash2, FiCheck, FiPlus, FiUser, FiPhone, FiHome }
 
 const AddressPage = () => {
   const dispatch = useDispatch();
-  const { data: addresses, isLoading } = useGetUserShippingAddressesQuery();
+  const { data: addresses, isLoading: isAddressLoading, error: isAddressError } = useGetUserShippingAddressesQuery();
   const { data: cartData, isLoading: isCartLoading, error: isCartError } = useGetCartQuery();
   const [createShippingAddress] = useCreateShippingAddressMutation();
   const [updateShippingAddress] = useUpdateShippingAddressMutation();
@@ -108,11 +108,21 @@ const AddressPage = () => {
 
   const { itemsPrice, shippingPrice, taxPrice, totalPrice } = cartData ? calcPrices(cartData) : {};
 
-  if (isLoading) {
+  if (isAddressLoading || isCartLoading) {
     return (
-      <div className="address-loading-container">
-        <div className="address-loading-spinner"></div>
-        <p>Loading your addresses...</p>
+      <div className="address-page-main-container">
+        <Loader />
+      </div>
+    );
+  }
+
+   if (isAddressError || isCartError) {
+    return (
+      <div className="address-page-main-container">
+        <ErrorCallback 
+          message={isAddressError?.data || isCartError?.data || 'An error occurred while fetching data.'} 
+          onRetry={() => window.location.reload()} 
+        />
       </div>
     );
   }

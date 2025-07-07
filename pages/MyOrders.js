@@ -4,6 +4,8 @@ import Link from 'next/link';
 import Loader from '../components/Loader';
 import { useRouter } from 'next/router';
 import useInitializeUser from '../components/useInitializeUser';
+import { FaBoxOpen } from "react-icons/fa";
+import ErrorCallback from '@/components/ErrorCallBack';
 
 const MyOrders = () => {
 
@@ -19,36 +21,29 @@ const MyOrders = () => {
         }
     }, [userInfo, loading, router]);
 
-    if (loading || !userInfo) {
-        return <p>Loading...</p>; // You can replace this with a spinner or any loading indicator
+    if (isLoading) {
+        return (
+            <div className="orders-container">
+                <Loader />
+            </div>
+        );
     }
-    if (isLoading) return (<div className="orders-container">
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '30vh'
-        }}>
-            <Loader />
-        </div>
 
-    </div>);
-    if (error) return (<div className="orders-container">
-        <p style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '30vh'
-        }}>No orders😢</p>
-    </div>);
+    if (error) {
+        return (
+            <div className="orders-container">
+                <ErrorCallback message={error?.data || error.message} onRetry={() => window.location.reload()} />
+            </div>
+        );
+    }
 
     return (
         <div className="orders-container">
-            <h2>My Orders</h2>
             <div className="orders-grid">
                 {orders?.length > 0 ? (
-                    orders.map((order) => (
-                        <>
+                    <>
+                        <h2>My Orders</h2>
+                        {orders.map((order) => (
                             <div key={order._id} className="order-card">
                                 <div className='order-card-top'>
                                     <div className='order-card-top-left'>
@@ -111,7 +106,7 @@ const MyOrders = () => {
                                                     <p style={{ fontWeight: '500', marginBottom: '0' }}>{item.name}</p>
                                                 </div>
                                                 <div className='order-card-middle-right-2'>
-                                                    <p style={{color: 'grey', marginBottom: '30px'}}>{item.category}</p>
+                                                    <p style={{ color: 'grey', marginBottom: '30px' }}>{item.category}</p>
                                                 </div>
                                                 <div className='order-card-middle-right-3'>
                                                     <p>Size : {item.size}</p>
@@ -130,10 +125,17 @@ const MyOrders = () => {
 
                                 </div>
                             </div>
-                        </>
-                    ))
+                        ))}
+                    </>
                 ) : (
-                    <p>No orders found.</p>
+                    <div className="no-orders-centered-container">
+                        <div className="no-orders-status-box empty-box">
+                            <FaBoxOpen size={100} className="no-orders-status-icon no-orders-empty-icon" />
+                            <h2>No Orders Found</h2>
+                            <p>You haven't placed any orders yet. When you do, they’ll show up here.</p>
+                            <a href="/" className="no-orders-primary-btn">Start Shopping</a>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>
