@@ -1575,11 +1575,6 @@ span.text-red {
     height: 40vh;
   }
 
-  .product-card-reviews {
-    width: 36px;
-    height: 14px;
-  }
-
   .product-card-reviews p {
     font-size: 13px;
   }
@@ -1618,13 +1613,6 @@ span.text-red {
     font-family: unset;
   }
 
-  .product-card-reviews {
-    gap: 3px;
-    width: 39px;
-    height: 12px;
-  }
-
-
   .product-card-reviews p {
     font-size: 13px;
   }
@@ -1652,7 +1640,6 @@ span.text-red {
   cursor: pointer;
   overflow: hidden;
   position: relative;
-  border-radius: 7px;
 }
 
 
