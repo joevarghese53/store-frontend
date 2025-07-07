@@ -7,7 +7,6 @@ import { Product } from '../components';
 import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
 import { RiFilter2Line } from "react-icons/ri";
-import { IoClose } from "react-icons/io5";
 
 
 const FilteredProductsMale = () => {
@@ -60,7 +59,11 @@ const FilteredProductsMale = () => {
   };
 
   if (categoriesQuery.isLoading || filteredProductsQuery.isLoading) {
-    return <Loader />;
+    return (
+      <div className="filtered-products-main-container">
+        <Loader />
+      </div>
+    )
   }
 
   return (
