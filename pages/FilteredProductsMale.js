@@ -98,16 +98,22 @@ const FilteredProductsMale = () => {
         <div className="filter-option">
           <h6>PRICE RANGE</h6>
           <div className='filter-option-row'>
-            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
-            <label className='price-input-label'>Rs. 500 - Rs. 600</label>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([699, 899])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([699, 899])
+              ? handlePriceChange([])
+              : handlePriceChange([699, 899])} />
+            <label className='price-input-label'>Rs. 699 - Rs. 899</label>
           </div>
           <div className='filter-option-row'>
-            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
-            <label className='price-input-label'>Rs. 600 - Rs. 700</label>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([899, 1099])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([899, 1099])
+              ? handlePriceChange([])
+              : handlePriceChange([899, 1099])} />
+            <label className='price-input-label'>Rs. 899 - Rs. 1099</label>
           </div>
           <div className='filter-option-row'>
-            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
-            <label className='price-input-label'>Rs. 700 - Rs. 800</label>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([1099, 1299])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([1099, 1299])
+              ? handlePriceChange([])
+              : handlePriceChange([1099, 1299])} />
+            <label className='price-input-label'>Rs. 1099 - Rs. 1299</label>
           </div>
         </div>
         <div className="filter-option">
@@ -157,16 +163,22 @@ const FilteredProductsMale = () => {
           <div className="filter-option">
             <h6>PRICE RANGE</h6>
             <div>
-              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
-              <label className='price-input-label'>Rs. 500 - Rs. 600</label>
+              <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([699, 899])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([699, 899])
+                ? handlePriceChange([])
+                : handlePriceChange([699, 899])} />
+              <label className='price-input-label'>Rs. 699 - Rs. 899</label>
             </div>
             <div>
-              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
-              <label className='price-input-label'>Rs. 600 - Rs. 700</label>
+              <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([899, 1099])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([899, 1099])
+                ? handlePriceChange([])
+                : handlePriceChange([899, 1099])} />
+              <label className='price-input-label'>Rs. 899 - Rs. 1099</label>
             </div>
             <div>
-              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
-              <label className='price-input-label'>Rs. 700 - Rs. 800</label>
+              <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([1099, 1299])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([1099, 1299])
+                ? handlePriceChange([])
+                : handlePriceChange([1099, 1299])} />
+              <label className='price-input-label'>Rs. 1099 - Rs. 1299</label>
             </div>
           </div>
           <div className="filter-option">

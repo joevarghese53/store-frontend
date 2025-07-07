@@ -94,7 +94,7 @@
 }
 
 .otp-button {
-  background: #667eea;
+  background: #f02d34;
   color: #fff;
   border: none;
   border-radius: 0.4rem;
@@ -111,7 +111,6 @@
 }
 .otp-button:hover:not(:disabled),
 .otp-button:focus:not(:disabled) {
-  background: #4f46e5;
   transform: translateY(-2px) scale(1.03);
 }
 
