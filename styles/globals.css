@@ -1444,7 +1444,7 @@ span.text-red {
 
 .pincode-input-container button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #f02d34;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -2760,7 +2760,7 @@ span.text-red {
 }
 
 .size-button:hover {
-  border-color: #0070f3;
+  border-color: #f02d34;
 }
 
 .size-button.selected {
