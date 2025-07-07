@@ -143,8 +143,18 @@ const Navbar = () => {
         )} 
         {!userInfo && (
           <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`}>
+            <div className="hamburger-menu-header">
+              <div className="hamburger-menu-header-user-info">
+                <div className="hamburger-menu-header-avatar">
+                  G
+                </div>
+                <div className="hamburger-menu-header-welcome-text">
+                  <span>Hello,</span>
+                  <span className="hamburger-menu-header-user-name">Guest</span>
+                </div>
+              </div>
+            </div>
             <div className="hamburger-menu-links">
-              <h1 className="hamburger-menu-heading">Hello, Guest</h1>
               <button onClick={() => setHamburgerOpen(false)} className='hamburger-menu-links-close-btn'><IoClose /></button>
               <Link href="/LoginPage" className='hamburger-menu-link' onClick={() => setHamburgerOpen(false)}>
                 <CgProfile className='hamburger-menu-icons' /> <span>Login</span>
