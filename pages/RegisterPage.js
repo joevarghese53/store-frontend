@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useRegisterMutation } from "../redux/api/usersApiSlice";
 import { useSendEmailOtpMutation } from "../redux/api/emailOtpSlice";
+import { useCheckUserExistsMutation } from "../redux/api/usersApiSlice";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { setRegisterData } from '../redux/features/auth/registerSlice';
@@ -17,32 +17,19 @@ const RegisterPage = () => {
     confirmPassword: ''
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [sendEmailOtp] = useSendEmailOtpMutation();
+  const [checkUserExists] = useCheckUserExistsMutation();
   const dispatch = useDispatch();
   const [error, setError] = useState('');
   const router = useRouter();
-
-  const [register] = useRegisterMutation();
-
-  // Toggle password visibility
-  const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
-  const toggleConfirmPasswordVisibility = () => setConfirmPasswordVisible(!confirmPasswordVisible);
-
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setUser({ ...user, [id]: value });
 
   };
-
-  useEffect(() => {
-    const allFieldsFilled = Object.values(user).every(field => field !== '');
-    const passwordsMatch = user.password === user.confirmPassword;
-    setButtonDisabled(!(allFieldsFilled && passwordsMatch));
-  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,6 +68,16 @@ const RegisterPage = () => {
         password: user.password
       };
 
+      console.log("checking user exists")
+
+      const userExistsResponse = await checkUserExists({ email: user.email }).unwrap();
+      console.log("User existence", userExistsResponse)
+      if (userExistsResponse.exists) {
+        setError("User with this email already exists. Please login or use a different email.");
+        setIsLoading(false);
+        return;
+      }
+
       // Send email OTP before registration
       const otpResponse = await sendEmailOtp(userData).unwrap();
       if (otpResponse.status !== 'success') {
@@ -105,7 +102,7 @@ const RegisterPage = () => {
         <h2 className={styles['auth-title']}>{isLoading ? "Processing" : "Create your account"}</h2>
         {error && <div className={styles['auth-error']}>{error}</div>}
         <form onSubmit={handleSubmit} className={styles['auth-form']} autoComplete="off">
-          <div className={styles['auth-label']} style={{marginBottom: 0}}>
+          <div className={styles['auth-label']} style={{ marginBottom: 0 }}>
             <label htmlFor="name">Name</label>
           </div>
           <input
@@ -117,7 +114,7 @@ const RegisterPage = () => {
             placeholder="Enter your full name"
             required
           />
-          <div className={styles['auth-label']} style={{marginBottom: 0}}>
+          <div className={styles['auth-label']} style={{ marginBottom: 0 }}>
             <label htmlFor="email">Email</label>
           </div>
           <input
@@ -129,7 +126,7 @@ const RegisterPage = () => {
             placeholder="Enter your email"
             required
           />
-          <div className={styles['auth-label']} style={{marginBottom: 0}}>
+          <div className={styles['auth-label']} style={{ marginBottom: 0 }}>
             <label htmlFor="password">Password</label>
           </div>
           <div style={{ position: 'relative' }}>
@@ -152,7 +149,7 @@ const RegisterPage = () => {
               {passwordVisible ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
-          <div className={styles['auth-label']} style={{marginBottom: 0}}>
+          <div className={styles['auth-label']} style={{ marginBottom: 0 }}>
             <label htmlFor="confirmPassword">Confirm Password</label>
           </div>
           <div style={{ position: 'relative' }}>
@@ -175,7 +172,7 @@ const RegisterPage = () => {
               {confirmPasswordVisible ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
-          <button type="submit" className={styles['auth-button']} disabled={buttonDisabled || isLoading}>
+          <button type="submit" className={styles['auth-button']} disabled={isLoading}>
             {isLoading ? <span>Processing...</span> : 'Sign Up'}
           </button>
         </form>

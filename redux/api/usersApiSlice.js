@@ -72,6 +72,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    checkUserExists: builder.mutation({
+      query: (email) => ({
+        url: `${USERS_URL}/checkUserExists`,
+        method: "POST",
+        body: email,
+      }),
+      providesTags: ["User"],
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -86,4 +95,5 @@ export const {
   useGetUserDetailsQuery,
   useResetPasswordLinkMutation,
   useResetPasswordMutation,
+  useCheckUserExistsMutation
 } = userApiSlice;

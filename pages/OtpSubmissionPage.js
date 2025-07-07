@@ -95,6 +95,9 @@ const OtpSubmissionPage = () => {
             }
 
             const registerRes = await register({ username: name, email, password }).unwrap();
+            if (registerRes.status !== "success") {
+                throw new Error(registerRes.message || "Registration failed");
+            }
             dispatch(clearRegisterData());
             router.push('/LoginPage');
         } catch (err) {
