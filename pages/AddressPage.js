@@ -10,7 +10,7 @@ import { selectShippingAddress } from '../redux/slices/checkoutSlice';
 import { useGetCartQuery } from '../redux/api/cartApiSlice';
 import Link from 'next/link';
 import Loader from '../components/Loader';
-import ErrorCallBack from '../components/ErrorCallback';
+import ErrorCallBack from '../components/ErrorCallBack';
 import { FiMapPin, FiEdit3, FiTrash2, FiCheck, FiPlus, FiUser, FiPhone, FiHome } from 'react-icons/fi';
 import Modal from '../components/Modal';
 
