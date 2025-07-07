@@ -172,6 +172,11 @@
     box-shadow: none;
   }
 
+  .auth-bg {
+  background: #ffffff;
+  padding: 0;
+}
+
   .auth-title {
     font-size: 1.3rem;
   }
