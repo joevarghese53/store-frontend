@@ -61,8 +61,8 @@ const WishlistPage = () => {
   }
 
   return (
-    <div className="empty-wishlist-main-container">
-      <div className="empty-wishlist-items">
+    <div className="wishlist-main-container">
+      <div className="wishlist-items">
         {data.items.length < 1 && (
           <div className="empty-wishlist-main-container">
           <div className="empty-wishlist">
