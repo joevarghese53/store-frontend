@@ -95,7 +95,7 @@ const OtpSubmissionPage = () => {
             }
 
             const registerRes = await register({ username: name, email, password }).unwrap();
-            if (registerRes.status !== "success") {
+            if (registerRes.success !== true) {
                 throw new Error(registerRes.message || "Registration failed");
             }
             dispatch(clearRegisterData());
