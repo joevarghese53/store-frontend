@@ -40,7 +40,7 @@ const RequestResetPasswordPage = () => {
         </p>
         {isError && (
           <div className={styles['auth-error']}>
-            Error: {error?.data?.message || "Something went wrong."}
+            Error: {error?.data?.message?.message || "Something went wrong."}
           </div>
         )}
         {isSuccess && (

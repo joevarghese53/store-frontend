@@ -32,7 +32,7 @@ const MyOrders = () => {
     if (error) {
         return (
             <div className="orders-container">
-                <ErrorCallBack message={error?.data || error.message} onRetry={() => window.location.reload()} />
+                <ErrorCallBack message={error?.data?.message || error.message} onRetry={() => window.location.reload()} />
             </div>
         );
     }

@@ -70,7 +70,7 @@ const FilteredProductsMale = () => {
   if (categoriesQuery.isError || isFilteredProductsError) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <ErrorCallBack message={isFilteredProductsError?.data || isFilteredProductsError.message} onRetry={() => window.location.reload()} />
+        <ErrorCallBack message={categoriesQuery.isError?.data?.message || isFilteredProductsError?.data?.message} onRetry={() => window.location.reload()} />
       </div>
     );
   }

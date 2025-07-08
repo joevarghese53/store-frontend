@@ -55,7 +55,7 @@ const DynamicProductPage = () => {
       console.log("Product added to cart");
     } catch (error) {
       console.log("Error adding product to cart: ", error);
-      toast.error(error?.data || error.message);
+      toast.error(error?.data?.message || error.message);
     }
   };
 

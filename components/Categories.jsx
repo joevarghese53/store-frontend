@@ -31,7 +31,7 @@ const Categories = ({ gender }) => {
     );
     if (categoriesError) return (
         <div className='categories'>
-           <ErrorCallBack message={categoriesError?.data || categoriesError?.message} onRetry={() => window.location.reload()} />
+           <ErrorCallBack message={categoriesError?.data?.message || categoriesError?.message} onRetry={() => window.location.reload()} />
         </div>
     );
     return (

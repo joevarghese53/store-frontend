@@ -26,7 +26,7 @@ const ManageOrders = () => {
             await confirmOrder(orderId).unwrap();
             toast.success("Order confirmed successfully");
         } catch (error) {
-            toast.error(error?.data || error.message);
+            toast.error(error?.data?.message || error.message);
         }
     };
 
@@ -35,7 +35,7 @@ const ManageOrders = () => {
             await shippedOrder(orderId).unwrap();
             toast.success("Item Shipped successfully");
         } catch (error) {
-            toast.error(error?.data || error.message);
+            toast.error(error?.data?.message || error.message);
         }
     };
 
@@ -44,7 +44,7 @@ const ManageOrders = () => {
             await outForDeliveryOrder(orderId).unwrap();
             toast.success("Item out for delivery successfully");
         } catch (error) {
-            toast.error(error?.data || error.message);
+            toast.error(error?.data?.message || error.message);
         }
     };
 
@@ -53,7 +53,7 @@ const ManageOrders = () => {
             await deliveredOrder(orderId).unwrap();
             toast.success("Item delivered successfully");
         } catch (error) {
-            toast.error(error?.data || error.message);
+            toast.error(error?.data?.message || error.message);
         }
     };
 

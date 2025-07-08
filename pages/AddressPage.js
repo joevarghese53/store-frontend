@@ -122,7 +122,7 @@ const AddressPage = () => {
     return (
       <div className="address-page-main-container">
         <ErrorCallBack 
-          message={isAddressError?.data || isCartError?.data || 'An error occurred while fetching data.'} 
+          message={isAddressError?.data?.message || isCartError?.data?.message || 'An error occurred while fetching data.'} 
           onRetry={() => window.location.reload()} 
         />
       </div>

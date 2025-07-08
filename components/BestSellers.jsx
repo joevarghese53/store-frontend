@@ -19,7 +19,7 @@ const BestSellers = ({ gender }) => { // Accept gender as a prop
     if (error) {
         return (
             <div className="best-sellers">
-                <ErrorCallBack message={error?.data || error.message} onRetry={() => window.location.reload()} />
+                <ErrorCallBack message={error?.data?.message || error.message} onRetry={() => window.location.reload()} />
             </div>
         );
     }

@@ -27,7 +27,7 @@ const Cproducts = () => {
       await addToCart({ productId: product_id, quantity: 1, productType: 'cProduct', size: size }).unwrap();
       toast.success(`Item Added to cart successfully.`);
     } catch (error) {
-      toast.error(error?.data || error.message);
+      toast.error(error?.data?.message || error.message);
     }
   };
 
@@ -40,7 +40,7 @@ const Cproducts = () => {
         toast.success(`Custom Product deleted successfully`);
       }
     } catch (error) {
-      toast.error(error?.data || error.message);
+      toast.error(error?.data?.message || error.message);
     }
   }
 

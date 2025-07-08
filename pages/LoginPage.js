@@ -41,8 +41,8 @@ const LoginPage = () => {
       dispatch(setCredentials({ ...response }));
       router.push('/');
     } catch (error) {
-      console.error('Error logging in user:', error.data.message);
-      setError(error.data.message);
+      console.error('Error logging in user:', error?.data?.message);
+      setError(error?.data?.message);
       setIsLoading(false);
     }
   };

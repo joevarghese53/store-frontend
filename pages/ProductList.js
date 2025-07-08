@@ -23,7 +23,7 @@ const ProductList = () => {
   if (isError) {
     return (
       <div className="wishlist-main-container">
-        <ErrorCallBack message={isError?.data || isError.message} onRetry={() => window.location.reload()} />
+        <ErrorCallBack message={isError?.data?.message || isError.message} onRetry={() => window.location.reload()} />
       </div>
     );
   }

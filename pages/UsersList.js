@@ -78,7 +78,7 @@ const UserList = () => {
             <Loader />
           </div>
         ) : error ? (
-          <Message variant="danger">{error?.data?.message || error.error}</Message>
+          <Message variant="danger">{error?.data?.message?.message || error.error}</Message>
         ) : (
           <div className="user-list-content">
             <div className="user-stats">

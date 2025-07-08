@@ -73,7 +73,7 @@ const ProductDetails = () => {
       refetch();
       toast.success("Review created successfully");
     } catch (error) {
-      toast.error(error?.data || error.message);
+      toast.error(error?.data?.message || error.message);
     }
   };
 
@@ -87,7 +87,7 @@ const ProductDetails = () => {
       await addToWishlist({ productId }).unwrap();
       toast.success(`Item added to wishlist`);
     } catch (error) {
-      toast.error(error?.data || error.message);
+      toast.error(error?.data?.message || error.message);
     }
   }
 
@@ -96,7 +96,7 @@ const ProductDetails = () => {
       await removeFromWishlist(productId).unwrap();
       toast.success(`Item removed from wishlist`);
     } catch (error) {
-      toast.error(error?.data || error.message);
+      toast.error(error?.data?.message || error.message);
     }
   }
 
@@ -118,7 +118,7 @@ const ProductDetails = () => {
       console.log("Product added to cart");
     } catch (error) {
       console.log("Error adding product to cart: ", error);
-      const errorMessage = error.data?.message || `Error: ${error.status}`;
+      const errorMessage = error?.data?.message || `Error: ${error.status}`;
       toast.error(errorMessage);
     }
   };

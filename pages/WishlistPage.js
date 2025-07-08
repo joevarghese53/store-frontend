@@ -26,7 +26,7 @@ const WishlistPage = () => {
       toast.success(`Item Moved to cart successfully.`);
       await removeFromWishlist(product_id).unwrap();
     } catch (error) {
-      toast.error(error?.data || error.message);
+      toast.error(error?.data?.message || error.message);
     }
   };
 
@@ -35,7 +35,7 @@ const WishlistPage = () => {
       await removeFromWishlist(product_id).unwrap();
       toast.success(`Item removed from wishlist`);
     } catch (error) {
-      toast.error(error?.data || error.message);
+      toast.error(error?.data?.message || error.message);
     }
   }
 
@@ -52,10 +52,27 @@ const WishlistPage = () => {
     );
   }
 
+  if (error && error?.data?.message === 'Wishlist not found') {
+    return (
+      <div className="empty-wishlist-main-container">
+        <div className="empty-wishlist">
+          <FaHeartBroken size={100} className="empty-wishlist-icon" />
+          <h2>Your wishlist is empty</h2>
+          <p>Looks like you haven't added anything yet.</p>
+          <Link href="/" passHref>
+            <button type="button" className="empty-wishlist-btn">
+              Continue Shopping
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   if (error) {
     return (
       <div className="wishlist-main-container">
-        <ErrorCallBack message={error?.data || error.message} onRetry={() => window.location.reload()} />
+        <ErrorCallBack message={error?.data?.message || error.message} onRetry={() => window.location.reload()} />
       </div>
     );
   }
@@ -65,17 +82,17 @@ const WishlistPage = () => {
       <div className="wishlist-items">
         {data.items.length < 1 && (
           <div className="empty-wishlist-main-container">
-          <div className="empty-wishlist">
-            <FaHeartBroken size={100} className="empty-wishlist-icon" />
-            <h2>Your wishlist is empty</h2>
-            <p>Looks like you haven't added anything yet.</p>
-            <Link href="/" passHref>
-              <button type="button" className="empty-wishlist-btn">
-                Continue Shopping
-              </button>
-            </Link>
+            <div className="empty-wishlist">
+              <FaHeartBroken size={100} className="empty-wishlist-icon" />
+              <h2>Your wishlist is empty</h2>
+              <p>Looks like you haven't added anything yet.</p>
+              <Link href="/" passHref>
+                <button type="button" className="empty-wishlist-btn">
+                  Continue Shopping
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
         )}
         {data.items.map((product) => (
           <div key={product.productId._id} className='wishlist-item'>

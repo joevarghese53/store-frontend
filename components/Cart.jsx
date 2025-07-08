@@ -72,9 +72,27 @@ const Cart = () => {
     </div>
   );
 
+  if (error && error?.data?.message === 'Cart not found') {
+    return (
+      <div className="cart-page-container">
+        <div className="cart-empty-state">
+          <div className="cart-empty-card">
+            <AiOutlineShopping className="cart-empty-icon" />
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added any items to your cart yet. Start shopping to see your items here.</p>
+            <Link href="/" className="cart-continue-shopping">
+              <FiArrowRight className="cart-arrow-icon" />
+              Continue Shopping
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (error) return (
     <div className="cart-page-container">
-      <ErrorCallBack message={error?.data || error.message} onRetry={() => window.location.reload()} />
+      <ErrorCallBack message={error?.data?.message || error.message} onRetry={() => window.location.reload()} />
     </div>
   );
 
