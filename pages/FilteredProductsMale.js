@@ -8,6 +8,7 @@ import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } f
 import { useRouter } from 'next/router';
 import { RiFilter2Line } from "react-icons/ri";
 import ErrorCallBack from '@/components/ErrorCallBack';
+import { FaFilter } from "react-icons/fa";
 
 
 const FilteredProductsMale = () => {
@@ -125,17 +126,24 @@ const FilteredProductsMale = () => {
           </div>
         </div>
       </div>
-      <div className="filtered-products">
-        {products.length === 0 ? (
-          <p>No products found</p>
-        ) : (
-          products.map((product) => (
+      {products.length === 0 ? (
+        <div className="centered-container">
+          <div className="status-box empty-box">
+            <FaFilter size={90} className="status-icon empty-icon" />
+            <h2>No Products Found</h2>
+            <p>Try adjusting your filters to see more items.</p>
+          </div>
+        </div>
+      ) : (
+        <div className="filtered-products">
+          {products.map((product) => (
             <div key={product._id}>
               <Product product={product} />
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
+
       <div className="filter-options-mobile" onClick={() => setFilterOpen(true)}>
         <RiFilter2Line size={24} />
         <h4>FILTER</h4>
