@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { runFireworks } from '../lib/utils';
 import { useGetOrderDetailsQuery } from '../redux/api/orderApiSlice';
 import Loader from "../components/Loader";
+import styles from "../styles/PaymentSuccessPage.module.css";
 
 const PaymentSuccessPage = () => {
 
@@ -23,11 +24,11 @@ const PaymentSuccessPage = () => {
 
   if (isLoading) {
     return (
-      <div className="success-wrapper">
-        <div className="success">
+      <div className={styles.successWrapper}>
+        <div className={styles.success}>
           <Loader />
           <Link href="/">
-            <button type="button" width="300px" className="btn">
+            <button type="button" className={styles.btn}>
               Continue Shopping
             </button>
           </Link>
@@ -38,11 +39,11 @@ const PaymentSuccessPage = () => {
 
   if (error) {
     return (
-      <div className="success-wrapper">
-        <div className="success">
+      <div className={styles.successWrapper}>
+        <div className={styles.success}>
           <Loader />
           <Link href="/">
-            <button type="button" width="300px" className="btn">
+            <button type="button" className={styles.btn}>
               Continue Shopping
             </button>
           </Link>
@@ -52,21 +53,21 @@ const PaymentSuccessPage = () => {
   }
 
   return (
-    <div className="success-wrapper">
-      <div className="success">
-        <p className="icon">
+    <div className={styles.successWrapper}>
+      <div className={styles.success}>
+        <p className={styles.icon}>
           <BsBagCheckFill />
         </p>
-        <h2>Thank you for your order!</h2>
-        <p className="email-msg">Check your email inbox for the receipt. <br></br>Please do check the updates/promotions/spam folder for the email.<br></br> If you still haven't recieved a confirmation mail, please contact our customer support.</p>
-        <p className="description">
+        <h2 className={styles.heading}>Thank you for your order!</h2>
+        <p className={styles.emailMsg}>Check your email inbox for the receipt. <br />Please do check the updates/promotions/spam folder for the email.<br /> If you still haven't received a confirmation mail, please contact our customer support.</p>
+        <p className={styles.description}>
           If you have any questions, please email
-          <a className="email" href="mailto:flowstateprojectinfo@gmail.com">
+          <a className={styles.email} href="mailto:flowstateprojectinfo@gmail.com">
             flowstateprojectinfo@gmail.com
           </a>
         </p>
         <Link href="/">
-          <button type="button" width="300px" className="btn">
+          <button type="button" className={styles.btn}>
             Continue Shopping
           </button>
         </Link>
