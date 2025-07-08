@@ -8297,7 +8297,7 @@ body .introjs-skipbutton {
 }
 
 .primary-btn {
-  background-color: #111827;
+  background-color: #f02d34;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -8309,7 +8309,7 @@ body .introjs-skipbutton {
 }
 
 .primary-btn:hover {
-  background-color: #1f2937;
+  background-color: #f02d34;
 }
 
 /* ErrorCallBack.jsx End */

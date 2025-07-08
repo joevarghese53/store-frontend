@@ -3,21 +3,40 @@ import Link from 'next/link';
 import moment from 'moment';
 import { useAllProductsQuery } from '../redux/api/productApiSlice';
 import styles from '../styles/ProductList.module.css';
+import ErrorCallBack from '@/components/ErrorCallBack';
+import Loader from '../components/Loader';
+import { FaSearch } from "react-icons/fa";
+
 
 const ProductList = () => {
   const { data: products, isLoading, isError } = useAllProductsQuery();
-  console.log("data",products)
+  console.log("data", products)
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles['admin-products-bg']}>
+        <Loader />
+      </div>
+    );
   }
 
   if (isError) {
-    return <div>Error loading products</div>;
+    return (
+      <div className="wishlist-main-container">
+        <ErrorCallBack message={isError?.data || isError.message} onRetry={() => window.location.reload()} />
+      </div>
+    );
   }
 
   if (!products || products.length === 0) {
-    return <div className={styles['no-products-found']}>No products found</div>;
+    return <div className="centered-container">
+      <div className="status-box empty-box">
+        <FaSearch size={90} className="status-icon empty-icon" color='#f02d34' />
+        <h2>No Products Found</h2>
+        <p>We couldn't find any products matching your search or filters.</p>
+        <a href="/" className="primary-btn">Go Back Home</a>
+      </div>
+    </div>
   }
 
   return (

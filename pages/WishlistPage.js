@@ -57,7 +57,7 @@ const WishlistPage = () => {
       <div className="wishlist-main-container">
         <ErrorCallBack message={error?.data || error.message} onRetry={() => window.location.reload()} />
       </div>
-    )
+    );
   }
 
   return (
