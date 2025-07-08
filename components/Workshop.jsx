@@ -778,7 +778,7 @@ const Workshop = ({ setActiveTab }) => {
                   <div className="payfortries-popup-overlay">
                     <div className="payfortries-popup-content">
                       <p>Pricing</p>
-                      <h2>JayVee</h2>
+                      <h2>Flow State</h2>
                       <p>Select your preferred payment method:</p>
                       <div className="payfortries-options-container">
                         <button
@@ -928,7 +928,7 @@ const Workshop = ({ setActiveTab }) => {
               <div className="payfortries-popup-overlay">
                 <div className="payfortries-popup-content">
                   <p>Pricing</p>
-                  <h2>JayVee</h2>
+                  <h2>Flow State</h2>
                   <p>Select your preferred payment method:</p>
                   <div className="payfortries-options-container">
                     <button

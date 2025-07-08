@@ -13,7 +13,7 @@ function Dragg({ upload, back, design, side, setFinalImageFront, setFinalImageBa
   const [uploadImage, setUploadImage] = useState(null);
   const canvasRef = useRef(null);
   const cproductDetails = {
-    cname: 'JayVee CUSTOMS',
+    cname: 'Flow State CUSTOMS',
     cdetails: 'Product Details',
     cprice: 50,
     cimage: back.substring(1) // Add the image path or URL

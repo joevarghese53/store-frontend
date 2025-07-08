@@ -61,8 +61,8 @@ const PaymentSuccessPage = () => {
         <p className="email-msg">Check your email inbox for the receipt. <br></br>Please do check the updates/promotions/spam folder for the email.<br></br> If you still haven't recieved a confirmation mail, please contact our customer support.</p>
         <p className="description">
           If you have any questions, please email
-          <a className="email" href="mailto:jayveeapparelscustomercare@gmail.com">
-            jayveeapparelscustomercare@gmail.com
+          <a className="email" href="mailto:flowstateprojectinfo@gmail.com">
+            flowstateprojectinfo@gmail.com
           </a>
         </p>
         <Link href="/">

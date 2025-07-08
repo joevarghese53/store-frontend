@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
   return (
     <div className="layout">
       <Head>
-        <title>JayVee</title>
+        <title>Flow State</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <header>
