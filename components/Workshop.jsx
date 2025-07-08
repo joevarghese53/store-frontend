@@ -51,7 +51,7 @@ const Workshop = ({ setActiveTab }) => {
   const [finalUploadBack, setFinalUploadBack] = useState(null);
   const [animbool, setanimbool] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('regular');
-  const [category, setCategory] = useState('66adfb21a1698be6bdfa8e59');
+  const [category, setCategory] = useState(categoriesData ? categoriesData[0]._id : null);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
   const [showUploadMobile, setShowUploadMobile] = useState(false);
   const [showColorMobile, setShowColorMobile] = useState(false);
@@ -67,6 +67,8 @@ const Workshop = ({ setActiveTab }) => {
     endX: 0,
     endY: 0,
   });
+
+  console.log(categoriesData)
 
   const averageTimePerJobInQueue = 15; // seconds per job
   const processingDuration = 15; // seconds to move from 70% to 100%

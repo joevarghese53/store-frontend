@@ -2,6 +2,8 @@ import React from 'react';
 
 import { ImageSlider } from './ImageSlider';
 import ImageSwiper from './ImageSwiper';
+import { useFetchCategoriesQuery } from "../redux/api/categoryApiSlice";
+
 
 const slide1 = '/img/slide-01.png';
 const slide2 = '/img/slide-02.png';
@@ -27,21 +29,24 @@ const mvideo3 = '/videos/mvideo-03.mp4';
 
 
 const HeroBanner = () => {
+
+  const { data: categories } = useFetchCategoriesQuery();
+
   const desktopMedia = [
     // { type: 'video', url: video1, alt: "video1" },
     { type: 'image', url: slide1, page: "/Customs" },
-    { type: 'image', url: slide2, page: "/FilteredProductsMale?category=66adfb21a1698be6bdfa8e59" },
-    { type: 'image', url: slide3, page: "/FilteredProductsMale?category=66afb54bc0aa9bfafb408a1f" },
-    { type: 'image', url: slide4, page: "/FilteredProductsMale?category=66afb550c0aa9bfafb408a24" },
+    { type: 'image', url: slide2, page: `/FilteredProductsMale?category=${categories ? categories[0]._id : null}`},
+    { type: 'image', url: slide3, page: `/FilteredProductsMale?category=${categories ? categories[1]._id : null}`},
+    { type: 'image', url: slide4, page: `/FilteredProductsMale?category=${categories ? categories[2]._id : null}`},
     { type: 'image', url: slide5, page: "/Customs" },
     { type: 'image', url: slide6, page: "/Customs" },
   ];
 
   const mobileMedia = [
     { type: 'image', url: mslide1, page: "/Customs" },
-    { type: 'image', url: mslide2, page: "/FilteredProductsMale?category=66adfb21a1698be6bdfa8e59" },
-    { type: 'image', url: mslide3, page: "/FilteredProductsMale?category=66afb54bc0aa9bfafb408a1f" },
-    { type: 'image', url: mslide4, page: "/FilteredProductsMale?category=66afb550c0aa9bfafb408a24" },
+    { type: 'image', url: mslide2, page: `/FilteredProductsMale?category=${categories ? categories[0]._id : null}`},
+    { type: 'image', url: mslide3, page: `/FilteredProductsMale?category=${categories ? categories[1]._id : null}`},
+    { type: 'image', url: mslide4, page: `/FilteredProductsMale?category=${categories ? categories[2]._id : null}`},
     { type: 'image', url: mslide5, page: "/Customs" },
     { type: 'image', url: mslide6, page: "/Customs" },
   ];

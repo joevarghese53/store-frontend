@@ -17,7 +17,8 @@ const CreateProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("66adfb21a1698be6bdfa8e59");
+  const { data: categories } = useFetchCategoriesQuery();
+  const [category, setCategory] = useState(categories?.[0]?._id || ""); 
   const [gender, setGender] = useState(""); // Initialize state for gender
   const [offers, setOffers] = useState("");
   const [returnpolicy, setReturnPolicy] = useState("");
@@ -30,7 +31,6 @@ const CreateProduct = () => {
   const router = useRouter();
   const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct] = useCreateProductMutation();
-  const { data: categories } = useFetchCategoriesQuery();
   const [isLoading, setIsLoading] = useState(false);
 
 
