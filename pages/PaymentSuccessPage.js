@@ -17,18 +17,11 @@ const PaymentSuccessPage = () => {
   console.log('orderdetails', orderDetails);
 
   useEffect(() => {
-    if (sessionStorage.getItem('paymentSuccess')) {
-      // Show the page
-      sessionStorage.removeItem('paymentSuccess'); // Remove so it can't be shown again
-    } else {
-      // Redirect if flag is missing
-      router.replace('/MyOrders');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (orderDetails) {
+    if (orderDetails && sessionStorage.getItem('paymentSuccess')) {
+      sessionStorage.removeItem('paymentSuccess');
       runFireworks();
+    } else {
+      router.replace('/MyOrders');
     }
   }, [orderDetails]);
 
