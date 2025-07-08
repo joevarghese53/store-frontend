@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { FiTrash2, FiArrowRight, FiShoppingBag } from 'react-icons/fi';
-import { useGetCartQuery, useAddToCartMutation, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
+import { useGetCartQuery, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
 import { useRouter } from 'next/router';
 import Loader from './Loader';
 import { toast } from 'react-toastify'
