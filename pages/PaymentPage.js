@@ -39,19 +39,30 @@ const PaymentPage = () => {
     const data = {
       merchantTransactionId: orderDetails._id,
       customerUserId: orderDetails.user._id,
-      amount: orderDetails.totalPrice * 100,
+      amount: orderDetails.totalPrice * 100, // Make sure it's in paise
       name: orderDetails.user.username,
     };
+
     try {
       const res = await axios.post(`${BASE_URL}/api/payment/initiate-payment`, data);
-      if (res.data.success) {
-        sessionStorage.setItem('paymentSuccess', 'true');
+
+      // Check if PhonePe returned success
+      if (res.data.success && res.data.data?.instrumentResponse?.redirectInfo?.url) {
+        // Optional: store flag for UI tracking
+        sessionStorage.setItem("paymentStarted", "true");
+
+        // Redirect to PhonePe payment gateway
         window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
+      } else {
+        toast.error("Something went wrong while initiating payment.");
+        console.error("PhonePe error:", res.data);
       }
     } catch (error) {
-      toast.error('Payment initiation failed');
+      console.error("Payment initiation error:", error);
+      toast.error("Payment initiation failed");
     }
   };
+
 
   if (isLoading) {
     return (

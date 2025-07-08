@@ -3749,17 +3749,17 @@ span.text-red {
 
   .address-page-button.edit-button:hover {
     color: #f02d34;
-    border-color: #f02d34;
+    border-color: #ffffff;
   }
 
   .address-page-button.remove-button:hover {
     color: #dc3545;
-    border-color: #dc3545;
+    border-color: #ffffff;
   }
 
   .address-page-button.select-button:hover {
     color: #f02d34;
-    background: #f8f9fa;
+    background: #ffffff;
   }
 
 }
@@ -7469,7 +7469,6 @@ body .introjs-skipbutton {
   font-size: 18px;
   padding: 18px 0;
   width: 100%;
-  margin-top: 18px;
   border: none;
   transition: all 0.3s;
   box-shadow: 0 2px 8px rgba(21, 81, 0, 0.08);
