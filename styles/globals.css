@@ -5573,7 +5573,6 @@ body .introjs-skipbutton {
 /* CategoryList.js start */
 .category-list-main-container {
   min-height: 100vh;
-  background: #f5f7fa;
   padding: 100px 2rem 2rem 2rem;
   display: flex;
   justify-content: center;
@@ -5864,7 +5863,6 @@ body .introjs-skipbutton {
 /* UsersList.js start */
 .user-list-main-container {
   min-height: 100vh;
-  background: #f5f7fa;
   padding: 100px 2rem 2rem 2rem;
   display: flex;
   justify-content: center;
@@ -6252,7 +6250,6 @@ body .introjs-skipbutton {
 /* ProfilePage.js start */
 .profile-main-container {
   min-height: 100vh;
-  background: #f5f7fa;
   padding: 100px 2rem 2rem 2rem;
   display: flex;
   justify-content: center;
@@ -6423,7 +6420,6 @@ body .introjs-skipbutton {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #f5f7fa;
   gap: 1rem;
 }
 
@@ -8107,9 +8103,8 @@ body .introjs-skipbutton {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70vh;
+  min-height: 100vh;
   background-color: #ffffff;
-  padding: 20px;
 }
 
 .empty-wishlist {

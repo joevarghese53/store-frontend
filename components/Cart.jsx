@@ -128,7 +128,7 @@ const Cart = () => {
 
               <div className="cart-items-list">
                 {data.items.map((item) => (
-                  <div className="cart-item-card" key={`${item.productId._id}-${item.size}`}>
+                  <div className="cart-item-card" key={`${item.productId?._id}-${item.size}`}>
                     <div className="cart-item-image">
                       <img src={item.productId.frontImage} alt={item.productId.name} />
                     </div>
@@ -152,7 +152,7 @@ const Cart = () => {
                         </div>
                         <button
                           className="cart-item-remove"
-                          onClick={() => handleRemoveFromCart(item.productId._id, item.size)}
+                          onClick={() => handleRemoveFromCart(item.productId?._id, item.size)}
                           title="Remove item"
                         >
                           <FiTrash2 />
