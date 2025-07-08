@@ -3242,7 +3242,6 @@ span.text-red {
   letter-spacing: 1px;
   gap: 8px;
   padding: 8px 0;
-  background: rgba(21, 81, 0, 0.1);
   border-radius: 8px;
 }
 
@@ -3259,7 +3258,6 @@ span.text-red {
   letter-spacing: 1px;
   position: relative;
   padding: 8px 5px;
-  background: rgba(102, 102, 102, 0.1);
   border-radius: 8px;
 }
 
@@ -3309,7 +3307,6 @@ span.text-red {
 .address-icon {
   width: 40px;
   height: 40px;
-  background: #f8f9fa;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -6441,7 +6438,7 @@ body .introjs-skipbutton {
 
 @media (max-width: 768px) {
   .profile-main-container {
-    padding: 80px 1rem 1rem 1rem;
+    padding: 80px 1rem 80px 1rem;
   }
 
   .profile-card {
@@ -6772,15 +6769,8 @@ body .introjs-skipbutton {
   align-items: center;
   gap: 16px;
   padding: 10px;
-  border: 1px solid #e9ecef;
-  border-radius: 12px;
   transition: all 0.3s ease;
   position: relative;
-}
-
-.cart-item-card:hover {
-  border-color: #f02d34;
-  box-shadow: 0 4px 12px rgba(21, 81, 0, 0.1);
 }
 
 .cart-item-image {
@@ -6832,7 +6822,6 @@ body .introjs-skipbutton {
 
 .cart-item-size,
 .cart-item-quantity {
-  background: #f8f9fa;
   padding: 4px 8px;
   border-radius: 6px;
 }
@@ -7148,7 +7137,6 @@ body .introjs-skipbutton {
   background: white;
   border-radius: 16px;
   padding: 28px 24px 24px 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   margin-bottom: 0;
 }
 
@@ -7213,7 +7201,6 @@ body .introjs-skipbutton {
   background: white;
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .checkout-summary-header {
@@ -7356,7 +7343,6 @@ body .introjs-skipbutton {
   height: 110px;
   object-fit: cover;
   border-radius: 10px;
-  background: #f8f9fa;
 }
 
 .payment-item-desc {
@@ -7382,14 +7368,12 @@ body .introjs-skipbutton {
 }
 
 .payment-item-category {
-  background: #f8f9fa;
   padding: 2px 8px;
   border-radius: 6px;
 }
 
 .payment-item-size,
 .payment-item-qty {
-  background: #f8f9fa;
   padding: 2px 8px;
   border-radius: 6px;
 }
@@ -7420,7 +7404,6 @@ body .introjs-skipbutton {
 .shipping-summary {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 20px 24px 18px 24px;
 }
 
@@ -7473,7 +7456,6 @@ body .introjs-skipbutton {
 .payment-summary-card {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 24px;
 }
 
