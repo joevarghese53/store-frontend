@@ -45,6 +45,7 @@ const PaymentPage = () => {
     try {
       const res = await axios.post(`${BASE_URL}/api/payment/initiate-payment`, data);
       if (res.data.success) {
+        sessionStorage.setItem('paymentSuccess', 'true');
         window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
       }
     } catch (error) {
