@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MdErrorOutline } from 'react-icons/md';
 import styles from '../styles/PaymentFailedPage.module.css';
 
 const PaymentFailedPage = () => {
-
   const router = useRouter();
 
   useEffect(() => {
-      if (sessionStorage.getItem('paymentStarted')) {
-        console.log("session data : ",sessionStorage.getItem('paymentStarted'))
-        // Show the page
-        sessionStorage.removeItem('paymentStarted'); // Remove so it can't be shown again
-      } else {
-        // Redirect if flag is missing
-        router.replace('/MyOrders');
-      }
-    }, []);
+    const flag = sessionStorage.getItem('paymentStarted');
+    if (flag) {
+      sessionStorage.removeItem('paymentStarted');
+    } else {
+      router.replace('/'); // Redirect to home if no payment was started
+    }
+  }, []);
 
   return (
     <div className={styles.failedWrapper}>

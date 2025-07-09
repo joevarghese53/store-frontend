@@ -7,7 +7,6 @@ import ErrorCallBack from './ErrorCallBack';
 const BestSellers = ({ gender }) => { // Accept gender as a prop
     // Pass gender as a parameter to the query hook
     const { data, isLoading, error } = useGetTopProductsQuery({ gender });
-    console.log(data);
     if (isLoading) {
         return (
             <div className="best-sellers">

@@ -54,10 +54,8 @@ const Cart = () => {
       if (!answer) return;
 
       const { data } = await removeCartItem({ productId: itemId, size: size }).unwrap();
-      console.log('Product deleted successfully', data);
       toast.success(`Item removed from cart successfully.`);
     } catch (err) {
-      console.log(err);
       toast.error('Failed to remove item from cart.');
     }
   };

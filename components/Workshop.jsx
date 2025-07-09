@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BoxDrawing from '@/components/BoxDrawing';
@@ -52,6 +52,7 @@ const Workshop = ({ setActiveTab }) => {
   const [animbool, setanimbool] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('regular');
   const [category, setCategory] = useState(categoriesData ? categoriesData[0]._id : null);
+  const [isCreateCProductLoading, setisCreateCProductLoading] = useState(false);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
   const [showUploadMobile, setShowUploadMobile] = useState(false);
   const [showColorMobile, setShowColorMobile] = useState(false);
@@ -68,7 +69,11 @@ const Workshop = ({ setActiveTab }) => {
     endY: 0,
   });
 
-  console.log(categoriesData)
+  useEffect(() => {
+    if (categoriesData && categoriesData.length > 0) {
+      setCategory(categoriesData[0]._id);
+    }
+  }, [categoriesData]);
 
   const averageTimePerJobInQueue = 15; // seconds per job
   const processingDuration = 15; // seconds to move from 70% to 100%
@@ -126,7 +131,10 @@ const Workshop = ({ setActiveTab }) => {
   };
 
   const handleFileChange = (e) => {
-    setSelectedFile(URL.createObjectURL(e.target.files[0]));
+    const file = e.target.files[0];
+    if (!file) return; // user cancelled
+
+    setSelectedFile(URL.createObjectURL(file));
   };
 
   const handleColorClick = (color) => {
@@ -203,25 +211,30 @@ const Workshop = ({ setActiveTab }) => {
   };
 
   const handlePaymentForTries = async () => {
+
+    sessionStorage.setItem('paymentStarted', 'true');
+    
     const data = {
       featureId: "generation_attempts_" + selectedOption,
-      amount: pricing[selectedOption] * 100,
+      amount: pricing[selectedOption] * 100, // in paise
       userId: userInfo._id,
       name: userInfo.username,
       triesToPurchase: tableData[selectedOption][0].value,
     };
-    console.log('Payment data:', data);
 
     try {
       const res = await purchaseTries(data).unwrap();
-      console.log('Payment response:', res);
-      if (res.success) {
+      if (res.success && res.data.instrumentResponse?.redirectInfo?.url) {
         window.location.href = res.data.instrumentResponse.redirectInfo.url;
+      } else {
+        toast.error("Something went wrong.");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Payment initiation failed", error);
+      toast.error("Payment initiation failed.");
     }
   };
+
 
   const handleSubmit = async () => {
 
@@ -396,6 +409,8 @@ const Workshop = ({ setActiveTab }) => {
   const handleCreateProduct = async () => {
     try {
 
+      setisCreateCProductLoading(true)
+
       console.log("Final Image Front: ", finalImageFront);
       console.log("Final Image Back: ", finalImageBack);
       console.log("Final Design Front: ", finalDesignFront);
@@ -448,7 +463,6 @@ const Workshop = ({ setActiveTab }) => {
       }
 
       const res = await uploadProductImage(formData).unwrap();
-      toast.success(res.message);
       console.log("Response: ", res);
       console.log("frontImage: ", res.imageUrls.frontImage[0]);
       console.log("backImage: ", res.imageUrls.backImage[0]);
@@ -529,13 +543,16 @@ const Workshop = ({ setActiveTab }) => {
         toast.error("Product creation failed. Try again.");
         console.log("Product creation failed. Try again.");
         console.log("Error: ", data.error);
+        setisCreateCProductLoading(false)
       } else {
         toast.success(`Product is created`);
         setActiveTab('CProducts');
+        setisCreateCProductLoading(false)
       }
     } catch (error) {
       console.error(error);
       toast.error("Product creation failed. Try again.");
+      setisCreateCProductLoading(false)
     }
   };
 
@@ -864,7 +881,7 @@ const Workshop = ({ setActiveTab }) => {
               </div>
             </div>
             <div className="final-product-create">
-              <button type='button' onClick={handleCreateProduct}>CREATE PRODUCT <FaArrowRightLong size={24} /></button>
+              <button type='button' disabled={isCreateCProductLoading} onClick={handleCreateProduct}>{isCreateCProductLoading ? "CREATING..." : "CREATE PRODUCT"} <FaArrowRightLong size={24} /></button>
             </div>
           </div>
 

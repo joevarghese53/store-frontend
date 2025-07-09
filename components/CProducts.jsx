@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useGetCProductsQuery } from '../redux/api/cProductApiSlice'
 import { useAddToCartMutation, useRemoveAllOfProductFromCartMutation } from '../redux/api/cartApiSlice'
-import { useRemoveFromWishlistMutation } from '../redux/api/wishlistApiSlice'
 import { useDeleteCProductMutation } from '../redux/api/cProductApiSlice'
 import { toast } from 'react-toastify'
 import Loader from './Loader'
@@ -16,7 +15,6 @@ const Cproducts = () => {
   const [addToCart] = useAddToCartMutation();
   const [deleteCProduct] = useDeleteCProductMutation();
   const [removeAllOfProductFromCart] = useRemoveAllOfProductFromCartMutation();
-  const [removeFromWishlist] = useRemoveFromWishlistMutation();
   const [showSizeModal, setShowSizeModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 

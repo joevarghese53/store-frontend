@@ -7,17 +7,31 @@ import {
 
 function Dragg({ upload, back, design, side, setFinalImageFront, setFinalImageBack, setFinalDesignFront, setFinalDesignBack, setFinalUploadFront, setFinalUploadBack }) {
 
-  const [createCProduct] = useCreateCProductMutation();
-  const [uploadProductImage] = useUploadProductImageMutation();
   const [canvas, setCanvas] = useState(null);
   const [uploadImage, setUploadImage] = useState(null);
   const canvasRef = useRef(null);
-  const cproductDetails = {
-    cname: 'Flow State CUSTOMS',
-    cdetails: 'Product Details',
-    cprice: 50,
-    cimage: back.substring(1) // Add the image path or URL
-  }
+  const [canvasWidth, setCanvasWidth] = useState(400);
+  const [canvasHeight, setCanvasHeight] = useState(400);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setCanvasWidth(350);
+        setCanvasHeight(350);
+      } else {
+        setCanvasWidth(400);
+        setCanvasHeight(400);
+      }
+    };
+
+    handleResize(); // Set initially
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   useEffect(() => {
     const newCanvas = new fabric.Canvas(canvasRef.current);
@@ -66,7 +80,7 @@ function Dragg({ upload, back, design, side, setFinalImageFront, setFinalImageBa
         if (uploadImage) {
           canvas.remove(uploadImage);
         }
-        
+
         // Add image to the canvas
         canvas.add(img);
         setUploadImage(img);
@@ -114,9 +128,9 @@ function Dragg({ upload, back, design, side, setFinalImageFront, setFinalImageBa
   }, [canvas, upload]);
 
 
-  const handleFinalise = () => {  
+  const handleFinalise = () => {
     const mergedImageURL = canvas.toDataURL('image/png');
-    if(side === 'front'){
+    if (side === 'front') {
       setFinalImageFront(mergedImageURL);
       setFinalDesignFront(design);
       setFinalUploadFront(upload);
@@ -129,8 +143,7 @@ function Dragg({ upload, back, design, side, setFinalImageFront, setFinalImageBa
 
   return (
     <>
-      <canvas ref={canvasRef} className="canvas-desktop" width={400} height={400} ></canvas>
-      <canvas ref={canvasRef} className="canvas-mobile" width={350} height={350} ></canvas>
+      <canvas ref={canvasRef} className="canvas" width={canvasWidth} height={canvasHeight} ></canvas>
       <div className='finalise'>
         <button type='button' className='finalise-button' onClick={() => { handleFinalise(); }}>CONFIRM DESIGN</button>
 

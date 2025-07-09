@@ -4977,6 +4977,12 @@ button:focus {
   border-radius: 6px;
 }
 
+.final-product-create button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .final-image-container {
   position: relative;
   display: inline-block;
@@ -5113,12 +5119,8 @@ button {
   display: none;
 }
 
-.canvas-desktop {
+.canvas {
   display: block;
-}
-
-.canvas-mobile {
-  display: none;
 }
 
 .workshop-tutorial-button {
@@ -5228,14 +5230,6 @@ body .introjs-skipbutton {
   .workshop-main-container {
     display: flex;
     flex-direction: column;
-  }
-
-  .canvas-desktop {
-    display: none;
-  }
-
-  .canvas-mobile {
-    display: block;
   }
 
   .customs-main-container {
@@ -5518,8 +5512,8 @@ body .introjs-skipbutton {
 @media screen and (max-width: 425px) {
 
   .cproduct-card {
-    height: 130px;
-    margin-bottom: 55px;
+    height: 25vh;
+    margin-bottom: 65px;
   }
 
   .cproduct-name {
