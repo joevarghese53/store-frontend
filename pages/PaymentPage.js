@@ -19,22 +19,6 @@ const PaymentPage = () => {
     skip: !orderId,
   });
 
-  const scrollToBilling = () => {
-    if (billingRef.current) {
-      const yOffset = -100;
-      const y = billingRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
-
-  useEffect(() => {
-    if (orderId) {
-      // For debugging
-      // console.log('Order ID:', orderId);
-      // console.log('Order Details:', orderDetails);
-    }
-  }, [orderId, orderDetails]);
-
   const handlePayment = async () => {
     const data = {
       merchantTransactionId: orderDetails._id,
@@ -102,7 +86,7 @@ const PaymentPage = () => {
                       </div>
                       <div className="cart-item-meta">
                         <span className="cart-item-size">Size: {item.size}</span>
-                        <span className="cart-item-quantity">Qty: {item.quantity}</span>
+                        <span className="cart-item-quantity">Qty: {item.qty}</span>
                       </div>
                     </div>
 
