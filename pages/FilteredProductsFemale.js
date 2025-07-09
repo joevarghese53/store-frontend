@@ -7,6 +7,8 @@ import { Product } from '../components';
 import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } from '../redux/features/shop/shopSlice';
 import { useRouter } from 'next/router';
 import { RiFilter2Line } from "react-icons/ri";
+import ErrorCallBack from '@/components/ErrorCallBack';
+import { FaFilter } from "react-icons/fa";
 
 const FilteredProductsFemale = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const FilteredProductsFemale = () => {
   const [filterOpen, setFilterOpen] = useState(false);
 
   // Fetch filtered products based on checked categories and price range
-  const filteredProductsQuery = useGetFilteredProductsQuery({ checked, radio: priceRange, gender: 'female' });
+  const { data: filteredProductsQuery, isLoading: isFilteredProductsLoading, isError: isFilteredProductsError, isSuccess: isFilteredProductsSuccess } = useGetFilteredProductsQuery({ checked, radio: priceRange, gender: 'female' });
 
   useEffect(() => {
     // Dispatch categories when fetched
@@ -37,11 +39,11 @@ const FilteredProductsFemale = () => {
   }, [category, categories, dispatch]);
 
   useEffect(() => {
-    // Fetch and set products when checked categories or price range change
-    if (filteredProductsQuery.isSuccess && filteredProductsQuery.data) {
-      dispatch(setProducts(filteredProductsQuery.data));
-    }
-  }, [checked, priceRange, filteredProductsQuery.data, filteredProductsQuery.isSuccess, dispatch]);
+     // Fetch and set products when checked categories or price range change
+     if (isFilteredProductsSuccess && filteredProductsQuery) {
+       dispatch(setProducts(filteredProductsQuery));
+     }
+   }, [checked, priceRange, filteredProductsQuery, isFilteredProductsSuccess, dispatch]);
 
   const handleCheck = (value, id) => {
     const updatedChecked = value ? [...checked, id] : checked.filter((c) => c !== id);
@@ -57,8 +59,20 @@ const FilteredProductsFemale = () => {
     dispatch(setPriceRange([]));
   };
 
-  if (categoriesQuery.isLoading || filteredProductsQuery.isLoading) {
-    return <Loader />;
+  if (categoriesQuery.isLoading || isFilteredProductsLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Loader />
+      </div>
+    )
+  }
+
+  if (categoriesQuery.isError || isFilteredProductsError) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <ErrorCallBack message={categoriesQuery.isError?.data?.message || isFilteredProductsError?.data?.message} onRetry={() => window.location.reload()} />
+      </div>
+    );
   }
 
   return (
@@ -84,16 +98,22 @@ const FilteredProductsFemale = () => {
         <div className="filter-option">
           <h6>PRICE RANGE</h6>
           <div className='filter-option-row'>
-            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
-            <label className='price-input-label'>Rs. 500 - Rs. 600</label>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([699, 899])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([699, 899])
+              ? handlePriceChange([])
+              : handlePriceChange([699, 899])} />
+            <label className='price-input-label'>Rs. 699 - Rs. 899</label>
           </div>
           <div className='filter-option-row'>
-            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
-            <label className='price-input-label'>Rs. 600 - Rs. 700</label>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([899, 1099])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([899, 1099])
+              ? handlePriceChange([])
+              : handlePriceChange([899, 1099])} />
+            <label className='price-input-label'>Rs. 899 - Rs. 1099</label>
           </div>
           <div className='filter-option-row'>
-            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
-            <label className='price-input-label'>Rs. 700 - Rs. 800</label>
+            <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([1099, 1299])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([1099, 1299])
+              ? handlePriceChange([])
+              : handlePriceChange([1099, 1299])} />
+            <label className='price-input-label'>Rs. 1099 - Rs. 1299</label>
           </div>
         </div>
         <div className="filter-option">
@@ -107,7 +127,13 @@ const FilteredProductsFemale = () => {
       </div>
       <div className="filtered-products">
         {products.length === 0 ? (
-          <p>No products found</p>
+          <div className="centered-container">
+            <div className="status-box empty-box">
+              <FaFilter size={90} className="status-icon empty-icon" />
+              <h2>No Products Found</h2>
+              <p>Try adjusting your filters to see more items.</p>
+            </div>
+          </div>
         ) : (
           products.map((product) => (
             <div key={product._id}>
@@ -143,16 +169,22 @@ const FilteredProductsFemale = () => {
           <div className="filter-option">
             <h6>PRICE RANGE</h6>
             <div>
-              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([500, 600])} onChange={() => handlePriceChange([500, 600])} />
-              <label className='price-input-label'>Rs. 500 - Rs. 600</label>
+              <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([699, 899])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([699, 899])
+                ? handlePriceChange([])
+                : handlePriceChange([699, 899])} />
+              <label className='price-input-label'>Rs. 699 - Rs. 899</label>
             </div>
             <div>
-              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([600, 700])} onChange={() => handlePriceChange([600, 700])} />
-              <label className='price-input-label'>Rs. 600 - Rs. 700</label>
+              <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([899, 1099])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([899, 1099])
+                ? handlePriceChange([])
+                : handlePriceChange([899, 1099])} />
+              <label className='price-input-label'>Rs. 899 - Rs. 1099</label>
             </div>
             <div>
-              <input type="radio" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([700, 800])} onChange={() => handlePriceChange([700, 800])} />
-              <label className='price-input-label'>Rs. 700 - Rs. 800</label>
+              <input type="checkbox" name="price" checked={JSON.stringify(priceRange) === JSON.stringify([1099, 1299])} onChange={() => JSON.stringify(priceRange) === JSON.stringify([1099, 1299])
+                ? handlePriceChange([])
+                : handlePriceChange([1099, 1299])} />
+              <label className='price-input-label'>Rs. 1099 - Rs. 1299</label>
             </div>
           </div>
           <div className="filter-option">

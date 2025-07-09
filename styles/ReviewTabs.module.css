@@ -327,7 +327,6 @@
 @media (max-width: 700px) {
   .review-tabs-container {
     padding: 1rem 0.2rem 1.5rem 0.2rem;
-    height: 420px;
   }
 
   .review-card-ui {
