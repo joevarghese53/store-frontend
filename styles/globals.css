@@ -3774,6 +3774,11 @@ span.text-red {
     background: #ffffff;
   }
 
+  .address-page-button.select-button.selected:hover {
+    background: #f02d34;
+    color: white;
+  }
+
 }
 
 
@@ -6968,8 +6973,6 @@ body .introjs-skipbutton {
     background: white;
     gap: 3vw;
     padding: 10px 0px;
-    border-top: 1px solid #d3d3d3;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -7021,7 +7024,7 @@ body .introjs-skipbutton {
 
   }
 
-  .cart-items-list{
+  .cart-items-list {
     padding: 0 6px;
   }
 }
