@@ -73,8 +73,8 @@ const PaymentSuccessPage = () => {
         <p className={styles.emailMsg}>Check your email inbox for the receipt. <br />Please do check the updates/promotions/spam folder for the email.<br /> If you still haven't received a confirmation mail, please contact our customer support.</p>
         <p className={styles.description}>
           If you have any questions, please email
-          <a className={styles.email} href="mailto:flowstateprojectinfo@gmail.com">
-            flowstateprojectinfo@gmail.com
+          <a className={styles.email} href="mailto:info@flowstateproject.in">
+            info@flowstateproject.in
           </a>
         </p>
         <Link href="/">

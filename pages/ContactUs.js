@@ -11,7 +11,7 @@ const ContactUs = () => {
           For any queries, please contact us at
           <span className="contact-us-email">
             <MdEmail style={{ marginRight: '8px', fontSize: '1.2em' }} />
-            flowstateprojectinfo@gmail.com
+            info@flowstateproject.in
           </span>
           <br />
           We will get back to you within 24 hours. Please refer to the FAQ below and see if it answers your queries.

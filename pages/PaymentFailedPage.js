@@ -29,8 +29,8 @@ const PaymentFailedPage = () => {
         </p>
         <p className={styles.description}>
           If you have any questions, please email
-          <a className={styles.email} href="mailto:flowstateprojectinfo@gmail.com">
-            flowstateprojectinfo@gmail.com
+          <a className={styles.email} href="mailto:info@flowstateproject.in">
+            info@flowstateproject.in
           </a>
         </p>
         <Link href="/">

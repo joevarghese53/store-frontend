@@ -26,7 +26,7 @@ const TandC = () => {
       <h3>GOVERNING LAW</h3>
       <p>These Terms and Conditions are governed by and construed in accordance with the laws of India, without regard to its conflict of law principles. Any disputes arising under or in connection with these Terms and Conditions shall be subject to the exclusive jurisdiction of the courts located in Kerala.</p>
       <h3>CONTACT INFORMATION</h3>
-      <p>For any questions or concerns regarding these Terms and Conditions, please contact us at <b>flowstateprojectinfo@gmail.com</b>.</p>
+      <p>For any questions or concerns regarding these Terms and Conditions, please contact us at <b>info@flowstateproject.in</b>.</p>
     </div>
   )
 }

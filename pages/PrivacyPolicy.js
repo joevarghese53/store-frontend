@@ -22,14 +22,14 @@ const PrivacyPolicy = () => {
             <h3>SECURITY OF PERSONAL INFORMATION</h3>
             <p>We implement reasonable security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. While we strive to protect your personal information, no method of transmission over the Internet or electronic storage is completely secure, and we cannot guarantee absolute security. You are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer or device.</p>
             <h3>YOUR RIGHTS</h3>
-            <p>You have the right to access, review, correct, or delete your personal information held by us. You may also withdraw your consent for us to process your personal information at any time, subject to legal or contractual restrictions and reasonable notice. To exercise your rights, please contact us at <b>flowstateprojectinfo@gmail.com</b>.</p>
+            <p>You have the right to access, review, correct, or delete your personal information held by us. You may also withdraw your consent for us to process your personal information at any time, subject to legal or contractual restrictions and reasonable notice. To exercise your rights, please contact us at <b>info@flowstateproject.in</b>.</p>
             <h3>CHANGES TO THIS PRIVACY POLICY</h3>
             <p>We may update this Privacy Policy from time to time to reflect changes in our practices, legal requirements, or for other operational, legal, or regulatory reasons. We will notify you of any material changes by posting the updated Privacy Policy on the Website. Your continued use of the Website following the posting of changes constitutes your acceptance of such changes.</p>
             <h3>CONTACT US</h3>
             <p>If you have any questions, concerns, or complaints about this Privacy Policy or our privacy practices, please contact us at:<br></br>
 
                 Joe Varghese<br></br>
-                Email: <b>flowstateprojectinfo@gmail.com</b>
+                Email: <b>info@flowstateproject.in</b>
             </p>
         </div>
     )

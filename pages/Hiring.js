@@ -42,7 +42,7 @@ const Hiring = () => {
         <p>
           If you’re excited about building something extraordinary and believe you have what it takes, we’d love to hear from you!
         </p>
-        <p><strong>Please send your application and resume to</strong>: <a href="mailto:flowstateprojectinfo@gmail.com">flowstateprojectinfo@gmail.com</a></p>
+        <p><strong>Please send your application and resume to</strong>: <a href="mailto:info@flowstateproject.in">info@flowstateproject.in</a></p>
       </div>
     </div>
   );

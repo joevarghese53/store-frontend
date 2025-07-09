@@ -25,11 +25,11 @@ const FAQ = () => {
                 },
                 {
                     question: 'I am unable to add products to my Bag.',
-                    answer: ' • Please clear cache, cookies and update the app and try again. If the issue persists, You can contact us at flowstateprojectinfo@gmail.com.'
+                    answer: ' • Please clear cache, cookies and update the app and try again. If the issue persists, You can contact us at info@flowstateproject.in.'
                 },
                 {
                     question: 'I tried to make a transaction, but it failed. What do I do?',
-                    answer: ' • If the amount has been deducted from your bank or card, don\'t worry; it will be refunded to the same account within 3-5 business days. Meanwhile, please wait a while and try again. If the issue persists, please contact us at flowstateprojectinfo@gmail.com.'
+                    answer: ' • If the amount has been deducted from your bank or card, don\'t worry; it will be refunded to the same account within 3-5 business days. Meanwhile, please wait a while and try again. If the issue persists, please contact us at info@flowstateproject.in.'
                 },
                 {
                     question: 'How long will it take to receive my order?',
