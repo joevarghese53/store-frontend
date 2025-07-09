@@ -1182,10 +1182,22 @@ span.text-red {
   display: none;
 }
 
+.back-button {
+  display: none;
+}
+
 
 /* Generic Breakpoints */
 
 @media (max-width: 768px) {
+
+  .back-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
 
   .bottom-navbar {
     justify-content: space-between;
@@ -1372,7 +1384,6 @@ span.text-red {
 
 
   .top-left-links a {
-    padding: 12px 15px;
     font-size: 12px;
   }
 
@@ -1398,7 +1409,7 @@ span.text-red {
 @media (max-width: 320px) {
 
   .top-left-links a {
-    padding: 14px 15px;
+    padding: 5px 10px;
   }
 }
 
@@ -3749,12 +3760,12 @@ span.text-red {
 
   .address-page-button.edit-button:hover {
     color: #f02d34;
-    border-color: #ffffff;
+    background: #ffffff;
   }
 
   .address-page-button.remove-button:hover {
     color: #dc3545;
-    border-color: #ffffff;
+    background: #ffffff;
   }
 
   .address-page-button.select-button:hover {

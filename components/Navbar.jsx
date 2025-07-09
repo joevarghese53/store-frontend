@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from '@/redux/features/auth/authSlice';
 import { useLogoutMutation } from '../redux/api/usersApiSlice';
 import { FaBars } from 'react-icons/fa';
-
+import { IoArrowBack } from "react-icons/io5";
 
 
 const Navbar = () => {
@@ -91,9 +91,16 @@ const Navbar = () => {
       </div>
       <div className="red-line"></div>
       <div className="bottom-navbar">
-        <div className="hamburger-menu" onClick={() => setHamburgerOpen(!hamburgerOpen)}>
-          <FaBars size={20} />
-        </div>
+        {router.pathname === '/' || router.pathname === '/women' || router.pathname === '/Customs' ? (
+          <div className="hamburger-menu" onClick={() => setHamburgerOpen(!hamburgerOpen)}>
+            <FaBars size={20} />
+          </div>
+        ) : (
+          <div className="back-button" onClick={() => router.back()}>
+            <IoArrowBack size={20} />
+          </div>
+        )}
+
 
         {/* Overlay for hamburger menu */}
         {hamburgerOpen && (
@@ -140,7 +147,7 @@ const Navbar = () => {
                 LOGOUT</button>
             </div>
           </div>
-        )} 
+        )}
         {!userInfo && (
           <div className={`hamburger-menu-mobile ${hamburgerOpen ? 'open' : ''}`}>
             <div className="hamburger-menu-header">
@@ -250,7 +257,7 @@ const Navbar = () => {
           <Link href="/CartPage">
             <div className="cart-icon">
               <AiOutlineShoppingCart style={{ marginRight: '10px', marginBottom: '4px' }} />
-              <span style={{fontWeight: '600', fontFamily: "monospace"}}>Cart</span>
+              <span style={{ fontWeight: '600', fontFamily: "monospace" }}>Cart</span>
               {/* <span className="cart-item-qty">{totalQuantities}</span> */}
             </div>
           </Link>
