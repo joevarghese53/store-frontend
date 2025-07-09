@@ -226,12 +226,12 @@ const ProductDetails = () => {
             {wishlistData && wishlistData.exists ? (
               <button type="button" className="add-to-wishlist" onClick={handleRemoveFromWishlist}>
                 <GoHeartFill style={{ marginRight: '10px' }} />
-                Added to Wishlist
+                Wishlist
               </button>
             ) : (
               <button type="button" className="add-to-wishlist" onClick={handleAddToWishlist}>
                 <GoHeart style={{ marginRight: '10px' }} />
-                Add to Wishlist
+                Wishlist
               </button>
             )}
 
