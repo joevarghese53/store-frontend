@@ -3639,6 +3639,7 @@ span.text-red {
 @media (max-width: 768px) {
   .address-page-main-container {
     margin-top: 100px;
+    padding: 7px;
   }
 
   .address-content {
@@ -3777,9 +3778,6 @@ span.text-red {
 
 
 @media (max-width: 480px) {
-  .address-page-main-container {
-    padding: 12px;
-  }
 
   .address-page-title {
     font-size: 20px;
@@ -6709,7 +6707,6 @@ body .introjs-skipbutton {
   justify-content: space-between;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e9ecef;
 }
 
 .cart-items-header h3 {
@@ -6854,7 +6851,6 @@ body .introjs-skipbutton {
   color: #333;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e9ecef;
 }
 
 .cart-summary-details {
@@ -6875,7 +6871,6 @@ body .introjs-skipbutton {
   font-weight: 700;
   color: #333;
   padding-top: 16px;
-  border-top: 1px solid #e9ecef;
 }
 
 .cart-summary-divider {
@@ -6919,6 +6914,10 @@ body .introjs-skipbutton {
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
+
+  .cart-page-container {
+    margin-top: 100px;
+  }
 
   .cart-item-image {
     width: 110px;
@@ -7015,6 +7014,19 @@ body .introjs-skipbutton {
   }
 
 }
+
+@media (max-width: 425px) {
+  .cart-item-price-note {
+    font-size: 8px;
+
+  }
+
+  .cart-items-list{
+    padding: 0 6px;
+  }
+}
+
+
 
 /* CartPage.js end */
 
@@ -7255,7 +7267,7 @@ body .introjs-skipbutton {
 @media (max-width: 768px) {
   .checkout-page {
     margin-top: 100px;
-    padding: 10px;
+    padding: 7px;
   }
 
   .checkout-address-card,
@@ -7511,7 +7523,7 @@ body .introjs-skipbutton {
 @media (max-width: 768px) {
   .payment-page-main-container {
     margin-top: 100px;
-    padding: 10px;
+    padding: 7px;
   }
 
   .payment-item-card,
