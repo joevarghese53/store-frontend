@@ -8063,7 +8063,7 @@ body .introjs-skipbutton {
 .empty-wishlist-main-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-top: 15vh;
   min-height: 100vh;
   background-color: #ffffff;
 }
