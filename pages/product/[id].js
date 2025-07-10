@@ -4,7 +4,6 @@ import SizeSelector from '../../components/SizeSelector';
 import ProductInfo from '../../components/ProductInfo';
 import PinCodeCheck from '@/components/PinCodeCheck';
 import { toast } from "react-toastify";
-import Link from 'next/link';
 import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
@@ -27,8 +26,10 @@ const ProductDetails = () => {
   const router = useRouter();
   const { id: productId } = router.query;
   console.log(productId);
+  if (!productId) {
+    return <Loader />;
+  }
   const { data: product, isLoading, refetch, error, } = useGetProductDetailsQuery(productId);
-  console.log(product);
   const { userInfo } = useSelector((state) => state.auth);
   const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
   const dispatch = useDispatch();
@@ -110,6 +111,12 @@ const ProductDetails = () => {
       toast.error('Please select a size before adding to cart.');
       return; // Ensure size is selected before proceeding
     }
+
+    if (!product || !product._id) {
+    toast.error('Product information is not loaded yet.');
+    return;
+  }
+
     try {
       const cartData = { productId: product._id, quantity: qty, productType: 'Product', size: selectedSize };
       console.log('Sending to API:', cartData);

@@ -7,29 +7,23 @@ import { setCredentials } from "../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import styles from '../styles/Auth.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-// import axios from 'axios';
 
 
 const LoginPage = () => {
   const [user, setUser] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
-  const router = useRouter();
-  const dispatch = useDispatch();
-
-  const [login] = useLoginMutation();
-
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [login] = useLoginMutation();
+
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setUser({ ...user, [id]: value });
   };
-
-  const handleResetPassword = () => {
-    router.push('/RequestResetPasswordPage');
-  }
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,11 +31,10 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       const response = await login({ email: user.email, password: user.password }).unwrap();
-      console.log('User logged in successfully:', response.data);
-      dispatch(setCredentials({ ...response }));
+      dispatch(setCredentials({ ...response, accessToken: response.accessToken }));
       router.push('/');
     } catch (error) {
-      console.error('Error logging in user:', error?.data?.message);
+      console.error('Login error:', error?.data?.message);
       setError(error?.data?.message);
       setIsLoading(false);
     }
@@ -96,12 +89,9 @@ const LoginPage = () => {
           Don't have an account? <Link href="/RegisterPage">Sign up</Link>
         </p>
         <p className={styles['auth-reset']}>
-          <button type="button" onClick={handleResetPassword}>Forgot your password?</button>
+          <button type="button" onClick={() => router.push('/RequestResetPasswordPage')}>Forgot your password?</button>
         </p>
       </div>
-      {/* <div className="login-image">
-        <img src={slide1} alt="Login Page Image" />
-      </div> */}
     </div>
   );
 };

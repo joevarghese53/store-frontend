@@ -3,13 +3,20 @@ import Head from 'next/head';
 import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar } from '.';
-import useInitializeUser from '../components/useInitializeUser'; 
+import Loader from './Loader';
+import useInitializeUser from '../components/useInitializeUser';
 
 
 const Layout = ({ children }) => {
   const { loading } = useInitializeUser();
 
-  if (loading) return <p>Loading...</p>; // Add a loading spinner or message if needed
+  if (loading) {
+    return (
+      <div className="layout">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="layout">
