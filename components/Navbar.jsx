@@ -59,9 +59,6 @@ const Navbar = () => {
   return (
     <div className="navbar-container">
       <div className={`top-navbar ${scrolling ? 'hidden' : ''}`}>
-        <div className="nav-logo-mobile">
-          <Link href="/"><img src="/img/logo.png" alt="Logo" /></Link>
-        </div>
         <div className="top-left-links">
           <a
             href="#"
@@ -73,6 +70,9 @@ const Navbar = () => {
           >
             ORIGINALS
           </a>
+          <div className="nav-logo-mobile">
+          <Link href="/"><img src="/img/logo-mobile.png" alt="Logo" /></Link>
+        </div>
           <a
             href="#"
             onClick={(e) => {
@@ -174,7 +174,7 @@ const Navbar = () => {
         )}
 
         <div className="nav-logo-desktop">
-          <Link href="/"><img src="/img/logo.png" alt="Logo" /></Link>
+          <Link href="/"><img src="/img/logo-desktop.png" alt="Logo" /></Link>
         </div>
         <div className="bottom-left-links">
           <a

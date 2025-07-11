@@ -1209,11 +1209,10 @@ span.text-red {
 
   .nav-logo-mobile {
     display: block;
-    font-size: 6px;
   }
 
   .nav-logo-mobile img {
-    height: 25px;
+    height: 30px;
   }
 
   .cart-icon span {
@@ -1235,10 +1234,16 @@ span.text-red {
   }
 
   .top-left-links {
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     text-align: center;
+    display: flex;
+  }
 
+  .top-left-links a {
+    padding: 3px 15px;
+    display: flex;
+    align-items: center;
   }
 
   .profile-icon {
@@ -5439,18 +5444,11 @@ body .introjs-skipbutton {
 @media screen and (max-width:768px) {
 
   .customs-main-container {
-    margin-top: 89px;
+    margin-top: 100px;
   }
 
 }
 
-@media screen and (max-width:425px) {
-
-  .customs-main-container {
-    margin-top: 88px;
-  }
-
-}
 
 
 /* Customs.js end */
