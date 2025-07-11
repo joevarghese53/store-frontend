@@ -7,20 +7,18 @@ import { RingLoader } from 'react-spinners';
 import { FaUpload, FaPalette, FaCog } from 'react-icons/fa';
 import { MdCategory } from "react-icons/md";
 import { useFetchCategoriesQuery } from '@/redux/api/categoryApiSlice';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
-import { useCreateCProductMutation, } from '@/redux/api/cProductApiSlice';
-import {
-  useUploadProductImageMutation,
-} from "../redux/api/productApiSlice";
+import { useCreateCProductMutation } from '@/redux/api/cProductApiSlice';
+import { generateImageApiSlice } from '@/redux/api/generateImageApiSlice';
+import { useUploadProductImageMutation } from "../redux/api/productApiSlice";
 import { useGetTriesQuery, useUseTriesMutation, usePurchaseTriesMutation } from '@/redux/api/triesApiSlice';
-import { useGenerateImageMutation } from '@/redux/api/generateImageApiSlice';
+import { useGenerateImageMutation, } from '@/redux/api/generateImageApiSlice';
 import { toast } from "react-toastify";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import { BASE_URL } from "../redux/constants.js";
 import 'intro.js/minified/introjs.min.css';
 import introJs from 'intro.js';
 
@@ -29,6 +27,7 @@ import introJs from 'intro.js';
 
 const Workshop = ({ setActiveTab }) => {
 
+  const dispatch = useDispatch();
   const [createCProduct] = useCreateCProductMutation();
   const [uploadProductImage] = useUploadProductImageMutation();
   const [generateImage] = useGenerateImageMutation();
@@ -213,7 +212,7 @@ const Workshop = ({ setActiveTab }) => {
   const handlePaymentForTries = async () => {
 
     sessionStorage.setItem('paymentStarted', 'true');
-    
+
     const data = {
       featureId: "generation_attempts_" + selectedOption,
       amount: pricing[selectedOption] * 100, // in paise
@@ -288,10 +287,20 @@ const Workshop = ({ setActiveTab }) => {
 
       const pollJobStatus = async () => {
         try {
-          const statusRes = await fetch(`${BASE_URL}/api/generate-image/status/${jobId}`, {
-            credentials: 'include'
-          });
-          const statusData = await statusRes.json();
+          const statusRes = await dispatch(
+            generateImageApiSlice.endpoints.checkImageGenerationStatus.initiate(jobId, {
+              forceRefetch: true,
+            })
+          );
+
+          if (statusRes.error || !statusRes.data) {
+            console.error("Polling error:", statusRes.error || "No data returned");
+            setErrorMessage("Connection lost or server unavailable.");
+            setanimbool(false);
+            return true;
+          }
+
+          const statusData = statusRes.data;
 
           if (statusData.status === "COMPLETED") {
             setImageData(statusData.finalImage);
@@ -304,7 +313,7 @@ const Workshop = ({ setActiveTab }) => {
               setQueuePosition(null);
               setProgress(0);
               setErrorMessage(null);
-            }, 1000); // after 2s, clean up the UI
+            }, 1000);
             return true;
           } else if (statusData.status === "FAILED") {
             toast.error("Image generation failed: " + statusData.error);
@@ -314,24 +323,28 @@ const Workshop = ({ setActiveTab }) => {
               setQueuePosition(null);
               setanimbool(false);
               setErrorMessage(null);
-            }, 5000); // after 2s, clean up the UI
+            }, 5000);
             return true;
           } else if (statusData.status === "PROCESSING") {
             setQueuePosition(0);
             if (!processingStartTime) {
               processingStartTime = Date.now();
             }
-            const elapsedProcessing = (Date.now() - processingStartTime) / 1000; // in seconds
+            const elapsedProcessing = (Date.now() - processingStartTime) / 1000;
             const progressVal = Math.min((elapsedProcessing / processingDuration) * 100, 99);
             setProgress(progressVal);
-          } else if (statusData.status === "IN_QUEUE" && statusData.position !== undefined && statusData.position !== null) {
+          } else if (
+            statusData.status === "IN_QUEUE" &&
+            statusData.position !== undefined &&
+            statusData.position !== null
+          ) {
             const position = statusData.position;
-
             console.log("Current Queue Position:", position);
             if (typeof position === "number" && !isNaN(position)) {
               setQueuePosition(position);
             }
           }
+
           return false;
         } catch (err) {
           console.error("Polling error:", err);

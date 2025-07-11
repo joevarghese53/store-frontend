@@ -10,7 +10,13 @@ export const generateImageApiSlice = apiSlice.injectEndpoints({
                 body: payload,
             }),
         }),
+        checkImageGenerationStatus: builder.query({
+            query: (jobId) => ({
+                url: `${GENERATE_IMAGE_URL}/status/${jobId}`,
+                method: "GET",
+            }),
+        })
     }),
 }); 
 
-export const { useGenerateImageMutation } = generateImageApiSlice;
+export const { useGenerateImageMutation, useCheckImageGenerationStatusQuery } = generateImageApiSlice;
