@@ -301,6 +301,8 @@ const Workshop = ({ setActiveTab }) => {
           }
 
           const statusData = statusRes.data;
+          console.log("final image: ", statusData.finalImage);
+          console.log("overlay image: ", statusData.overlayImage);
 
           if (statusData.status === "COMPLETED") {
             setImageData(statusData.finalImage);

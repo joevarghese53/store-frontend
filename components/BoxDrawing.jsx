@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
-const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) => {
+const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [startY, setStartY] = useState(0);
@@ -47,11 +47,11 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
         back: { left: 115, top: 65, right: 285, bottom: 345 }
       }
     };
-  
+
     // Ensure we have a valid screen, category, and side, and return a safe default if not
     return (bounds[screen]?.[category]?.[side]) || bounds.default[side] || { left: 0, top: 0, right: 0, bottom: 0 };
   };
-  
+
   const tshirtBounds = getTshirtBounds(screen, category, side);
 
 
@@ -59,7 +59,7 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
 
   const handleMouseDown = (e) => {
     const containerRect = containerRef.current.getBoundingClientRect();
-    
+
 
     if (
       e.clientX - containerRect.left < tshirtBounds.left ||
@@ -104,7 +104,12 @@ const BoxDrawing = ({ imageUrl, onValuesChange, imggg, category, side, screen}) 
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    onValuesChange({ startX, startY, endX, endY });
+    const x1 = Math.min(startX, endX);
+    const y1 = Math.min(startY, endY);
+    const x2 = Math.max(startX, endX);
+    const y2 = Math.max(startY, endY);
+
+    onValuesChange([x1, y1, x2, y2]);
   };
 
   const handleTouchStart = (e) => {
