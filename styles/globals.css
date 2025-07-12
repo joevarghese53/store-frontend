@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 html,
 body,
 * {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Inter', serif;
   box-sizing: border-box;
 
 }
@@ -6486,7 +6487,7 @@ body .introjs-skipbutton {
 .cart-page-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 7px;
+  padding: 20px;
   margin-top: 140px;
   margin-bottom: 70px;
   min-height: calc(100vh - 140px);
@@ -6914,6 +6915,7 @@ body .introjs-skipbutton {
 
   .cart-page-container {
     margin-top: 100px;
+    padding: 7px;
   }
 
   .cart-item-image {
