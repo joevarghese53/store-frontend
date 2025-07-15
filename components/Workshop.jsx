@@ -258,6 +258,8 @@ const Workshop = ({ setActiveTab }) => {
     const formattedBoxDrawingValues = boxDrawingValuesArray.join('_');
     const formattedTextareaValue = textareaValue.replace(/ /g, '_');
     const deviceType = window.innerWidth <= 800 ? 'mobile' : 'desktop';
+    
+    console.log("Box Drawing Values:", formattedBoxDrawingValues);
 
     const payload = {
       prompt: formattedTextareaValue,
