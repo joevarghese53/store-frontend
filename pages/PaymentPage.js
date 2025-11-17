@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { useGetOrderDetailsQuery } from '../redux/api/orderApiSlice';
+import { useInitiatePaymentMutation } from '@/redux/api/paymentApiSlice';
 import axios from 'axios';
 import { BASE_URL } from "../redux/constants.js";
 import { FiUser, FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
@@ -10,6 +11,7 @@ const PaymentPage = () => {
   const router = useRouter();
   const { orderId } = router.query;
   const billingRef = useRef(null);
+  const [ initiatePayment ] = useInitiatePaymentMutation()
 
   const {
     data: orderDetails,
@@ -28,25 +30,24 @@ const PaymentPage = () => {
     };
 
     try {
-      const res = await axios.post(`${BASE_URL}/api/payment/initiate-payment`, data);
-
+      const res = await initiatePayment(data).unwrap();
+      console.log("Response-----",res)
       // Check if PhonePe returned success
-      if (res.data.success && res.data.data?.instrumentResponse?.redirectInfo?.url) {
+      if (res.success && res.data?.instrumentResponse?.redirectInfo?.url) {
         // Optional: store flag for UI tracking
         sessionStorage.setItem("paymentStarted", "true");
 
         // Redirect to PhonePe payment gateway
-        window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
+        window.location.href = res.data.instrumentResponse.redirectInfo.url;
       } else {
         toast.error("Something went wrong while initiating payment.");
-        console.error("PhonePe error:", res.data);
+        console.error("PhonePe error:", res);
       }
     } catch (error) {
       console.error("Payment initiation error:", error);
       toast.error("Payment initiation failed");
     }
   };
-
 
   if (isLoading) {
     return (

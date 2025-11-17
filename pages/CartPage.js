@@ -8,7 +8,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 const CartPage = () => {
   const { userInfo, loading } = useInitializeUser();
   const router = useRouter();
-
+  
   React.useEffect(() => {
     if (!loading && !userInfo) {
       router.push('/LoginPage');

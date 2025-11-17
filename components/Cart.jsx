@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai';
 import { FiTrash2, FiArrowRight, FiShoppingBag } from 'react-icons/fi';
-import { useGetCartQuery, useUpdateCartItemMutation, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
-import { useRouter } from 'next/router';
+import { useGetCartQuery, useRemoveFromCartMutation } from '../redux/api/cartApiSlice';
 import Loader from './Loader';
 import { toast } from 'react-toastify'
 import ErrorCallBack from './ErrorCallBack';
@@ -11,8 +10,8 @@ import ErrorCallBack from './ErrorCallBack';
 const Cart = () => {
   const { data, isLoading, error, refetch } = useGetCartQuery();
   const [removeCartItem] = useRemoveFromCartMutation();
-  const router = useRouter();
   const billingRef = useRef(null);
+  console.log("Cart", data)
 
   const scrollToBilling = () => {
     if (billingRef.current) {

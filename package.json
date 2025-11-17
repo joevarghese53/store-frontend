@@ -4,9 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "backend": "nodemon backend/index.js",
-    "frontend": "next dev",
-    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

@@ -21,7 +21,14 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   // If access token expired (unauthorized)
   if (result?.error?.status === 401) {
     // Attempt refresh token
-    const refreshResult = await baseQuery(`${USERS_URL}/refresh-token`, api, extraOptions);
+    const refreshResult = await baseQuery(
+      {
+        url: `${USERS_URL}/refresh-token`,
+        method: "POST",
+      },
+      api,
+      extraOptions
+    );
 
     if (refreshResult?.data?.accessToken) {
       // Store new access token in Redux
