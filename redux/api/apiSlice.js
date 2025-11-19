@@ -1,7 +1,7 @@
 // redux/api/apiSlice.js
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 import { BASE_URL, USERS_URL } from "../constants.js";
-import { logout, setCredentials } from "../features/auth/authSlice";
+import { logout, setAccessToken } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -32,9 +32,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     if (refreshResult?.data?.accessToken) {
       // Store new access token in Redux
-      const userInfo = api.getState().auth.userInfo;
-      const updatedUser = { ...userInfo, accessToken: refreshResult.data.accessToken };
-      api.dispatch(setCredentials(updatedUser));
+      api.dispatch(setAccessToken(refreshResult.data.accessToken));
 
       // Retry original request
       result = await baseQuery(args, api, extraOptions);

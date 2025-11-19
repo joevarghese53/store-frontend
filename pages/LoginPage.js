@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useLoginMutation } from "../redux/api/usersApiSlice";
 import { setCredentials } from "../redux/features/auth/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from '../styles/Auth.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -29,14 +29,26 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
+    
     try {
+
       const response = await login({ email: user.email, password: user.password }).unwrap();
       dispatch(setCredentials({ ...response, accessToken: response.accessToken }));
       router.push('/');
+
     } catch (error) {
-      console.error('Login error:', error?.data?.message);
-      setError(error?.data?.message);
-      setIsLoading(false);
+
+      setError(
+        error?.data?.message ||
+        error?.error ||
+        error?.message ||
+        "Something went wrong"
+      );      
+
+    } finally {
+      
+      setIsLoading(false)
+
     }
   };
 

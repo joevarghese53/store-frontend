@@ -15,9 +15,7 @@ const OtpSubmissionPage = () => {
     const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef([]);
     const [isResending, setIsResending] = useState(false);
-
-    const { name, email, password } = useSelector((state) => state.register);
-    console.log("Register Data:", { name, email, password });
+    const { name, email } = useSelector(state => state.register);
     const [verifyOtp] = useVerifyEmailOtpMutation();
     const [sendOtp] = useSendEmailOtpMutation();
     const [register] = useRegisterMutation();
@@ -25,7 +23,7 @@ const OtpSubmissionPage = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if (!email || !password) {
+        if (!email) {
             router.replace('/RegisterPage');
         }
     }, []);
@@ -76,6 +74,7 @@ const OtpSubmissionPage = () => {
         }
     };
 
+    //Handle OTP Submission 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -89,21 +88,33 @@ const OtpSubmissionPage = () => {
         }
 
         try {
-            const otpRes = await verifyOtp({ email, otp }).unwrap();
-            if (otpRes.message !== "OTP verified successfully") {
-                throw new Error("OTP verification failed");
-            }
 
-            const registerRes = await register({ username: name, email, password }).unwrap();
-            if (registerRes.success !== true) {
-                throw new Error(registerRes.message || "Registration failed");
-            }
+            //Verify OTP
+            await verifyOtp({ email, otp }).unwrap();
+
+            //Register User
+            const registerRes = await register({ email: email }).unwrap();
+
+            // Clear Registration data from Redux and add login details
             dispatch(clearRegisterData());
-            router.push('/LoginPage');
+            dispatch(setCredentials({ ...registerRes, accessToken: registerRes.accessToken }));
+
+            //Redirect to Home Page
+            router.push('/');
+
         } catch (err) {
-            setError(err?.data?.message || err.message || 'Failed to verify OTP');
+
+            setError(
+                error?.data?.message ||
+                error?.error ||
+                error?.message ||
+                "Something went wrong"
+            );
+
         } finally {
+
             setIsLoading(false);
+
         }
     };
 

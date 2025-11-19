@@ -7,29 +7,34 @@ const userInfoFromStorage =
     : null;
 
 const initialState = {
-  userInfo: userInfoFromStorage,
+  userInfo: userInfoFromStorage, // { name, email, accessToken, ... }
 };
 
 const authSlice = createSlice({
-
   name: 'auth',
   initialState,
   reducers: {
     setCredentials: (state, action) => {
       state.userInfo = action.payload;
-      const { accessToken, ...userData } = action.payload;
       if (typeof window !== 'undefined') {
-        localStorage.setItem('userInfo', JSON.stringify(userData));
+        localStorage.setItem('userInfo', JSON.stringify(action.payload));
       }
     },
     logout: (state) => {
       state.userInfo = null;
       if (typeof window !== 'undefined') {
-        localStorage.clear();
+        localStorage.removeItem('userInfo');
+      }
+    },
+    setAccessToken: (state, action) => {
+      if (!state.userInfo) return;
+      state.userInfo.accessToken = action.payload;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('userInfo', JSON.stringify(state.userInfo));
       }
     },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, setAccessToken } = authSlice.actions;
 export default authSlice.reducer;

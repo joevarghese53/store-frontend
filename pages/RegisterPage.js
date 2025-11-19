@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSendEmailOtpMutation } from "../redux/api/emailOtpSlice";
-import { useCheckUserExistsMutation } from "../redux/api/usersApiSlice";
+import { useInitiateRegistrationMutation } from "../redux/api/usersApiSlice";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { setRegisterData } from '../redux/features/auth/registerSlice';
@@ -19,8 +18,7 @@ const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [sendEmailOtp] = useSendEmailOtpMutation();
-  const [checkUserExists] = useCheckUserExistsMutation();
+  const [initiateRegistration] = useInitiateRegistrationMutation();
   const dispatch = useDispatch();
   const [error, setError] = useState('');
   const router = useRouter();
@@ -31,13 +29,14 @@ const RegisterPage = () => {
 
   };
 
+  //Hanle Register New User Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
+    // Validate Password Strength
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
     if (!passwordPattern.test(user.password)) {
       setError((
         <>
@@ -49,11 +48,11 @@ const RegisterPage = () => {
           <br /> - Be at least 8 characters long.
         </>
       ));
-
       setIsLoading(false);
       return;
     }
 
+    // Check if passwords match
     if (user.password !== user.confirmPassword) {
       setError("Passwords do not match!");
       setIsLoading(false);
@@ -61,38 +60,33 @@ const RegisterPage = () => {
     }
 
     try {
-
+      // Data
       const userData = {
-        name: user.name,
+        username: user.name,
         email: user.email,
         password: user.password
       };
 
-      console.log("checking user exists")
+      // Initiate Registration to store userInfo in server Redis and send OTP to email
+      await initiateRegistration(userData).unwrap();
 
-      const userExistsResponse = await checkUserExists({ email: user.email }).unwrap();
-      console.log("User existence", userExistsResponse)
-      if (userExistsResponse.exists) {
-        setError("User with this email already exists. Please login or use a different email.");
-        setIsLoading(false);
-        return;
-      }
-
-      // Send email OTP before registration
-      const otpResponse = await sendEmailOtp(userData).unwrap();
-      if (otpResponse.status !== 'success') {
-        throw new Error(otpResponse.message || 'Failed to send OTP');
-      }
-      console.log('OTP sent successfully:', otpResponse.data);
-
-      dispatch(setRegisterData(userData));
-
+      // Store user data in Redux for use in OTP submission page
+      dispatch(setRegisterData({name: userData.username, email: userData.email}));
       router.push('/OtpSubmissionPage');
+
     } catch (error) {
-      console.error('Error sending OTP:', error);
-      setError(error.message || 'An error occurred while sending OTP');
+
+      setError(
+        error?.data?.message ||
+        error?.error ||
+        error?.message ||
+        "Something went wrong"
+      );      
+
     } finally {
+
       setIsLoading(false);
+
     }
   };
 

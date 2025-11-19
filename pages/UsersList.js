@@ -23,6 +23,7 @@ const UserList = () => {
     refetch();
   }, [refetch]);
 
+  //Delete user handler
   const deleteHandler = async (id) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
