@@ -1,10 +1,9 @@
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 import { Layout } from '../components';
 import '../styles/globals.css';
-import store, { persistor } from "../redux/store";
+import store from "../redux/store";
 import axios from 'axios';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +12,6 @@ axios.defaults.withCredentials = true;
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
         <Layout>
           <Toaster />
           <ToastContainer
@@ -28,7 +26,6 @@ function MyApp({ Component, pageProps }) {
           />
           <Component {...pageProps} />
         </Layout>
-      </PersistGate>
     </Provider>
   )
 }
