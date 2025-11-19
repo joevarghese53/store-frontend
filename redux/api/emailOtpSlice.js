@@ -3,9 +3,9 @@ import { EMAIL_OTP_URL } from "../constants";
 
 export const emailOtpSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        sendEmailOtp: builder.mutation({
+        reSendOtpEmail: builder.mutation({
             query: (userData) => ({
-                url: `${EMAIL_OTP_URL}/send`,
+                url: `${EMAIL_OTP_URL}/resend-otp`,
                 method: 'POST',
                 body: userData,
             }),
@@ -21,6 +21,6 @@ export const emailOtpSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-    useSendEmailOtpMutation,
+    useReSendOtpEmailMutation,
     useVerifyEmailOtpMutation,
 } = emailOtpSlice;

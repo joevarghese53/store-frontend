@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useVerifyEmailOtpMutation, useSendEmailOtpMutation } from '../redux/api/emailOtpSlice';
+import { useVerifyEmailOtpMutation, useReSendOtpEmailMutation } from '../redux/api/emailOtpSlice';
 import { useRegisterMutation } from '../redux/api/usersApiSlice';
 import { useRouter } from 'next/router';
 import { clearRegisterData } from '../redux/features/auth/registerSlice';
@@ -17,7 +17,7 @@ const OtpSubmissionPage = () => {
     const [isResending, setIsResending] = useState(false);
     const { name, email } = useSelector(state => state.register);
     const [verifyOtp] = useVerifyEmailOtpMutation();
-    const [sendOtp] = useSendEmailOtpMutation();
+    const [reSendOtp] = useReSendOtpEmailMutation();
     const [register] = useRegisterMutation();
     const dispatch = useDispatch();
     const router = useRouter();
@@ -123,8 +123,8 @@ const OtpSubmissionPage = () => {
         setInfo('');
         setIsResending(true);
         try {
-            const sendRes = await sendOtp({ name, email }).unwrap();
-            if (sendRes.message === "OTP sent successfully") {
+            const sendRes = await reSendOtp({ name, email }).unwrap();
+            if (sendRes.success === true) {
                 setInfo("OTP resent to your email");
                 setResendTimer(60);
             } else {
