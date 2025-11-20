@@ -185,7 +185,7 @@ const UpdateProfilePage = () => {
             <input
               id="password"
               type={passwordVisible ? "text" : "password"}
-              placeholder="Enter new password (leave blank to keep current)"
+              placeholder="Enter new password"
               className={styles["auth-input"]}
               value={password}
               onChange={(e) => setPassword(e.target.value)}

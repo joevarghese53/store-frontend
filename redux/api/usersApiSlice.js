@@ -35,6 +35,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USERS_URL}/profile`,
       }),
+      providesTags: ["User"]
     }),
     updateProfile: builder.mutation({
       query: (data) => ({
@@ -42,6 +43,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: ["User"]
     }),
     resetPasswordLink: builder.mutation({
       query: (data) => ({
