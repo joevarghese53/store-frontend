@@ -4,6 +4,7 @@ import { useVerifyEmailOtpMutation, useReSendOtpEmailMutation } from '../redux/a
 import { useRegisterMutation } from '../redux/api/usersApiSlice';
 import { useRouter } from 'next/router';
 import { clearRegisterData } from '../redux/features/auth/registerSlice';
+import { setCredentials } from '@/redux/features/auth/authSlice';
 import styles from '../styles/OtpSubmissionPage.module.css';
 
 const OtpSubmissionPage = () => {
@@ -102,7 +103,7 @@ const OtpSubmissionPage = () => {
             //Redirect to Home Page
             router.push('/');
 
-        } catch (err) {
+        } catch (error) {
 
             setError(
                 error?.data?.message ||
