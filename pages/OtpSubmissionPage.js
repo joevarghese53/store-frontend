@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useVerifyEmailOtpMutation, useReSendOtpEmailMutation } from '../redux/api/emailOtpSlice';
 import { useRegisterMutation } from '../redux/api/usersApiSlice';
 import { useRouter } from 'next/router';
-import { clearRegisterData } from '../redux/features/auth/registerSlice';
-import { setCredentials } from '@/redux/features/auth/authSlice';
+import { clearRegisterData } from '../redux/state/auth/registerSlice';
+import { setCredentials } from '@/redux/state/auth/authSlice';
 import styles from '../styles/OtpSubmissionPage.module.css';
 
 const OtpSubmissionPage = () => {

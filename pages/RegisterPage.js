@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useInitiateRegistrationMutation } from "../redux/api/usersApiSlice";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { setRegisterData } from '../redux/features/auth/registerSlice';
+import { setRegisterData } from '../redux/state/auth/registerSlice';
 import styles from '../styles/Auth.module.css';
 
 const RegisterPage = () => {

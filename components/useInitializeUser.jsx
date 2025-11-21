@@ -1,7 +1,7 @@
 // In a React component or a custom hook
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials } from '../redux/features/auth/authSlice'; // Adjust path as needed
+import { setCredentials } from '../redux/state/auth/authSlice'; // Adjust path as needed
 
 const useInitializeUser = () => {
   const dispatch = useDispatch();

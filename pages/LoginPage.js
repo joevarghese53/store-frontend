@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useLoginMutation } from "../redux/api/usersApiSlice";
-import { setCredentials } from "../redux/features/auth/authSlice";
+import { setCredentials } from "../redux/state/auth/authSlice";
 import { useDispatch } from "react-redux";
 import styles from '../styles/Auth.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';

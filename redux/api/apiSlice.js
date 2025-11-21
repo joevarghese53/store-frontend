@@ -1,7 +1,7 @@
 // redux/api/apiSlice.js
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 import { BASE_URL, USERS_URL } from "../constants.js";
-import { logout, setAccessToken } from "../features/auth/authSlice";
+import { logout, setAccessToken } from "../state/auth/authSlice.js";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -38,10 +38,14 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       result = await baseQuery(args, api, extraOptions);
     } else {
       // Refresh failed — logout user
+
+      //Clear cookie by calling logout endpoint
       await baseQuery({
         url: `${USERS_URL}/logout`,
         method: 'POST',
       }, api, extraOptions);
+
+      //Clear redux state and local storage
       api.dispatch(logout());
     }
   }

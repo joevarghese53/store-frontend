@@ -2,7 +2,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from "react-redux";
 import { useGetCartQuery } from '../redux/api/cartApiSlice';
-import { selectSelectedAddress } from '../redux/slices/checkoutSlice';
+import { selectSelectedAddress } from '../redux/state/checkout/checkoutSlice';
 import { useCreateOrderMutation } from "../redux/api/orderApiSlice";
 import Link from 'next/link';
 import { useRouter } from 'next/router';

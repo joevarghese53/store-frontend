@@ -11,6 +11,7 @@ const RequestResetPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("Init Reset password reset for email:", email);
       const response = await resetPasswordLink({ email }).unwrap();
       setMessage(response.message || "If the email exists, a reset link has been sent.");
     } catch (err) {

@@ -4,7 +4,7 @@ import { useGetFilteredProductsQuery } from '../redux/api/productApiSlice';
 import { useFetchCategoriesQuery } from '../redux/api/categoryApiSlice';
 import Loader from '../components/Loader';
 import { Product } from '../components';
-import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } from '../redux/features/shop/shopSlice';
+import { setCategories, setProducts, setChecked, setPriceRange, resetFilters } from '../redux/state/shop/shopSlice';
 import { useRouter } from 'next/router';
 import { RiFilter2Line } from "react-icons/ri";
 import ErrorCallBack from '@/components/ErrorCallBack';

@@ -10,7 +10,7 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import Link from 'next/link';
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from '@/redux/features/auth/authSlice';
+import { logout } from '@/redux/state/auth/authSlice';
 import { useLogoutMutation } from '../redux/api/usersApiSlice';
 import { FaBars } from 'react-icons/fa';
 import { IoArrowBack } from "react-icons/io5";

@@ -6,7 +6,7 @@ import {
   useUpdateShippingAddressMutation,
   useDeleteShippingAddressMutation
 } from '../redux/api/shippingAddressApiSlice';
-import { selectShippingAddress } from '../redux/slices/checkoutSlice';
+import { selectShippingAddress } from '../redux/state/checkout/checkoutSlice';
 import { useGetCartQuery } from '../redux/api/cartApiSlice';
 import Link from 'next/link';
 import Loader from '../components/Loader';

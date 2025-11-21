@@ -8,7 +8,7 @@ import {
   useGetProfileQuery,
   useUpdateProfileMutation,
 } from "../redux/api/usersApiSlice";
-import { setCredentials } from "../redux/features/auth/authSlice";
+import { setCredentials } from "../redux/state/auth/authSlice";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "../styles/Auth.module.css";
 import Link from "next/link";
