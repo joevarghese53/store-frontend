@@ -21,6 +21,8 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   // If access token expired (unauthorized)
   if (result?.error?.status === 401) {
 
+    const requestedUrl = typeof args === "string" ? args : args?.url ?? "";
+
     const isAuthEndpoint =
       requestedUrl.includes("/login") ||
       requestedUrl.includes("/refresh-token") ||
