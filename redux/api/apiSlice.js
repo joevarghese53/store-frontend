@@ -20,6 +20,21 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
   // If access token expired (unauthorized)
   if (result?.error?.status === 401) {
+
+    const isAuthEndpoint =
+      requestedUrl.includes("/login") ||
+      requestedUrl.includes("/refresh-token") ||
+      requestedUrl.includes("/logout") ||
+      requestedUrl.includes("/register") ||
+      requestedUrl.includes("/initiate-registration") ||
+      requestedUrl.includes("/resetPasswordLink") ||
+      requestedUrl.includes("/resetPassword");
+
+    if (isAuthEndpoint) {
+      // Return the original result (401) so the caller can handle it (e.g. show "invalid creds")
+      return result;
+    }
+
     // Attempt refresh token
     const refreshResult = await baseQuery(
       {
