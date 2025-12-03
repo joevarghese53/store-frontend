@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaTrash, FaCheck, FaTimes, FaUser, FaEnvelope, FaCrown, FaEdit, FaSave, FaUsers } from "react-icons/fa";
-import { MdModeEdit } from "react-icons/md";
+import { FaTrash, FaTimes, FaUser, FaEnvelope, FaCrown, FaEdit, FaSave, FaUsers } from "react-icons/fa";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {
@@ -138,9 +137,10 @@ const UserList = () => {
                           <input
                             type="email"
                             value={editableUserEmail}
-                            onChange={(e) => setEditableUserEmail(e.target.value)}
+                            // onChange={(e) => setEditableUserEmail(e.target.value)}
                             className="user-edit-input"
                             placeholder="Enter email"
+                            readOnly
                           />
                         </div>
                       ) : (
