@@ -113,6 +113,13 @@
   margin-top: 1.2rem;
 }
 
+.auth-info {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 1.2rem;
+  color: green;
+}
+
 .auth-link a {
   color: #f02d34;
   text-decoration: none;

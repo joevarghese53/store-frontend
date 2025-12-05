@@ -45,12 +45,12 @@ const RequestResetPasswordPage = () => {
           </div>
         )}
         {isSuccess && (
-          <div className={styles['auth-link']}>
-            Check your email for the reset link.
+          <div className={styles['auth-info']}>
+            {message}
           </div>
         )}
         {message && !isError && !isSuccess && (
-          <div className={styles['auth-link']}>
+          <div className={styles['auth-info']}>
             {message}
           </div>
         )}

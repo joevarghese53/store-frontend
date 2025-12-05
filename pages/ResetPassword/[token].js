@@ -80,7 +80,7 @@ const ResetPasswordPage = () => {
         {message && <p className="message">{message}</p>}
         {errorPattern && <p className="error-message">{errorPattern}</p>}
         {isError && <p className="error-message">Error: {error?.data?.message?.message || "Something went wrong."}</p>}
-        {isSuccess && <p className="success-message">Your password has been reset successfully. You can now log in.</p>}
+        {isSuccess && <p className="success-message">{message}</p>}
       </div>
     </div>
   );
