@@ -41,7 +41,7 @@ const ProductDetails = () => {
   const [addToCart] = useAddToCartMutation();
   const [addToWishlist] = useAddToWishlistMutation();
   const [removeFromWishlist] = useRemoveFromWishlistMutation();
-  const { data: wishlistData } = useCheckItemInWishlistQuery(productId);
+  const { data: itemExistCheck } = useCheckItemInWishlistQuery(productId);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -230,7 +230,7 @@ const ProductDetails = () => {
             >
               Add to Cart
             </button>
-            {wishlistData && wishlistData.exists ? (
+            {itemExistCheck && itemExistCheck.exists ? (
               <button type="button" className="add-to-wishlist" onClick={handleRemoveFromWishlist}>
                 <GoHeartFill style={{ marginRight: '10px' }} />
                 Added to Wishlist
@@ -244,7 +244,7 @@ const ProductDetails = () => {
 
           </div>
           <div className="product-detail-desc-buttons-mobile">
-            {wishlistData && wishlistData.exists ? (
+            {itemExistCheck && itemExistCheck.exists ? (
               <button type="button" className="add-to-wishlist" onClick={handleRemoveFromWishlist}>
                 <GoHeartFill style={{ marginRight: '10px' }} />
                 Wishlist

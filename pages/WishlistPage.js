@@ -43,7 +43,9 @@ const WishlistPage = () => {
     setSelectedProduct(product); // Set the selected product
     setShowSizeModal(true); // Show the size selection modal
   };
-  console.log(data);
+
+  console.log("Wishlist Data",data);
+  
   if (isLoading) {
     return (
       <div className="wishlist-main-container">

@@ -6,9 +6,6 @@ const Product = ({ product }) => {
   // Assume product.image already contains the full URL
   const imageUrl = product.frontImage;
 
-  console.log("product", product);
-
-
   return (
     <div className='product-card-main-container'>
       <Link href={`/product/${product._id}`}>
