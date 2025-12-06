@@ -47,9 +47,8 @@ const UserList = () => {
         userId: id,
         username: editableUserName,
         email: editableUserEmail,
-      });
+      }).unwrap();
       setEditableUserId(null);
-      refetch();
       toast.success("User updated successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);

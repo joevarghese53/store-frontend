@@ -1,4 +1,4 @@
-// redux/api/cartApiSlice.js
+// redux/api/wishlistApiSlice.js
 import { apiSlice } from "./apiSlice";
 import { WISHLIST_URL } from "../constants";
 
