@@ -1,5 +1,6 @@
 // CreateProduct.js
-import React, { useState } from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
 import {
   useCreateProductMutation,
   useUploadProductImageMutation,
@@ -18,7 +19,7 @@ const CreateProduct = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const { data: categories } = useFetchCategoriesQuery();
-  const [category, setCategory] = useState(categories?.[0]?._id || ""); 
+  const [category, setCategory] = useState(categories?.[0]?._id || "");
   const [gender, setGender] = useState(""); // Initialize state for gender
   const [offers, setOffers] = useState("");
   const [returnpolicy, setReturnPolicy] = useState("");
@@ -32,6 +33,25 @@ const CreateProduct = () => {
   const [uploadProductImage] = useUploadProductImageMutation();
   const [createProduct] = useCreateProductMutation();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+  return () => {
+    if (frontImageUrlToDisplay) {
+      URL.revokeObjectURL(frontImageUrlToDisplay);
+    }
+    if (backImageUrlToDisplay) {
+      URL.revokeObjectURL(backImageUrlToDisplay);
+    }
+    if (frontDesignUrlToDisplay) {
+      URL.revokeObjectURL(frontDesignUrlToDisplay);
+    }
+    if (backDesignUrlToDisplay) {
+      URL.revokeObjectURL(backDesignUrlToDisplay);
+    }
+    imagesUrlToDisplay.forEach((url) => URL.revokeObjectURL(url));
+  };
+}, [frontImageUrlToDisplay, backImageUrlToDisplay, frontDesignUrlToDisplay, backDesignUrlToDisplay, imagesUrlToDisplay]);
+
 
 
 
@@ -95,31 +115,36 @@ const CreateProduct = () => {
   };
 
   const uploadFrontImageHandler = async (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
+    if (!file) return;
     setFrontImage(file);
     setFrontImageUrlToDisplay(URL.createObjectURL(file));
   };
 
   const uploadBackImageHandler = async (e) => {
-    const file = e.target.files[0];
-    setBackImage(file);
+const file = e.target.files?.[0];
+    if (!file) return;
+        setBackImage(file);
     setBackImageUrlToDisplay(URL.createObjectURL(file));
   };
 
   const uploadFrontDesignHandler = async (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
+    if (!file) return;
     setFrontDesign(file);
     setFrontDesignUrlToDisplay(URL.createObjectURL(file));
   };
 
   const uploadBackDesignHandler = async (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
+    if (!file) return;
     setBackDesign(file);
     setBackDesignUrlToDisplay(URL.createObjectURL(file));
   };
 
   const uploadImagesHandler = async (e) => {
     const files = Array.from(e.target.files);
+    if (!files.length) return;
     setImages((prevImages) => [...prevImages, ...files]);
     const urls = files.map((file) => URL.createObjectURL(file));
     setImagesUrlToDisplay((prevImages) => [...prevImages, ...urls]);
