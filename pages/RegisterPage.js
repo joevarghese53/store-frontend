@@ -63,15 +63,20 @@ const RegisterPage = () => {
       // Data
       const userData = {
         username: user.name,
-        email: user.email,
+        email: user.email.toLowerCase(),
         password: user.password
       };
 
       // Initiate Registration to store userInfo in server Redis and send OTP to email
       await initiateRegistration(userData).unwrap();
+      localStorage.setItem(
+        'otp_resend_expiry',
+        (Date.now() + 60 * 1000).toString()
+      );
+
 
       // Store user data in Redux for use in OTP submission page
-      dispatch(setRegisterData({name: userData.username, email: userData.email}));
+      dispatch(setRegisterData({ name: userData.username, email: userData.email }));
       router.push('/OtpSubmissionPage');
 
     } catch (error) {
@@ -81,7 +86,7 @@ const RegisterPage = () => {
         error?.error ||
         error?.message ||
         "Something went wrong"
-      );      
+      );
 
     } finally {
 

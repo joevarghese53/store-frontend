@@ -12,7 +12,7 @@ const OtpSubmissionPage = () => {
     const [error, setError] = useState('');
     const [info, setInfo] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [resendTimer, setResendTimer] = useState(60);
+    const [resendTimer, setResendTimer] = useState(0);
     const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef([]);
     const [isResending, setIsResending] = useState(false);
@@ -22,6 +22,15 @@ const OtpSubmissionPage = () => {
     const [register] = useRegisterMutation();
     const dispatch = useDispatch();
     const router = useRouter();
+    const RESEND_EXPIRY_KEY = 'otp_resend_expiry';
+
+    useEffect(() => {
+        const expiry = localStorage.getItem(RESEND_EXPIRY_KEY);
+        if (!expiry) return;
+
+        const remaining = Math.ceil((Number(expiry) - Date.now()) / 1000);
+        setResendTimer(remaining > 0 ? remaining : 0);
+    }, []);
 
     useEffect(() => {
         if (!email) {
@@ -29,13 +38,38 @@ const OtpSubmissionPage = () => {
         }
     }, []);
 
+    useEffect(() => {
+        inputRefs.current[0]?.focus();
+    }, []);
+
+    const handlePaste = (e) => {
+        const paste = e.clipboardData.getData('text').replace(/\D/g, '');
+        if (paste.length === 6) {
+            setOtpDigits(paste.split(''));
+            inputRefs.current[5]?.focus();
+        }
+    };
+
+
     // Countdown logic for resend timer
     useEffect(() => {
-        if (resendTimer > 0) {
-            const interval = setInterval(() => setResendTimer(prev => prev - 1), 1000);
-            return () => clearInterval(interval);
-        }
+        if (resendTimer <= 0) return;
+
+        const interval = setInterval(() => {
+            const expiry = localStorage.getItem(RESEND_EXPIRY_KEY);
+            if (!expiry) {
+                setResendTimer(0);
+                return;
+            }
+
+            const remaining = Math.ceil((Number(expiry) - Date.now()) / 1000);
+            setResendTimer(Math.max(remaining, 0));
+        }, 1000);
+
+        return () => clearInterval(interval);
     }, [resendTimer]);
+
+
 
     // Update OTP state when digits change
     useEffect(() => {
@@ -97,6 +131,7 @@ const OtpSubmissionPage = () => {
             const registerRes = await register({ email: email }).unwrap();
 
             // Clear Registration data from Redux and add login details
+            localStorage.removeItem(RESEND_EXPIRY_KEY);
             dispatch(clearRegisterData());
             dispatch(setCredentials({ ...registerRes, accessToken: registerRes.accessToken }));
 
@@ -105,21 +140,39 @@ const OtpSubmissionPage = () => {
 
         } catch (error) {
 
-            setError(
+            const message =
                 error?.data?.message ||
                 error?.error ||
                 error?.message ||
-                "Something went wrong"
-            );
+                "Something went wrong";
 
-        } finally {
+            // 🔴 Registration session expired → restart flow
+            if (
+                message.toLowerCase().includes("registration data expired") ||
+                message.toLowerCase().includes("otp expired") ||
+                message.toLowerCase().includes("email mismatch")
+            ) {
+                localStorage.removeItem(RESEND_EXPIRY_KEY);
+                dispatch(clearRegisterData());
+                setOtpDigits(['', '', '', '', '', '']);
 
+                setError(message + " Redirecting to registration page...");
+
+                setTimeout(() => {
+                    router.replace('/RegisterPage');
+                }, 1500);
+
+                return; // ⛔ stop further execution
+            }
+
+            // 🔴 Normal OTP / network error → stay on page
+            setError(message);
             setIsLoading(false);
-
         }
     };
 
     const handleResendOtp = async () => {
+        if (resendTimer > 0) return;
         setError('');
         setInfo('');
         setIsResending(true);
@@ -127,7 +180,11 @@ const OtpSubmissionPage = () => {
             const sendRes = await reSendOtp({ name, email }).unwrap();
             if (sendRes.success === true) {
                 setInfo("OTP resent to your email");
+                const expiryTime = Date.now() + 60 * 1000;
+                localStorage.setItem(RESEND_EXPIRY_KEY, expiryTime.toString());
+
                 setResendTimer(60);
+
             } else {
                 throw new Error(sendRes.message || "Failed to resend OTP");
             }
@@ -163,6 +220,7 @@ const OtpSubmissionPage = () => {
                                 onKeyDown={e => handleOtpKeyDown(e, idx)}
                                 autoFocus={idx === 0}
                                 aria-label={`OTP digit ${idx + 1}`}
+                                onPaste={handlePaste}
                             />
                         ))}
                     </div>
