@@ -4,16 +4,15 @@ import { PAYMENT_URL } from "../constants";
 
 export const paymentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    initiatePayment: builder.mutation({
-      query: (data) => ({
-        url: `${PAYMENT_URL}/initiate-payment`,
-        method: "POST",
-        body: data,
+    checkPaymentStatus: builder.mutation({
+      query: (merchantOrderId) => ({
+        url: `${PAYMENT_URL}/status?id=${merchantOrderId}`,
+        method: "GET",
       }),
     }),
   }),
 });
 
 export const {
-  useInitiatePaymentMutation
+  useCheckPaymentStatusMutation,
 } = paymentApiSlice;

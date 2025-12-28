@@ -4498,6 +4498,10 @@ span.text-red {
   margin: auto
 }
 
+.rise-loader {
+  margin: 20px;
+}
+
 
 @keyframes spin {
   0% {

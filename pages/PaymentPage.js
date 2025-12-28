@@ -2,16 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { useGetOrderDetailsQuery } from '../redux/api/orderApiSlice';
-import { useInitiatePaymentMutation } from '@/redux/api/paymentApiSlice';
-import axios from 'axios';
-import { BASE_URL } from "../redux/constants.js";
+import { usePayForOrderMutation } from '@/redux/api/orderApiSlice';
 import { FiUser, FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
 
 const PaymentPage = () => {
   const router = useRouter();
   const { orderId } = router.query;
   const billingRef = useRef(null);
-  const [ initiatePayment ] = useInitiatePaymentMutation()
+  const [ initiatePayment ] = usePayForOrderMutation()
 
   const {
     data: orderDetails,

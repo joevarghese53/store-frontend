@@ -3,17 +3,18 @@ import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BoxDrawing from '@/components/BoxDrawing';
 import Dragg from '@/components/dragg';
-import { RingLoader } from 'react-spinners';
 import { FaUpload, FaPalette, FaCog } from 'react-icons/fa';
 import { MdCategory } from "react-icons/md";
 import { useFetchCategoriesQuery } from '@/redux/api/categoryApiSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
+import { RingLoader, RiseLoader } from 'react-spinners';
 import { useCreateCProductMutation } from '@/redux/api/cProductApiSlice';
 import { generateImageApiSlice } from '@/redux/api/generateImageApiSlice';
 import { useUploadProductImageMutation } from "../redux/api/productApiSlice";
 import { useGetTriesQuery, useUseTriesMutation, usePurchaseTriesMutation } from '@/redux/api/triesApiSlice';
 import { useGenerateImageMutation, } from '@/redux/api/generateImageApiSlice';
+import { useCheckPaymentStatusMutation } from '@/redux/api/paymentApiSlice';
 import { toast } from "react-toastify";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
@@ -21,8 +22,8 @@ import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import 'intro.js/minified/introjs.min.css';
 import introJs from 'intro.js';
-
-
+import Script from "next/script";
+import Loader from './Loader';
 
 
 const Workshop = ({ setActiveTab }) => {
@@ -33,9 +34,10 @@ const Workshop = ({ setActiveTab }) => {
   const [generateImage] = useGenerateImageMutation();
   const { userInfo } = useSelector((state) => state.auth);
   const { data: categoriesData, isLoading: categoriesLoading, error: categoriesError } = useFetchCategoriesQuery();
-  const { data: triesData, isLoading: triesLoading, error: triesError } = useGetTriesQuery();
+  const { data: triesData, isLoading: triesLoading, error: triesError, refetch: refetchTries } = useGetTriesQuery();
   const [useTries] = useUseTriesMutation();
   const [purchaseTries] = usePurchaseTriesMutation();
+  const [checkPaymentStatus] = useCheckPaymentStatusMutation();
   const [activeColor, setActiveColor] = useState('black');
   const [activeSide, setActiveSide] = useState('front');
   const [textareaValue, setTextareaValue] = useState('');
@@ -61,6 +63,9 @@ const Workshop = ({ setActiveTab }) => {
   const [queuePosition, setQueuePosition] = useState(null);
   const [progress, setProgress] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isPolling, setIsPolling] = useState(false);
+  const [pollStatus, setPollStatus] = useState("INITIATED");
+  const [pollAttempts, setPollAttempts] = useState(0);
   const [boxDrawingValues, setBoxDrawingValues] = useState({
     startX: 0,
     startY: 0,
@@ -73,6 +78,54 @@ const Workshop = ({ setActiveTab }) => {
       setCategory(categoriesData[0]._id);
     }
   }, [categoriesData]);
+
+  const MAX_ATTEMPTS = 60; // ~5 minutes if interval = 5s
+  const POLL_INTERVAL = 5000;
+
+  const pollPaymentStatus = async (orderId) => {
+    setIsPolling(true);
+    setPollStatus("INITIATED");
+    setPollAttempts(0);
+
+    let attempts = 0;
+
+    const interval = setInterval(async () => {
+      attempts++;
+
+      try {
+        const res = await checkPaymentStatus(orderId).unwrap();
+
+        setPollStatus(res.status);
+        setPollAttempts(attempts);
+
+        if (res.status === "COMPLETED") {
+          clearInterval(interval);
+          setIsPolling(false);
+          await refetchTries();
+          toast.success("Payment successful 🎉");
+          return;
+        }
+
+        if (res.status === "FAILED") {
+          clearInterval(interval);
+          setIsPolling(false);
+          toast.error("Payment failed. Please try again.");
+          return;
+        }
+
+        if (attempts >= MAX_ATTEMPTS) {
+          clearInterval(interval);
+          setIsPolling(false);
+          toast.info(
+            "Payment is still processing. Tries will be added once confirmed."
+          );
+        }
+      } catch (err) {
+        console.error("Polling error", err);
+      }
+    }, POLL_INTERVAL);
+  };
+
 
   const averageTimePerJobInQueue = 15; // seconds per job
   const processingDuration = 15; // seconds to move from 70% to 100%
@@ -210,29 +263,50 @@ const Workshop = ({ setActiveTab }) => {
   };
 
   const handlePaymentForTries = async () => {
-
-    sessionStorage.setItem('paymentStarted', 'true');
-
     const data = {
-      featureId: "generation_attempts_" + selectedOption,
-      amount: pricing[selectedOption] * 100, // in paise
-      userId: userInfo._id,
-      name: userInfo.username,
-      triesToPurchase: tableData[selectedOption][0].value,
+      featureId: "BT_" + selectedOption.toUpperCase(),
+      option: selectedOption,
     };
 
     try {
-      const res = await purchaseTries(data).unwrap();
-      if (res.success && res.data.instrumentResponse?.redirectInfo?.url) {
-        window.location.href = res.data.instrumentResponse.redirectInfo.url;
-      } else {
-        toast.error("Something went wrong.");
+      // 1️⃣ Initiate payment
+      const initRes = await purchaseTries(data).unwrap();
+
+      if (!initRes?.success || !initRes?.redirectUrl || !initRes?.merchantOrderId) {
+        toast.error("Failed to initiate payment");
+        return;
       }
+
+      if (!window.PhonePeCheckout) {
+        toast.error("Payment system still loading. Try again.");
+        return;
+      }
+
+      closePopup();
+
+      // 2️⃣ Open PhonePe iframe
+      window.PhonePeCheckout.transact({
+        tokenUrl: initRes.redirectUrl,
+        type: "IFRAME",
+
+        callback: async (result) => {
+          // 🚫 User cancelled
+          if (result === "USER_CANCEL") {
+            toast.info("Payment cancelled");
+            return;
+          }
+
+          if (result === "CONCLUDED") {
+            pollPaymentStatus(initRes.merchantOrderId);
+          }
+        },
+      });
     } catch (error) {
       console.error("Payment initiation failed", error);
       toast.error("Payment initiation failed.");
     }
   };
+
 
 
   const handleSubmit = async () => {
@@ -258,7 +332,7 @@ const Workshop = ({ setActiveTab }) => {
     const formattedBoxDrawingValues = boxDrawingValuesArray.join('_');
     const formattedTextareaValue = textareaValue.replace(/ /g, '_');
     const deviceType = window.innerWidth <= 800 ? 'mobile' : 'desktop';
-    
+
     console.log("Box Drawing Values:", formattedBoxDrawingValues);
 
     const payload = {
@@ -578,6 +652,10 @@ const Workshop = ({ setActiveTab }) => {
     <>
       {userInfo ? (
         <>
+          <Script
+            src="https://mercury.phonepe.com/web/bundle/checkout.js"
+            strategy="afterInteractive"
+          />
           <button
             className="workshop-tutorial-button"
             onClick={startTutorial}
@@ -621,6 +699,39 @@ const Workshop = ({ setActiveTab }) => {
 
                     <BoxDrawing imageUrl={`./img/${activeColor}_tshirt_${selectedCategory}_${activeSide}.png`} onValuesChange={handleBoxDrawingValuesChange} imggg={true} category={`${selectedCategory}`} side={`${activeSide}`} screen='mobile' />
                   </div>
+                  {isPolling && (
+                    <div className="loading-screen-overlay">
+                      <div className="loading-box">
+                        <RiseLoader className='rise-loader' color='#00d0ff'></RiseLoader>
+                        <h2 style={{ "margin" : "50px 0px"}}>
+                          {pollStatus === "INITIATED" || pollStatus === "PENDING"
+                            ? "Confirming payment…"
+                            : pollStatus === "COMPLETED"
+                              ? "Payment successful 🎉"
+                              : "Payment failed"}
+                        </h2>
+
+                        <p>
+                          {pollStatus === "PENDING"
+                            ? "This may take a few seconds. Please don’t close the page."
+                            : "Checking payment status with PhonePe"}
+                        </p>
+
+                        {pollAttempts >= 6 && (
+                          <p className="hint">
+                            Taking longer than usual. You can safely close this page —
+                            your tries will be added once confirmed.
+                          </p>
+                        )}
+
+                        {pollAttempts >= MAX_ATTEMPTS && (
+                          <button onClick={() => setIsPolling(false)}>
+                            Close
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   {animbool && (
                     <div className="loading-screen-overlay">
                       <div className="loading-box">
