@@ -23,7 +23,6 @@ import { IoClose } from "react-icons/io5";
 import 'intro.js/minified/introjs.min.css';
 import introJs from 'intro.js';
 import Script from "next/script";
-import Loader from './Loader';
 
 
 const Workshop = ({ setActiveTab }) => {
@@ -79,7 +78,11 @@ const Workshop = ({ setActiveTab }) => {
     }
   }, [categoriesData]);
 
-  const MAX_ATTEMPTS = 60; // ~5 minutes if interval = 5s
+  useEffect(() => {
+    return () => clearInterval(interval);
+  }, []);
+
+  const MAX_ATTEMPTS = 12; // ~1 minute if interval = 5s
   const POLL_INTERVAL = 5000;
 
   const pollPaymentStatus = async (orderId) => {
@@ -703,7 +706,7 @@ const Workshop = ({ setActiveTab }) => {
                     <div className="loading-screen-overlay">
                       <div className="loading-box">
                         <RiseLoader className='rise-loader' color='#00d0ff'></RiseLoader>
-                        <h2 style={{ "margin" : "50px 0px"}}>
+                        <h2 style={{ "margin": "50px 0px" }}>
                           {pollStatus === "INITIATED" || pollStatus === "PENDING"
                             ? "Confirming payment…"
                             : pollStatus === "COMPLETED"
