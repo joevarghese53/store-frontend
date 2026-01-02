@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BoxDrawing from '@/components/BoxDrawing';
@@ -65,6 +65,7 @@ const Workshop = ({ setActiveTab }) => {
   const [isPolling, setIsPolling] = useState(false);
   const [pollStatus, setPollStatus] = useState("INITIATED");
   const [pollAttempts, setPollAttempts] = useState(0);
+  const pollingIntervalRef = useRef(null);
   const [boxDrawingValues, setBoxDrawingValues] = useState({
     startX: 0,
     startY: 0,
@@ -79,20 +80,26 @@ const Workshop = ({ setActiveTab }) => {
   }, [categoriesData]);
 
   useEffect(() => {
-    return () => clearInterval(interval);
+    return () => {
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+        pollingIntervalRef.current = null;
+      }
+    };
   }, []);
 
   const MAX_ATTEMPTS = 12; // ~1 minute if interval = 5s
   const POLL_INTERVAL = 5000;
 
   const pollPaymentStatus = async (orderId) => {
+    if (pollingIntervalRef.current) return;
     setIsPolling(true);
     setPollStatus("INITIATED");
     setPollAttempts(0);
 
     let attempts = 0;
 
-    const interval = setInterval(async () => {
+    pollingIntervalRef.current = setInterval(async () => {
       attempts++;
 
       try {
@@ -102,7 +109,8 @@ const Workshop = ({ setActiveTab }) => {
         setPollAttempts(attempts);
 
         if (res.status === "COMPLETED") {
-          clearInterval(interval);
+          clearInterval(pollingIntervalRef.current);
+          pollingIntervalRef.current = null;
           setIsPolling(false);
           await refetchTries();
           toast.success("Payment successful 🎉");
@@ -110,18 +118,18 @@ const Workshop = ({ setActiveTab }) => {
         }
 
         if (res.status === "FAILED") {
-          clearInterval(interval);
+          clearInterval(pollingIntervalRef.current);
+          pollingIntervalRef.current = null;
           setIsPolling(false);
           toast.error("Payment failed. Please try again.");
           return;
         }
 
         if (attempts >= MAX_ATTEMPTS) {
-          clearInterval(interval);
+          clearInterval(pollingIntervalRef.current);
+          pollingIntervalRef.current = null;
           setIsPolling(false);
-          toast.info(
-            "Payment is still processing. Tries will be added once confirmed."
-          );
+          toast.info("Payment is still processing. Tries will be added once confirmed.");
         }
       } catch (err) {
         console.error("Polling error", err);
@@ -287,13 +295,11 @@ const Workshop = ({ setActiveTab }) => {
 
       closePopup();
 
-      // 2️⃣ Open PhonePe iframe
       window.PhonePeCheckout.transact({
         tokenUrl: initRes.redirectUrl,
         type: "IFRAME",
 
         callback: async (result) => {
-          // 🚫 User cancelled
           if (result === "USER_CANCEL") {
             toast.info("Payment cancelled");
             return;
