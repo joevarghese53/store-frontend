@@ -97,13 +97,13 @@ const WishlistPage = () => {
           </div>
         )}
         {data.items.map((product) => (
-          <div key={product.productId._id} className='wishlist-item'>
-            <Product product={product.productId} />
+          <div key={product._id} className='wishlist-item'>
+            <Product product={product} />
             <div className="wishlist-btns">
-              <div className="wishlist-remove" onClick={() => handleRemoveFromWishlist(product.productId._id)}>
+              <div className="wishlist-remove" onClick={() => handleRemoveFromWishlist(product._id)}>
                 <RiDeleteBin6Line />
               </div>
-              <div className="wishlist-move-to-cart" onClick={() => handleMoveToCartClick(product.productId)}>
+              <div className="wishlist-move-to-cart" onClick={() => handleMoveToCartClick(product)}>
                 MOVE TO CART
               </div>
             </div>
