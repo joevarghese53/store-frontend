@@ -104,8 +104,7 @@ const Workshop = ({ setActiveTab }) => {
 
       try {
         const res = await checkPaymentStatus(orderId).unwrap();
-
-        console.log("Payment status response:", res);
+        
         setPollStatus(res.status);
         setPollAttempts(attempts);
 

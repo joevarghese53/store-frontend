@@ -38,6 +38,14 @@ export const shippingAddressApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['ShippingAddress'],
     }),
+    setDefaultShippingAddress: builder.mutation({
+      query: (id) => ({
+        url: `${SHIPPING_ADDRESS_URL}/${id}/default`,
+        method: 'PATCH',
+        credentials: 'include',
+      }),
+      invalidatesTags: ['ShippingAddress'],
+    }),
   }),
 });
 
@@ -46,4 +54,5 @@ export const {
   useCreateShippingAddressMutation,
   useUpdateShippingAddressMutation,
   useDeleteShippingAddressMutation,
+  useSetDefaultShippingAddressMutation,
 } = shippingAddressApiSlice;

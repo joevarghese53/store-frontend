@@ -25,7 +25,7 @@
     "fabricjs-react": "^1.2.2",
     "framer-motion": "^12.23.25",
     "intro.js": "^7.2.0",
-    "jspdf": "^3.0.4",
+    "jspdf": "^4.0.0",
     "lucide-react": "^0.556.0",
     "merge-images": "^2.0.0",
     "moment": "^2.30.1",

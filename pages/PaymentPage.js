@@ -194,17 +194,52 @@ const PaymentPage = () => {
                   <span>Shipping Details</span>
                 </div>
                 <div className='shipping-summary-rows'>
-                  <div className='shipping-summary-left'>
-                    <div className="shipping-summary-row"><FiUser /> <span>Name:</span></div>
-                    <div className="shipping-summary-row"><FiMail /> <span>Email:</span></div>
-                    <div className="shipping-summary-row"><FiMapPin /> <span>Address:</span></div>
-                    <div className="shipping-summary-row"><FiPhone /> <span>Contact:</span></div>
+                  <div className="shipping-summary-row">
+                    <div className='shipping-summary-left'>
+                      <FiUser /> <span>Name:</span>
+                    </div>
+                    <div className='shipping-summary-value'>
+                      {orderDetails.user.username}
+                    </div>
                   </div>
-                  <div className='shipping-summary-right'>
-                    <div className="shipping-summary-value">{orderDetails.user.username}</div>
-                    <div className="shipping-summary-value">{orderDetails.user.email}</div>
-                    <div className="shipping-summary-value">{orderDetails.shippingAddress.address}, {orderDetails.shippingAddress.city} - {orderDetails.shippingAddress.postalCode}, {orderDetails.shippingAddress.state}, {orderDetails.shippingAddress.country}</div>
-                    <div className="shipping-summary-value">{orderDetails.shippingAddress.phoneno}</div>
+
+                  <div className="shipping-summary-row">
+                    <div className='shipping-summary-left'>
+                      <FiMail /> <span>Email:</span>
+                    </div>
+                    <div className='shipping-summary-value'>
+                      {orderDetails.user.email}
+                    </div>
+                  </div>
+
+                  <div className="shipping-summary-row">
+                    <div className='shipping-summary-left'>
+                      <FiMapPin /> <span>Address:</span>
+                    </div>
+                    <div className='shipping-summary-value'>
+                      {orderDetails.shippingAddress.fullName}, <br />
+                      {orderDetails.shippingAddress.addressLine1}, <br />
+                      {orderDetails.shippingAddress.addressLine2 && (
+                        <>
+                          {orderDetails.shippingAddress.addressLine2}, <br />
+                        </>
+                      )}
+                      {orderDetails.shippingAddress.landmark && (
+                        <>
+                          {orderDetails.shippingAddress.landmark}, <br />
+                        </>
+                      )}
+                      {orderDetails.shippingAddress.city} - {orderDetails.shippingAddress.postalCode}, {orderDetails.shippingAddress.state}, {orderDetails.shippingAddress.country}
+                    </div>
+                  </div>
+
+                  <div className="shipping-summary-row">
+                    <div className='shipping-summary-left'>
+                      <FiPhone /> <span>Contact:</span>
+                    </div>
+                    <div className='shipping-summary-value'>
+                      {orderDetails.shippingAddress.phoneNumber}
+                    </div>
                   </div>
                 </div>
               </div>
