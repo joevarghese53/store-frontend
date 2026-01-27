@@ -4,12 +4,19 @@ import { useRouter } from 'next/router';
 import { useGetOrderDetailsQuery } from '../redux/api/orderApiSlice';
 import { usePayForOrderMutation } from '@/redux/api/orderApiSlice';
 import { FiUser, FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
+import Script from "next/script";
+import { useCheckPaymentStatusMutation } from '@/redux/api/paymentApiSlice';
 
 const PaymentPage = () => {
   const router = useRouter();
   const { orderId } = router.query;
   const billingRef = useRef(null);
-  const [ initiatePayment ] = usePayForOrderMutation()
+  const [initiatePayment] = usePayForOrderMutation()
+  const [isPolling, setIsPolling] = useState(false);
+  const [pollStatus, setPollStatus] = useState("INITIATED");
+  const [pollAttempts, setPollAttempts] = useState(0);
+  const pollingIntervalRef = useRef(null);
+  const [checkPaymentStatus] = useCheckPaymentStatusMutation();
 
   const {
     data: orderDetails,
@@ -19,28 +26,98 @@ const PaymentPage = () => {
     skip: !orderId,
   });
 
+  useEffect(() => {
+    return () => {
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+        pollingIntervalRef.current = null;
+      }
+    };
+  }, []);
+
+  const MAX_ATTEMPTS = 12; // ~1 minute if interval = 5s
+  const POLL_INTERVAL = 5000;
+
+  const pollPaymentStatus = async (orderId) => {
+    if (pollingIntervalRef.current) return;
+    setIsPolling(true);
+    setPollStatus("INITIATED");
+    setPollAttempts(0);
+
+    let attempts = 0;
+
+    pollingIntervalRef.current = setInterval(async () => {
+      attempts++;
+
+      try {
+        const res = await checkPaymentStatus(orderId).unwrap();
+
+        console.log("Payment status response:", res);
+        setPollStatus(res.status);
+        setPollAttempts(attempts);
+
+        if (res.status === "SUCCESS") {
+          clearInterval(pollingIntervalRef.current);
+          pollingIntervalRef.current = null;
+          setIsPolling(false);
+          await refetchTries();
+          toast.success("Payment successful 🎉");
+          return;
+        }
+
+        if (res.status === "FAILED") {
+          clearInterval(pollingIntervalRef.current);
+          pollingIntervalRef.current = null;
+          setIsPolling(false);
+          toast.error("Payment failed. Please try again.");
+          return;
+        }
+
+        if (attempts >= MAX_ATTEMPTS) {
+          clearInterval(pollingIntervalRef.current);
+          pollingIntervalRef.current = null;
+          setIsPolling(false);
+          toast.info("Payment is still processing. Tries will be added once confirmed.");
+        }
+      } catch (err) {
+        console.error("Polling error", err);
+      }
+    }, POLL_INTERVAL);
+  };
+
   const handlePayment = async () => {
     const data = {
-      merchantTransactionId: orderDetails._id,
-      customerUserId: orderDetails.user._id,
-      amount: orderDetails.totalPrice * 100, // Make sure it's in paise
-      name: orderDetails.user.username,
+      merchantOrderId: orderDetails._id,
     };
 
     try {
-      const res = await initiatePayment(data).unwrap();
-      console.log("Response-----",res)
-      // Check if PhonePe returned success
-      if (res.success && res.data?.instrumentResponse?.redirectInfo?.url) {
-        // Optional: store flag for UI tracking
-        sessionStorage.setItem("paymentStarted", "true");
-
-        // Redirect to PhonePe payment gateway
-        window.location.href = res.data.instrumentResponse.redirectInfo.url;
-      } else {
-        toast.error("Something went wrong while initiating payment.");
-        console.error("PhonePe error:", res);
+      const initRes = await initiatePayment(data).unwrap();
+      if (!initRes?.success || !initRes?.redirectUrl || !initRes?.merchantOrderId) {
+        toast.error("Failed to initiate payment");
+        return;
       }
+
+      if (!window.PhonePeCheckout) {
+        toast.error("Payment system still loading. Try again.");
+        return;
+      }
+      console.log("Response-----", res)
+
+      window.PhonePeCheckout.transact({
+        tokenUrl: initRes.redirectUrl,
+        type: "IFRAME",
+
+        callback: async (result) => {
+          if (result === "USER_CANCEL") {
+            toast.info("Payment cancelled");
+            return;
+          }
+
+          if (result === "CONCLUDED") {
+            pollPaymentStatus(initRes.merchantOrderId);
+          }
+        },
+      });
     } catch (error) {
       console.error("Payment initiation error:", error);
       toast.error("Payment initiation failed");
@@ -63,6 +140,10 @@ const PaymentPage = () => {
 
   return (
     <div className='payment-page-main-container'>
+      <Script
+        src="https://mercury.phonepe.com/web/bundle/checkout.js"
+        strategy="afterInteractive"
+      />
       <div className='address-header'>
         <h4 id='address-header-one'>MY CART ------- ADDRESS ------- CHECKOUT  ------- PAYMENT</h4>
         <h4 id='address-header-two'></h4>
@@ -162,6 +243,39 @@ const PaymentPage = () => {
           Pay Now
         </button>
       </div>
+      {isPolling && (
+        <div className="loading-screen-overlay">
+          <div className="loading-box">
+            <RiseLoader className='rise-loader' color='#00d0ff'></RiseLoader>
+            <h2 style={{ "margin": "50px 0px" }}>
+              {pollStatus === "INITIATED" || pollStatus === "PENDING"
+                ? "Confirming payment…"
+                : pollStatus === "COMPLETED"
+                  ? "Payment successful 🎉"
+                  : "Payment failed"}
+            </h2>
+
+            <p>
+              {pollStatus === "PENDING"
+                ? "This may take a few seconds. Please don’t close the page."
+                : "Checking payment status with PhonePe"}
+            </p>
+
+            {pollAttempts >= 6 && (
+              <p className="hint">
+                Taking longer than usual. You can safely close this page —
+                your tries will be added once confirmed.
+              </p>
+            )}
+
+            {pollAttempts >= MAX_ATTEMPTS && (
+              <button onClick={() => setIsPolling(false)}>
+                Close
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

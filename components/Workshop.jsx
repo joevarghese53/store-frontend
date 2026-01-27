@@ -319,6 +319,7 @@ const Workshop = ({ setActiveTab }) => {
 
 
 
+
   const handleSubmit = async () => {
 
     // Check if the prompt (textareaValue) is empty
