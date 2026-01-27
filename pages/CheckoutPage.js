@@ -6,7 +6,7 @@ import { selectSelectedAddress } from '../redux/state/checkout/checkoutSlice';
 import { useCreateOrderMutation } from "../redux/api/orderApiSlice";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FiUser, FiMapPin, FiEdit2 } from 'react-icons/fi';
+import { FiUser, FiMapPin, FiEdit2, FiPhone } from 'react-icons/fi';
 
 const CheckoutPage = () => {
 
@@ -16,7 +16,29 @@ const CheckoutPage = () => {
     const [createOrder, { isLoading, error }] = useCreateOrderMutation();
     const router = useRouter();
 
+    if (!userInfo || isCartLoading || !selectedAddress) {
+        return (
+            <div className="checkout-loading-container">
+                <div className="checkout-loading-spinner"></div>
+                <p>Loading checkout...</p>
+            </div>
+        );
+    }
 
+    // Extract shipping address details
+    const {
+        _id,
+        fullName,
+        addressLine1,
+        addressLine2,
+        city,
+        postalCode,
+        state,
+        country,
+        phoneNumber
+    } = selectedAddress;
+
+    // Function to calculate prices
     function calcPrices(data) {
         const items = data.items;
         let itemsPriceWithTax = 0;
@@ -48,9 +70,9 @@ const CheckoutPage = () => {
             totalPrice, // Final price including tax and shipping
         };
     }
-
     const { itemsPrice, shippingPrice, taxPrice, totalPrice } = cartData ? calcPrices(cartData) : {};
 
+    // Handler for placing order
     const placeOrderHandler = async () => {
         try {
             console.log('Placing order...');
@@ -73,26 +95,20 @@ const CheckoutPage = () => {
             console.log('Cart Items:', cartItems);
 
             const shippingAddress = {
-                address: selectedAddress.address,
-                city: selectedAddress.city,
-                postalCode: selectedAddress.postalCode,
-                state: selectedAddress.state,
-                country: selectedAddress.country,
-                phoneno: selectedAddress.phoneno
+                fullName,
+                addressLine1,
+                addressLine2,
+                city,
+                postalCode,
+                state,
+                country,
+                phoneNumber,
             };
             console.log('Shipping Address:', shippingAddress);
-
-            const totPrice = totalPrice;
-            console.log('Total Price:', totPrice);
 
             const orderData = {
                 orderItems: cartItems,
                 shippingAddress: shippingAddress,
-                paymentMethod: 'Paytm',
-                itemsPrice: totPrice,
-                shippingPrice: 0,
-                taxPrice: 0,
-                totalPrice: totPrice,
             };
             console.log('Order Data:', orderData);
 
@@ -104,15 +120,6 @@ const CheckoutPage = () => {
             toast.error(error.message || 'Failed to place order');
         }
     };
-
-    if (!userInfo || isCartLoading || !selectedAddress) {
-        return (
-            <div className="checkout-loading-container">
-                <div className="checkout-loading-spinner"></div>
-                <p>Loading checkout...</p>
-            </div>
-        );
-    }
 
     return (
         <div className="checkout-page">
@@ -132,10 +139,27 @@ const CheckoutPage = () => {
                         <FiUser className="checkout-address-user-icon" />
                         <span>{userInfo.username}</span>
                     </div>
-                    <div className="checkout-address-info">
-                        <span>{selectedAddress.address}, {selectedAddress.city}, {selectedAddress.postalCode}</span><br />
-                        <span>{selectedAddress.state}, {selectedAddress.country}</span><br />
-                        <span>{selectedAddress.phoneno}</span>
+                    <div className="address-content">
+                        <p id='address' className="address-text">
+                            {selectedAddress.fullName} <br />
+                            {selectedAddress.addressLine1} <br />
+                            {selectedAddress.addressLine2 && (
+                                <>
+                                    {selectedAddress.addressLine2} <br />
+                                </>
+                            )}
+
+                            {selectedAddress.landmark && (
+                                <>
+                                    {selectedAddress.landmark} <br />
+                                </>
+                            )}
+                            {selectedAddress.city} - {selectedAddress.postalCode}, {selectedAddress.state}, {selectedAddress.country}.<br />
+                            <span className="contact-info">
+                                <FiPhone className="contact-icon" />
+                                {selectedAddress.phoneNumber}
+                            </span>
+                        </p>
                     </div>
                 </div>
                 <div className="checkout-summary-card">

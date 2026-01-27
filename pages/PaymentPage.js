@@ -9,7 +9,7 @@ const PaymentPage = () => {
   const router = useRouter();
   const { orderId } = router.query;
   const billingRef = useRef(null);
-  const [ initiatePayment ] = usePayForOrderMutation()
+  const [initiatePayment] = usePayForOrderMutation()
 
   const {
     data: orderDetails,
@@ -18,6 +18,8 @@ const PaymentPage = () => {
   } = useGetOrderDetailsQuery(orderId || '', {
     skip: !orderId,
   });
+
+  console.log("Order Details in Payment Page:", orderDetails);
 
   const handlePayment = async () => {
     const data = {
@@ -29,7 +31,7 @@ const PaymentPage = () => {
 
     try {
       const res = await initiatePayment(data).unwrap();
-      console.log("Response-----",res)
+      console.log("Response-----", res)
       // Check if PhonePe returned success
       if (res.success && res.data?.instrumentResponse?.redirectInfo?.url) {
         // Optional: store flag for UI tracking
@@ -113,17 +115,52 @@ const PaymentPage = () => {
                   <span>Shipping Details</span>
                 </div>
                 <div className='shipping-summary-rows'>
-                  <div className='shipping-summary-left'>
-                    <div className="shipping-summary-row"><FiUser /> <span>Name:</span></div>
-                    <div className="shipping-summary-row"><FiMail /> <span>Email:</span></div>
-                    <div className="shipping-summary-row"><FiMapPin /> <span>Address:</span></div>
-                    <div className="shipping-summary-row"><FiPhone /> <span>Contact:</span></div>
+                  <div className="shipping-summary-row">
+                    <div className='shipping-summary-left'>
+                      <FiUser /> <span>Name:</span>
+                    </div>
+                    <div className='shipping-summary-value'>
+                      {orderDetails.user.username}
+                    </div>
                   </div>
-                  <div className='shipping-summary-right'>
-                    <div className="shipping-summary-value">{orderDetails.user.username}</div>
-                    <div className="shipping-summary-value">{orderDetails.user.email}</div>
-                    <div className="shipping-summary-value">{orderDetails.shippingAddress.address}, {orderDetails.shippingAddress.city} - {orderDetails.shippingAddress.postalCode}, {orderDetails.shippingAddress.state}, {orderDetails.shippingAddress.country}</div>
-                    <div className="shipping-summary-value">{orderDetails.shippingAddress.phoneno}</div>
+
+                  <div className="shipping-summary-row">
+                    <div className='shipping-summary-left'>
+                      <FiMail /> <span>Email:</span>
+                    </div>
+                    <div className='shipping-summary-value'>
+                      {orderDetails.user.email}
+                    </div>
+                  </div>
+
+                  <div className="shipping-summary-row">
+                    <div className='shipping-summary-left'>
+                      <FiMapPin /> <span>Address:</span>
+                    </div>
+                    <div className='shipping-summary-value'>
+                      {orderDetails.shippingAddress.fullName}, <br />
+                      {orderDetails.shippingAddress.addressLine1}, <br />
+                      {orderDetails.shippingAddress.addressLine2 && (
+                        <>
+                          {orderDetails.shippingAddress.addressLine2}, <br />
+                        </>
+                      )}
+                      {orderDetails.shippingAddress.landmark && (
+                        <>
+                          {orderDetails.shippingAddress.landmark}, <br />
+                        </>
+                      )}
+                      {orderDetails.shippingAddress.city} - {orderDetails.shippingAddress.postalCode}, {orderDetails.shippingAddress.state}, {orderDetails.shippingAddress.country}
+                    </div>
+                  </div>
+
+                  <div className="shipping-summary-row">
+                    <div className='shipping-summary-left'>
+                      <FiPhone /> <span>Contact:</span>
+                    </div>
+                    <div className='shipping-summary-value'>
+                      {orderDetails.shippingAddress.phoneNumber}
+                    </div>
                   </div>
                 </div>
               </div>
