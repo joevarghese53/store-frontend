@@ -17,17 +17,6 @@ const PaymentSuccessPage = () => {
   console.log('orderdetails', orderDetails);
 
   useEffect(() => {
-    if (sessionStorage.getItem('paymentStarted')) {
-      console.log("session data : ",sessionStorage.getItem('paymentStarted'))
-      // Show the page
-      sessionStorage.removeItem('paymentStarted'); // Remove so it can't be shown again
-    } else {
-      // Redirect if flag is missing
-      router.replace('/MyOrders');
-    }
-  }, []);
-
-  useEffect(() => {
     if (orderDetails) {
       runFireworks();
     }

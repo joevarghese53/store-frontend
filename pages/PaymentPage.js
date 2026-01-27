@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { useGetOrderDetailsQuery } from '../redux/api/orderApiSlice';
@@ -6,6 +6,7 @@ import { usePayForOrderMutation } from '@/redux/api/orderApiSlice';
 import { FiUser, FiMapPin, FiMail, FiPhone } from 'react-icons/fi';
 import Script from "next/script";
 import { useCheckPaymentStatusMutation } from '@/redux/api/paymentApiSlice';
+import { RiseLoader } from 'react-spinners';
 
 const PaymentPage = () => {
   const router = useRouter();
@@ -60,7 +61,6 @@ const PaymentPage = () => {
           clearInterval(pollingIntervalRef.current);
           pollingIntervalRef.current = null;
           setIsPolling(false);
-          await refetchTries();
           toast.success("Payment successful 🎉");
           return;
         }
@@ -87,7 +87,7 @@ const PaymentPage = () => {
 
   const handlePayment = async () => {
     const data = {
-      merchantOrderId: orderDetails._id,
+      orderId: orderDetails._id,
     };
 
     try {
@@ -101,7 +101,7 @@ const PaymentPage = () => {
         toast.error("Payment system still loading. Try again.");
         return;
       }
-      console.log("Response-----", res)
+      console.log("Response-----", initRes)
 
       window.PhonePeCheckout.transact({
         tokenUrl: initRes.redirectUrl,
