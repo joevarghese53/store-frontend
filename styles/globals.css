@@ -3299,9 +3299,9 @@ span.text-red {
   background: white;
   position: relative;
   overflow: hidden;
-      display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .address-select-container:hover {
@@ -3935,13 +3935,11 @@ span.text-red {
 }
 
 .product-detail-container {
-  display: flex;
-  gap: 40px;
-  color: #2c2a2a;
   justify-content: center;
-  margin: 20px;
+  gap: 40px;
   margin-top: 130px;
-  min-height: 150vh;
+  margin-bottom: 15vh;
+  display: flex;
 }
 
 .product-detail-review {
@@ -3974,8 +3972,9 @@ span.text-red {
 }
 
 .image-container-desktop {
-  height: 734px;
-  overflow: hidden;
+  position: sticky;
+  top: 130px;
+  height: 100%;
 }
 
 .image-container-mobile {
@@ -3989,8 +3988,8 @@ span.text-red {
 }
 
 .small-image {
-  height: 91px;
   cursor: pointer;
+  height: 10vh;
 }
 
 

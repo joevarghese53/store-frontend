@@ -1,0 +1,40 @@
+.product-detail-container {
+    justify-content: center;
+    gap: 40px;
+    margin-top: 130px;
+    margin-bottom: 15vh;
+    display: flex;
+}
+
+.image-container-desktop {
+    position: sticky;
+    top: 130px;
+    height: 100%;
+}
+
+.small-images-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.small-image {
+    cursor: pointer;
+    height: 10vh;
+}
+
+.image-container-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .image-container-desktop {
+        display: none;
+    }
+
+    .image-container-mobile {
+        display: block;
+        width: 100vw;
+        margin-top: 92px;
+    }
+}

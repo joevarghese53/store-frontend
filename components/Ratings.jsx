@@ -1,5 +1,7 @@
 import React from "react";
-import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { FaStarHalfAlt } from "react-icons/fa";
+import { IoMdStar, IoMdStarOutline } from "react-icons/io";
+
 
 const Ratings = ({ value, text }) => {
   const fullStars = Math.floor(value);
@@ -20,11 +22,11 @@ const Ratings = ({ value, text }) => {
       style={{ gap: "0.1rem", minHeight: "2.1rem", display: "flex", alignItems: "center" }}
     >
       {[...Array(fullStars)].map((_, index) => (
-        <FaStar key={index} style={starStyle} />
+        <IoMdStar key={index} style={starStyle} />
       ))}
       {halfStars === 1 && <FaStarHalfAlt style={starStyle} />}
       {[...Array(emptyStar)].map((_, index) => (
-        <FaRegStar key={index} style={starStyle} />
+        <IoMdStarOutline key={index} style={starStyle} />
       ))}
       {text && (
         <span

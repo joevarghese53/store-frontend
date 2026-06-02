@@ -113,9 +113,9 @@ const ProductDetails = () => {
     }
 
     if (!product || !product._id) {
-    toast.error('Product information is not loaded yet.');
-    return;
-  }
+      toast.error('Product information is not loaded yet.');
+      return;
+    }
 
     try {
       const cartData = { productId: product._id, quantity: qty, productType: 'Product', size: selectedSize };
@@ -152,19 +152,19 @@ const ProductDetails = () => {
           <div className="small-images-container">
             <img
               src={product.frontImage}
-              className={selectedImage === product.frontImage ? 'small-image selected-image' : 'small-image'}
+              className="small-image"
               onClick={() => setSelectedImage(product.frontImage)}
             />
             <img
               src={product.backImage}
-              className={selectedImage === product.backImage ? 'small-image selected-image' : 'small-image'}
+              className="small-image"
               onClick={() => setSelectedImage(product.backImage)}
             />
             {product.images?.map((item, i) => (
               <img
                 key={i}
                 src={item}
-                className={i === index ? 'small-image selected-image' : 'small-image'}
+                className="small-image"
                 onClick={() => setSelectedImage(item)}
               />
             ))}
